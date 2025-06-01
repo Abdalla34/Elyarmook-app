@@ -59,7 +59,6 @@
       </div>
     </div>
   </div>
-  
 </template>
 <style scoped>
 .links-wrapper {
@@ -80,7 +79,7 @@
   justify-content: center;
   gap: 20px;
 }
-ul li a{
+ul li a {
   color: #7e7e7e;
 }
 @media (max-width: 576px) {

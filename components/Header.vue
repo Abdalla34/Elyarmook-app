@@ -11,26 +11,36 @@
           <input
             type="search"
             placeholder="search"
-            class="text-capitalize focus-input fw-600 p-1"
+            class="text-capitalize focus-input fw-600 p-2 input-search"
           />
-          <i class="fa-solid fa-magnifying-glass icon position-absolute"></i>
+          <i class="fa-solid fa-magnifying-glass icon-search position-absolute"></i>
         </div>
       </div>
       <div
         class="profile-card d-flex justify-content-center align-items-center gap-2"
       >
-        <i
-          class="fa-solid fa-cart-shopping fa-1x d-flex align-items-center justify-content-center background-color-cart"
-        ></i>
         <div
           class="background-color-cart d-flex align-items-center justify-content-center"
         >
-          <img class="bmw-img" src="/public/BMW.png" alt="" />
+          <button class="buttons">
+            <i
+              class="fa-solid fa-cart-shopping fa-1x d-flex align-items-center justify-content-center z-index-after"
+            ></i>
+          </button>
         </div>
         <div
           class="background-color-cart d-flex align-items-center justify-content-center"
         >
-          <img class="profile-img" src="/public/profile.jpg" alt="" />
+          <button class="buttons">
+            <img class="bmw-img z-index-after" src="/public/BMW.png" alt="" />
+          </button>
+        </div>
+        <div
+          class="background-color-cart d-flex align-items-center justify-content-center"
+        >
+          <button class="buttons">
+            <img class="profile-img z-index-after" src="/public/profile.jpg" alt="" />
+          </button>
         </div>
       </div>
     </div>
@@ -39,6 +49,9 @@
 <style scoped>
 .width-image {
   width: 80px;
+}
+.input-search {
+  width: 320px;
 }
 .focus-input {
   border-radius: 10px;
@@ -53,7 +66,7 @@
   border: none;
   outline: none;
 }
-.icon {
+.icon-search {
   width: 20px;
   right: 20px;
   top: 50%;
@@ -66,16 +79,48 @@
   height: 47px;
   border-radius: 10px;
 }
+.buttons {
+  border: none;
+}
+.bmw-img {
+  width: 21px;
+}
+.input-search {
+  width: 320px;
+}
 .background-color-cart {
   background-color: rgba(255, 249, 212, 1);
   border-radius: 10px;
   height: 50px;
   width: 55px;
   padding: 7px;
+  position: relative;
+  transition: all 0.4s ease;
+  overflow: hidden;
+  z-index: 1;
+  overflow: hidden;
 }
-.bmw-img {
-  width: 21px;
+.background-color-cart::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: var(--secound-color);
+  width: 0;
+  height: 0;
+  opacity: 1;
+  transition: all 0.4s ease;
 }
+.background-color-cart:hover::after {
+  width: 100%;
+  height: 100%;
+  background-color: var(--main-color);
+}
+.z-index-after {
+  position: relative
+  ;
+}
+
 @media (max-width: 576px) {
   .search {
     display: none;
@@ -91,6 +136,11 @@
     height: 35px;
     width: 40px;
     padding: 7px;
+  }
+}
+@media (max-width: 768px) {
+  .input-search {
+    display: none;
   }
 }
 </style>
