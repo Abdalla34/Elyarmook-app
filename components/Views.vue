@@ -10,7 +10,8 @@
                 class="d-flex gap-1 align-items-center color-text"
                 exact-active-class="active"
               >
-                <i class="fa-solid fa-house"></i>
+                <!-- <i class="fa-solid fa-house"></i> -->
+                <IconHome />
                 <h6 class="text-capitalize link-sm">home</h6>
               </NuxtLink>
             </li>
@@ -59,7 +60,6 @@
       </div>
     </div>
   </div>
-  
 </template>
 <style scoped>
 .links-wrapper {
@@ -80,7 +80,7 @@
   justify-content: center;
   gap: 20px;
 }
-ul li a{
+ul li a {
   color: #7e7e7e;
 }
 @media (max-width: 576px) {
