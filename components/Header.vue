@@ -13,7 +13,9 @@
             placeholder="search"
             class="text-capitalize focus-input fw-600 p-2 input-search"
           />
-          <i class="fa-solid fa-magnifying-glass icon-search position-absolute"></i>
+          <i
+            class="fa-solid fa-magnifying-glass icon-search position-absolute"
+          ></i>
         </div>
       </div>
       <div
@@ -39,7 +41,11 @@
           class="background-color-cart d-flex align-items-center justify-content-center"
         >
           <button class="buttons">
-            <img class="profile-img z-index-after" src="/public/profile.jpg" alt="" />
+            <img
+              class="profile-img z-index-after"
+              src="/public/profile.jpg"
+              alt=""
+            />
           </button>
         </div>
       </div>
@@ -52,33 +58,28 @@
   transition: transform 0.3s ease, filter 0.3s ease;
   cursor: pointer;
 }
-
 .width-image:hover {
   transform: scale(1.1) rotate(5deg);
   filter: brightness(1.1) drop-shadow(0 4px 8px rgba(255, 230, 84, 0.4));
 }
-
 .input-search {
   width: 320px;
   transition: all 0.3s ease;
 }
-
 .focus-input {
   border-radius: 10px;
   border: none;
   background-color: rgba(247, 242, 244, 1);
   transition: all 0.3s ease;
 }
-
 .focus-input:hover {
-  background-color: rgba(255, 255, 255, 0.9);
+  /* background-color: rgba(255, 255, 255, 0.9); */
   box-shadow: 0 4px 15px rgba(255, 230, 84, 0.2);
   transform: translateY(-1px);
 }
-
 .focus-input:focus {
-  background-color: white;
-  box-shadow: 0 6px 20px rgba(255, 230, 84, 0.3);
+  /* background-color: white; */
+  /* box-shadow: 0 6px 20px rgba(255, 230, 84, 0.3); */
   transform: translateY(-2px);
   outline: 2px solid var(--main-color);
 }
@@ -168,11 +169,13 @@
   transition: all 0.2s ease;
 }
 
-.profile-img, .bmw-img {
+.profile-img,
+.bmw-img {
   transition: all 0.3s ease;
 }
 
-.profile-img:hover, .bmw-img:hover {
+.profile-img:hover,
+.bmw-img:hover {
   transform: scale(1.05);
   filter: brightness(1.1);
 }
@@ -182,7 +185,7 @@
 }
 
 .icon-search:hover {
-  color: var(--main-color);
+  color: blac;
   transform: translateY(-50%) scale(1.2);
 }
 

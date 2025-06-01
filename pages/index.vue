@@ -275,15 +275,14 @@ let offersCards = ref([
   padding: 30px 0px;
   background-color: var(--main-color);
 }
-/* Services Section - Enhanced Figma Design Match */
+/* Services Section*/
 .services-section {
   padding: 100px 0 120px;
   background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 50%, #f1f3f4 100%);
   position: relative;
   overflow: hidden;
 }
-
-.services-section::before {
+/* .services-section::before {
   content: '';
   position: absolute;
   top: 0;
@@ -294,8 +293,7 @@ let offersCards = ref([
     radial-gradient(circle at 20% 80%, rgba(255, 230, 84, 0.05) 0%, transparent 50%),
     radial-gradient(circle at 80% 20%, rgba(255, 107, 107, 0.05) 0%, transparent 50%);
   pointer-events: none;
-}
-
+} */
 .services-container {
   max-width: 1200px;
   margin: 0 auto;
@@ -303,13 +301,11 @@ let offersCards = ref([
   position: relative;
   z-index: 1;
 }
-
 .services-header {
   position: relative;
   margin-bottom: 80px;
   height: 40px;
 }
-
 .soon-badge {
   position: absolute;
   top: 0;
@@ -466,9 +462,6 @@ let offersCards = ref([
 .service-card:hover .service-description {
   color: #5a6c7d;
 }
-/* .load {
-  position: absolute;
-} */
 /* end public classes */
 /* start swiper slider header */
 .mySwiper {
