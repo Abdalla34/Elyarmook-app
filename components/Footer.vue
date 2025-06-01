@@ -83,6 +83,13 @@ p {
 .logo img {
   max-width: 100px;
   height: auto;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.logo img:hover {
+  transform: scale(1.1) rotate(5deg);
+  filter: brightness(1.2) drop-shadow(0 4px 8px rgba(255, 230, 84, 0.4));
 }
 
 .box-style {
@@ -90,6 +97,38 @@ p {
   border-radius: 20px;
   border: 1px solid white;
   width: fit-content;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.box-style:hover {
+  background-color: var(--main-color);
+  border-color: var(--main-color);
+  transform: scale(1.05) translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 230, 84, 0.3);
+  color: #040505;
+}
+
+.box-style:hover .span {
+  color: #040505;
+  font-weight: 600;
+}
+
+.box-style::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.box-style:hover::before {
+  left: 100%;
 }
 
 .icon {
@@ -102,10 +141,45 @@ p {
 
 ul li a {
   color: white;
+  transition: all 0.3s ease;
+  position: relative;
+  padding: 5px 0;
+  display: inline-block;
 }
 
 ul li a:hover {
-  opacity: 0.6;
+  color: var(--main-color);
+  transform: translateX(5px);
+  text-shadow: 0 2px 4px rgba(255, 230, 84, 0.3);
+}
+
+ul li a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--main-color);
+  transition: width 0.3s ease;
+}
+
+ul li a:hover::after {
+  width: 100%;
+}
+
+/* Social media and other text links */
+.col-lg-2 p {
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  padding: 2px 0;
+}
+
+.col-lg-2 p:hover {
+  color: var(--main-color);
+  transform: translateX(3px);
+  text-shadow: 0 2px 4px rgba(255, 230, 84, 0.3);
 }
 
 /* Medium Screens */
