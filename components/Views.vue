@@ -12,6 +12,7 @@
               >
                 <!-- <i class="fa-solid fa-house"></i> -->
                 <IconHome />
+                
                 <h6 class="text-capitalize link-sm">home</h6>
               </NuxtLink>
             </li>
