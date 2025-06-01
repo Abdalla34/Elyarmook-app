@@ -37,6 +37,7 @@
 
       <!-- start div soon -->
       <div class="soon mt-5">
+        <p class="soon-after text-danger text-uppercase">soon</p>
         <div class="row mt-4">
           <div
             class="col-lg-4 col-md-4 col-sm-12 mt-4 d-flex justify-content-center align-items-center flex-column"
@@ -166,7 +167,8 @@
       </div>
       <!-- end qr code -->
     </div>
-      <Footer />
+
+    <Footer />
   </div>
 </template>
 
@@ -250,6 +252,18 @@ let offersCards = ref([
   padding: 30px 0px;
   background-color: var(--main-color);
 }
+.soon {
+  position: relative;
+}
+.soon-after {
+  position: absolute;
+  right: 50px;
+  top: -12px;
+  font-weight: 600;
+}
+/* .load {
+  position: absolute;
+} */
 /* end public classes */
 /* start swiper slider header */
 .mySwiper {
