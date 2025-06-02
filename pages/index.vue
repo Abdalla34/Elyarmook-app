@@ -36,25 +36,34 @@
       <!-- end swiper -->
 
       <!-- start services section -->
-      <div class="services-section">
-        <div class="services-container">
+      <div class="services-section border-radius-20px">
+        <div class="services-container container position-relative">
           <div class="services-header">
-            <span class="soon-badge">SOON</span>
+            <span
+              class="soon-badge text-uppercase text-light ps-3 pe-3 pt-1 pb-1 position-absolute border-radius-20px"
+              >SOON</span
+            >
           </div>
-          <div class="services-grid">
+          <div class="row">
             <div
-              class="service-card"
+              class="col-lg-4 col-md-4 col-sm-12"
               v-for="(service, index) in soonGifts"
               :key="index"
             >
-              <div class="service-icon-wrapper">
-                <div class="service-icon">
-                  <img :src="service.imageSoon" :alt="service.title" />
+              <div class="service-card text-center mb-3">
+                <div class="service-icon-wrapper">
+                  <div class="service-icon">
+                    <img
+                      class="img"
+                      :src="service.imageSoon"
+                      :alt="service.title"
+                    />
+                  </div>
                 </div>
-              </div>
-              <div class="service-content">
-                <h3 class="service-title">{{ service.title }}</h3>
-                <p class="service-description">{{ service.des }}</p>
+                <div class="service-content">
+                  <h3 class="service-title">{{ service.title }}</h3>
+                  <p class="color-parag">{{ service.des }}</p>
+                </div>
               </div>
             </div>
           </div>
@@ -100,18 +109,12 @@
                       :src="item.image"
                       alt=""
                     />
-                    <div class="detailes-card d-flex justify-content-between">
-                      <h4 class="h1">{{ item.name }}</h4>
-                      <p class="d-flex align-items-center gap-1 fw-bold fs-6">
-                        {{ item.price }}
-                        <span class="currency">{{ item.currency }}</span>
-                      </p>
-                    </div>
-                    <button
-                      class="button-card background-main border-radius-20px w-100 text-capitalize fs-12-fw p-1"
-                    >
-                      add to card
-                    </button>
+                    <TitleServices
+                      :title="item.name"
+                      :currency="item.price"
+                      :sar="item.currency"
+                    />
+                    <ButtonCard />
                   </SwiperSlide>
                 </Swiper>
                 <div
@@ -144,7 +147,9 @@
                   :key="index"
                   class="slide-qr"
                 >
-                  <div class="qr-slide-container">
+                  <div
+                    class="qr-slide-container d-flex jusstify-content-between align-items-center"
+                  >
                     <!-- Left Section: Offer Details -->
                     <div class="offer-section">
                       <h1 class="offer-title">{{ item.sale }}</h1>
@@ -158,7 +163,11 @@
                           <div class="phone-screen">
                             <div class="phone-notch"></div>
                             <div class="phone-content">
-                              <img :src="item.img" alt="App Preview" class="app-screenshot" />
+                              <img
+                                :src="item.img"
+                                alt="App Preview"
+                                class="app-screenshot"
+                              />
                             </div>
                             <div class="phone-home-bar"></div>
                           </div>
@@ -277,192 +286,65 @@ let offersCards = ref([
 }
 /* Services Section*/
 .services-section {
-  padding: 100px 0 120px;
+  padding: 50px 0;
   background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 50%, #f1f3f4 100%);
   position: relative;
   overflow: hidden;
 }
-/* .services-section::before {
-  content: '';
+.services-section::before {
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background:
-    radial-gradient(circle at 20% 80%, rgba(255, 230, 84, 0.05) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(255, 107, 107, 0.05) 0%, transparent 50%);
+  background: radial-gradient(
+      circle at 20% 80%,
+      rgba(255, 230, 84, 0.05) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(255, 107, 107, 0.05) 0%,
+      transparent 50%
+    );
   pointer-events: none;
-} */
+}
 .services-container {
-  max-width: 1200px;
   margin: 0 auto;
   padding: 0 40px;
-  position: relative;
-  z-index: 1;
 }
 .services-header {
   position: relative;
   margin-bottom: 80px;
   height: 40px;
 }
+
 .soon-badge {
-  position: absolute;
-  top: 0;
+  top: 30px;
   right: 0;
   background: linear-gradient(135deg, #ff4757, #ff3742);
-  color: white;
-  padding: 12px 24px;
-  border-radius: 25px;
   font-size: 0.75rem;
   font-weight: 800;
-  text-transform: uppercase;
   letter-spacing: 1px;
-  box-shadow:
-    0 8px 25px rgba(255, 71, 87, 0.4),
+  box-shadow: 0 8px 25px rgba(255, 71, 87, 0.4),
     0 4px 12px rgba(255, 71, 87, 0.3);
-  transform: rotate(-2deg);
+  /* transform: rotate(-2deg); */
   transition: all 0.3s ease;
   border: 2px solid rgba(255, 255, 255, 0.3);
 }
 
 .soon-badge:hover {
   transform: rotate(0deg) scale(1.05);
-  box-shadow:
-    0 12px 35px rgba(255, 71, 87, 0.5),
+  box-shadow: 0 12px 35px rgba(255, 71, 87, 0.5),
     0 6px 18px rgba(255, 71, 87, 0.4);
 }
-
-.services-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 50px;
-  align-items: stretch;
-}
-
-.service-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  padding: 0;
-  background: white;
-  border-radius: 25px;
-  box-shadow:
-    0 10px 40px rgba(0, 0, 0, 0.08),
-    0 4px 20px rgba(0, 0, 0, 0.04);
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  position: relative;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.8);
-}
-
-.service-card:hover {
-  transform: translateY(-15px) scale(1.02);
-  box-shadow:
-    0 25px 60px rgba(0, 0, 0, 0.15),
-    0 10px 30px rgba(0, 0, 0, 0.1);
-}
-
-.service-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 5px;
-  background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #45b7d1, #f39c12);
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-
-.service-card:hover::before {
-  opacity: 1;
-}
-
-.service-icon-wrapper {
+.services-card {
   width: 100%;
-  padding: 50px 30px 30px;
-  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-  border-radius: 25px 25px 0 0;
-  position: relative;
 }
 
-.service-icon {
-  position: relative;
-  display: inline-block;
-}
-
-.service-icon::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 120px;
-  height: 120px;
-  background: radial-gradient(circle, rgba(255, 230, 84, 0.1) 0%, transparent 70%);
-  border-radius: 50%;
-  opacity: 0;
-  transition: all 0.4s ease;
-}
-
-.service-card:hover .service-icon::before {
-  opacity: 1;
-  transform: translate(-50%, -50%) scale(1.2);
-}
-
-.service-icon img {
-  width: 90px;
-  height: 90px;
-  object-fit: contain;
-  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.1));
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  position: relative;
-  z-index: 2;
-}
-
-.service-card:hover .service-icon img {
-  transform: scale(1.15) rotate(8deg);
-  filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.2));
-}
-
-.service-content {
-  padding: 30px 30px 40px;
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.service-title {
-  font-size: 1.6rem;
-  font-weight: 800;
-  color: #2c3e50;
-  margin: 0 0 20px 0;
-  text-transform: capitalize;
-  letter-spacing: -0.03em;
-  line-height: 1.2;
-  transition: color 0.3s ease;
-}
-
-.service-card:hover .service-title {
-  color: #1a252f;
-}
-
-.service-description {
-  font-size: 1rem;
-  color: #6c757d;
-  line-height: 1.7;
-  margin: 0;
-  max-width: 280px;
-  transition: color 0.3s ease;
-}
-
-.service-card:hover .service-description {
-  color: #5a6c7d;
-}
 /* end public classes */
+
 /* start swiper slider header */
 .mySwiper {
   width: 100%;
@@ -484,39 +366,7 @@ let offersCards = ref([
 .gap {
   gap: 20px;
 }
-.button {
-  background-color: var(--main-color, #007bff);
-  font-size: 15px;
-  border: none;
-  border-radius: 20px;
-  transition: all 0.3s ease;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-}
 
-.button:hover {
-  background-color: var(--secound-color);
-  transform: scale(1.05) translateY(-2px);
-  box-shadow: 0 8px 25px rgba(255, 230, 84, 0.4);
-  color: #040505;
-  font-weight: 600;
-}
-
-.button::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-  transition: left 0.5s ease;
-}
-
-.button:hover::before {
-  left: 100%;
-}
 .mySwiper :deep(.swiper-button-prev),
 .mySwiper :deep(.swiper-button-next) {
   width: 40px;
@@ -573,7 +423,7 @@ let offersCards = ref([
 
 .swiper-button-prev-custom::after,
 .swiper-button-next-custom::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 50%;
   left: 50%;
@@ -615,42 +465,6 @@ let offersCards = ref([
   filter: brightness(1.1) drop-shadow(0 4px 12px rgba(255, 230, 84, 0.3));
 }
 
-.currency {
-  font-size: 10px;
-  font-weight: 700;
-}
-
-.button-card {
-  border: none;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-  cursor: pointer;
-}
-
-.button-card:hover {
-  background-color: var(--secound-color) !important;
-  transform: scale(1.02) translateY(-2px);
-  box-shadow: 0 6px 20px rgba(255, 230, 84, 0.4);
-  color: #040505;
-  font-weight: 600;
-}
-
-.button-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-  transition: left 0.4s ease;
-}
-
-.button-card:hover::before {
-  left: 100%;
-}
-
 /* Product card hover effects */
 .swiper-slide {
   transition: all 0.3s ease;
@@ -664,7 +478,7 @@ let offersCards = ref([
 /* end to-card */
 /* start qr code - Figma Design Match */
 .qr-code {
-  background: linear-gradient(90deg, #F8D7DA 0%, #FFF3CD 100%);
+  background: linear-gradient(90deg, #f8d7da 0%, #fff3cd 100%);
   padding: 60px 40px;
   position: relative;
   overflow: hidden;
@@ -681,9 +495,6 @@ let offersCards = ref([
 }
 
 .qr-slide-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   width: 100%;
   max-width: 1000px;
   height: 100%;
@@ -700,7 +511,6 @@ let offersCards = ref([
   align-items: flex-start;
   padding-right: 40px;
 }
-
 .offer-title {
   font-size: 4rem;
   font-weight: 900;
@@ -720,13 +530,13 @@ let offersCards = ref([
 }
 
 /* Center Section - Phone Mockup */
-.phone-section {
+/* .phone-section {
   flex: 0 0 auto;
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 0 40px;
-}
+} */
 
 .phone-mockup {
   position: relative;
@@ -743,20 +553,19 @@ let offersCards = ref([
   background: linear-gradient(145deg, #1a1a1a, #2d2d2d);
   border-radius: 35px;
   padding: 10px;
-  box-shadow:
-    0 25px 50px rgba(0, 0, 0, 0.4),
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4),
     inset 0 2px 4px rgba(255, 255, 255, 0.1);
   position: relative;
 }
 
-.phone-screen {
+/* .phone-screen {
   width: 100%;
   height: 100%;
   background: #000;
   border-radius: 25px;
   overflow: hidden;
   position: relative;
-}
+} */
 
 .phone-notch {
   position: absolute;
@@ -922,9 +731,6 @@ let offersCards = ref([
     width: 250px;
     height: 120px;
   }
-  .button {
-    font-size: 10px;
-  }
   .title {
     font-size: 15px;
   }
@@ -937,58 +743,18 @@ let offersCards = ref([
 
   /* Services Section Mobile Responsive */
   .services-section {
-    padding: 80px 0 100px;
+    margin-top: 100px;
   }
-
   .services-container {
     padding: 0 20px;
   }
-
-  .services-header {
-    margin-bottom: 60px;
-    height: 30px;
-  }
-
-  .services-grid {
-    grid-template-columns: 1fr;
-    gap: 40px;
-  }
-
-  .service-card {
-    margin: 0 10px;
-    border-radius: 20px;
-  }
-
   .service-icon-wrapper {
-    padding: 40px 20px 25px;
-    border-radius: 20px 20px 0 0;
+    padding: 15px 10px;
   }
 
   .service-icon img {
     width: 70px;
     height: 70px;
-  }
-
-  .service-content {
-    padding: 25px 20px 35px;
-  }
-
-  .service-title {
-    font-size: 1.4rem;
-    margin-bottom: 15px;
-  }
-
-  .service-description {
-    font-size: 0.95rem;
-    line-height: 1.6;
-  }
-
-  .soon-badge {
-    right: 10px;
-    font-size: 0.65rem;
-    padding: 10px 18px;
-    border-radius: 20px;
-    letter-spacing: 0.8px;
   }
 
   /* QR Code Mobile Responsive */
@@ -1048,22 +814,9 @@ let offersCards = ref([
   }
 }
 @media (min-width: 577px) and (max-width: 768px) {
-  .button {
-    font-size: 10px;
-  }
-  .title {
-    font-size: 15px;
-  }
-  .parag {
-    font-size: 10px;
-  }
-  .slide-content {
-    gap: 0px;
-  }
-
   /* Services Section Tablet Responsive */
   .services-section {
-    padding: 90px 0 110px;
+    margin-top: 100px;
   }
 
   .services-container {
@@ -1072,54 +825,7 @@ let offersCards = ref([
 
   .services-header {
     margin-bottom: 70px;
-    height: 35px;
-  }
-
-  .services-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 45px;
-  }
-
-  .service-card:nth-child(3) {
-    grid-column: 1 / -1;
-    max-width: 450px;
-    margin: 0 auto;
-  }
-
-  .service-card {
-    border-radius: 22px;
-  }
-
-  .service-icon-wrapper {
-    padding: 45px 25px 28px;
-    border-radius: 22px 22px 0 0;
-  }
-
-  .service-icon img {
-    width: 80px;
-    height: 80px;
-  }
-
-  .service-content {
-    padding: 28px 25px 38px;
-  }
-
-  .service-title {
-    font-size: 1.5rem;
-    margin-bottom: 18px;
-  }
-
-  .service-description {
-    font-size: 0.98rem;
-    line-height: 1.65;
-  }
-
-  .soon-badge {
-    right: 20px;
-    font-size: 0.7rem;
-    padding: 11px 20px;
-    border-radius: 22px;
-    letter-spacing: 0.9px;
+    height: 25px;
   }
 
   /* QR Code Tablet Responsive */

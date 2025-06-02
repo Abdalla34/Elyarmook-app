@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  transition: color 0.3s ease, background-color 0.3s ease;
 }
 :root {
   --main-color: #ffe654;
@@ -12,31 +13,6 @@
 /* Global smooth scrolling */
 html {
   scroll-behavior: smooth;
-}
-
-/* Global focus styles for accessibility */
-*:focus {
-  outline: 2px solid var(--main-color);
-  outline-offset: 2px;
-}
-
-/* Global button hover effects */
-button {
-  transition: all 0.3s ease;
-}
-
-button:hover {
-  transform: translateY(-1px);
-}
-
-/* Global image hover effects */
-img {
-  transition: all 0.3s ease;
-}
-
-/* Smooth transitions for all elements */
-* {
-  transition: color 0.3s ease, background-color 0.3s ease;
 }
 h1,
 h2,
@@ -59,7 +35,7 @@ ul a {
   font-size: 12px;
 }
 .h1 {
-  font-size: 20px;
+  font-size: 18px;
   text-transform: capitalize;
 }
 @media (max-width: 576px) {
@@ -78,3 +54,156 @@ ul a {
   font-size: 12px;
   font-weight: 600;
 }
+
+/* Global focus styles for accessibility */
+*:focus {
+  outline: 2px solid var(--main-color);
+  outline-offset: 2px;
+}
+
+/* Global button hover effects */
+button {
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+}
+
+/* Global image hover effects */
+img {
+  transition: all 0.3s ease;
+  width: 150px;
+  margin: 0px auto;
+}
+
+/* Smooth transitions for all elements */
+.button {
+  background-color: var(--main-color, #007bff);
+  font-size: 15px;
+  border: none;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.button:hover {
+  background-color: var(--secound-color);
+  transform: scale(1.05) translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 230, 84, 0.4);
+  color: #040505;
+  font-weight: 600;
+}
+
+.button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.button:hover::before {
+  left: 100%;
+}
+
+.service-card {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  background: white;
+  border-radius: 25px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08), 0 4px 20px rgba(0, 0, 0, 0.04);
+  transition: all 0.4s;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.service-card:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15), 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.service-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(10deg, #ff6b6b, #4ecdc4, #45b7d1, #f39c12);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.service-card:hover::before {
+  opacity: 1;
+}
+
+
+/* .service-icon::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(
+    circle,
+    rgba(255, 230, 84, 0.1) 0%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  opacity: 0;
+  transition: all 0.4s ease;
+} */
+
+.service-card:hover .service-icon::before {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.2);
+}
+
+.service-card:hover .service-icon img {
+  transform: scale(1.15) rotate(8deg);
+  filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.2));
+}
+
+.service-content {
+  padding: 10px;
+}
+
+.service-title {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #2c3e50;
+  margin: 0 0 20px 0;
+  text-transform: capitalize;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  transition: color 0.3s ease;
+}
+
+.service-card:hover .service-title {
+  color: #1a252f;
+}
+
+/* .service-description {
+  font-size: 1rem;
+  color: #6c757d;
+  line-height: 1.7;
+  margin: 0;
+  max-width: 280px;
+  transition: color 0.3s ease;
+} */

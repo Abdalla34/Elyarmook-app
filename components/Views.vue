@@ -12,7 +12,7 @@
               >
                 <!-- <i class="fa-solid fa-house"></i> -->
                 <IconHome />
-                
+
                 <h6 class="text-capitalize link-sm">home</h6>
               </NuxtLink>
             </li>
@@ -28,22 +28,22 @@
             </li>
             <li>
               <NuxtLink
-                to="/offers"
-                class="d-flex gap-1 align-items-center color-text"
-                exact-active-class="active"
-              >
-                <i class="fa-solid fa-tags"></i>
-                <h6 class="text-capitalize link-sm">offers</h6>
-              </NuxtLink>
-            </li>
-            <li>
-              <NuxtLink
                 to="/services"
                 class="d-flex gap-1 align-items-center color-text"
                 exact-active-class="active"
               >
                 <i class="fa-solid fa-wrench"></i>
                 <h6 class="text-capitalize link-sm">services</h6>
+              </NuxtLink>
+            </li>
+            <li>
+              <NuxtLink
+                to="/offers"
+                class="d-flex gap-1 align-items-center color-text"
+                exact-active-class="active"
+              >
+                <i class="fa-solid fa-tags"></i>
+                <h6 class="text-capitalize link-sm">offers</h6>
               </NuxtLink>
             </li>
             <li>
@@ -101,13 +101,18 @@ ul li a:hover:not(.active) {
 
 /* Subtle glow effect on hover */
 ul li a:hover:not(.active)::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
   transition: left 0.5s ease;
   left: 100%;
 }
