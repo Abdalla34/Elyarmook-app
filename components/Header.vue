@@ -116,11 +116,6 @@
   height: 100%;
   background-color: var(--main-color);
 }
-.z-index-after {
-  position: relative
-  ;
-}
-
 @media (max-width: 576px) {
   .search {
     display: none;
