@@ -5,7 +5,38 @@
 }
 :root {
   --main-color: #ffe654;
+  --main-color-rgb: 255, 230, 84;
   --secound-color: #ffec7f;
+}
+
+/* Global smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Global focus styles for accessibility */
+*:focus {
+  outline: 2px solid var(--main-color);
+  outline-offset: 2px;
+}
+
+/* Global button hover effects */
+button {
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+}
+
+/* Global image hover effects */
+img {
+  transition: all 0.3s ease;
+}
+
+/* Smooth transitions for all elements */
+* {
+  transition: color 0.3s ease, background-color 0.3s ease;
 }
 h1,
 h2,
