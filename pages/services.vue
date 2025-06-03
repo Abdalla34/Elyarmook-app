@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div class="services-parent">
     <Header />
     <Views />
     <div class="container pt-5">
-      <div class="row mt-5">
+      <div class="row mt-3 mb-5 pb-5">
         <div
           class="col-lg-4 col-md-6 col-sm-12 text-center mb-4"
           v-for="(item, index) in imagesServices"
@@ -17,11 +17,14 @@
               :sar="item.sar"
             />
             <div class="width-button-component">
-              <ButtonCard />
+              <ButtonCard textButton="add to card" />
             </div>
           </div>
         </div>
       </div>
+    </div>
+    <div class="mt-5">
+      <Footer />
     </div>
   </div>
 </template>
@@ -66,12 +69,13 @@ let imagesServices = ref([
 ]);
 </script>
 <style scoped>
+/* .services-parent{
+  background-color: white;
+} */
 .up-box {
-  /* height: 250px; */
   background-color: #b8bbc01a;
   width: 100%;
 }
-
 .width-button-component {
   width: 60%;
   margin: 0 auto;
@@ -79,5 +83,10 @@ let imagesServices = ref([
 img {
   width: 150px;
   margin: 0px auto;
+}
+@media (max-width: 576px) {
+  img {
+    width: 100px;
+  }
 }
 </style>

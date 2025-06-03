@@ -1,5 +1,5 @@
 <template>
-  <div class="footer p-5 text-light">
+  <div class="footer p-5 text-light mt-5">
     <div class="container">
       <div class="row hand d-flex text-md-start">
         <!-- Logo + Download + Contact -->

@@ -1,68 +1,77 @@
 <template>
-  <div class="container px-2 links">
-    <div class="row">
-      <div class="col-12 mt-4">
-        <div class="links-wrapper">
-          <ul class="d-flex align-items-center flex-nowrap ul-justify">
-            <li class="">
-              <NuxtLink
-                to="/"
-                class="d-flex gap-1 align-items-center color-text"
-                exact-active-class="active"
-              >
-                <!-- <i class="fa-solid fa-house"></i> -->
-                <IconHome />
+  <div class="veiws-parent">
+    <div class="container px-2 links">
+      <div class="row">
+        <div class="col-12 mt-4">
+          <div class="links-wrapper">
+            <ul class="d-flex align-items-center flex-nowrap ul-justify">
+              <li class="">
+                <NuxtLink
+                  to="/"
+                  class="d-flex gap-1 align-items-center color-text"
+                  exact-active-class="active"
+                >
+                  <!-- <i class="fa-solid fa-house"></i> -->
+                  <IconHome />
 
-                <h6 class="text-capitalize link-sm">home</h6>
-              </NuxtLink>
-            </li>
-            <li>
-              <NuxtLink
-                to="/myOrders"
-                class="d-flex gap-1 align-items-center justify-content-center color-text"
-                exact-active-class="active"
-              >
-                <i class="fa-solid fa-bag-shopping"></i>
-                <h6 class="text-capitalize link-sm">my orders</h6>
-              </NuxtLink>
-            </li>
-            <li>
-              <NuxtLink
-                to="/services"
-                class="d-flex gap-1 align-items-center color-text"
-                exact-active-class="active"
-              >
-                <i class="fa-solid fa-wrench"></i>
-                <h6 class="text-capitalize link-sm">services</h6>
-              </NuxtLink>
-            </li>
-            <li>
-              <NuxtLink
-                to="/offers"
-                class="d-flex gap-1 align-items-center color-text"
-                exact-active-class="active"
-              >
-                <i class="fa-solid fa-tags"></i>
-                <h6 class="text-capitalize link-sm">offers</h6>
-              </NuxtLink>
-            </li>
-            <li>
-              <NuxtLink
-                to="/spareParts"
-                class="d-flex gap-1 align-items-center color-text"
-                exact-active-class="active"
-              >
-                <i class="fa-solid fa-cogs"></i>
-                <h6 class="text-capitalize link-sm">spare parts</h6>
-              </NuxtLink>
-            </li>
-          </ul>
+                  <h6 class="text-capitalize link-sm">home</h6>
+                </NuxtLink>
+              </li>
+              <li>
+                <NuxtLink
+                  to="/myOrders"
+                  class="d-flex gap-1 align-items-center justify-content-center color-text"
+                  exact-active-class="active"
+                >
+                  <i class="fa-solid fa-bag-shopping"></i>
+                  <h6 class="text-capitalize link-sm">my orders</h6>
+                </NuxtLink>
+              </li>
+              <li>
+                <NuxtLink
+                  to="/services"
+                  class="d-flex gap-1 align-items-center color-text"
+                  exact-active-class="active"
+                >
+                  <i class="fa-solid fa-wrench"></i>
+                  <h6 class="text-capitalize link-sm">services</h6>
+                </NuxtLink>
+              </li>
+              <li>
+                <NuxtLink
+                  to="/offers"
+                  class="d-flex gap-1 align-items-center color-text"
+                  exact-active-class="active"
+                >
+                  <i class="fa-solid fa-tags"></i>
+                  <h6 class="text-capitalize link-sm">offers</h6>
+                </NuxtLink>
+              </li>
+              <li>
+                <NuxtLink
+                  to="/spareParts"
+                  class="d-flex gap-1 align-items-center color-text"
+                  exact-active-class="active"
+                >
+                  <i class="fa-solid fa-cogs"></i>
+                  <h6 class="text-capitalize link-sm">spare parts</h6>
+                </NuxtLink>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </template>
 <style scoped>
+.veiws-parent {
+  background-color: white;
+  width: 70%;
+  margin: auto;
+  border-radius: 30px;
+  margin-top: 20px;
+}
 .links-wrapper {
   overflow-x: auto;
   white-space: nowrap;
@@ -73,17 +82,17 @@
 .active {
   color: #040505;
   background-color: var(--main-color);
-  padding: 7px 8px;
+  padding: 4px 10px;
   border-radius: 20px;
   font-weight: 500;
 }
 .ul-justify {
   justify-content: center;
-  gap: 20px;
+  gap: 10px;
 }
 ul li a {
   color: #7e7e7e;
-  padding: 7px 8px;
+  /* padding: 7px 5px; */
   border-radius: 20px;
   transition: all 0.3s ease;
   transform: scale(1);
@@ -154,6 +163,9 @@ ul li a.active:hover {
   ul li a:hover i,
   ul li a:hover h6 {
     transform: translateY(-0.5px);
+  }
+  .veiws-parent {
+    width: 100%;
   }
 }
 

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="header-parent">
     <div
       class="container p-2 d-flex justify-content-between align-items-center pt-3"
     >
@@ -53,6 +53,10 @@
   </div>
 </template>
 <style scoped>
+.header-parent{
+background-color: white;
+width: 100%;
+}
 .width-image {
   width: 80px;
   transition: transform 0.3s ease, filter 0.3s ease;
@@ -65,6 +69,7 @@
 .input-search {
   width: 320px;
   transition: all 0.3s ease;
+  background-color: rgba(255, 255, 255, 0.8);
 }
 .focus-input {
   border-radius: 10px;
@@ -109,9 +114,6 @@
 }
 .bmw-img {
   width: 21px;
-}
-.input-search {
-  width: 320px;
 }
 .background-color-cart {
   background-color: rgba(255, 249, 212, 1);

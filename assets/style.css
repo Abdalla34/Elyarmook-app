@@ -9,7 +9,9 @@
   --main-color-rgb: 255, 230, 84;
   --secound-color: #ffec7f;
 }
-
+body {
+  background-color: rgba(247, 242, 244, 1);
+}
 /* Global smooth scrolling */
 html {
   scroll-behavior: smooth;
@@ -151,25 +153,6 @@ img {
   opacity: 1;
 }
 
-
-/* .service-icon::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 120px;
-  height: 120px;
-  background: radial-gradient(
-    circle,
-    rgba(255, 230, 84, 0.1) 0%,
-    transparent 70%
-  );
-  border-radius: 50%;
-  opacity: 0;
-  transition: all 0.4s ease;
-} */
-
 .service-card:hover .service-icon::before {
   opacity: 1;
   transform: translate(-50%, -50%) scale(1.2);
@@ -198,12 +181,3 @@ img {
 .service-card:hover .service-title {
   color: #1a252f;
 }
-
-/* .service-description {
-  font-size: 1rem;
-  color: #6c757d;
-  line-height: 1.7;
-  margin: 0;
-  max-width: 280px;
-  transition: color 0.3s ease;
-} */
