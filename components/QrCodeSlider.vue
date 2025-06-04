@@ -75,7 +75,7 @@ let offersCards = ref([
   overflow: hidden;
 }
 
-/* offer */
+/* offer sec*/
 .offer-title {
   font-size: 40px;
   transition: all 0.4s ease;
@@ -87,7 +87,9 @@ let offersCards = ref([
 .des-offer {
   width: 300px;
 }
-/* صورة الموبايل */
+/* end offer sec */
+
+/*img setcion*/
 .img-offer img {
   transition: all 0.4s ease;
   height: 350px;
@@ -98,6 +100,8 @@ let offersCards = ref([
 .img-offer img:hover {
   transform: scale(1.1);
 }
+/* end img sec*/
+
 /* qr section */
 .qr-code {
   background-color: rgba(255, 255, 255, 0.4);
@@ -121,8 +125,9 @@ let offersCards = ref([
   font-size: 14px;
   color: #000;
 }
-/* end */
+/* end qr sec */
 
+/* siwper sec */
 .swiper-button-prev-custom,
 .swiper-button-next-custom {
   position: absolute;
@@ -164,17 +169,29 @@ let offersCards = ref([
 }
 
 @keyframes moveRight {
-  0% { transform: translateY(-50%) translateX(0); }
-  50% { transform: translateY(-50%) translateX(5px); }
-  100% { transform: translateY(-50%) translateX(0); }
+  0% {
+    transform: translateY(-50%) translateX(0);
+  }
+  50% {
+    transform: translateY(-50%) translateX(5px);
+  }
+  100% {
+    transform: translateY(-50%) translateX(0);
+  }
 }
 
 @keyframes moveLeft {
-  0% { transform: translateY(-50%) translateX(0); }
-  50% { transform: translateY(-50%) translateX(-5px); }
-  100% { transform: translateY(-50%) translateX(0); }
+  0% {
+    transform: translateY(-50%) translateX(0);
+  }
+  50% {
+    transform: translateY(-50%) translateX(-5px);
+  }
+  100% {
+    transform: translateY(-50%) translateX(0);
+  }
 }
-
+/* end siper sec */
 /* Responsive */
 @media (max-width: 320px) {
   .swiper-button-prev-custom {
