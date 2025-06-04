@@ -214,7 +214,7 @@ ul li a:focus {
 /* من 1201px وطالع - شاشات كبيرة */
 @media (min-width: 1201px) {
   .veiws-parent {
-    width: 60%;
+    width: 30%;
     margin: auto;
   }
 }
