@@ -10,7 +10,7 @@
   --secound-color: #ffec7f;
 }
 body {
-  background-color: rgba(247, 242, 244, 1);
+  background-color: #fdfdff;
 }
 /* Global smooth scrolling */
 html {
@@ -81,7 +81,7 @@ img {
 
 /* Smooth transitions for all elements */
 .button {
-  background-color: var(--main-color, #007bff);
+  background-color: var(--main-color);
   font-size: 15px;
   border: none;
   border-radius: 20px;
@@ -123,13 +123,13 @@ img {
   display: flex;
   flex-direction: column;
   padding: 0;
-  background: white;
   border-radius: 25px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08), 0 4px 20px rgba(0, 0, 0, 0.04);
   transition: all 0.4s;
   position: relative;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.8);
+  background-color: #ffffff;
 }
 
 .service-card:hover {

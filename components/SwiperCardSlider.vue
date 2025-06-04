@@ -78,7 +78,8 @@ let previews = ref([
 </script>
 <style scoped>
 .box-diesign {
-  max-width: 900px;
+  /* max-width: 900px; */
+  width: 90%;
   margin: 0px auto;
   height: auto;
   padding: 30px 0px;
@@ -92,6 +93,25 @@ let previews = ref([
   margin: 0 auto;
   max-width: 400px;
 }
+.text-title {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.img-card {
+  display: block;
+  margin: 0 auto;
+  max-width: 150px;
+  height: auto;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.img-card:hover {
+  transform: scale(1.05);
+  filter: brightness(1.1) drop-shadow(0 4px 12px rgba(255, 230, 84, 0.3));
+}
+
 .swiper-button-prev-custom,
 .swiper-button-next-custom {
   width: 35px;
@@ -130,28 +150,50 @@ let previews = ref([
   width: 60px;
   height: 60px;
 }
+
 .swiper-button-prev-custom::before {
   content: "←";
 }
+
 .swiper-button-next-custom::before {
   content: "→";
 }
-.text-title {
-  position: relative;
-  left: 50%;
-  transform: translateX(-50%);
-}
-.img-card {
-  display: block;
-  margin: 0 auto;
-  max-width: 150px;
-  height: auto;
-  transition: all 0.3s ease;
-  cursor: pointer;
+
+.swiper-button-prev-custom:hover {
+  animation: moveLeft 0.4s infinite;
 }
 
-.img-card:hover {
-  transform: scale(1.05);
-  filter: brightness(1.1) drop-shadow(0 4px 12px rgba(255, 230, 84, 0.3));
+.swiper-button-next-custom:hover {
+  animation: moRight 0.4s infinite;
+}
+
+@keyframes moveLeft {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-5px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes moRight {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-5px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@media (max-width: 576px) {
+  .box-diesign {
+    width: 100%;
+  }
 }
 </style>

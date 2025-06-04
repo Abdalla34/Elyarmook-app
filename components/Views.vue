@@ -66,33 +66,40 @@
 </template>
 <style scoped>
 .veiws-parent {
-  background-color: white;
-  width: 70%;
+  display: flex;
+  justify-content: center;
+  padding: 5px 0;
+  overflow-x: hidden;
+  width: 45%;
   margin: auto;
-  border-radius: 30px;
-  margin-top: 20px;
 }
+
 .links-wrapper {
+  background-color: white;
+  border-radius: 20px;
+  padding: 10px 20px;
+  padding-bottom: 0px;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
   overflow-x: auto;
   white-space: nowrap;
 }
+
 .links-wrapper::-webkit-scrollbar {
   display: none;
 }
-.active {
-  color: #040505;
-  background-color: var(--main-color);
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-weight: 500;
-}
+
 .ul-justify {
-  justify-content: center;
   gap: 10px;
+  justify-content: center;
+  flex-wrap: nowrap;
+  min-width: max-content;
 }
+
 ul li a {
   color: #7e7e7e;
-  /* padding: 7px 5px; */
   border-radius: 20px;
   transition: all 0.3s ease;
   transform: scale(1);
@@ -100,7 +107,14 @@ ul li a {
   overflow: hidden;
 }
 
-/* Hover animations */
+.active {
+  color: #040505;
+  background-color: var(--main-color);
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
 ul li a:hover:not(.active) {
   color: #040505;
   background-color: rgba(var(--main-color-rgb, 255, 193, 7), 0.1);
@@ -108,7 +122,6 @@ ul li a:hover:not(.active) {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Subtle glow effect on hover */
 ul li a:hover:not(.active)::before {
   content: "";
   position: absolute;
@@ -126,14 +139,12 @@ ul li a:hover:not(.active)::before {
   left: 100%;
 }
 
-/* Icon and text hover effects */
 ul li a:hover i,
 ul li a:hover h6 {
   transform: translateY(-1px);
   transition: transform 0.2s ease;
 }
 
-/* Active state should override hover effects */
 ul li a.active {
   transform: scale(1);
   box-shadow: none;
@@ -141,6 +152,16 @@ ul li a.active {
 
 ul li a.active:hover {
   transform: scale(1);
+}
+
+ul li a i,
+ul li a h6 {
+  transition: transform 0.2s ease;
+}
+
+ul li a:focus {
+  outline: 2px solid var(--main-color);
+  outline-offset: 2px;
 }
 
 @media (max-width: 576px) {
@@ -151,11 +172,10 @@ ul li a.active:hover {
     font-size: 12px;
   }
   .ul-justify {
-    justify-content: start;
-    gap: 5px;
+    justify-content: flex-start;
+    gap: 6px;
   }
 
-  /* Reduce hover effects on mobile for better touch experience */
   ul li a:hover:not(.active) {
     transform: scale(1.02);
   }
@@ -168,16 +188,34 @@ ul li a.active:hover {
     width: 100%;
   }
 }
-
-/* Smooth transitions for all interactive elements */
-ul li a i,
-ul li a h6 {
-  transition: transform 0.2s ease;
+@media (min-width: 577px) and (max-width: 768px) {
+  .veiws-parent {
+    width: 100%;
+    padding: 0 20px;
+  }
 }
 
-/* Focus states for accessibility */
-ul li a:focus {
-  outline: 2px solid var(--main-color);
-  outline-offset: 2px;
+/* من 769 لـ 992px - تابلت */
+@media (min-width: 769px) and (max-width: 992px) {
+  .veiws-parent {
+    width: 80%;
+    margin: auto;
+  }
+}
+
+/* من 993 لـ 1200px - لابتوب */
+@media (min-width: 993px) and (max-width: 1200px) {
+  .veiws-parent {
+    width: 70%;
+    margin: auto;
+  }
+}
+
+/* من 1201px وطالع - شاشات كبيرة */
+@media (min-width: 1201px) {
+  .veiws-parent {
+    width: 60%;
+    margin: auto;
+  }
 }
 </style>

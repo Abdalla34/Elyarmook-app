@@ -18,7 +18,9 @@
                 <div>
                   <h1 class="title">{{ item.title }}</h1>
                   <p class="parag color-parag">{{ item.des }}</p>
-                  <ButtonCard textButton="learn More" />
+                  <div class="width-button">
+                    <button class="button ps-4 pe-3 pt-2 pb-2">learn More</button>
+                  </div>
 
                   <!-- <button class="button text-capitalize pt-2 pb-2 ps-4 pe-4">
                       learn more
@@ -62,6 +64,7 @@ let imagesSliders = ref([
   width: 100%;
   height: 300px;
   background-color: white;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.04);
 }
 .slide-img {
   width: 250px;
@@ -108,8 +111,13 @@ let imagesSliders = ref([
 .parag {
   font-size: 12px;
 }
+.width-button {
+  width: 150px;
+}
+
 @media (max-width: 576px) {
   .slide-content {
+    gap: 0px;
     flex-wrap: wrap;
   }
   .slide-img {

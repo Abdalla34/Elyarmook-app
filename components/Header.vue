@@ -54,8 +54,9 @@
 </template>
 <style scoped>
 .header-parent{
-background-color: white;
+background-color: #FFFFFF;
 width: 100%;
+box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 .width-image {
   width: 80px;
@@ -69,7 +70,7 @@ width: 100%;
 .input-search {
   width: 320px;
   transition: all 0.3s ease;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color:#F7F7FC;
 }
 .focus-input {
   border-radius: 10px;

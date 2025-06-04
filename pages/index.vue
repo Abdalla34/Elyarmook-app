@@ -13,8 +13,8 @@
         <div class="services-container container position-relative">
           <div class="services-header">
             <span
-              class="soon-badge text-uppercase text-light ps-3 pe-3 pt-1 pb-1 position-absolute border-radius-20px"
-              >SOON</span
+              class="soon-badge text-capitalize ps-3 pe-3 pt-1 pb-1 position-absolute border-radius-20px"
+              >Soon</span
             >
           </div>
           <div class="row">
@@ -52,7 +52,6 @@
       <qr-code-slider />
       <!-- end qr code -->
     </div>
-
     <Footer />
   </div>
 </template>
@@ -86,11 +85,11 @@ let soonGifts = ref([
 /* Services Section*/
 .services-section {
   padding: 50px 0;
-  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 50%, #f1f3f4 100%);
+  /* background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 50%, #f1f3f4 100%); */
   position: relative;
   overflow: hidden;
 }
-.services-section::before {
+/* .services-section::before {
   content: "";
   position: absolute;
   top: 0;
@@ -108,7 +107,7 @@ let soonGifts = ref([
       transparent 50%
     );
   pointer-events: none;
-}
+} */
 .services-container {
   margin: 0 auto;
   padding: 0 40px;
@@ -116,20 +115,18 @@ let soonGifts = ref([
 .services-header {
   position: relative;
   margin-bottom: 40px;
-  height: 40px;
+  height: 30px;
 }
 .soon-badge {
-  top: 30px;
+  top: 45px;
+  position: relative;
+  z-index: 10;
   right: 0;
-  background: linear-gradient(135deg, #ff4757, #ff3742);
+  background: #F9CBCB;
   font-size: 0.75rem;
-  font-weight: 800;
   letter-spacing: 1px;
-  box-shadow: 0 8px 25px rgba(255, 71, 87, 0.4),
-    0 4px 12px rgba(255, 71, 87, 0.3);
-  /* transform: rotate(-2deg); */
-  transition: all 0.3s ease;
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease; 
+  color: #EB5757;
 }
 .soon-badge:hover {
   transform: rotate(0deg) scale(1.05);

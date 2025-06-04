@@ -9,7 +9,7 @@
           v-for="(item, index) in imagesServices"
           :key="index"
         >
-          <div class="up-box border-radius-20px service-card">
+          <div class="up-box border-radius-20px bg service-card">
             <img :src="item.img" class="img" alt="car-fix" />
             <TitleServices
               :title="item.title"
@@ -69,9 +69,9 @@ let imagesServices = ref([
 ]);
 </script>
 <style scoped>
-/* .services-parent{
-  background-color: white;
-} */
+.services-parent{
+  background-color: #FFFFFF;
+}
 .up-box {
   background-color: #b8bbc01a;
   width: 100%;
@@ -83,6 +83,9 @@ let imagesServices = ref([
 img {
   width: 150px;
   margin: 0px auto;
+}
+.bg{
+background-color: #FFFFFF;
 }
 @media (max-width: 576px) {
   img {
