@@ -5,6 +5,6 @@ export default defineNuxtConfig({
   css: [
     "bootstrap/dist/css/bootstrap.min.css",
     "@fortawesome/fontawesome-free/css/all.min.css",
-    "@/assets/style.css",
+    "@/assets/style.css", // الخطوط مستوردة جوه الملف ده
   ],
 });

@@ -3,7 +3,7 @@
     <div
       class="container p-2 d-flex justify-content-between align-items-center pt-3"
     >
-      <div class="logo d-flex align-items-center gap-1">
+      <div class="logo d-flex align-items-center gap-3">
         <div class="image-logo">
           <img class="width-image" src="/Yarmook Logo.png" alt="" />
         </div>
@@ -11,11 +11,9 @@
           <input
             type="search"
             placeholder="search"
-            class="text-capitalize focus-input fw-600 p-2 input-search"
+            class="text-capitalize focus-input fw-600 p-2 input-search border-radius-36px"
           />
-          <i
-            class="fa-solid fa-magnifying-glass icon-search position-absolute"
-          ></i>
+          <IconSearch class="icon-search position-absolute" />
         </div>
       </div>
       <div
@@ -25,9 +23,7 @@
           class="background-color-cart d-flex align-items-center justify-content-center"
         >
           <button class="buttons">
-            <i
-              class="fa-solid fa-cart-shopping fa-1x d-flex align-items-center justify-content-center z-index-after"
-            ></i>
+            <CarIconCard />
           </button>
         </div>
         <div
@@ -43,7 +39,7 @@
           <button class="buttons">
             <img
               class="profile-img z-index-after"
-              src="/public/profile.jpg"
+              src="/public/img-icon.jpg"
               alt=""
             />
           </button>
@@ -53,13 +49,14 @@
   </div>
 </template>
 <style scoped>
-.header-parent{
-background-color: #FFFFFF;
-width: 100%;
-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+.header-parent {
+  background-color: #ffffff;
+  width: 100%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 .width-image {
-  width: 80px;
+  width: 120px;
+  height: 48px;
   transition: transform 0.3s ease, filter 0.3s ease;
   cursor: pointer;
 }
@@ -69,11 +66,13 @@ box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 .input-search {
   width: 320px;
+  height: 64px;
+  padding: 20px 262px 20px 20px;
   transition: all 0.3s ease;
-  background-color:#F7F7FC;
+  background-color: #f7f7fc;
 }
 .focus-input {
-  border-radius: 10px;
+  width: 330px;
   border: none;
   background-color: rgba(247, 242, 244, 1);
   transition: all 0.3s ease;
@@ -90,25 +89,28 @@ box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
   outline: 2px solid var(--main-color);
 }
 .focus-input::placeholder {
-  color: (147, 147, 147, 1);
-  font-weight: 500;
+  color: #939393;
+  font-size: 16px;
+  font-weight: 400;
+  font-family: var(--font-main);
 }
 .focus-input:focus {
   border: none;
   outline: none;
 }
 .icon-search {
-  width: 20px;
   right: 20px;
   top: 50%;
   transform: translatey(-50%);
   color: #939393;
   cursor: pointer;
+  transition: all 0.3s ease;
 }
 .profile-img {
-  width: 46px;
-  height: 47px;
-  border-radius: 10px;
+  width: 64px;
+  padding: 5px;
+  border-radius: 16px;
+  height: 64px;
 }
 .buttons {
   border: none;
@@ -118,10 +120,10 @@ box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 .background-color-cart {
   background-color: rgba(255, 249, 212, 1);
-  border-radius: 10px;
-  height: 50px;
-  width: 55px;
-  padding: 7px;
+  height: 64px;
+  width: 64px;
+  border-radius: 16px;
+  padding: 20px;
   position: relative;
   transition: all 0.3s ease;
   overflow: hidden;
@@ -144,7 +146,7 @@ box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
   background: radial-gradient(circle, rgba(255, 255, 255, 0.3), transparent);
   width: 0;
   height: 0;
-  border-radius: 50%;
+
   transition: all 0.4s ease;
   z-index: 0;
 }
@@ -183,10 +185,6 @@ box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
   filter: brightness(1.1);
 }
 
-.icon-search {
-  transition: all 0.3s ease;
-}
-
 .icon-search:hover {
   color: blac;
   transform: translateY(-50%) scale(1.2);
@@ -199,11 +197,10 @@ box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
   .profile-img {
     width: 30px;
     height: 35px;
-    border-radius: 10px;
   }
   .background-color-cart {
     background-color: rgba(255, 249, 212, 1);
-    border-radius: 10px;
+
     height: 35px;
     width: 40px;
     padding: 7px;
@@ -215,6 +212,3 @@ box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
   }
 }
 </style>
-
-
-

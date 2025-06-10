@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope&family=Poppins&display=swap");
+
 * {
   margin: 0;
   padding: 0;
@@ -8,9 +10,13 @@
   --main-color: #ffe654;
   --main-color-rgb: 255, 230, 84;
   --secound-color: #ffec7f;
+  --font-main: "Poppins", sans-serif;
+  --font-alt: "Manrope", sans-serif;
+  --color-black: #040505;
 }
 body {
   background-color: #fdfdff;
+  font-family: "Poppins", sans-serif;
 }
 /* Global smooth scrolling */
 html {
@@ -32,14 +38,41 @@ ul {
 ul a {
   text-decoration: none;
 }
-.color-parag {
+/* main font size title fw */
+.title-fs-fw {
+  font-size: 36px;
+  font-family: var(--font-main);
+  font-weight: 600;
+}
+/* main parag font size fw */
+.p-color-fs {
   color: #7e7e7e;
-  font-size: 12px;
+  font-size: 16px;
+  font-weight: 400;
+  font-family: var(--font-main);
 }
-.h1 {
-  font-size: 18px;
-  text-transform: capitalize;
+/* card lorem */
+.card-lorem {
+  font-size: 48px;
+  color: #040505;
 }
+/* card lorem */
+.p-color {
+  color: #3d3d3d;
+}
+
+/* iconLinks */
+.icon-links-fix {
+  width: 24px;
+  height: 24px;
+  transition: color 0.3s ease, transform 0.3s ease;
+  color: inherit;
+}
+
+.border-radius-36px {
+  border-radius: 36px;
+}
+
 @media (max-width: 576px) {
   .color-parag {
     color: #7e7e7e;
@@ -48,13 +81,6 @@ ul a {
 }
 .background-main {
   background-color: var(--main-color);
-}
-.border-radius-20px {
-  border-radius: 20px;
-}
-.fs-12-fw {
-  font-size: 12px;
-  font-weight: 600;
 }
 
 /* Global focus styles for accessibility */

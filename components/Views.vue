@@ -11,9 +11,7 @@
                   class="d-flex gap-1 align-items-center color-text"
                   exact-active-class="active"
                 >
-                  <!-- <i class="fa-solid fa-house"></i> -->
                   <IconHome />
-
                   <h6 class="text-capitalize link-sm">home</h6>
                 </NuxtLink>
               </li>
@@ -23,7 +21,7 @@
                   class="d-flex gap-1 align-items-center justify-content-center color-text"
                   exact-active-class="active"
                 >
-                  <i class="fa-solid fa-bag-shopping"></i>
+                  <BagTic />
                   <h6 class="text-capitalize link-sm">my orders</h6>
                 </NuxtLink>
               </li>
@@ -33,7 +31,7 @@
                   class="d-flex gap-1 align-items-center color-text"
                   exact-active-class="active"
                 >
-                  <i class="fa-solid fa-wrench"></i>
+                  <ServicesIcon />
                   <h6 class="text-capitalize link-sm">services</h6>
                 </NuxtLink>
               </li>
@@ -43,7 +41,7 @@
                   class="d-flex gap-1 align-items-center color-text"
                   exact-active-class="active"
                 >
-                  <i class="fa-solid fa-tags"></i>
+                  <OffersIcon />
                   <h6 class="text-capitalize link-sm">offers</h6>
                 </NuxtLink>
               </li>
@@ -53,7 +51,7 @@
                   class="d-flex gap-1 align-items-center color-text"
                   exact-active-class="active"
                 >
-                  <i class="fa-solid fa-cogs"></i>
+                  <IconParts />
                   <h6 class="text-capitalize link-sm">spare parts</h6>
                 </NuxtLink>
               </li>
@@ -61,6 +59,7 @@
           </div>
         </div>
       </div>
+      <div class="box-phone"></div>
     </div>
   </div>
 </template>
@@ -69,21 +68,16 @@
   display: flex;
   justify-content: center;
   padding: 5px 0;
-  overflow-x: hidden;
-  width: 45%;
   margin: auto;
 }
 
 .links-wrapper {
   background-color: white;
-  border-radius: 20px;
-  padding: 10px 20px;
-  padding-bottom: 0px;
-  width: 100%;
+  border-radius: 36px;
   max-width: 100%;
   margin: 0 auto;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
-  overflow-x: auto;
+  /* overflow-x: auto; */
   white-space: nowrap;
 }
 
@@ -92,25 +86,35 @@
 }
 
 .ul-justify {
-  gap: 10px;
+  gap: 24px;
   justify-content: center;
   flex-wrap: nowrap;
   min-width: max-content;
 }
 
+.link-sm {
+  font-size: 16px;
+  font-weight: 500;
+}
+
 ul li a {
   color: #7e7e7e;
-  border-radius: 20px;
+  border-radius: 36px;
   transition: all 0.3s ease;
   transform: scale(1);
   position: relative;
+  padding: 12px 16px;
+  height: 48px;
+  font-size: 16px;
   overflow: hidden;
+  /* paragraph-spacing: 16px; */
 }
 
 .active {
   color: #040505;
   background-color: var(--main-color);
-  padding: 4px 10px;
+  padding: 12px 16px;
+  height: 48px;
   border-radius: 20px;
   font-weight: 500;
 }
@@ -139,7 +143,7 @@ ul li a:hover:not(.active)::before {
   left: 100%;
 }
 
-ul li a:hover i,
+ul li a:hover,
 ul li a:hover h6 {
   transform: translateY(-1px);
   transition: transform 0.2s ease;
@@ -164,6 +168,13 @@ ul li a:focus {
   outline-offset: 2px;
 }
 
+.box-phone {
+  width: 300px;
+  height: 100%;
+  background-color: white;
+  box-shadow: 0px 10px 12px rgba(0, 0, 0, 0.05);
+}
+
 @media (max-width: 576px) {
   .link-sm {
     font-size: 12px;
@@ -186,6 +197,9 @@ ul li a:focus {
   }
   .veiws-parent {
     width: 100%;
+  }
+  .links-wrapper {
+    overflow-x: auto;
   }
 }
 @media (min-width: 577px) and (max-width: 768px) {
@@ -214,7 +228,7 @@ ul li a:focus {
 /* من 1201px وطالع - شاشات كبيرة */
 @media (min-width: 1201px) {
   .veiws-parent {
-    width: 30%;
+    width: 39%;
     margin: auto;
   }
 }

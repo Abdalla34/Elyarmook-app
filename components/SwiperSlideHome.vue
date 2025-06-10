@@ -16,7 +16,7 @@
                 class="slide-content d-flex align-items-center gap justify-content-center"
               >
                 <div>
-                  <h1 class="title">{{ item.title }}</h1>
+                  <h1 class="title-sec-main">{{ item.title }}</h1>
                   <p class="parag color-parag">{{ item.des }}</p>
                   <div class="width-button">
                     <button class="button ps-4 pe-3 pt-2 pb-2">learn More</button>
@@ -67,8 +67,8 @@ let imagesSliders = ref([
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.04);
 }
 .slide-img {
-  width: 250px;
-  height: 250px;
+  width: 320px;
+  height: 270px;
   object-fit: contain;
   border-radius: 10px;
   transition: all 0.4s ease;
@@ -105,11 +105,13 @@ let imagesSliders = ref([
   opacity: 1;
   width: 20px;
 }
-.title {
-  font-size: 20px;
-}
+/* .title {
+  font-size: 36px;
+  font-weight: 600;
+} */
 .parag {
-  font-size: 12px;
+  font-size: 16px;
+  font-weight: 400;
 }
 .width-button {
   width: 150px;

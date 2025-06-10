@@ -43,7 +43,8 @@
 </template>
 <style scoped>
 .svg {
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
+  color: #040505;
 }
 </style>
