@@ -6,25 +6,23 @@
       :loop="true"
       :pagination="{ clickable: true }"
       navigation
-      class="mySwiper border-radius-20px mb-5 p-2 mt-4"
+      class="mySwiper mb-5 p-2 mt-4"
     >
       <SwiperSlide v-for="(item, index) in imagesSliders" :key="index">
         <div class="container">
           <div class="row d-flex align-items-center justify-content-center">
             <div class="col-10">
               <div
-                class="slide-content d-flex align-items-center gap justify-content-center"
+                class="slide-content d-flex align-items-center justify-content-center"
               >
                 <div>
                   <h1 class="title-sec-main">{{ item.title }}</h1>
-                  <p class="parag color-parag">{{ item.des }}</p>
+                  <p class="desc">{{ item.des }}</p>
                   <div class="width-button">
-                    <button class="button ps-4 pe-3 pt-2 pb-2">learn More</button>
+                    <button class="button padding-button text-capitalize">
+                      learn More
+                    </button>
                   </div>
-
-                  <!-- <button class="button text-capitalize pt-2 pb-2 ps-4 pe-4">
-                      learn more
-                    </button> -->
                 </div>
                 <img :src="item.img" alt="Slide Image" class="slide-img" />
               </div>
@@ -66,8 +64,9 @@ let imagesSliders = ref([
   background-color: white;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.04);
 }
+
 .slide-img {
-  width: 320px;
+  width: 364px;
   height: 270px;
   object-fit: contain;
   border-radius: 10px;
@@ -78,24 +77,46 @@ let imagesSliders = ref([
   transform: scale(1.1) rotate(3deg);
   filter: brightness(1.1) drop-shadow(0 8px 16px rgba(255, 230, 84, 0.3));
 }
-.gap {
-  gap: 20px;
+
+.mySwiper :deep(.swiper-button-prev),
+.mySwiper :deep(.swiper-button-next) {
+  width: 48px;
+  height: 48px;
+  background-color: rgba(255, 230, 84, 0.1); /* لون خفيف */
+  color: #333;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
+
 .mySwiper :deep(.swiper-button-prev),
 .mySwiper :deep(.swiper-button-next) {
   width: 40px;
-  height: 10px;
-  margin: 10px 0px 0px 0px;
+  height: 40px;
   color: #585858;
+  transition: all 0.3s ease;
+  font-weight: bold;
 }
+
 .mySwiper :deep(.swiper-button-prev)::after {
-  font-size: 20px;
-  font-weight: bold;
+  font-size: 25px;
+  content: "←";
 }
+
 .mySwiper :deep(.swiper-button-next)::after {
-  font-size: 20px;
-  font-weight: bold;
+  font-size: 25px;
+  content: "→";
 }
+
+.mySwiper :deep(.swiper-button-prev:hover),
+.mySwiper :deep(.swiper-button-next:hover) {
+  color: black;
+  transform: scale(1.2);
+}
+
 .mySwiper :deep(.swiper-pagination-bullet) {
   background: #585858;
   opacity: 0.5;
@@ -103,58 +124,94 @@ let imagesSliders = ref([
 }
 .mySwiper :deep(.swiper-pagination-bullet-active) {
   opacity: 1;
-  width: 20px;
+  width: 15px;
 }
-/* .title {
-  font-size: 36px;
+.title-sec-main {
+  font-family: var(--font-main);
   font-weight: 600;
-} */
-.parag {
-  font-size: 16px;
-  font-weight: 400;
+  font-size: 36px;
+  line-height: 44px;
+  letter-spacing: -2%;
 }
-.width-button {
-  width: 150px;
+.desc {
+  width: 444px;
+  height: 44px;
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 28px;
 }
 
-@media (max-width: 576px) {
+.width-button {
+  width: 187px;
+  height: 67px;
+}
+.padding-button {
+  padding: 20px 49px;
+  font-size: 16px;
+  color: var(--color-black);
+  font-weight: 500;
+  border-radius: 36px;
+}
+
+@media (max-width: 768px) {
   .slide-content {
-    gap: 0px;
-    flex-wrap: wrap;
+    flex-direction: column;
   }
+
   .slide-img {
-    width: 250px;
+    width: 224px;
     height: 120px;
+    margin-top: -33px;
   }
-  .title {
-    font-size: 15px;
+
+  .title-sec-main {
+    font-size: 20px;
+    line-height: 32px;
   }
-  .parag {
+
+  .desc {
+    width: 100%;
+    font-size: 10px;
+    margin-bottom: 15px;
+  }
+  .padding-button {
+    padding: 5px 12px;
     font-size: 12px;
   }
-  .image-icons {
-    width: 120px;
+  .mySwiper :deep(.swiper-button-prev),
+  .mySwiper :deep(.swiper-button-next) {
+    width: 20px;
+    height: 20px;
+  }
+  .mySwiper :deep(.swiper-button-prev)::after {
+    font-size: 18px;
+    content: "←";
+  }
+
+  .mySwiper :deep(.swiper-button-next)::after {
+    font-size: 18px;
+    content: "→";
   }
 }
-@media (min-width: 577px) and (max-width: 768px) {
-  .slide-content {
-    /* flex-wrap: wrap; */
-    position: relative;
-    top: 50%;
-    transform: translateY(50%);
-  }
+
+@media (min-width: 769px) and (max-width: 992px) {
   .slide-img {
-    width: 250px;
-    height: 120px;
+    width: 220px;
+    height: 150px;
   }
-  .title {
-    font-size: 15px;
+
+  .title-sec-main {
+    font-size: 20px;
+    line-height: 32px;
   }
-  .parag {
-    font-size: 10px;
+  .desc {
+    width: 100%;
+    font-size: 13px;
+    margin-bottom: 15px;
   }
-  .image-icons {
-    width: 120px;
+  .padding-button {
+    padding: 10px 20px;
+    font-size: 12px;
   }
 }
 </style>
