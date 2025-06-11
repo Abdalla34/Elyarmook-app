@@ -174,7 +174,9 @@ function toogleBox() {
   box-shadow: 1px 2px 7px rgba(0, 0, 0, 0.4);
   display: none;
 }
-
+.link-sm {
+  margin-bottom: 0px;
+}
 @media (max-width: 576px) {
   .pages {
     display: none;
