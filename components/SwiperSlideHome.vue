@@ -82,7 +82,7 @@ let imagesSliders = ref([
 .mySwiper :deep(.swiper-button-next) {
   width: 48px;
   height: 48px;
-  background-color: rgba(255, 230, 84, 0.1); /* لون خفيف */
+  background-color:#EBEBEB;
   color: #333;
   border-radius: 50%;
   transition: all 0.3s ease;
@@ -93,20 +93,22 @@ let imagesSliders = ref([
   position: absolute;
 }
 
-.mySwiper :deep(.swiper-button-prev),
+/* .mySwiper :deep(.swiper-button-prev),
 .mySwiper :deep(.swiper-button-next) {
   width: 40px;
   height: 40px;
   color: #585858;
   transition: all 0.3s ease;
   font-weight: bold;
-}
+} */
+ 
 .mySwiper :deep(.swiper-button-prev) {
   left: 68px;
 }
 .mySwiper :deep(.swiper-button-next) {
   right: 68px;
 }
+
 .mySwiper :deep(.swiper-button-prev)::after {
   font-size: 25px;
   content: "←";
@@ -129,10 +131,12 @@ let imagesSliders = ref([
   border-radius: 4px;
   bottom: 22px;
 }
+
 .mySwiper :deep(.swiper-pagination-bullet-active) {
   opacity: 1;
   width: 15px;
 }
+
 .title-sec-main {
   font-family: var(--font-main);
   font-weight: 600;
@@ -140,6 +144,7 @@ let imagesSliders = ref([
   line-height: 44px;
   letter-spacing: -2%;
 }
+
 .desc {
   width: 444px;
   height: 44px;
@@ -172,7 +177,7 @@ let imagesSliders = ref([
   }
 
   .title-sec-main {
-    font-size: 20px;
+    font-size: 30px;
     line-height: 32px;
   }
 
@@ -181,15 +186,18 @@ let imagesSliders = ref([
     font-size: 10px;
     margin-bottom: 15px;
   }
+
   .padding-button {
     padding: 5px 12px;
     font-size: 12px;
   }
+
   .mySwiper :deep(.swiper-button-prev),
   .mySwiper :deep(.swiper-button-next) {
     width: 20px;
     height: 20px;
   }
+
   .mySwiper :deep(.swiper-button-prev)::after {
     font-size: 18px;
     content: "←";
@@ -198,6 +206,18 @@ let imagesSliders = ref([
   .mySwiper :deep(.swiper-button-next)::after {
     font-size: 18px;
     content: "→";
+  }
+
+  .mySwiper :deep(.swiper-button-prev) {
+    left: 10px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .mySwiper :deep(.swiper-button-next) {
+    right: 10px;
+    width: 40px;
+    height: 40px;
   }
 }
 

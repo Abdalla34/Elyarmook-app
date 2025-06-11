@@ -32,38 +32,82 @@
         </div>
 
         <div class="col-lg-2 col-md-3 col-sm-12">
-          <h6 class="text-capitalize mb-3">Links</h6>
+          <h6 class="text-capitalize mb-3 font-size-title">Links</h6>
           <ul class="list-unstyled">
-            <li class="pt-1"><NuxtLink to="/">Home</NuxtLink></li>
-            <li class="pt-1"><NuxtLink to="/services">Services</NuxtLink></li>
             <li class="pt-1">
-              <NuxtLink to="/SpareParts">Spare Parts</NuxtLink>
+              <NuxtLink class="font-size-16px" to="/">Home</NuxtLink>
             </li>
-            <li class="pt-1"><NuxtLink to="/offers">Offers</NuxtLink></li>
-            <li class="pt-1"><NuxtLink to="/">Membership</NuxtLink></li>
+            <li class="pt-1">
+              <NuxtLink class="font-size-16px" to="/services"
+                >Services</NuxtLink
+              >
+            </li>
+            <li class="pt-1">
+              <NuxtLink class="font-product" to="/SpareParts"
+                >Spare Parts</NuxtLink
+              >
+            </li>
+            <li class="pt-1">
+              <NuxtLink class="font-size-16px" to="/offers">Offers</NuxtLink>
+            </li>
+            <li class="pt-1">
+              <NuxtLink class="font-size-16px" to="/">Membership</NuxtLink>
+            </li>
           </ul>
         </div>
 
         <div class="col-lg-2 col-md-3 col-sm-12">
-          <h6 class="text-capitalize mb-3">Products</h6>
-          <p class="pt-1">Product 1</p>
-          <p class="pt-1">Product 2</p>
-          <p class="pt-1">Product 3</p>
-          <p class="pt-1">Product 4</p>
+          <h6 class="text-capitalize mb-3 font-size-title">Products</h6>
+          <p class="pt-1 font-size-16px font-size-16px">Product 1</p>
+          <p class="pt-1 font-size-16px font-size-16px">Product 2</p>
+          <p class="pt-1 font-size-16px font-size-16px">Product 3</p>
+          <p class="pt-1 font-size-16px font-size-16px">Product 4</p>
         </div>
 
         <div class="col-lg-2 col-md-3 col-sm-12">
-          <h6 class="text-capitalize mb-3">Help</h6>
-          <p class="pt-1">FAQ</p>
-          <p class="pt-1">Contact Us</p>
-          <p class="pt-1">WhatsApp</p>
+          <h6 class="text-capitalize mb-3 font-size-title">Help</h6>
+          <p class="pt-1 font-size-16px">FAQ</p>
+          <p class="pt-1 font-size-16px">Contact Us</p>
+          <p class="pt-1 font-size-16px">WhatsApp</p>
         </div>
 
         <div class="col-lg-2 col-md-3 col-sm-12">
-          <h6 class="text-capitalize mb-3">Follow Us</h6>
-          <p>Facebook</p>
-          <p>Instagram</p>
-          <p>Twitter</p>
+          <h6 class="text-capitalize mb-3 font-size-title">social Media</h6>
+          <div class="d-flex gap-2 align-items-center justify-content-start gap-4">
+            <div class="box-hover-icons">
+              <FaceBookIcon />
+            </div>
+            <div class="box-hover-icons">
+              <InstgramIcon />
+            </div>
+            <div class="box-hover-icons">
+              <WhatsapIcon />
+            </div>
+          </div>
+
+          <div class="accpet">
+            <h6 class="text-capitalize mb-3 font-size-title mt-2 text-center">
+              we accept
+            </h6>
+            <button class="button-visa">
+              <img src="/tamara.png" alt="" />
+            </button>
+            <button class="button-visa">
+              <img src="/tabby.png" alt="" />
+            </button>
+            <button class="button-visa">
+              <img src="/mada.png" alt="" />
+            </button>
+            <button class="button-visa">
+              <img src="/master_card.png" alt="" />
+            </button>
+            <button class="button-visa">
+              <img src="/visa.png" alt="" />
+            </button>
+            <button class="button-visa">
+              <img src="/pay.png" alt="" />
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -78,6 +122,14 @@ p {
 
 .footer {
   background-color: #1e1e1e;
+}
+
+.font-size-title {
+  font-family: var(--font-main);
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 28px;
+  letter-spacing: 0%;
 }
 
 .logo img {
@@ -107,7 +159,6 @@ p {
   background-color: var(--main-color);
   border-color: var(--main-color);
   transform: scale(1.05) translateY(-2px);
-  box-shadow: 0 8px 25px rgba(255, 230, 84, 0.3);
   color: #040505;
 }
 
@@ -117,13 +168,18 @@ p {
 }
 
 .box-style::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
   transition: left 0.5s ease;
 }
 
@@ -140,6 +196,7 @@ p {
 }
 
 ul li a {
+  font-family: var(--font-main);
   color: white;
   transition: all 0.3s ease;
   position: relative;
@@ -154,7 +211,7 @@ ul li a:hover {
 }
 
 ul li a::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 0;
   left: 0;
@@ -166,6 +223,41 @@ ul li a::after {
 
 ul li a:hover::after {
   width: 100%;
+}
+
+.font-size-16px {
+  font-size: 16px;
+}
+
+.button-visa {
+  background-color: #ffffff;
+  border-radius: 5px;
+  border: none;
+  width: 50px;
+  height: 21px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+}
+
+.button-visa:hover {
+  transform: scale(1.1);
+}
+
+.box-hover-icons {
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  padding: 8px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.box-hover-icons:hover {
+  background-color: #040505;
+  transform: scale(1.1);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  color: #ffffff; 
 }
 
 /* Social media and other text links */
@@ -235,7 +327,7 @@ ul li a:hover::after {
     font-size: 11px;
   }
   .box-style {
-    width: 150px
+    width: 150px;
   }
 }
 </style>
