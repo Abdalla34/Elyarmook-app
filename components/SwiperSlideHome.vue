@@ -101,6 +101,9 @@ let imagesSliders = ref([
   transition: all 0.3s ease;
   font-weight: bold;
 }
+.mySwiper :deep(.swiper-button-prev) {
+  left: 68px;
+}
 .mySwiper :deep(.swiper-button-next) {
   right: 68px;
 }
