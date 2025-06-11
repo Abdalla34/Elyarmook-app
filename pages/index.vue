@@ -1,7 +1,7 @@
 <template>
   <div class="parent">
     <Header />
-    <!-- <Views /> -->
+    <Views />
     <div class="container">
       <!-- start swiper home -->
       <SwiperSlideHome />

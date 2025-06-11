@@ -85,7 +85,7 @@
                 </li>
                 <li class="">
                   <NuxtLink
-                    to="/offers"
+                    to="/services"
                     exact-active-class="active"
                     class="d-flex align-items-center gap-1 border-radius-36px p-color-fs"
                   >
@@ -95,7 +95,7 @@
                 </li>
                 <li class="">
                   <NuxtLink
-                    to="/services"
+                    to="/offers"
                     exact-active-class="active"
                     class="d-flex align-items-center gap-1 border-radius-36px p-color-fs"
                   >
@@ -122,26 +122,20 @@
   </div>
 </template>
 <script setup>
-
 let boxOpen = ref(false);
 function toogleBox() {
   boxOpen.value = !boxOpen.value;
 }
 </script>
 <style scoped>
-.pages {
-  display: flex;
-  justify-content: center;
-  background-color: #ffffff;
-  width: 819px;
-  margin: auto;
-  height: 72px;
-  padding: 12px 30px;
-  align-items: baseline;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
-}
 .ul {
   gap: 24px;
+  background-color: #ffffff;
+  width: fit-content;
+  margin: auto;
+  padding: 12px 32px;
+  border-radius: 36px;
+  box-shadow: 0px 0px 20px 0px #0000000a;
 }
 .ul li {
   height: 48px;
@@ -190,7 +184,7 @@ function toogleBox() {
   .pages {
     display: none;
   }
-  .box-phone{
+  .box-phone {
     display: block;
   }
 }

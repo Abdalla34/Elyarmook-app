@@ -17,8 +17,8 @@
               class="slide-content d-flex align-items-center justify-content-center gap-5 flex-wrap"
             >
               <div class="descount-offer">
-                <h1 class="offer-title">{{ item.sale }}</h1>
-                <p class="text-capitalize des-offer color-parag">
+                <h1 class="font-title">{{ item.sale }}</h1>
+                <p class="font-p width-p">
                   {{ item.des }}
                 </p>
               </div>
@@ -31,7 +31,7 @@
                 <img src="/QR_code.png" alt="" />
                 <div class="scan-text">
                   <h6 class="text-capitalize">try the app</h6>
-                  <p class="text-capitalize color-parag">scan to download</p>
+                  <p class="text-capitalize font-14px">scan to download</p>
                 </div>
               </div>
             </div>
@@ -67,25 +67,16 @@ let offersCards = ref([
 <style scoped>
 .box-diesign {
   width: 90%;
-  margin: 0 auto;
+  margin: auto;
   height: auto;
-  padding: 30px 0;
-  background: linear-gradient(90deg, #f8d7da 0%, #fff3cd 100%);
+  border-radius: 60px;
+  background: linear-gradient(90deg, #fae1e7 0%, #fcee97 100%);
   position: relative;
   overflow: hidden;
 }
 
-/* offer sec*/
-.offer-title {
-  font-size: 40px;
-  transition: all 0.4s ease;
-}
-.offer-title:hover {
-  color: #000;
-  transform: scale(1.1);
-}
-.des-offer {
-  width: 300px;
+.width-p {
+  width: 283px;
 }
 /* end offer sec */
 
@@ -104,9 +95,13 @@ let offersCards = ref([
 
 /* qr section */
 .qr-code {
-  background-color: rgba(255, 255, 255, 0.4);
-  border-radius: 10px;
+  top: -5px;
+  background: rgba(255, 255, 255, 0.4); 
+  border-radius: 24px;
+  border-width: 1px;
   position: relative;
+  z-index: 10;
+  backdrop-filter: blur(6px); 
 }
 .qr-code img {
   width: 70px;
@@ -120,10 +115,24 @@ let offersCards = ref([
   transform: scale(1.1);
   border: 3px solid white;
 }
+
 .scan-text h6 {
-  margin: 0;
+  font-family: var(--font-main);
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 30px;
+  letter-spacing: 0%;
+  color: #272324;
+}
+
+.font-14px {
+  font-family: var(--font-main);
+  font-weight: 400;
   font-size: 14px;
-  color: #000;
+  line-height: 20px;
+  letter-spacing: 0%;
+  color: #333333;
+  margin-top: 5px;
 }
 /* end qr sec */
 
@@ -193,7 +202,7 @@ let offersCards = ref([
 }
 /* end siper sec */
 /* Responsive */
-@media (max-width: 320px) {
+/* @media (max-width: 320px) {
   .swiper-button-prev-custom {
     left: 2px;
   }
@@ -201,26 +210,48 @@ let offersCards = ref([
   .swiper-button-next-custom {
     right: 2px;
   }
+
+  .scan-text h6 {
+    font-size: 15px;
+  }
+} */
+
+@media (max-width: 576px) {
+  .box-diesign {
+    width: 95%;
+    padding: 30px 15px;
+    border-radius: 40px;
+  }
+  .scan-text h6 {
+    font-size: 18px;
+  }
+}
+
+@media (min-width: 577px) and (max-width: 768px) {
+  .box-diesign {
+    width: 92%;
+    padding: 35px 20px;
+    border-radius: 50px;
+  }
+  .scan-text h6 {
+    font-size: 20px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 991px) {
+  .box-diesign {
+    width: 88%;
+    padding: 38px 25px;
+  }
+  .scan-text h6 {
+    font-size: 25px;
+  }
 }
 
 @media (max-width: 992px) {
   .slide-content {
     flex-direction: column;
     gap: 20px;
-  }
-
-  .descount-offer {
-    text-align: center;
-    width: 100%;
-  }
-
-  .offer-title {
-    font-size: 25px;
-  }
-
-  .des-offer {
-    width: 100%;
-    padding: 0 15px;
   }
 
   .img-offer img {
@@ -248,6 +279,16 @@ let offersCards = ref([
 
   .swiper-button-next-custom {
     right: 10px;
+  }
+  .descount-offer {
+    text-align: center;
+  }
+}
+
+@media (min-width: 992px) {
+  .box-diesign {
+    width: 85%;
+    padding: 40px 30px;
   }
 }
 </style>

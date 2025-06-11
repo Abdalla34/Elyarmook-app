@@ -90,6 +90,7 @@ let imagesSliders = ref([
   align-items: center;
   justify-content: center;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: absolute;
 }
 
 .mySwiper :deep(.swiper-button-prev),
@@ -100,7 +101,9 @@ let imagesSliders = ref([
   transition: all 0.3s ease;
   font-weight: bold;
 }
-
+.mySwiper :deep(.swiper-button-next) {
+  right: 68px;
+}
 .mySwiper :deep(.swiper-button-prev)::after {
   font-size: 25px;
   content: "←";
@@ -121,6 +124,7 @@ let imagesSliders = ref([
   background: #585858;
   opacity: 0.5;
   border-radius: 4px;
+  bottom: 22px;
 }
 .mySwiper :deep(.swiper-pagination-bullet-active) {
   opacity: 1;

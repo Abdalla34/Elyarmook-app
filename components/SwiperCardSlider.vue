@@ -1,53 +1,56 @@
 <template>
   <div class="parent-slider-card">
-    <div class="to-card box-diesign border-radius-20px mb-5 mt-5">
+    <div class="to-card box-diesign mb-5 mt-5">
       <div class="container">
         <div class="row">
           <div class="col-12">
-            <div class="text-title text-center mb-4">
-              <h1 class="h1">lorem</h1>
-              <p class="color-parag">
+            <div class="text-title text-center">
+              <h1 class="text-capitalize font-title">lorem</h1>
+              <p class="font-p">
                 Lorem ipsum dolor sit amet,Lorem ipsum dolor sit amet, Lorem
                 ipsum dolo
               </p>
             </div>
-            <div
-              class="swiper-wrapper-custom d-flex align-items-center justify-content-center gap-2 position-relative"
-            >
-              <div
-                class="swiper-button-prev-custom d-flex justify-content-center align-items-center"
-              ></div>
-              <Swiper
-                :modules="[Navigation]"
-                :slides-per-view="1"
-                :loop="true"
-                :navigation="{
-                  nextEl: '.swiper-button-next-custom',
-                  prevEl: '.swiper-button-prev-custom',
-                }"
-                class="swper-card"
-              >
-                <SwiperSlide
-                  v-for="(item, index) in previews"
-                  :key="index"
-                  class="bg-white p-3 border-radius-20px"
+
+            <!-- غلاف السلايدر + الأسهم -->
+            <div class="slider-wrapper position-relative">
+              <div class="swiper-button-prev-custom">←</div>
+              <div class="swiper-button-next-custom">→</div>
+
+              <div class="mini-box">
+                <Swiper
+                  :modules="[Navigation]"
+                  :slides-per-view="1"
+                  :loop="true"
+                  :navigation="{
+                    nextEl: '.swiper-button-next-custom',
+                    prevEl: '.swiper-button-prev-custom',
+                  }"
+                  class="swper-card"
                 >
-                  <img
-                    class="img-card background-main border-radius-20px mb-2"
-                    :src="item.image"
-                    alt=""
-                  />
-                  <TitleServices
-                    :title="item.name"
-                    :currency="item.price"
-                    :sar="item.currency"
-                  />
-                  <ButtonCard textButton="add to card" />
-                </SwiperSlide>
-              </Swiper>
-              <div
-                class="swiper-button-next-custom d-flex justify-content-center align-items-center"
-              ></div>
+                  <SwiperSlide v-for="(item, index) in previews" :key="index">
+                    <div
+                      class="preview-slide d-flex align-items-center text-center flex-column"
+                    >
+                      <div class="img-card">
+                        <img
+                          :src="item.image"
+                          :alt="item.name"
+                          class="img-offer"
+                        />
+                      </div>
+                      <TitleServices
+                        :title="item.name"
+                        :currency="item.price"
+                        :sar="item.currency"
+                      />
+                      <div class="width-button-component">
+                        <ButtonCard textButton="add to card" />
+                      </div>
+                    </div>
+                  </SwiperSlide>
+                </Swiper>
+              </div>
             </div>
           </div>
         </div>
@@ -55,6 +58,7 @@
     </div>
   </div>
 </template>
+
 <script setup>
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Autoplay, Navigation } from "swiper/modules";
@@ -63,7 +67,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 let previews = ref([
   {
-    image: "/preview1.png",
+    image: "/FrameCrad.png",
     name: "Periodic maintenance",
     price: "50",
     currency: "SAR",
@@ -76,124 +80,240 @@ let previews = ref([
   },
 ]);
 </script>
+
 <style scoped>
+/* Main Container */
 .box-diesign {
-  /* max-width: 900px; */
   width: 90%;
   margin: 0px auto;
   height: auto;
-  padding: 30px 0px;
-  background-color: var(--main-color);
+  padding: 40px 20px;
+  background-color: #ffec7f;
+  border-radius: 60px;
 }
+
+.preview-slide {
+  margin-top: -35px;
+}
+
+/* Swiper Container */
 .swper-card {
   position: relative;
-  max-width: 200px;
-}
-.swiper-wrapper-custom {
+  width: 100%;
+  max-width: 280px;
   margin: 0 auto;
-  max-width: 400px;
 }
+
 .text-title {
-  position: relative;
-  left: 50%;
-  transform: translateX(-50%);
+  margin-bottom: 30px;
 }
+
+/* Mini Box Container */
+.mini-box {
+  background-color: #fff9d4;
+  border-radius: 40px;
+  padding: 8px 28px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Image Card */
 .img-card {
-  display: block;
-  margin: 0 auto;
-  max-width: 150px;
-  height: auto;
-  transition: all 0.3s ease;
+  margin-bottom: 25px;
+  position: relative;
+}
+
+.img-offer {
+  border-radius: 25px;
+  object-fit: cover;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   cursor: pointer;
 }
 
-.img-card:hover {
+.img-offer:hover {
   transform: scale(1.05);
-  filter: brightness(1.1) drop-shadow(0 4px 12px rgba(255, 230, 84, 0.3));
+  filter: brightness(1.1);
+  box-shadow: 0 15px 35px rgba(255, 230, 84, 0.4);
 }
 
+.width-button-component {
+  width: 100%;
+  margin-top: 28px;
+}
+
+.slider-wrapper {
+  position: relative;
+  width: fit-content;
+  margin: auto;
+  max-width: 100%;
+}
+
+/* Navigation Buttons */
 .swiper-button-prev-custom,
 .swiper-button-next-custom {
-  width: 35px;
-  height: 35px;
-  background-color: #eee;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 45px;
+  height: 45px;
+  background: rgba(255, 255, 255, 0.95);
   border-radius: 50%;
   font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  transition: all 0.3s ease;
-  position: relative;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border: 2px solid rgba(255, 230, 84, 0.3);
+  user-select: none;
+}
+
+.swiper-button-prev-custom {
+  left: -60px;
+}
+
+.swiper-button-next-custom {
+  right: -60px;
 }
 
 .swiper-button-prev-custom:hover,
 .swiper-button-next-custom:hover {
-  background-color: var(--secound-color);
-  transform: scale(1.15);
-  box-shadow: 0 6px 20px rgba(255, 230, 84, 0.4);
+  background: #fff;
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  border-color: rgba(255, 230, 84, 0.6);
 }
 
-.swiper-button-prev-custom::after,
-.swiper-button-next-custom::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 0;
-  height: 0;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.3), transparent);
-  border-radius: 50%;
-  transition: all 0.3s ease;
-}
+/* Responsive Design */
 
-.swiper-button-prev-custom:hover::after,
-.swiper-button-next-custom:hover::after {
-  width: 60px;
-  height: 60px;
-}
-
-.swiper-button-prev-custom::before {
-  content: "←";
-}
-
-.swiper-button-next-custom::before {
-  content: "→";
-}
-
-.swiper-button-prev-custom:hover {
-  animation: moveLeft 0.4s infinite;
-}
-
-.swiper-button-next-custom:hover {
-  animation: moRight 0.4s infinite;
-}
-
-@keyframes moveLeft {
-  0% {
-    transform: translateX(0);
-  }
-  50% {
-    transform: translateX(-5px);
-  }
-  100% {
-    transform: translateX(0);
-  }
-}
-
-@keyframes moRight {
-  0% {
-    transform: translateX(0);
-  }
-  50% {
-    transform: translateX(-5px);
-  }
-  100% {
-    transform: translateX(0);
-  }
-}
-
+/* Mobile Devices (≤576px) */
 @media (max-width: 576px) {
   .box-diesign {
-    width: 100%;
+    width: 95%;
+    padding: 30px 15px;
+    border-radius: 40px;
   }
+
+  .mini-box {
+    padding: 20px 15px;
+    border-radius: 30px;
+  }
+
+  .preview-slide {
+    padding: 15px;
+  }
+
+  .img-offer {
+    width: 180px;
+    height: 200px;
+    border-radius: 20px;
+  }
+
+  .img-offer:hover {
+    transform: scale(1.02) rotate(1deg);
+  }
+
+  .swiper-button-prev-custom,
+  .swiper-button-next-custom {
+    display: none;
+  }
+
+  .swper-card {
+    max-width: 220px;
+  }
+}
+
+/* Tablet Devices (577px - 768px) */
+@media (min-width: 577px) and (max-width: 768px) {
+  .box-diesign {
+    width: 92%;
+    padding: 35px 20px;
+    border-radius: 50px;
+  }
+
+  .mini-box {
+    padding: 25px 20px;
+    border-radius: 35px;
+  }
+
+  .img-offer {
+    width: 200px;
+    height: 220px;
+  }
+
+  .swiper-button-prev-custom {
+    left: -50px;
+  }
+
+  .swiper-button-next-custom {
+    right: -50px;
+  }
+
+  .swper-card {
+    max-width: 250px;
+  }
+}
+
+/* Large Tablet/Small Desktop (769px - 991px) */
+@media (min-width: 769px) and (max-width: 991px) {
+  .box-diesign {
+    width: 88%;
+    padding: 38px 25px;
+  }
+
+  .img-offer {
+    width: 210px;
+    height: 230px;
+  }
+
+  .swiper-button-prev-custom {
+    left: -55px;
+  }
+
+  .swiper-button-next-custom {
+    right: -55px;
+  }
+
+  .swper-card {
+    max-width: 260px;
+  }
+}
+
+/* Large Desktop (≥992px) */
+@media (min-width: 992px) {
+  .box-diesign {
+    width: 85%;
+    padding: 40px 30px;
+  }
+
+  .img-offer {
+    width: 240px;
+    height: 260px;
+  }
+
+  .swper-card {
+    max-width: 300px;
+  }
+}
+
+/* Animations */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.preview-slide {
+  animation: slideIn 0.6s ease-out;
 }
 </style>

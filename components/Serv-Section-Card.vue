@@ -25,7 +25,7 @@
             </div>
             <div class="service-content">
               <h3 class="service-title text-capitalize">{{ service.title }}</h3>
-              <p class="service-desc">{{ service.des }}</p>
+              <p class="p-color-fs">{{ service.des }}</p>
             </div>
           </div>
         </div>
@@ -161,14 +161,6 @@ let soonGifts = ref([
   letter-spacing: -2%;
   color: #4e4b66;
 }
-.service-desc {
-  font-family: var(--font-main);
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
-  letter-spacing: 0%;
-  color: #7e7e7e;
-}
 
 @media (max-width: 576px) {
   /* Services Section Mobile Responsive */
@@ -177,7 +169,8 @@ let soonGifts = ref([
   }
 
 }
-@media (min-width: 577px) and (max-width: 768px) {
 
-}
+/* @media (min-width: 577px) and (max-width: 768px) {
+
+} */
 </style>

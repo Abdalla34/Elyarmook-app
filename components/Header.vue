@@ -10,9 +10,9 @@
 
         <div class="search position-relative">
           <input
-            type="search"
+            type="text"
             placeholder="search"
-            class="text-capitalize focus-input fw-600 p-2 input-search border-radius-36px"
+            class="text-capitalize focus-input fw-600 input-search border-radius-36px"
           />
           <IconSearch class="icon-search position-absolute" />
         </div>
@@ -21,7 +21,6 @@
       <div class="profile-ds">
         <ProfileCard />
       </div>
-      
     </div>
   </div>
 </template>
@@ -42,32 +41,31 @@
   transform: scale(1.1) rotate(5deg);
   filter: brightness(1.1) drop-shadow(0 4px 8px rgba(255, 230, 84, 0.4));
 }
-.input-search {
+.search {
   width: 339px;
-  height: 64px;
+}
+.input-search {
+  max-width: 100%;
   padding: 20px 262px 20px 20px;
   transition: all 0.3s ease;
   background-color: #f7f7fc;
 }
 .focus-input {
-  width: 330px;
   border: none;
   background-color: rgba(247, 242, 244, 1);
   transition: all 0.3s ease;
 }
 .focus-input:hover {
-  /* background-color: rgba(255, 255, 255, 0.9); */
   box-shadow: 0 4px 15px rgba(255, 230, 84, 0.2);
   transform: translateY(-1px);
 }
 .focus-input:focus {
-  /* background-color: white; */
-  /* box-shadow: 0 6px 20px rgba(255, 230, 84, 0.3); */
   transform: translateY(-2px);
   outline: 2px solid var(--main-color);
 }
 .focus-input::placeholder {
   color: #939393;
+
   font-size: 16px;
   font-weight: 400;
   font-family: var(--font-main);
