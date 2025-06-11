@@ -75,7 +75,7 @@ defineProps({
   font-family: var(--font-main);
   font-weight: 700;
   font-size: 1.4rem;
-  color: #2c3e50;
+  color: #0A0B0B;
   line-height: 1;
 }
 
