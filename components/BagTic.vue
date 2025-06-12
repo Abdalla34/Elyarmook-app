@@ -1,9 +1,8 @@
 <template>
   <svg
     class="icon-links-fix"
-
     viewBox="0 0 25 24"
-    fill="none"
+    fill="currentColor"
     xmlns="http://www.w3.org/2000/svg"
   >
     <path
@@ -31,6 +30,4 @@
   </svg>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

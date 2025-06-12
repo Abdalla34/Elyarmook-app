@@ -121,13 +121,20 @@
     </div>
   </div>
 </template>
+
+
+
 <script setup>
 let boxOpen = ref(false);
 function toogleBox() {
   boxOpen.value = !boxOpen.value;
 }
 </script>
+
+
+
 <style scoped>
+
 .ul {
   gap: 24px;
   background-color: #ffffff;
@@ -137,23 +144,27 @@ function toogleBox() {
   border-radius: 36px;
   box-shadow: 0px 0px 20px 0px #0000000a;
 }
+
 .ul li {
   height: 48px;
 }
+
 .ul li a {
   padding: 12px 16px;
   transition: all 0.4s ease;
   outline: none;
 }
+
 .active {
   background-color: var(--main-color);
   color: var(--color-black);
 }
+
 .ul li a:hover:not(.active) {
   color: var(--color-black);
-  background-color: rgba(var(--main-color-rgb, 255, 193, 7), 0.1);
+  background-color: rgba(247, 242, 244, 1);
   transform: scale(1.03);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .ul-phone li {
@@ -174,14 +185,19 @@ function toogleBox() {
   box-shadow: 1px 2px 7px rgba(0, 0, 0, 0.4);
   display: none;
 }
+
 .link-sm {
   margin-bottom: 0px;
 }
+
+
+
 @media (max-width: 576px) {
   .pages {
     display: none;
   }
 }
+
 @media (max-width: 768px) {
   .pages {
     display: none;
@@ -190,4 +206,5 @@ function toogleBox() {
     display: block;
   }
 }
+
 </style>

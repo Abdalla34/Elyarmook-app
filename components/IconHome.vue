@@ -17,4 +17,10 @@
 
 <script setup></script>
 
-<style></style>
+<style>
+svg:hover path {
+  fill: black;
+  stroke: black;
+  transition: all 0.3s ease;
+}
+</style>

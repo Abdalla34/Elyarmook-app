@@ -81,8 +81,8 @@ let imagesServices = ref([
   background-color: #ffffff;
 }
 
-.service-content{
-margin-bottom: -50px;
+.service-content {
+  margin-bottom: -50px;
 }
 
 .service-card {
@@ -102,6 +102,7 @@ margin-bottom: -50px;
 .service-card:hover {
   transform: translateY(-5px) scale(1.02);
   box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15), 0 10px 30px rgba(0, 0, 0, 0.1);
+   background-color: #ebebeb
 }
 
 .img {
@@ -137,4 +138,5 @@ margin-bottom: -50px;
     border-radius: 20px;
   }
 }
+
 </style>

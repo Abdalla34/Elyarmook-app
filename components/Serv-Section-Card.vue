@@ -60,7 +60,6 @@ let soonGifts = ref([
 </script>
 
 <style scoped>
-
 .services-container {
   margin: 0 auto;
   padding: 0 40px;
@@ -105,9 +104,10 @@ let soonGifts = ref([
 .service-card:hover {
   transform: translateY(-5px) scale(1.02);
   box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15), 0 10px 30px rgba(0, 0, 0, 0.1);
+  background-color: #ebebeb
 }
 
-.service-card::before {
+/* .service-card::before {
   content: "";
   position: absolute;
   top: 0;
@@ -121,7 +121,7 @@ let soonGifts = ref([
 
 .service-card:hover::before {
   opacity: 1;
-}
+} */
 
 .img {
   width: 160px;

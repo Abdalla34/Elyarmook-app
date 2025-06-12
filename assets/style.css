@@ -57,6 +57,7 @@ ul a {
   letter-spacing: -2%;
   color: #040505;
 }
+
 .font-p {
   font-family: var(--font-main);
   font-weight: 400;
@@ -65,6 +66,7 @@ ul a {
   letter-spacing: 0%;
   color: #3d3d3d;
 }
+
 @media (max-width: 576px) {
   .font-title {
     font-size: 2rem;
@@ -74,6 +76,7 @@ ul a {
     padding: 0 10px;
   }
 }
+
 @media (min-width: 577px) and (max-width: 768px) {
   .font-title {
     font-size: 2.2rem;
@@ -95,6 +98,12 @@ ul a {
   color: inherit;
   margin-bottom: 0px;
 }
+
+
+
+/* .icon-links-fix:hovesvg{
+  color: black;
+} */
 
 .border-radius-36px {
   border-radius: 36px;
@@ -221,3 +230,19 @@ button:hover {
   }
 }
 /* end name currency sar */
+
+/* sale offers */
+.offers-sale {
+  font-family: var(--font-main);
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: center;
+  vertical-align: middle;
+  background-color: #c71f45;
+  color: white;
+  padding: 1px 13px;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+}
+/* end sale offers */
