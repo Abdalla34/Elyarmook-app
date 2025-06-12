@@ -1,12 +1,12 @@
 <template>
-  <div class="parent-swiper">
+  <div class="parent-swiper margin-bottom-section">
     <Swiper
       :modules="[Pagination, Autoplay, Navigation]"
       :slides-per-view="1"
       :loop="true"
       :pagination="{ clickable: true }"
       navigation
-      class="mySwiper mb-5 p-2 mt-4"
+      class="mySwiper p-2 mt-4"
     >
       <SwiperSlide v-for="(item, index) in imagesSliders" :key="index">
         <div class="container">
@@ -33,6 +33,7 @@
     </Swiper>
   </div>
 </template>
+
 <script setup>
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Pagination, Autoplay, Navigation } from "swiper/modules";
@@ -57,12 +58,14 @@ let imagesSliders = ref([
   },
 ]);
 </script>
+
 <style scoped>
 .mySwiper {
   width: 100%;
   height: 300px;
   background-color: white;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.04);
+  border-radius: 60px;
 }
 
 .slide-img {
@@ -82,7 +85,7 @@ let imagesSliders = ref([
 .mySwiper :deep(.swiper-button-next) {
   width: 48px;
   height: 48px;
-  background-color:#EBEBEB;
+  background-color: #ebebeb;
   color: #333;
   border-radius: 50%;
   transition: all 0.3s ease;
@@ -101,7 +104,7 @@ let imagesSliders = ref([
   transition: all 0.3s ease;
   font-weight: bold;
 } */
- 
+
 .mySwiper :deep(.swiper-button-prev) {
   left: 68px;
 }
@@ -173,23 +176,28 @@ let imagesSliders = ref([
   .slide-img {
     width: 224px;
     height: 120px;
-    margin-top: -33px;
+    margin-top: -29px;
   }
 
   .title-sec-main {
     font-size: 30px;
     line-height: 32px;
+    text-align: center;
   }
 
   .desc {
     width: 100%;
     font-size: 10px;
-    margin-bottom: 15px;
+    margin-bottom: 3px;
+    text-align: center;
   }
 
   .padding-button {
     padding: 5px 12px;
     font-size: 12px;
+    position: relative;
+    left: 50%;
+    transform: translateX(-9%);
   }
 
   .mySwiper :deep(.swiper-button-prev),

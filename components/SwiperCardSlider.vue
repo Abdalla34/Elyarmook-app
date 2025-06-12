@@ -1,6 +1,6 @@
 <template>
-  <div class="parent-slider-card">
-    <div class="to-card box-diesign mb-5 mt-5">
+  <div class="parent-slider-card margin-bottom-section">
+    <div class="to-card box-diesign">
       <div class="container">
         <div class="row">
           <div class="col-12">

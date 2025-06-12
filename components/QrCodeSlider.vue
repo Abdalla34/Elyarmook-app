@@ -1,6 +1,6 @@
 <template>
-  <div class="qr-slider-wrapper p-4 border-radius-20px box-diesign">
-    <div class="container">
+  <div class="qr-slider-wrapper p-4 box-diesign ">
+    <div class="container ">
       <div class="up-box position-relative">
         <Swiper
           :modules="[Navigation, Pagination]"
@@ -73,6 +73,7 @@ let offersCards = ref([
   background: linear-gradient(90deg, #fae1e7 0%, #fcee97 100%);
   position: relative;
   overflow: hidden;
+  margin-bottom: 76px;
 }
 
 .width-p {
@@ -201,6 +202,7 @@ let offersCards = ref([
   }
 }
 /* end siper sec */
+
 /* Responsive */
 /* @media (max-width: 320px) {
   .swiper-button-prev-custom {

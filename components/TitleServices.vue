@@ -20,8 +20,8 @@ defineProps({
 });
 </script>
 
-
 <style scoped>
+
 .text-details {
   width: 100%;
   display: flex;
@@ -38,55 +38,7 @@ defineProps({
   gap: 40px;
 }
 
-.item-name {
-  font-family: var(--font-main);
-  font-weight: 600;
-  font-size: 24px;
-  line-height: 1.3;
-  color: #14142b;
-  margin: 0;
-  text-align: left;
-  flex: 1;
-  transition: color 0.3s ease;
-}
 
-.item-name:hover {
-  color: #0f0f23;
-}
-
-/* Price */
-.item-price {
-  display: flex;
-  align-items: flex-end;
-  gap: 2px;
-  border-radius: 12px;
-  transition: all 0.3s ease;
-  min-width: 70px;
-  color: #3d3d3d;
-}
-
-.item-price:hover {
-  background: rgba(255, 255, 255, 1);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-.price-value {
-  font-family: var(--font-main);
-  font-weight: 700;
-  font-size: 1.4rem;
-  color: #0A0B0B;
-  line-height: 1;
-}
-
-.price-currency {
-  font-family: var(--font-main);
-  font-weight: 500;
-  font-size: 0.8rem;
-  color: #6c757d;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
 
 @media (max-width: 576px) {
   .text-title h1 {
@@ -161,9 +113,7 @@ defineProps({
   }
 }
 
-
 @media (min-width: 992px) {
-
   .text-details {
     padding: 0 12px;
   }
@@ -182,7 +132,5 @@ defineProps({
   .price-currency {
     font-size: 0.85rem;
   }
-
- 
 }
 </style>

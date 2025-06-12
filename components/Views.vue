@@ -55,7 +55,7 @@
       </ul>
       <ProfileCard />
     </div>
-    <div class="veiws-parent">
+    <div class="veiws-parent margin-bottom-section">
       <div class="container px-2 links">
         <div class="row">
           <div class="col-12 mt-4">

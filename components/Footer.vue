@@ -1,5 +1,5 @@
 <template>
-  <div class="footer p-5 text-light mt-5">
+  <div class="footer p-5 text-light">
     <div class="container">
       <div class="row hand d-flex text-md-start">
         <!-- Logo + Download + Contact -->
@@ -26,8 +26,8 @@
           </div>
           <div class="contact-us mt-4">
             <h6 class="text-capitalize">Contact us:</h6>
-            <p class="mt-2">0123456789</p>
-            <p class="color-parag text-light">Everyday 8 am - 12 am</p>
+            <p class="mt-2 num">0123456789</p>
+            <p class="days">Everyday 8 am - 12 am</p>
           </div>
         </div>
 
@@ -73,7 +73,9 @@
 
         <div class="col-lg-2 col-md-3 col-sm-12">
           <h6 class="text-capitalize mb-3 font-size-title">social Media</h6>
-          <div class="d-flex gap-2 align-items-center justify-content-start gap-4">
+          <div
+            class="d-flex gap-2 align-items-center justify-content-start gap-4"
+          >
             <div class="box-hover-icons">
               <FaceBookIcon />
             </div>
@@ -118,6 +120,29 @@
 p {
   padding: 0px;
   margin: 0px;
+}
+
+.contact-us h6 {
+  font-family: var(--font-main);
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 28px;
+  letter-spacing: 0%;
+}
+.contact-us .num {
+  font-family: var(--font-main);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.days {
+  font-family: var(--font-main);
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: 0%;
+  color: #fcfcfc;
 }
 
 .footer {
@@ -257,7 +282,7 @@ ul li a:hover::after {
   background-color: #040505;
   transform: scale(1.1);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-  color: #ffffff; 
+  color: #ffffff;
 }
 
 /* Social media and other text links */

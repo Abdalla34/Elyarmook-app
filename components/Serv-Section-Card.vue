@@ -1,7 +1,7 @@
 <template>
-  <div class="services-section border-radius-20px">
+  <div class="services-section border-radius-20px margin-bottom-section">
     <div class="services-container container position-relative">
-      <div class="services-header">
+      <div class="services-header position-relative">
         <span
           class="soon-badge text-capitalize ps-3 pe-3 pt-1 pb-1 position-absolute border-radius-20px"
           >Soon</span
@@ -60,45 +60,18 @@ let soonGifts = ref([
 </script>
 
 <style scoped>
-.services-section {
-  padding: 50px 0;
-  /* background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 50%, #f1f3f4 100%); */
-  position: relative;
-  overflow: hidden;
-}
-/* .services-section::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: radial-gradient(
-      circle at 20% 80%,
-      rgba(255, 230, 84, 0.05) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      circle at 80% 20%,
-      rgba(255, 107, 107, 0.05) 0%,
-      transparent 50%
-    );
-  pointer-events: none;
-} */
+
 .services-container {
   margin: 0 auto;
   padding: 0 40px;
 }
 .services-header {
   position: relative;
-  margin-bottom: 40px;
-  height: 30px;
 }
 .soon-badge {
-  top: 43px;
-  position: relative;
+  top: -20px;
   z-index: 10;
-  right: 0;
+  right: 8px;
   background: #f9cbcb;
   font-size: 0.75rem;
   letter-spacing: 1px;
@@ -106,6 +79,7 @@ let soonGifts = ref([
   color: #eb5757;
   border-radius: 20px;
 }
+
 /* .soon-badge:hover {
   transform: rotate(0deg) scale(1.05);
   box-shadow: 0 12px 35px rgba(255, 71, 87, 0.5),
@@ -148,6 +122,7 @@ let soonGifts = ref([
 .service-card:hover::before {
   opacity: 1;
 }
+
 .img {
   width: 160px;
   height: 160px;
@@ -167,7 +142,6 @@ let soonGifts = ref([
   .services-container {
     padding: 0 20px;
   }
-
 }
 
 /* @media (min-width: 577px) and (max-width: 768px) {

@@ -70,7 +70,6 @@
   background: radial-gradient(circle, rgba(255, 255, 255, 0.3), transparent);
   width: 0;
   height: 0;
-
   transition: all 0.4s ease;
   z-index: 0;
 }
@@ -89,7 +88,7 @@
 }
 
 .buttons:hover {
-  transform: scale(1.1);
+  transform: scale(1.04);
 }
 
 .z-index-after {
