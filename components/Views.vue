@@ -1,60 +1,5 @@
 <template>
   <div>
-    <div v-if="boxOpen" class="box-phone">
-      <ul class="links ul-phone">
-        <li class="">
-          <NuxtLink
-            to="/"
-            exact-active-class="active"
-            class="d-flex align-items-center gap-1 p-color-fs"
-          >
-            <iconHome />
-            <h6 class="text-capitalize link-sm">Home</h6>
-          </NuxtLink>
-        </li>
-        <li class="border-radius-36px">
-          <NuxtLink
-            to="/myOrders"
-            exact-active-class="active"
-            class="d-flex align-items-center gap-1 p-color-fs"
-          >
-            <BagTic />
-            <h6 class="text-capitalize link-sm">my orders</h6>
-          </NuxtLink>
-        </li>
-        <li class="">
-          <NuxtLink
-            to="/offers"
-            exact-active-class="active"
-            class="d-flex align-items-center gap-1 p-color-fs"
-          >
-            <ServicesIcon />
-            <h6 class="text-capitalize link-sm">services</h6>
-          </NuxtLink>
-        </li>
-        <li class="">
-          <NuxtLink
-            to="/services"
-            exact-active-class="active"
-            class="d-flex align-items-center gap-1 p-color-fs"
-          >
-            <OffersIcon />
-            <h6 class="text-capitalize link-sm">offers</h6>
-          </NuxtLink>
-        </li>
-        <li class="">
-          <NuxtLink
-            to="/spareParts"
-            exact-active-class="active"
-            class="d-flex align-items-center gap-1 p-color-fs"
-          >
-            <IconParts />
-            <h6 class="text-capitalize link-sm">spare Parts</h6>
-          </NuxtLink>
-        </li>
-      </ul>
-      <ProfileCard />
-    </div>
     <div class="veiws-parent margin-bottom-section">
       <div class="container px-2 links">
         <div class="row">
@@ -174,20 +119,9 @@ function toogleBox() {
   padding: 10px;
 }
 
-.box-phone {
-  background-color: #fdfdff;
-  width: 300px;
-  height: 100vh;
-  position: absolute;
-  top: 76px;
-  left: 0;
-  z-index: 50;
-  box-shadow: 1px 2px 7px rgba(0, 0, 0, 0.4);
-  display: none;
-}
-
 .link-sm {
   margin-bottom: 0px;
+  font-size: 16px;
 }
 
 
@@ -202,8 +136,11 @@ function toogleBox() {
   .pages {
     display: none;
   }
-  .box-phone {
-    display: block;
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+  .link-sm {
+    font-size: 11px;
   }
 }
 

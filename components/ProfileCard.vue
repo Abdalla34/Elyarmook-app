@@ -107,9 +107,10 @@
   transform: scale(1.05);
   filter: brightness(1.1);
 }
-@media (max-width: 768px) {
+
+/* @media (max-width: 768px) {
   .profile-card {
     display: none;
   }
-}
+} */
 </style>

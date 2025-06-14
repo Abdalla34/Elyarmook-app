@@ -21,7 +21,6 @@ defineProps({
 </script>
 
 <style scoped>
-
 .text-details {
   width: 100%;
   display: flex;
@@ -37,8 +36,6 @@ defineProps({
   width: 100%;
   gap: 40px;
 }
-
-
 
 @media (max-width: 576px) {
   .text-title h1 {
@@ -96,7 +93,7 @@ defineProps({
   }
 
   .item-name {
-    font-size: 1.15rem;
+    font-size: 15px;
   }
 
   .item-price {
@@ -131,6 +128,11 @@ defineProps({
 
   .price-currency {
     font-size: 0.85rem;
+  }
+}
+@media (min-width: 769px) and (max-width: 992px) {
+  .item-name {
+    font-size: 18px;
   }
 }
 </style>

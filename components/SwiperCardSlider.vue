@@ -220,12 +220,21 @@ let previews = ref([
 
   .swiper-button-prev-custom,
   .swiper-button-next-custom {
-    display: none;
+    width: 34px;
+    height: 30px;
+    font-size: 12px;
   }
 
   .swper-card {
     max-width: 220px;
   }
+  .swiper-button-prev-custom {
+    left: -38px;
+  }
+  .swiper-button-next-custom {
+    right: -38px;
+  }
+  
 }
 
 /* Tablet Devices (577px - 768px) */

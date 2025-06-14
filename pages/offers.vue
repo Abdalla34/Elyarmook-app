@@ -1,47 +1,49 @@
 <template>
-  <div class="offers margin-bottom-section">
-    <Header />
-    <Views />
-    <div class="offers-page">
-      <div class="container">
-        <div class="row">
-          <div
-            class="col-lg-6 col-md-12 col-sm-12"
-            v-for="(item, indxe) in prices"
-            :key="index"
-          >
-            <div class="offer-card margin-bottom-24px">
-              <div class="img-offer text-center">
-                <img :src="item.imgPrice" alt="" class="margin-bottom-24px" />
-              </div>
-              <div
-                class="details-card d-flex justify-content-between margin-bottom-24px"
-              >
-                <h1 class="item-name">{{ item.title }}</h1>
-                <span
-                  class="offers-sale d-flex align-items-center justify-content-center"
-                  >{{ item.sale }}
-                </span>
-              </div>
-              <div class="date currency d-flex justify-content-between">
-                <span class="price-value price"
-                  >{{ item.prices }}
-                  <span class="price-currency sar">{{
-                    item.currency
-                  }}</span></span
+  <div>
+    <div class="offers margin-bottom-section">
+      <Header />
+      <Views />
+      <div class="offers-page">
+        <div class="container">
+          <div class="row">
+            <div
+              class="col-lg-6 col-md-12 col-sm-12"
+              v-for="(item, indxe) in prices"
+              :key="index"
+            >
+              <div class="offer-card margin-bottom-24px">
+                <div class="img-offer text-center">
+                  <img :src="item.imgPrice" alt="" class="margin-bottom-24px" />
+                </div>
+                <div
+                  class="details-card d-flex justify-content-between margin-bottom-24px"
                 >
-                <span class="text-capitalize date-item price-value">{{
-                  item.endDate
-                }}</span>
+                  <h1 class="item-name">{{ item.title }}</h1>
+                  <span
+                    class="offers-sale d-flex align-items-center justify-content-center"
+                    >{{ item.sale }}
+                  </span>
+                </div>
+                <div class="date currency d-flex justify-content-between">
+                  <span class="price-value price"
+                    >{{ item.prices }}
+                    <span class="price-currency sar">{{
+                      item.currency
+                    }}</span></span
+                  >
+                  <span class="text-capitalize date-item price-value">{{
+                    item.endDate
+                  }}</span>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="footer">
-    <Footer />
+    <div class="footer">
+      <Footer />
+    </div>
   </div>
 </template>
 
@@ -107,6 +109,7 @@ let prices = ref([
   border-radius: 64px;
   transition: all 0.4s ease;
 }
+
 .offer-card:hover {
   transform: scale(1.02);
 }
