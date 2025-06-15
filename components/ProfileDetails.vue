@@ -17,7 +17,7 @@
               </li>
               <li class="border-radius-36px">
                 <NuxtLink
-                  to="/"
+                  to="/myCars"
                   exact-active-class="active"
                   class="d-flex align-items-center gap-1 border-radius-36px p-color-fs"
                 >
@@ -27,7 +27,7 @@
               </li>
               <li class="">
                 <NuxtLink
-                  to="/"
+                  to="/wallet"
                   exact-active-class="active"
                   class="d-flex align-items-center gap-1 border-radius-36px p-color-fs"
                 >
@@ -37,7 +37,7 @@
               </li>
               <li class="">
                 <NuxtLink
-                  to="/offers"
+                  to="/language"
                   exact-active-class="active"
                   class="d-flex align-items-center gap-1 border-radius-36px p-color-fs"
                 >
@@ -47,7 +47,7 @@
               </li>
               <li class="">
                 <NuxtLink
-                  to="/spareParts"
+                  to="/help"
                   exact-active-class="active"
                   class="d-flex align-items-center gap-1 border-radius-36px p-color-fs"
                 >
