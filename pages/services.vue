@@ -1,7 +1,6 @@
 <template>
   <div class="services-parent">
-    <Header />
-    <Views />
+  
     <div class="container cards-wrapper margin-bottom-section">
       <div class="row">
         <div
@@ -30,7 +29,7 @@
         </div>
       </div>
     </div>
-    <Footer />
+
   </div>
 </template>
 

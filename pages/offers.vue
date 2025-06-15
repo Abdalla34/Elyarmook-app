@@ -1,8 +1,6 @@
 <template>
   <div>
     <div class="offers margin-bottom-section">
-      <Header />
-      <Views />
       <div class="offers-page">
         <div class="container">
           <div class="row">
@@ -11,7 +9,7 @@
               v-for="(item, indxe) in prices"
               :key="index"
             >
-              <div class="offer-card margin-bottom-24px">
+              <div class="offer-card margin-bottom-24px" @click="navigateTo('/offerSelected')">
                 <div class="img-offer text-center">
                   <img :src="item.imgPrice" alt="" class="margin-bottom-24px" />
                 </div>
@@ -40,9 +38,6 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="footer">
-      <Footer />
     </div>
   </div>
 </template>

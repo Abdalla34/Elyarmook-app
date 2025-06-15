@@ -2,20 +2,25 @@
   <div class="app-wrapper">
     <!-- Global Mobile Menu - Available on all pages -->
     <MobileMenu />
-
+    <Header />
+    <Views />
     <!-- Page Content -->
     <NuxtPage />
+    <Footer class="margin-top" />
   </div>
 </template>
 
 <script setup>
 // Global app configuration
 useHead({
-  title: 'Yarmook - Car Services',
+  title: "Yarmook - Car Services",
   meta: [
-    { name: 'description', content: 'Professional car maintenance and repair services' },
-    { name: 'viewport', content: 'width=device-width, initial-scale=1' }
-  ]
+    {
+      name: "description",
+      content: "Professional car maintenance and repair services",
+    },
+    { name: "viewport", content: "width=device-width, initial-scale=1" },
+  ],
 });
 </script>
 
@@ -53,5 +58,9 @@ input:focus {
 /* Smooth scrolling for all anchor links */
 html {
   scroll-behavior: smooth;
+}
+
+.margin-top {
+  margin-top: 25px;
 }
 </style>

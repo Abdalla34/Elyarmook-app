@@ -1,15 +1,11 @@
 <template>
   <div class="parent">
-    <Header />
-
-    <Views />
     <div class="container">
       <SwiperSlideHome />
       <Serv-Section-Card />
       <swiper-card-slider />
       <qr-code-slider />
     </div>
-    <Footer />
   </div>
 </template>
 

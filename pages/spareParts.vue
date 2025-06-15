@@ -1,6 +1,6 @@
 <template>
   <div class="parts">
-    <Header />
-    <Views />
+    <!-- <Header />
+    <Views /> -->
   </div>
 </template>

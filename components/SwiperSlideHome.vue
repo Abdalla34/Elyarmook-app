@@ -64,7 +64,7 @@ let imagesSliders = ref([
   width: 100%;
   height: 300px;
   background-color: white;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 0px 8px rgba(0, 0, 0, 0.08);
   border-radius: 60px;
 }
 

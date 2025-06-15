@@ -99,12 +99,6 @@ ul a {
   margin-bottom: 0px;
 }
 
-
-
-/* .icon-links-fix:hovesvg{
-  color: black;
-} */
-
 .border-radius-36px {
   border-radius: 36px;
 }
@@ -245,4 +239,65 @@ button:hover {
   border-radius: 20px;
   transition: all 0.3s ease;
 }
+
 /* end sale offers */
+.col-padding {
+  padding-left: 60px;
+  margin: auto;
+}
+
+/* title pages car profile wallet helpe*/
+.title-pages {
+  font-family: var(--font-main);
+  font-weight: 600;
+  font-size: 25px;
+  line-height: 38px;
+  letter-spacing: 0%;
+}
+/* end  */
+
+/* satrt  button pages car profile wallet helpe */
+.width-height {
+  width: 30%;
+  margin: auto;
+  text-align: center;
+  margin-bottom: 25px;
+  padding: 16px;
+  transition: all 0.4s ease;
+  cursor: pointer;
+}
+
+.button-save {
+  background-color: var(--main-color);
+}
+
+.button-save:hover {
+  background-color: var(--secound-color);
+  transform: scale(1.05) translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 230, 84, 0.4);
+}
+
+.width-height button {
+  border: none;
+  background: transparent;
+}
+
+.width-height:hover {
+  transform: scale(1.05) translateY(-2px);
+}
+/* end */
+
+/* start box-pages */
+.box-pages {
+  border: 1px solid #ebebeb;
+  border-radius: 12px;
+  border-width: 1px;
+  padding: 20px 16px;
+  transition: all 0.4s ease;
+  cursor: pointer;
+  margin-bottom: 16px;
+}
+
+.box-pages:hover {
+  transform: scale(1.04) translateY(-2px);
+}
