@@ -2,11 +2,11 @@
   <div class="app-wrapper">
     <!-- Global Mobile Menu - Available on all pages -->
     <MobileMenu />
-    <Header />
-    <Views />
+    <Header v-if="showLayout" />
+    <Views v-if="showLayout"/>
     <!-- Page Content -->
     <NuxtPage />
-    <Footer class="margin-top" />
+    <Footer class="margin-top" v-if="showLayout" />
   </div>
 </template>
 
@@ -22,6 +22,14 @@ useHead({
     { name: "viewport", content: "width=device-width, initial-scale=1" },
   ],
 });
+
+import { useRoute } from "vue-router";
+
+const route = useRoute();
+
+const noLayoutPages = ["/contactUs",];
+
+const showLayout = !noLayoutPages.includes(route.path);
 </script>
 
 <style>

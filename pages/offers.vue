@@ -6,10 +6,10 @@
           <div class="row">
             <div
               class="col-lg-6 col-md-12 col-sm-12"
-              v-for="(item, indxe) in prices"
+              v-for="(item, index) in offers"
               :key="index"
             >
-              <div class="offer-card margin-bottom-24px" @click="navigateTo('/offerSelected')">
+              <div class="offer-card margin-bottom-24px"   @click="navigateTo(`/offerSelected/${index}`)">
                 <div class="img-offer text-center">
                   <img :src="item.imgPrice" alt="" class="margin-bottom-24px" />
                 </div>
@@ -43,56 +43,14 @@
 </template>
 
 <script setup>
-let prices = ref([
-  {
-    imgPrice: "/img-price2.png",
-    title: "Periodic maintenance",
-    prices: "50",
-    currency: "sar",
-    sale: "30% off",
-    endDate: "dec,3,2024",
-  },
-  {
-    imgPrice: "/img-price2.png",
-    title: "Periodic maintenance",
-    prices: "50",
-    currency: "sar",
-    sale: "30% off",
-    endDate: "dec,3,2024",
-  },
-  {
-    imgPrice: "/img-price2.png",
-    title: "Periodic maintenance",
-    prices: "50",
-    currency: "sar",
-    sale: "30% off",
-    endDate: "dec,3,2024",
-  },
-  {
-    imgPrice: "/img-price2.png",
-    title: "Periodic maintenance",
-    prices: "50",
-    currency: "sar",
-    sale: "30% off",
-    endDate: "dec,3,2024",
-  },
-  {
-    imgPrice: "/img-price2.png",
-    title: "Periodic maintenance",
-    prices: "50",
-    currency: "sar",
-    sale: "30% off",
-    endDate: "dec,3,2024",
-  },
-  {
-    imgPrice: "/img-price2.png",
-    title: "Periodic maintenance",
-    prices: "50",
-    currency: "sar",
-    sale: "30% off",
-    endDate: "dec,3,2024",
-  },
-]);
+
+
+import { useOfferStore } from '@/stores/offers'
+
+const offerStore = useOfferStore()
+const offers = offerStore.offers
+
+
 </script>
 
 <style scoped>

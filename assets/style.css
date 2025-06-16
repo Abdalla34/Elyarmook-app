@@ -34,6 +34,10 @@ h6 {
   margin: 0;
 }
 
+*input {
+  transition: all 0.4s ease;
+}
+
 ul {
   list-style: none;
   padding: 0;
@@ -243,7 +247,32 @@ button:hover {
 /* end sale offers */
 .col-padding {
   padding-left: 60px;
+  padding-right: 60px;
   margin: auto;
+}
+
+@media (max-width: 768px) {
+  .col-padding {
+    width: 100%;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 992px) {
+  .col-padding {
+    width: 100%;
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+}
+
+@media (min-width: 993px) and (max-width: 1200px) {
+  .col-padding {
+    width: 100%;
+    padding-left: 50px;
+    padding-right: 50px;
+  }
 }
 
 /* title pages car profile wallet helpe*/
@@ -266,7 +295,11 @@ button:hover {
   transition: all 0.4s ease;
   cursor: pointer;
 }
-
+@media (max-width: 768px) {
+  .width-height {
+    width: 100%;
+  }
+}
 .button-save {
   background-color: var(--main-color);
 }
@@ -300,4 +333,36 @@ button:hover {
 
 .box-pages:hover {
   transform: scale(1.04) translateY(-2px);
+}
+
+/* background-icon help*/
+.wrapper-icons {
+  background-color: #fae1e7;
+  padding: 8px;
+  border-radius: 8px;
+  display: inline-flex; /* تخليه ياخد حجم الأيقونة بس */
+}
+
+.background-icon {
+  color: #e3496c;
+  width: 24px;
+  height: 24px;
+}
+
+/* label */
+.label {
+  font-weight: 500;
+  font-size: 16px;
+  margin-bottom: 8px;
+  text-transform: capitalize;
+}
+
+@media (max-width: 768px) {
+  .row-inputs {
+    display: block;
+    margin-bottom: 24px;
+  }
+  .label {
+    margin: 10px 0px;
+  }
 }

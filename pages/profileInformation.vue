@@ -58,7 +58,7 @@
           <button class="text-capitalize">save</button>
         </div>
         <div
-          class="button-delete border-radius-36px width-height d-flex justify-content-center"
+          class="button-delete border-radius-36px width-height d-flex justify-content-center margin-bottom-90px"
         >
           <button class="text-capitalize color-but">
             <svg
@@ -114,6 +114,10 @@
 </template>
 
 <style>
+.margin-bottom-90px {
+  margin-bottom: 90px;
+}
+
 .row {
   display: flex;
   justify-content: center;
@@ -154,14 +158,14 @@ input::placeholder {
   font-family: var(--font-main);
 }
 
-.label {
-  font-weight: 500;
-  font-size: 16px;
-  margin-bottom: 8px;
-  text-transform: capitalize;
-}
-
 .color-but {
   color: #eb5757;
+}
+
+@media (max-width: 768px) {
+  .row-inputs {
+    display: block;
+    margin-bottom: 24px;
+  }
 }
 </style>

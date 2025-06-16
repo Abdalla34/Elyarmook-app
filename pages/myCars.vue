@@ -1,7 +1,7 @@
 <template>
   <div>
     <ProfileDetails />
-    <div class="profile-information">
+    <div class="mycars-information">
       <div class="container">
         <div class="row">
           <div class="col-8 col-padding">
@@ -42,7 +42,7 @@
                 </div>
               </div>
             </div>
-            <div class="button-save border-radius-36px width-height">
+            <div class="button-save border-radius-36px width-height margin-bottom-287px">
               <button class="text-capitalize">
                 <i class="fa-solid fa-plus"></i>
                 add new car
@@ -73,8 +73,9 @@ let cars = ref([
 </script>
 
 <style scoped>
-
-
+.margin-bottom-287px{
+  margin-bottom: 286px;
+}
 .car-box:hover p {
   color: black;
 }

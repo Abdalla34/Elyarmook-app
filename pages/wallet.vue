@@ -1,7 +1,7 @@
 <template>
   <div>
     <ProfileDetails />
-    <div class="profile-information">
+    <div class="wallet-information">
       <div class="container">
         <div class="row">
           <div class="col-8 col-padding">
@@ -114,6 +114,10 @@ let wallets = ref([
 </script>
 
 <style scoped>
+.wallet {
+  margin-bottom: 192px;
+}
+
 .price {
   font-family: var(--font-main);
   font-weight: 600;

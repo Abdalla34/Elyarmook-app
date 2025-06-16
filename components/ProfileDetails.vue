@@ -64,11 +64,9 @@
 </template>
 
 <style>
-
 .margin-bottom-40px {
   margin-bottom: 40px;
 }
-
 
 .col-10 {
   width: 100%;
@@ -129,6 +127,9 @@
 @media (max-width: 768px) {
   .pages {
     display: none;
+  }
+  .margin-bottom-40px {
+    margin-bottom: 0px;
   }
 }
 

@@ -7,4 +7,5 @@ export default defineNuxtConfig({
     "@fortawesome/fontawesome-free/css/all.min.css",
     "@/assets/style.css", // الخطوط مستوردة جوه الملف ده
   ],
+    modules: ['@pinia/nuxt'],
 });
