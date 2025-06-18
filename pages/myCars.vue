@@ -5,10 +5,7 @@
       <div class="container">
         <div class="row">
           <div class="col-8 col-padding">
-            <h1 class="margin-bottom-24px text-capitalize title-pages">
-              my cars
-            </h1>
-
+            <GoPageArrow title="my cars" :showIcon="false" />
             <div
               class="cars margin-bottom-24px"
               v-for="(item, index) in cars"
@@ -42,7 +39,9 @@
                 </div>
               </div>
             </div>
-            <div class="button-save border-radius-36px width-height margin-bottom-287px">
+            <div
+              class="button-save border-radius-36px width-height margin-bottom-287px"
+            >
               <button class="text-capitalize">
                 <i class="fa-solid fa-plus"></i>
                 add new car
@@ -73,7 +72,7 @@ let cars = ref([
 </script>
 
 <style scoped>
-.margin-bottom-287px{
+.margin-bottom-287px {
   margin-bottom: 286px;
 }
 .car-box:hover p {

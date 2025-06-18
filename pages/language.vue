@@ -5,9 +5,7 @@
       <div class="container">
         <div class="row">
           <div class="col-8 col-padding position-relative">
-            <h1 class="margin-bottom-24px text-capitalize title-pages">
-              Language
-            </h1>
+           <GoPageArrow title="language" :showIcon="false" />
 
             <div class="lang margin-bottom-24px box-pages">
               <div class="lang-box">

@@ -8,7 +8,7 @@
             <div
               class="profiel-img d-flex justify-content-between align-items-center margin-bottom-24px"
             >
-              <h1 class="margin-bottom-24px text-capitalize title-pages mb-0">
+              <h1 class="margin-bottom-24px text-capitalize personal mb-0">
                 personal information
               </h1>
               <div class="box-img position-relative text-center">
@@ -18,7 +18,10 @@
                   alt=""
                   class="img-profile"
                 />
-                <div class="change-profile position-absolute" :class="{ 'd-block': profileImg }">
+                <div
+                  class="change-profile position-absolute"
+                  :class="{ 'd-block': profileImg }"
+                >
                   <h6 class="h6 text-capitalize">profile picture</h6>
                   <div
                     class="change box-design d-flex gap-2 justify-content-center align-items-center"
@@ -301,7 +304,7 @@ input::placeholder {
   background-color: #ffffff;
   z-index: 10;
   box-shadow: 0px 0px 20px 0px #0000000a;
-   display: none;
+  display: none;
 }
 
 .box-design {
@@ -349,6 +352,14 @@ input::placeholder {
 
 .paragraph-change {
   color: var(--color-black);
+}
+
+.personal {
+  font-family: var(--font-main);
+  font-weight: 600;
+  font-size: 25px;
+  line-height: 38px;
+  letter-spacing: 0%;
 }
 
 @media (max-width: 768px) {

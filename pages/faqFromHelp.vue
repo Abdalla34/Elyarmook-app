@@ -5,30 +5,66 @@
       <div class="container">
         <div class="row">
           <div class="col-8 col-padding">
-            <div
-              class="wllet-title d-flex align-items-center gap-2 margin-bottom-24px"
-            >
-              <div class="icon-width" @click="navigateTo('/help')">
-                <i class="fa-solid fa-arrow-left-long"></i>
-              </div>
-              <h1 class="text-capitalize text">help > FAQ</h1>
-            </div>
+
+            <GoPageArrow title="help > FAQ" backPath="/help" />
 
             <div
               class="box-main padding-left-25px box-pages d-flex align-items-center justify-content-between"
+              v-for="(item, index) in questions"
+              :key="index"
+               @click="toggleIcon(index)"
             >
               <div class="detalis">
-                <h6 class="text-capitalize font-p fw-bold">title</h6>
-                <p
-                  class="font-p display-paragraph"
-                  :class="{ 'd-block': isIconTrue }"
-                >
-                  Answer the frequently asked question in a simple sentence, a
-                  longish paragraph, or even in a list.
-                </p>
+                <h6 class="text-capitalize font-p fw-bold">{{ item.title }}</h6>
+                <transition name="fade-slide">
+                  <p
+                    v-if="activeIndexes[index]"
+                    class="font-p display-paragraph d-block"
+                  >
+                    {{ item.answer }}
+                  </p>
+                </transition>
               </div>
               <div class="icon-arrow">
-           
+                <div
+                  class="arrow-bottom"
+                  :class="{ 'd-none': activeIndexes[index] }"
+                >
+                  <svg
+                    class="font-icon"
+                    width="12"
+                    height="8"
+                    viewBox="0 0 12 8"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M1 1.5L6 6.5L11 1.5"
+                      stroke="#7E7E7E"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </div>
+                <div class="arrow-top" v-if="activeIndexes[index]">
+                  <svg
+                    class="font-icon"
+                    width="12"
+                    height="8"
+                    viewBox="0 0 12 8"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M11 6.5L6 1.5L1 6.5"
+                      stroke="#7E7E7E"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </div>
               </div>
             </div>
           </div>
@@ -39,10 +75,36 @@
 </template>
 
 <script setup>
-let isIconTrue = ref(false);
+
+const questions = ref([
+  {
+    title: "title",
+    answer:
+      "Answer the frequently asked question in a simple sentence, a longish paragraph, or even in a list.",
+  },
+  {
+    title: "tilt",
+    answer: "This is the second answer content.",
+  },
+  {
+    title: "tilt",
+    answer: "This is the second answer content.",
+  },
+  {
+    title: "tilt",
+    answer: "This is the second answer content.",
+  },
+]);
+
+const activeIndexes = ref(questions.value.map(() => false));
+
+function toggleIcon(index) {
+  activeIndexes.value[index] = !activeIndexes.value[index];
+}
 </script>
 
 <style scoped>
+
 .padding-left-25px {
   padding-left: 30px;
 }
@@ -59,39 +121,31 @@ let isIconTrue = ref(false);
   margin-bottom: 600px;
 }
 
-.icon-width {
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-
-.fa-solid {
-  cursor: pointer;
-  font-size: 16px;
-  color: #7e7e7e;
-  transition: all 0.3s ease;
-}
-
-.icon-width:hover .fa-solid {
-  color: var(--color-black);
-  transform: translateX(-4px) scale(2);
-  animation: slideLeft 0.3s ease infinite;
-}
 
 .display-paragraph {
   display: none;
+  color: #737373;
 }
 
-@keyframes slideLeft {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-4px);
-  }
+.fade-slide-enter-active,
+.fade-slide-leave-active {
+  transition: all ease 0.4s;
+}
+
+.fade-slide-enter-from,
+.fade-slide-leave-to {
+  opacity: 0;
+  transform: translateY(-8px);
+}
+
+.fade-slide-enter-to,
+.fade-slide-leave-from {
+  opacity: 1;
+  transform: translateY(0px);
+}
+
+.font-icon {
+  font-size: 16px;
 }
 
 @media (max-width: 576px) {

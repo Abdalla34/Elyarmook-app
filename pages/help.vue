@@ -63,7 +63,7 @@
 
               <!-- visit branch -->
               <div class="help margin-bottom-24px box-pages">
-                <div class="help-box" @click="navigateTo('nearest-pranch')">
+                <div class="help-box" @click="navigateTo('ourBranches')">
                   <div
                     class="help-detalis d-flex justify-content-between align-items-center"
                   >
@@ -88,6 +88,7 @@
 .margin-280px {
   margin-bottom: 240px;
 }
+
 .details {
   font-family: var(--font-main);
   font-weight: 600;

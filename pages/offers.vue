@@ -6,10 +6,13 @@
           <div class="row">
             <div
               class="col-lg-6 col-md-12 col-sm-12"
-              v-for="(item, index) in offers"
-              :key="index"
+              v-for="item in offers"
+              :key="item.id"
             >
-              <div class="offer-card margin-bottom-24px"   @click="navigateTo(`/offerSelected/${index}`)">
+              <div
+                class="offer-card margin-bottom-24px"
+                @click="navigateTo(`/offerSelected/${item.id}`)"
+              >
                 <div class="img-offer text-center">
                   <img :src="item.imgPrice" alt="" class="margin-bottom-24px" />
                 </div>
@@ -35,6 +38,9 @@
                 </div>
               </div>
             </div>
+            <!-- <div class="ing-false" v-if="isNotoffer">
+              <img src="/Yarmook-Website.htm" alt="" />
+            </div> -->
           </div>
         </div>
       </div>
@@ -43,14 +49,69 @@
 </template>
 
 <script setup>
+let offers = ref([
+  {
+    imgPrice: "/img-price2.png",
+    title: "Periodic Maintenance",
+    prices: "50",
+    currency: "SAR",
+    sale: "30% OFF",
+    endDate: "Dec 3, 2024",
+  },
+  {
+    imgPrice: "/img-price2.png",
+    title: "Oil Change",
+    prices: "60",
+    currency: "SAR",
+    sale: "20% OFF",
+    endDate: "Jan 1, 2024",
+  },
+  {
+    imgPrice: "/img-price2.png",
+    title: "Oil Change",
+    prices: "70",
+    currency: "SAR",
+    sale: "20% OFF",
+    endDate: "Jan 1, 2022",
+  },
+  {
+    imgPrice: "/img-price2.png",
+    title: "Oil Change",
+    prices: "80",
+    currency: "SAR",
+    sale: "20% OFF",
+    endDate: "Jan 1, 3030",
+  },
+  {
+    imgPrice: "/img-price2.png",
+    title: "Oil Change",
+    prices: "90",
+    currency: "SAR",
+    sale: "20% OFF",
+    endDate: "Jan 1, 2026",
+  },
+  {
+    imgPrice: "/img-price2.png",
+    title: "Oil Change",
+    prices: "100",
+    currency: "SAR",
+    sale: "20% OFF",
+    endDate: "Jan 1, 2020",
+  },
+]);
 
+let isNotoffer = ref(false);
+onMounted(() => {
+  if (offers.value.length === 0) {
+    isNotoffer.value = true;
+  } else {
+    isNotoffer.value = false;
+  }
+});
 
-import { useOfferStore } from '@/stores/offers'
-
-const offerStore = useOfferStore()
-const offers = offerStore.offers
-
-
+// const offers = ref([]);
+// const { data } = await useFetch("/api/offers");
+// offers.value = data.value;
 </script>
 
 <style scoped>
@@ -61,6 +122,7 @@ const offers = offerStore.offers
   box-shadow: 0 -4px 29px #0a0d121a;
   border-radius: 64px;
   transition: all 0.4s ease;
+  cursor: pointer;
 }
 
 .offer-card:hover {

@@ -8,7 +8,7 @@
             <div
               class="wllet-title d-flex align-items-center justify-content-between"
             >
-              <h1 class="margin-bottom-24px text-capitalize title-pages">
+              <h1 class="margin-bottom-24px text-capitalize title-pages mb-0">
                 wallet
               </h1>
 
@@ -24,7 +24,7 @@
             </div>
 
             <div
-              class="box-pages margin-bottom-24px"
+              class="box-pages margin-bottom-24px col-padding"
               v-for="(item, index) in wallets"
               :key="index"
             >

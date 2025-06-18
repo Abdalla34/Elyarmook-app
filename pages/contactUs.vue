@@ -19,7 +19,7 @@
               </div>
 
               <div class="bottom-80px">
-                <div class="inputs margin-0">
+                <div class="inputs">
                   <div class="input d-flex flex-column">
                     <label for="" class="label">full name</label>
                     <input
@@ -29,7 +29,7 @@
                     />
                   </div>
                 </div>
-                <div class="inputs margin-0">
+                <div class="inputs">
                   <div class="input d-flex flex-column">
                     <label for="" class="label">Phone Number</label>
                     <input
@@ -39,7 +39,7 @@
                     />
                   </div>
                 </div>
-                <div class="inputs margin-0">
+                <div class="inputs">
                   <div class="input d-flex flex-column">
                     <label for="" class="label">Subject</label>
                     <input
@@ -49,7 +49,7 @@
                     />
                   </div>
                 </div>
-                <div class="inputs margin-0">
+                <div class="inputs">
                   <div class="input d-flex flex-column">
                     <label for="" class="label">Message</label>
                     <textarea
@@ -82,7 +82,9 @@ let isSend = ref(false);
 .contact-us {
   margin-top: 70px;
 }
-
+.inputs {
+  margin-bottom: 10px;
+}
 .icon {
   border-width: 2px;
   border-style: solid;
