@@ -4,7 +4,7 @@
     <div class="language">
       <div class="container">
         <div class="row">
-          <div class="col-8 col-padding">
+          <div class="col-8 col-padding position-relative">
             <h1 class="margin-bottom-24px text-capitalize title-pages">
               Language
             </h1>
@@ -19,7 +19,7 @@
                     <h5 class="arabic">Arabic</h5>
                   </div>
                   <div class="input-check">
-                    <input type="checkbox" />
+                    <input type="checkbox" v-model="isArabic" />
                   </div>
                 </div>
               </div>
@@ -34,7 +34,53 @@
                     <h5 class="english">English</h5>
                   </div>
                   <div class="input-check">
-                    <input type="checkbox" />
+                    <input type="checkbox" v-model="isEnglish" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="box-checked border-radius-36px text-center"
+              v-if="isArabic"
+            >
+              <div class="isarabic transition">
+                <SoudiaIcon />
+                <h6>Change Language to Arabic</h6>
+                <p>Are you Sure to Change Language to Arabic?</p>
+                <div
+                  class="done margin-60px d-flex align-items-center justify-content-center gap-2"
+                >
+                  <div
+                    class="cancel box-button text-capitalize"
+                    @click="cancelArabic"
+                  >
+                    cancel
+                  </div>
+                  <div class="yes-change box-button text-capitalize">
+                    yes,change
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="box-checked border-radius-36px text-center"
+              v-if="isEnglish"
+            >
+              <div class="isenglish transition">
+                <USA />
+                <h6>Change Language to English</h6>
+                <p>Are you Sure to Change Language to English?</p>
+                <div
+                  class="done margin-60px d-flex align-items-center justify-content-center gap-2"
+                >
+                  <div
+                    class="cancel box-button text-capitalize"
+                    @click="cancelEnglish"
+                  >
+                    cancel
+                  </div>
+                  <div class="yes-change box-button text-capitalize">
+                    yes,change
                   </div>
                 </div>
               </div>
@@ -46,7 +92,20 @@
   </div>
 </template>
 
+<script setup>
+let isArabic = ref(false);
+let isEnglish = ref(false);
+
+function cancelArabic() {
+  isArabic.value = false;
+}
+function cancelEnglish() {
+  isEnglish.value = false;
+}
+</script>
+
 <style scoped>
+
 .language {
   margin-bottom: 482px;
 }
@@ -104,7 +163,150 @@
   border: none;
 }
 
-@media(max-width:576px) {
-  
+.box-checked {
+  background-color: #ffffff;
+  box-shadow: 0px 0px 15px 0px #0000000d;
+  margin: auto;
+  padding: 60px 40px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.cancel:hover {
+  background-color: #eb5757;
+  color: white;
+  box-shadow: 0px 1px 30px #eb5757;
+  border: none;
+}
+
+.isarabic h6,
+.isenglish h6 {
+  font-family: var(--font-alt);
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 41px;
+  letter-spacing: 0%;
+  text-align: center;
+  vertical-align: middle;
+  text-transform: capitalize;
+}
+
+.isarabic p,
+.isenglish p {
+  font-family: var(--font-main);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0%;
+  text-align: center;
+  vertical-align: middle;
+  color: #7e7e7e;
+}
+
+.margin-60px {
+  margin-top: 60px;
+}
+
+.box-button {
+  border-radius: 36px;
+  border: 1px solid #d4d4d4;
+  padding: 21px 91px;
+  gap: 8px;
+  max-width: 100%;
+  cursor: pointer;
+}
+
+.yes-change {
+  background-color: var(--main-color);
+  border: none;
+  font-family: var(--font-main);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0%;
+  color: #040505;
+}
+
+.yes-change:hover {
+  box-shadow: 0px 1px 30px var(--main-color);
+}
+
+.transition {
+  transition: all 0.3s ease;
+}
+
+.overLay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(0, 0, 0, 0.3);
+}
+
+@media (max-width: 576px) {
+  .box-checked {
+    width: 80%;
+  }
+
+  .box-button {
+    padding: 10px 30px;
+  }
+
+  .isarabic h6,
+  .isenglish h6 {
+    font-size: 17px;
+  }
+
+  .isarabic p,
+  .isenglish p {
+    font-size: 9px;
+  }
+}
+
+@media (min-width: 577px) and (max-width: 768px) {
+  .box-checked {
+    width: 80%;
+  }
+
+  .box-button {
+    padding: 10px 40px;
+  }
+
+  .isarabic h6,
+  .isenglish h6 {
+    font-size: 17px;
+  }
+
+  .isarabic p,
+  .isenglish p {
+    font-size: 9px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 993px) {
+  .box-button {
+    padding: 10px 60px;
+  }
+}
+
+@media (min-width: 993px) {
+  .box-checked {
+    width: 60%;
+  }
+
+  .box-button {
+    padding: 12px 80px;
+  }
+
+  .isarabic h6,
+  .isenglish h6 {
+    font-size: 20px;
+  }
+
+  .isarabic p,
+  .isenglish p {
+    font-size: 12px;
+  }
 }
 </style>

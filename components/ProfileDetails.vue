@@ -94,7 +94,7 @@
 }
 
 .active {
-  background-color: var(--main-color);
+ background-color: rgba(247, 242, 244, 1);
   color: var(--color-black);
 }
 

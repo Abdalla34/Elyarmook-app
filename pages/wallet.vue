@@ -1,7 +1,7 @@
 <template>
   <div>
     <ProfileDetails />
-    <div class="wallet-information">
+    <div class="wallet-information wallet-margin">
       <div class="container">
         <div class="row">
           <div class="col-8 col-padding">
@@ -114,7 +114,7 @@ let wallets = ref([
 </script>
 
 <style scoped>
-.wallet {
+.wallet-margin {
   margin-bottom: 192px;
 }
 

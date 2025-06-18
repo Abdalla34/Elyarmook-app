@@ -29,7 +29,7 @@ const route = useRoute();
 
 const noLayoutPages = ["/contactUs",];
 
-const showLayout = !noLayoutPages.includes(route.path);
+const showLayout = computed(() => !noLayoutPages.includes(route.path));
 </script>
 
 <style>

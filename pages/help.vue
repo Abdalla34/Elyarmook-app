@@ -29,7 +29,7 @@
 
               <!-- fa1 -->
               <div class="help margin-bottom-24px box-pages">
-                <div class="help-box" @click="navigateTo('faq')">
+                <div class="help-box" @click="navigateTo('faqFromHelp')">
                   <div
                     class="help-detalis d-flex justify-content-between align-items-center"
                   >
