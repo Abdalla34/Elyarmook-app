@@ -5,17 +5,22 @@
       <div class="container">
         <div class="row">
           <div class="col-8 col-padding">
-
             <GoPageArrow title="help > FAQ" backPath="/help" />
 
             <div
-              class="box-main padding-left-25px box-pages d-flex align-items-center justify-content-between"
+              class="box-main padding-left-25px d-flex align-items-center justify-content-between"
               v-for="(item, index) in questions"
               :key="index"
-               @click="toggleIcon(index)"
+              @click="toggleIcon(index)"
+              :class="{ active: activeIndexes[index] }"
             >
-              <div class="detalis">
-                <h6 class="text-capitalize font-p fw-bold">{{ item.title }}</h6>
+             <!-- hover -->
+              <div class="position-absolute bg-hover"></div>
+
+              <div class="detalis position-relative z-index">
+                <h6 class="text-capitalize font-p fw-bold">
+                  {{ item.title }}
+                </h6>
                 <transition name="fade-slide">
                   <p
                     v-if="activeIndexes[index]"
@@ -25,7 +30,8 @@
                   </p>
                 </transition>
               </div>
-              <div class="icon-arrow">
+
+              <div class="icon-arrow position-relative z-index">
                 <div
                   class="arrow-bottom"
                   :class="{ 'd-none': activeIndexes[index] }"
@@ -75,7 +81,6 @@
 </template>
 
 <script setup>
-
 const questions = ref([
   {
     title: "title",
@@ -105,6 +110,38 @@ function toggleIcon(index) {
 
 <style scoped>
 
+.box-main {
+  border: 1px solid #ebebeb;
+  border-radius: 12px;
+  padding: 20px 16px;
+  position: relative;
+  cursor: pointer;
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+
+.bg-hover {
+  position: absolute;
+  bottom: -100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #ebebeb;
+  border-radius: 12px;
+  opacity: 0;
+  transition: all 0.4s ease;
+  z-index: 0;
+}
+
+.box-main:hover .bg-hover {
+  bottom: 0;
+  opacity: 0.9;
+}
+
+.z-index{
+  z-index: 1;
+}
+
 .padding-left-25px {
   padding-left: 30px;
 }
@@ -120,7 +157,6 @@ function toggleIcon(index) {
 .faq-help {
   margin-bottom: 600px;
 }
-
 
 .display-paragraph {
   display: none;

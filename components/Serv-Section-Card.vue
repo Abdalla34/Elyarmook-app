@@ -102,7 +102,7 @@ let soonGifts = ref([
 }
 
 .service-card:hover {
-  transform: translateY(-5px) scale(1.02);
+  transform: translateY(-2px) scale(1.02);
   box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15), 0 10px 30px rgba(0, 0, 0, 0.1);
   background-color: #ebebeb
 }
@@ -144,7 +144,5 @@ let soonGifts = ref([
   }
 }
 
-/* @media (min-width: 577px) and (max-width: 768px) {
 
-} */
 </style>

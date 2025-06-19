@@ -3,7 +3,7 @@
     <!-- Global Mobile Menu - Available on all pages -->
     <MobileMenu />
     <Header v-if="showLayout" />
-    <Views v-if="showLayout"/>
+    <Views v-if="showLayout" />
     <!-- Page Content -->
     <NuxtPage />
     <Footer class="margin-top" v-if="showLayout" />
@@ -27,7 +27,7 @@ import { useRoute } from "vue-router";
 
 const route = useRoute();
 
-const noLayoutPages = ["/contactUs",];
+const noLayoutPages = ["/contactUs", "/carBrand", "/car-series"];
 
 const showLayout = computed(() => !noLayoutPages.includes(route.path));
 </script>

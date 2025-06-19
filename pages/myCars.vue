@@ -11,16 +11,17 @@
               v-for="(item, index) in cars"
               :key="index"
             >
-              <div class="car-box d-flex justify-content-between box-pages">
+              <div class="car-box d-flex justify-content-between box-main">
+                <div class="position-absolute bg-hover"></div>
                 <div class="car-detalis d-flex gap-2">
-                  <div class="car-img">
+                  <div class="car-img z-index position-relative">
                     <img :src="item.carLogo" alt="" />
                   </div>
-                  <div class="car-name">
+                  <div class="car-name z-index position-relative">
                     <p>{{ item.carNAme }}</p>
                   </div>
                 </div>
-                <div>
+                <div class="position-relative z-index">
                   <svg
                     width="14"
                     height="4"
@@ -41,8 +42,9 @@
             </div>
             <div
               class="button-save border-radius-36px width-height margin-bottom-287px"
+              @click="navigateTo('carBrand')"
             >
-              <button class="text-capitalize">
+              <button class="text-capitalize" >
                 <i class="fa-solid fa-plus"></i>
                 add new car
               </button>
@@ -90,5 +92,37 @@ let cars = ref([
   font-size: 16px;
   color: #96a0b6;
   margin: 0;
+}
+
+.box-main {
+  border: 1px solid #ebebeb;
+  border-radius: 12px;
+  padding: 20px 16px;
+  position: relative;
+  cursor: pointer;
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+
+.bg-hover {
+  position: absolute;
+  bottom: -100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #ebebeb;
+  border-radius: 12px;
+  opacity: 0;
+  transition: all 0.4s ease;
+  z-index: 0;
+}
+
+.box-main:hover .bg-hover {
+  bottom: 0;
+  opacity: 0.9;
+}
+
+.z-index{
+  z-index: 1;
 }
 </style>

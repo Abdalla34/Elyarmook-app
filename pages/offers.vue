@@ -60,7 +60,7 @@ let offers = ref([
   },
   {
     imgPrice: "/img-price2.png",
-    title: "Oil Change",
+    title: "Periodic Maintenance",
     prices: "60",
     currency: "SAR",
     sale: "20% OFF",
@@ -68,7 +68,7 @@ let offers = ref([
   },
   {
     imgPrice: "/img-price2.png",
-    title: "Oil Change",
+    title: "Periodic Maintenancee",
     prices: "70",
     currency: "SAR",
     sale: "20% OFF",
@@ -76,7 +76,7 @@ let offers = ref([
   },
   {
     imgPrice: "/img-price2.png",
-    title: "Oil Change",
+    title: "Periodic Maintenance",
     prices: "80",
     currency: "SAR",
     sale: "20% OFF",
@@ -84,7 +84,7 @@ let offers = ref([
   },
   {
     imgPrice: "/img-price2.png",
-    title: "Oil Change",
+    title: "Periodic Maintenance",
     prices: "90",
     currency: "SAR",
     sale: "20% OFF",
@@ -92,7 +92,7 @@ let offers = ref([
   },
   {
     imgPrice: "/img-price2.png",
-    title: "Oil Change",
+    title: "Periodic Maintenance",
     prices: "100",
     currency: "SAR",
     sale: "20% OFF",
@@ -126,7 +126,7 @@ onMounted(() => {
 }
 
 .offer-card:hover {
-  transform: scale(1.02);
+  transform: scale(1.01);
 }
 
 .img-offer img {
@@ -186,6 +186,7 @@ onMounted(() => {
 .price {
   font-weight: 600;
 }
+
 .sar {
   font-size: 18px;
 }

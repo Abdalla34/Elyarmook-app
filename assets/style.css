@@ -375,3 +375,75 @@ button:hover {
   width: 100%;
   border-radius: 36px;
 }
+
+
+/* style Page single inputs  */
+.input-style,
+textarea {
+  border-radius: 12px;
+  border: 2px solid #f1f3f9;
+  padding: 12px 16px;
+  margin-bottom: 15px;
+}
+
+.input-style:focus,
+textarea:focus {
+  outline: none;
+  border: 2px solid var(--main-color);
+  box-shadow: 0px 1px 10px var(--main-color);
+}
+.input-style:hover,
+textarea:hover {
+  outline: none;
+  border: 2px solid var(--main-color);
+  box-shadow: 0px 1px 20px var(--main-color);
+}
+
+.input-style::placeholder,
+textarea::placeholder {
+  color: #96a0b6;
+  font-family: var(--font-main);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: 0%;
+}
+
+textarea {
+  height: 140px;
+  resize: none;
+}
+
+.icon-to-page {
+  border-width: 2px;
+  border-style: solid;
+  border-color: #7e7e7e;
+  border-radius: 50%;
+  padding: 8px;
+  height: 25px;
+  width: 25px;
+  cursor: pointer;
+  transition: all ease 0.2s;
+}
+
+.icon-to-page:hover {
+  border-color: var(--main-color);
+  background-color: var(--main-color);
+  color: white;
+  font-size: 24px;
+}
+
+/* end single pages icon */
+
+/* input Brand */
+.input-brand {
+  border-radius: 12px;
+  border: 2px solid #f1f3f9;
+  padding: 12px 16px;
+  margin-bottom: 15px;
+}
+
+.input-brand:hover {
+  background-color: #ebebeb;
+}
+/* end */

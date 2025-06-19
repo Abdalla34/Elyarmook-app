@@ -5,8 +5,9 @@
       <div class="container">
         <div class="row">
           <div class="col-8 col-padding position-relative">
-           <GoPageArrow title="language" :showIcon="false" />
+            <GoPageArrow title="language" :showIcon="false" />
 
+            <!-- lang Arabic -->
             <div class="lang margin-bottom-24px box-pages">
               <div class="lang-box">
                 <div
@@ -17,11 +18,20 @@
                     <h5 class="arabic">Arabic</h5>
                   </div>
                   <div class="input-check">
-                    <input type="checkbox" v-model="isArabic" />
+                    <input
+                      type="checkbox"
+                      :checked="isArabic"
+                      @change="isArabic = true"
+                      :disabled="isConfirmationOpen"
+                      :class="{ 'opacity-input': isConfirmationOpen }"
+                    />
                   </div>
                 </div>
               </div>
             </div>
+
+            <!-- lang English -->
+
             <div class="lang margin-bottom-24px box-pages">
               <div class="lang-box">
                 <div
@@ -32,11 +42,18 @@
                     <h5 class="english">English</h5>
                   </div>
                   <div class="input-check">
-                    <input type="checkbox" v-model="isEnglish" />
+                    <input
+                      type="checkbox"
+                      :checked="isEnglish"
+                      @change="isEnglish = true"
+                      :disabled="isConfirmationOpen"
+                      :class="{ 'opacity-input': isConfirmationOpen }"
+                    />
                   </div>
                 </div>
               </div>
             </div>
+            <!-- box Arabic -->
             <div
               class="box-checked border-radius-36px text-center"
               v-if="isArabic"
@@ -60,6 +77,8 @@
                 </div>
               </div>
             </div>
+
+            <!-- box English  -->
             <div
               class="box-checked border-radius-36px text-center"
               v-if="isEnglish"
@@ -83,6 +102,7 @@
                 </div>
               </div>
             </div>
+            opacity-input-1 
           </div>
         </div>
       </div>
@@ -94,6 +114,8 @@
 let isArabic = ref(false);
 let isEnglish = ref(false);
 
+const isConfirmationOpen = computed(() => isArabic.value || isEnglish.value);
+
 function cancelArabic() {
   isArabic.value = false;
 }
@@ -103,7 +125,6 @@ function cancelEnglish() {
 </script>
 
 <style scoped>
-
 .language {
   margin-bottom: 482px;
 }
@@ -240,6 +261,13 @@ function cancelEnglish() {
   width: 100%;
   height: 100%;
   background-color: rgb(0, 0, 0, 0.3);
+}
+
+.opacity-input {
+  opacity: 0.5;
+}
+.opacity-input-1 {
+  opacity: 1;
 }
 
 @media (max-width: 576px) {
