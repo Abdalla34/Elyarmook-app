@@ -166,7 +166,7 @@
 }
 
 .background-color-cart:hover {
-  transform: scale(1.1) translateY(-2px);
+  transform: scale(1.01) translateY(-1px);
   box-shadow: 0 8px 20px rgba(255, 230, 84, 0.4);
   background-color: var(--main-color);
 }

@@ -79,12 +79,6 @@ let soonGifts = ref([
   border-radius: 20px;
 }
 
-/* .soon-badge:hover {
-  transform: rotate(0deg) scale(1.05);
-  box-shadow: 0 12px 35px rgba(255, 71, 87, 0.5),
-    0 6px 18px rgba(255, 71, 87, 0.4);
-} */
-
 .service-card {
   display: flex;
   flex-direction: column;
@@ -107,21 +101,6 @@ let soonGifts = ref([
   background-color: #ebebeb
 }
 
-/* .service-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 5px;
-  background: linear-gradient(10deg, #ff6b6b, #4ecdc4, #45b7d1, #f39c12);
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-
-.service-card:hover::before {
-  opacity: 1;
-} */
 
 .img {
   width: 160px;

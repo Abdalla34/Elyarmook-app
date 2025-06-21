@@ -99,7 +99,6 @@ ul a {
   width: 24px;
   height: 24px;
   transition: color 0.3s ease, transform 0.3s ease;
-  color: inherit;
   margin-bottom: 0px;
 }
 

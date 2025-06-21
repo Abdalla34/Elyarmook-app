@@ -4,7 +4,7 @@
     width="25"
     height="24"
     viewBox="0 0 25 24"
-    fill="currentColor"
+    fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
     <path
@@ -23,9 +23,4 @@
 </template>
 
 <style scoped>
-svg:hover path {
-  fill: black;
-  stroke: black;
-  transition: all 0.3s ease;
-}
 </style>

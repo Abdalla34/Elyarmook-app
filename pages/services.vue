@@ -1,6 +1,5 @@
 <template>
   <div class="services-parent">
-  
     <div class="container cards-wrapper margin-bottom-section">
       <div class="row">
         <div
@@ -29,7 +28,6 @@
         </div>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -75,7 +73,6 @@ let imagesServices = ref([
 </script>
 
 <style scoped>
-
 .services-parent {
   background-color: #ffffff;
 }
@@ -99,9 +96,9 @@ let imagesServices = ref([
 }
 
 .service-card:hover {
-  transform: translateY(-2px) scale(1.01);
+  transform: translateY(-1px) scale(1.0);
   box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15), 0 10px 30px rgba(0, 0, 0, 0.1);
-   background-color: #ebebeb
+  background-color: #ebebeb;
 }
 
 .img {
@@ -137,5 +134,4 @@ let imagesServices = ref([
     border-radius: 20px;
   }
 }
-
 </style>
