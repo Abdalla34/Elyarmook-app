@@ -268,22 +268,14 @@ ul li a:hover::after {
   transform: scale(1.1);
 }
 
-.box-hover-icons {
+/* .box-hover-icons {
   cursor: pointer;
-  transition: all 0.3s ease-in-out;
-  padding: 8px;
   border-radius: 10px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
 }
-
 .box-hover-icons:hover {
-  background-color: #040505;
-  transform: scale(1.1);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-  color: #ffffff;
-}
+  background-color: white;
+  stroke: black;
+} */
 
 /* Social media and other text links */
 .col-lg-2 p {

@@ -31,7 +31,7 @@ const noLayoutPages = ["/contactUs", "/carBrand", "/car-series"];
 
 const showLayout = computed(() => !noLayoutPages.includes(route.path));
 
-const pageVeiws = ["/orderDetails"];
+const pageVeiws = ["/orderDetails", "/orderContinue"];
 const showVeiws = computed(() => !pageVeiws.includes(route.path));
 </script>
 

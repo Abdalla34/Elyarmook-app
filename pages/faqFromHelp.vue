@@ -8,7 +8,7 @@
             <GoPageArrow title="help > FAQ" backPath="/help" />
 
             <div
-              class="box-main padding-left-25px d-flex align-items-center justify-content-between"
+              class="box-main padding-left-25px d-flex align-items-center justify-content-between box-hover-bg"
               v-for="(item, index) in questions"
               :key="index"
               @click="toggleIcon(index)"

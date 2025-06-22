@@ -79,7 +79,10 @@
                 <i class="fa-solid fa-plus"></i>
                 add another items
               </button>
-              <button class="continue text-capitalize label button">
+              <button
+                class="continue text-capitalize label button"
+                @click="navigateTo('/orderContinue')"
+              >
                 continue
               </button>
             </div>
@@ -91,8 +94,8 @@
 </template>
 
 <style scoped>
-.order-details{
-    margin-top: 40px;
+.order-details {
+  margin-top: 40px;
 }
 .text {
   margin-bottom: 40px;
@@ -157,6 +160,14 @@
 @media (max-width: 576px) {
   .svg-position {
     left: 6%;
+  }
+  .additems,
+  .continue {
+    width: 100%;
+  }
+  
+  .buttons-order{
+    flex-direction: column;
   }
 }
 

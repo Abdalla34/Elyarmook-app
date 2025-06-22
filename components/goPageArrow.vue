@@ -1,5 +1,5 @@
 <template>
-  <div class="wllet-title d-flex align-items-center gap-2 margin-bottom-24px">
+  <div class="d-flex align-items-center gap-2 margin-bottom-24px">
     <div class="icon-width" v-if="showIcon" @click="navigateTo(backPath)">
       <i class="fa-solid fa-arrow-left-long"></i>
     </div>

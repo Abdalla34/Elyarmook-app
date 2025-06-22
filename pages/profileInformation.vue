@@ -346,6 +346,7 @@ input::placeholder {
   color: white;
   font-weight: bold;
 }
+
 .delete:hover svg path {
   stroke: white;
 }

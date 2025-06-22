@@ -1,6 +1,7 @@
 <template>
   <div>
     <svg
+      class="hover"
       width="28"
       height="28"
       viewBox="0 0 28 28"
@@ -19,3 +20,14 @@
     </svg>
   </div>
 </template>
+
+<style scoped>
+.hover {
+  transition: all 0.4s;
+  cursor: pointer;
+}
+.hover:hover {
+  fill: blue;
+  stroke: white;
+}
+</style>

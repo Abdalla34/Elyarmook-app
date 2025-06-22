@@ -12,6 +12,7 @@
               <div class="lang-box">
                 <div
                   class="lang-detalis d-flex justify-content-between align-items-center"
+                  :class="{ 'opacity-input-1': isArabic }"
                 >
                   <div class="d-flex align-items-center gap-2">
                     <SoudiaIcon />
@@ -23,7 +24,7 @@
                       :checked="isArabic"
                       @change="isArabic = true"
                       :disabled="isConfirmationOpen"
-                      :class="{ 'opacity-input': isConfirmationOpen }"
+                      :class="{ 'opacity-input-1': isConfirmationOpen }"
                     />
                   </div>
                 </div>
@@ -36,6 +37,7 @@
               <div class="lang-box">
                 <div
                   class="lang-detalis d-flex justify-content-between align-items-center"
+                  :class="{ 'opacity-input-1': isEnglish }"
                 >
                   <div class="d-flex align-items-center gap-2">
                     <USA />
@@ -47,7 +49,7 @@
                       :checked="isEnglish"
                       @change="isEnglish = true"
                       :disabled="isConfirmationOpen"
-                      :class="{ 'opacity-input': isConfirmationOpen }"
+                      :class="{ 'opacity-input-1': isConfirmationOpen }"
                     />
                   </div>
                 </div>
@@ -102,7 +104,6 @@
                 </div>
               </div>
             </div>
-            opacity-input-1 
           </div>
         </div>
       </div>
