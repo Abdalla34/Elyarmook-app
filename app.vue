@@ -3,7 +3,7 @@
     <!-- Global Mobile Menu - Available on all pages -->
     <MobileMenu />
     <Header v-if="showLayout" />
-    <Views v-if="showLayout" />
+    <Views v-if="showLayout && showVeiws" />
     <!-- Page Content -->
     <NuxtPage />
     <Footer class="margin-top" v-if="showLayout" />
@@ -30,6 +30,9 @@ const route = useRoute();
 const noLayoutPages = ["/contactUs", "/carBrand", "/car-series"];
 
 const showLayout = computed(() => !noLayoutPages.includes(route.path));
+
+const pageVeiws = ["/orderDetails"];
+const showVeiws = computed(() => !pageVeiws.includes(route.path));
 </script>
 
 <style>

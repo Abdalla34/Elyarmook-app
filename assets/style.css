@@ -14,6 +14,7 @@
   --font-main: "Poppins", sans-serif;
   --font-alt: "Manrope", sans-serif;
   --color-black: #040505;
+  --color-secound-main: #F7F7FC
 }
 
 body {
@@ -141,7 +142,7 @@ button:hover {
 
 .button:hover {
   background-color: var(--secound-color);
-  transform: scale(1.05) translateY(-2px);
+  transform: scale(1.02) translateY(-1px);
   box-shadow: 0 8px 25px rgba(255, 230, 84, 0.4);
 }
 
@@ -395,7 +396,7 @@ textarea:focus {
 textarea:hover {
   outline: none;
   border: 2px solid var(--main-color);
-  box-shadow: 0px 1px 20px var(--main-color);
+  box-shadow: 0px 1px 13px var(--main-color);
 }
 
 .input-style::placeholder,
@@ -406,6 +407,7 @@ textarea::placeholder {
   font-size: 16px;
   line-height: 150%;
   letter-spacing: 0%;
+  text-transform: capitalize;
 }
 
 textarea {
