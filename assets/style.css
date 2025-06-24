@@ -468,3 +468,56 @@ textarea {
   bottom: 0;
   opacity: 0.9;
 }
+
+/* ul links  */
+.ul {
+  gap: 24px;
+  background-color: #ffffff;
+  width: fit-content;
+  margin: auto;
+  padding: 12px 32px;
+  border-radius: 36px;
+  box-shadow: 0px 0px 20px 0px #0000000a;
+}
+
+.ul li {
+  height: 48px;
+}
+
+.ul li a {
+  padding: 12px 16px;
+  transition: all 0.4s ease;
+  outline: none;
+}
+
+.active {
+  background-color: #EBEBEB;
+  color: var(--color-black);
+}
+
+.ul li a:hover:not(.active) {
+  color: var(--color-black);
+  background-color: rgba(247, 242, 244, 1);
+  transform: scale(1.03);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.ul-phone li {
+  padding-top: 10px;
+}
+
+.ul-phone li a {
+  padding: 10px;
+}
+
+.link-sm {
+  margin-bottom: 0px;
+  font-size: 16px;
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+  .link-sm {
+    font-size: 11px;
+  }
+}
+/* end ul link */

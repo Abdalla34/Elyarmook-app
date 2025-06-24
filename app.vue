@@ -31,8 +31,10 @@ const noLayoutPages = ["/contactUs", "/carBrand", "/car-series"];
 
 const showLayout = computed(() => !noLayoutPages.includes(route.path));
 
-const pageVeiws = ["/orderDetails", "/confirmOrder"];
-const showVeiws = computed(() => !pageVeiws.includes(route.path));
+const showViews = computed(() => {
+  const path = route.path;
+  return !path.startsWith("/orderDetails") && path !== "/confirmOrder";
+});
 </script>
 
 <style>

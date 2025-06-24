@@ -1,6 +1,9 @@
 <template>
   <div class="margin-top">
     <div class="container">
+      <div v-if="test">
+        <Veiws />
+      </div>
       <div class="row">
         <!-- الجزء اليسار -->
         <div class="col-lg-5 col-md-7">
