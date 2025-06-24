@@ -45,7 +45,7 @@
                         :sar="item.currency"
                       />
                       <div class="width-button-component">
-                        <ButtonCard textButton="add to card" />
+                        <ButtonCard textButton="add to card" isActive="activeIcon"/>
                       </div>
                     </div>
                   </SwiperSlide>
@@ -79,6 +79,7 @@ let previews = ref([
     currency: "SAR",
   },
 ]);
+let activeIcon = ref(true)
 </script>
 
 <style scoped>

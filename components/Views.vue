@@ -14,7 +14,7 @@
                     exact-active-class="active"
                     class="d-flex align-items-center gap-1 border-radius-36px p-color-fs"
                   >
-                    <iconHome />
+                    <iconHome :isActive="$route.path === '/'" />
                     <h6 class="text-capitalize link-sm">Home</h6>
                   </NuxtLink>
                 </li>
@@ -24,37 +24,40 @@
                     exact-active-class="active"
                     class="d-flex align-items-center gap-1 border-radius-36px p-color-fs"
                   >
-                    <BagTic />
+                    <BagTic :isActive="$route.path === 'myOrders'" />
                     <h6 class="text-capitalize link-sm">my orders</h6>
                   </NuxtLink>
                 </li>
+
                 <li class="">
                   <NuxtLink
                     to="/services"
                     exact-active-class="active"
                     class="d-flex align-items-center gap-1 border-radius-36px p-color-fs"
                   >
-                    <ServicesIcon />
+                    <ServicesIcon :isActive="$route.path === '/services'" />
                     <h6 class="text-capitalize link-sm">services</h6>
                   </NuxtLink>
                 </li>
+
                 <li class="">
                   <NuxtLink
                     to="/offers"
                     exact-active-class="active"
                     class="d-flex align-items-center gap-1 border-radius-36px p-color-fs"
                   >
-                    <OffersIcon />
+                    <OffersIcon :isActive="$route.path === '/offers'" />
                     <h6 class="text-capitalize link-sm">offers</h6>
                   </NuxtLink>
                 </li>
+
                 <li class="">
                   <NuxtLink
                     to="/spareParts"
                     exact-active-class="active"
                     class="d-flex align-items-center gap-1 border-radius-36px p-color-fs"
                   >
-                    <IconParts />
+                    <IconParts :isActive="$route.path === '/spareParts'" />
                     <h6 class="text-capitalize link-sm">spare Parts</h6>
                   </NuxtLink>
                 </li>
@@ -67,8 +70,6 @@
   </div>
 </template>
 
-
-
 <script setup>
 let boxOpen = ref(false);
 function toogleBox() {
@@ -76,10 +77,7 @@ function toogleBox() {
 }
 </script>
 
-
-
 <style scoped>
-
 .ul {
   gap: 24px;
   background-color: #ffffff;
@@ -112,7 +110,6 @@ function toogleBox() {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-
 .ul-phone li {
   padding-top: 10px;
 }
@@ -126,7 +123,9 @@ function toogleBox() {
   font-size: 16px;
 }
 
-
+a svg path {
+  fill: none;
+}
 
 @media (max-width: 576px) {
   .pages {
@@ -145,5 +144,4 @@ function toogleBox() {
     font-size: 11px;
   }
 }
-
 </style>

@@ -69,7 +69,7 @@
 
           <!-- زرار الإضافة للكارت -->
           <div class="width-button">
-            <ButtonCard textButton="add to cart" />
+            <ButtonCard textButton="add to cart" isActive="activeIcon" />
           </div>
         </div>
       </div>
@@ -90,6 +90,7 @@ let selectedCard = ref([
       "orem ipsum dolor sit amet,Lorem ipsum dolor sit amet,  Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor",
   },
 ]);
+let activeIcon = ref(true);
 
 // let route = useRoute();
 // let idParams = route.params.id;

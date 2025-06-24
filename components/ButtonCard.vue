@@ -3,7 +3,7 @@
     <button
       class="d-flex padding-button align-items-center justify-content-center gap-2 mb-3 button background-main border-radius-20px w-100 text-capitalize"
     >
-      <CarIconCard />
+      <CarIconCard v-if="isActive" />
       <span class="button-text">{{ textButton }}</span>
     </button>
   </div>
@@ -12,6 +12,7 @@
 <script setup>
 defineProps({
   textButton: String,
+  isActive: Boolean,
 });
 </script>
 

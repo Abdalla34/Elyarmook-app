@@ -22,7 +22,7 @@
               />
             </div>
             <div class="div-button">
-              <ButtonCard textButton="add to card" />
+              <ButtonCard textButton="add to card" isActive="activeIcon" />
             </div>
           </div>
         </div>
@@ -73,6 +73,7 @@ let imagesServices = ref([
     sar: "SAR",
   },
 ]);
+let activeIcon = ref(true)
 </script>
 
 <style scoped>
