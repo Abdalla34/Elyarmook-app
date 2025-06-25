@@ -3,7 +3,6 @@
     <div class="container">
       <div class="row">
         <div class="col-8 col-padding">
-
           <div class="cart-name">
             <h1 class="title-pages">
               Cart <span class="p-color-fs">({{ orders.length }})</span>
@@ -74,7 +73,10 @@
               </svg>
             </div>
           </div>
-          <div class="button-continue width" @click="navigateTo('/orderDetails')">
+          <div
+            class="button-continue width"
+            @click="navigateTo('/orderDetails')"
+          >
             <ButtonCard textButton="continue" />
           </div>
         </div>
@@ -113,52 +115,5 @@ function deletedOrder(id) {
 </script>
 
 <style scoped>
-.cart-name {
-  margin-bottom: 20px;
-}
-
-.cart {
-  padding: 36px;
-  background-color: #ffffff;
-  box-shadow: 0px 1px 2px 0px #0a0d120f;
-
-  box-shadow: 0px 1px 3px 0px #0a0d121a;
-}
-
-.delete-icon {
-  background-color: var(--color-secound-main);
-  padding: 16px 24px;
-  border-radius: 50px;
-  cursor: pointer;
-  transition: all ease 0.4s;
-}
-
-.delete-icon:hover {
-  background-color: #eb5757;
-}
-
-.delete-icon:hover svg path {
-  stroke: white;
-  fill: white;
-}
-
-.width {
-  width: 50%;
-  margin: auto;
-  margin-top: 95px;
-  margin-bottom: 150px;
-}
-
-.price {
-  font-size: 30px;
-}
-
-@media (max-width: 768px) {
-  .price {
-    font-size: 16px;
-  }
-  .span {
-    font-size: 12px;
-  }
-}
+@import "./assets/css/cardorder.css";
 </style>

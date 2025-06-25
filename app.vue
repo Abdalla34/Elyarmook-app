@@ -3,7 +3,8 @@
     <!-- Global Mobile Menu - Available on all pages -->
     <MobileMenu />
     <Header v-if="showLayout" />
-    <Views v-if="showLayout && showVeiws" />
+    <!-- <Views v-if="showLayout && showVeiws" /> -->
+    <Views v-if="showLayout" />
     <!-- Page Content -->
     <NuxtPage />
     <Footer class="margin-top" v-if="showLayout" />
@@ -31,10 +32,10 @@ const noLayoutPages = ["/contactUs", "/carBrand", "/car-series"];
 
 const showLayout = computed(() => !noLayoutPages.includes(route.path));
 
-const showViews = computed(() => {
-  const path = route.path;
-  return !path.startsWith("/orderDetails") && path !== "/confirmOrder";
-});
+// const showViews = computed(() => {
+//   const path = route.path;
+//   return !path.startsWith("/orderDetails") && path !== "/confirmOrder";
+// });
 </script>
 
 <style>

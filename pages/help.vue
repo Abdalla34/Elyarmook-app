@@ -85,6 +85,7 @@
   </div>
 </template>
 <style scoped>
+
 .margin-280px {
   margin-bottom: 240px;
 }

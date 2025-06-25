@@ -1,0 +1,83 @@
+.daimond-img {
+  background-color: #fffcea;
+  padding: 68px;
+  border-radius: 32px;
+}
+.mt {
+  margin-top: 33px;
+  margin-bottom: 130px;
+}
+
+.color {
+  color: #c71f45;
+}
+.color-gray {
+  color: #7e7e7e;
+}
+
+.price-value {
+  font-size: 30px;
+  color: #c71f45;
+}
+
+.span {
+  color: #c71f45;
+  font-size: 18px;
+}
+
+.sale {
+  font-family: var(--font-main);
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 28px;
+  letter-spacing: 0%;
+  text-decoration: line-through;
+  text-align: center;
+  text-decoration: line-through;
+  color: #6e7191;
+  text-align: end;
+}
+
+.date-end {
+  font-family: var(--font-main);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0%;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.about-title {
+  font-family: var(--font-main);
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 28px;
+  letter-spacing: 0%;
+  color: #262338;
+  margin-bottom: 18px;
+}
+
+.details {
+  margin-bottom: 34px;
+}
+
+.details p {
+  font-family: var(--font-main);
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 28px;
+  letter-spacing: 0%;
+  color: #262338;
+}
+
+h3 {
+  margin-top: 54px;
+  margin-bottom: 16px;
+  font-family: var(--font-main);
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 28px;
+  letter-spacing: 0%;
+  color: #262338;
+}

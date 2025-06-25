@@ -26,9 +26,7 @@
             </div>
           </div>
         </div>
-        <div class="isEmpty">
-          
-        </div>
+        <div class="isEmpty"></div>
       </div>
     </div>
   </div>
@@ -73,69 +71,9 @@ let imagesServices = ref([
     sar: "SAR",
   },
 ]);
-let activeIcon = ref(true)
+let activeIcon = ref(true);
 </script>
 
 <style scoped>
-.services-parent {
-  background-color: #ffffff;
-}
-
-.service-content {
-  margin-bottom: -50px;
-}
-
-.service-card {
-  width: 100%;
-  padding: 30px 20px;
-  background-color: #f9f9f9;
-  transition: all 0.4s ease;
-  border-radius: 40px;
-  box-shadow: 0 10px 40px #0a0d121a;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  min-height: 470px;
-}
-
-.service-card:hover {
-  transform: translateY(-1px) scale(1.0);
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15), 0 10px 30px rgba(0, 0, 0, 0.1);
-  background-color: #ebebeb;
-}
-
-.img {
-  width: 160px;
-  height: 160px;
-  object-fit: contain;
-  margin-top: 10px;
-}
-
-.div-button {
-  width: 100%;
-}
-
-/* Responsive */
-@media (max-width: 992px) {
-  .cards-wrapper {
-    padding: 30px 40px;
-  }
-}
-
-@media (max-width: 576px) {
-  .cards-wrapper {
-    padding: 20px 20px;
-  }
-
-  .img {
-    width: 80px;
-    height: 80px;
-  }
-
-  .service-card {
-    padding: 20px 15px;
-    border-radius: 20px;
-  }
-}
+@import "./assets/css/services.css";
 </style>

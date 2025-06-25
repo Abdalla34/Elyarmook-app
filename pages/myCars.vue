@@ -44,7 +44,7 @@
               class="button-save border-radius-36px width-height margin-bottom-287px"
               @click="navigateTo('carBrand')"
             >
-              <button class="text-capitalize" >
+              <button class="text-capitalize">
                 <i class="fa-solid fa-plus"></i>
                 add new car
               </button>
@@ -74,55 +74,5 @@ let cars = ref([
 </script>
 
 <style scoped>
-.margin-bottom-287px {
-  margin-bottom: 286px;
-}
-.car-box:hover p {
-  color: black;
-}
-
-.car-img img {
-  width: 16px;
-  height: 16px;
-}
-
-.car-name p {
-  font-family: var(--font-main);
-  font-weight: 400;
-  font-size: 16px;
-  color: #96a0b6;
-  margin: 0;
-}
-
-.box-main {
-  border: 1px solid #ebebeb;
-  border-radius: 12px;
-  padding: 20px 16px;
-  position: relative;
-  cursor: pointer;
-  margin-bottom: 16px;
-  overflow: hidden;
-}
-
-.bg-hover {
-  position: absolute;
-  bottom: -100%;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #ebebeb;
-  border-radius: 12px;
-  opacity: 0;
-  transition: all 0.4s ease;
-  z-index: 0;
-}
-
-.box-main:hover .bg-hover {
-  bottom: 0;
-  opacity: 0.9;
-}
-
-.z-index{
-  z-index: 1;
-}
+@import "./assets/css/mycars.css";
 </style>

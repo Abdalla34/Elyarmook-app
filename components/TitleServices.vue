@@ -130,6 +130,7 @@ defineProps({
     font-size: 0.85rem;
   }
 }
+
 @media (min-width: 769px) and (max-width: 992px) {
   .item-name {
     font-size: 18px;

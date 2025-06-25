@@ -1,0 +1,70 @@
+.add-car {
+  margin-top: 70px;
+}
+
+.title-page {
+  width: 90%;
+  margin: auto;
+}
+
+.search-input {
+  width: 90%;
+  margin: auto;
+  margin-bottom: 40px;
+}
+
+.search-input .search {
+  width: 100%;
+  border-radius: 36px;
+  border: 2px solid #f1f3f9;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.search-input .search:focus {
+  outline: none;
+  border: 2px solid var(--main-color);
+  box-shadow: 0px 1px 10px var(--main-color);
+}
+
+.inputs input {
+  width: 100%;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.input-brand {
+  border-radius: 12px;
+  border: 2px solid #f1f3f9;
+  padding: 12px 16px;
+  margin-bottom: 15px;
+}
+
+.input-brand:hover {
+  background-color: #ebebeb;
+}
+
+.bmw-img {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+}
+
+.name-car {
+  font-family: var(--font-main);
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 28px;
+  letter-spacing: 0%;
+  color: #6e7191;
+}
+
+.gap {
+  gap: 199px;
+}
+
+@media (max-width: 768px) {
+  .add-car {
+    padding: 100px 0px;
+  }
+}
