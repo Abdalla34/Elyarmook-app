@@ -4,6 +4,7 @@
       <div class="row justify-content-center">
         <div class="col-8">
           <div class="membership">
+            
             <div
               class="member d-flex align-items-center justify-content-between"
             >

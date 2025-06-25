@@ -60,6 +60,7 @@ let imagesSliders = ref([
 </script>
 
 <style scoped>
+
 .mySwiper {
   width: 100%;
   height: 300px;
@@ -249,4 +250,5 @@ let imagesSliders = ref([
     font-size: 12px;
   }
 }
+
 </style>
