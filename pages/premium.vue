@@ -4,44 +4,38 @@
       <div class="row justify-content-center">
         <div class="col-8">
           <div class="membership">
-            
             <div
               class="member d-flex align-items-center justify-content-between"
             >
               <div class="title d-flex align-items-center gap-2">
-                <img src="/Diamond.png" alt="" />
-                <h1 class="title-h1">
-                  Save With an ALyarmook One Membership For 1 Year
-                </h1>
+                <div>
+                  <img src="/Diamond.png" alt="" />
+                </div>
+                <div>
+                  <h1 class="title-h1">
+                    Save With an ALyarmook One Membership For 1 Year
+                  </h1>
+                  <p class="date">end date: des,4,2024</p>
+                </div>
               </div>
+
               <div class="price">
-                <p class="now">
-                  5000 <span class="text-uppercase span">sar</span>
+                <p class="now d-flex gap-2">
+                  5000 <span class="text-uppercase span mt-2">sar</span>
                 </p>
                 <p class="desc">80SAR</p>
               </div>
             </div>
           </div>
 
-          <div
-            class="learn-more-box margin-bottom-24px d-flex justify-content-between align-item-center"
-          >
-            <div class="img-taby d-flex align-items-center gap-2 flex-wrap">
-              <img src="/tabby-new 1.png" alt="Tabby Logo" class="tabby-img" />
-              <p class="tabby-text mb-0">
-                4 Interest-free payments of
-                <span class="sar-currency fw-bold">22.41 SAR</span> With Tabby
-              </p>
-            </div>
-            <div class="button-more p-color-fs text-capitalize">learn more</div>
-          </div>
+          <imgTapy />
 
           <div class="details">
             <h1 class="about-title">About Membership</h1>
             <p>
               Lorem ipsum dolor sit amet,Lorem ipsum dolor sit amet, Lorem ipsum
               dolor sit amet,Lorem ipsumLorem ipsum dolor sit amet,Lorem ipsum
-              dolor sit amet,  em ipsum Lorem ipsum dolor sit amet,Lorem ipsum
+              dolor sit amet, em ipsum Lorem ipsum dolor sit amet,Lorem ipsum
               dolor sit amet, Lorem ipsum dolor sit
             </p>
           </div>
@@ -57,8 +51,8 @@
             />
           </div>
 
-          <div class="button-member">
-            <button class="text-capitalize">
+          <div class="button-member" v-if="ismemberShip">
+            <button @click="toggleButton" class="text-capitalize">
               <svg
                 width="24"
                 height="25"
@@ -77,12 +71,41 @@
               get membership
             </button>
           </div>
+
+          <div class="button-member position" v-if="isAddCart">
+            <button @click="toggleButton" class="text-capitalize add-card">
+              <svg
+                width="24"
+                height="25"
+                viewBox="0 0 24 25"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12 3C17.2339 3 21.5 7.26614 21.5 12.5C21.5 17.7339 17.2339 22 12 22C6.76614 22 2.5 17.7339 2.5 12.5C2.5 7.26614 6.76614 3 12 3ZM17.1338 8.78613C16.6485 8.30092 15.8515 8.30092 15.3662 8.78613L10.5801 13.5723L8.63379 11.626C8.14855 11.1409 7.35145 11.1409 6.86621 11.626C6.38099 12.1112 6.38107 12.9083 6.86621 13.3936L9.69629 16.2236C9.92899 16.4563 10.246 16.5898 10.5801 16.5898C10.9142 16.5898 11.2312 16.4563 11.4639 16.2236L17.1396 10.5479C17.6137 10.0574 17.6223 9.27464 17.1338 8.78613Z"
+                  fill="#41C980"
+                  stroke="#41C980"
+                />
+              </svg>
+              added to card
+            </button>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </template>
 
+<script setup>
+let ismemberShip = ref(true);
+let isAddCart = ref(false);
+
+const toggleButton = () => {
+  ismemberShip.value = !ismemberShip.value;
+  isAddCart.value = !isAddCart.value;
+};
+</script>
+
 <style scoped>
-@import './assets/css/premium.css';
+@import "./assets/css/premium.css";
 </style>

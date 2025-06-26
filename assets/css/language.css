@@ -26,7 +26,6 @@
   height: 100%;
   appearance: none;
   border: 3px solid var(--main-color);
-  border-radius: 8px;
   cursor: pointer;
   position: relative;
   background-color: white;
@@ -48,11 +47,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 8px;
 }
 
 .input-check input:focus {
-  border: none;
+  outline: none;
+  /* border: 1px solid var(--main-color); */
+  box-shadow: none
 }
 
 .box-checked {

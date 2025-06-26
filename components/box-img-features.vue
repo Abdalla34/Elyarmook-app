@@ -5,20 +5,14 @@
     </div>
 
     <div class="mt">
-      <div class="d-flex align-items-center justify-content-between">
-        <h1 class="item-name">{{ title }}</h1>
-        <p class="price-value size-font mb-0">
-          {{ price }}
-          <span class="font-size-currency text-uppercase span"> sar </span>
-        </p>
-      </div>
-      <p class="text-end sale">{{ oldprice }}</p>
-      <div class="date-end d-flex justify-content-between mt-3">
-        <div>
-          <span class="text-capitalize date">{{ enddate }}:</span>
-          <span class="text-capitalize date-end ms-2">{{ date }} </span>
+      <div class="title-sale d-flex align-items-center justify-content-between">
+        <div class="name-product">
+          {{ title }}
         </div>
-        <p class="text-line"></p>
+        <div class="sale-price d-flex justify-content-end align-items-center">
+          <p class="price">{{ price }} <span class="span">SAR</span></p>
+          <p class="oldprice">{{ oldDes }} <span>SAR</span></p>
+        </div>
       </div>
     </div>
   </div>
@@ -30,8 +24,8 @@ defineProps({
   price: Number,
   oldprice: Number,
   enddate: String,
-  date: [Number, String],
   img: String,
+  oldDes: [Number, String],
 });
 </script>
 
@@ -44,6 +38,48 @@ defineProps({
 
 .mt {
   margin-top: 33px;
-  margin-bottom: 130px;
+}
+
+.price {
+  font-family: Poppins;
+  font-weight: 600;
+  font-size: 36px;
+  line-height: 44px;
+  letter-spacing: -2%;
+  text-align: center;
+  color: #c71f45;
+}
+
+.oldprice {
+  text-align: end;
+  font-family: var(--font-main);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0%;
+  text-align: center;
+  text-decoration: line-through;
+  color: #7e7e7e;
+}
+
+span{
+  font-size: 15px;
+}
+
+@media (min-width: 768px) {
+  .sale-price {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 768px) {
+  .title-sale {
+    flex-direction: column;
+  }
+
+  .sale-price {
+    margin-top: 40px;
+    gap: 50px;
+  }
 }
 </style>
