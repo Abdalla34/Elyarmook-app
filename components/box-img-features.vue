@@ -21,7 +21,7 @@
 <script setup>
 defineProps({
   title: String,
-  price: Number,
+  price: [Number, String],
   oldprice: Number,
   enddate: String,
   img: String,

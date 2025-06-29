@@ -49,12 +49,29 @@
             </p>
 
             <div class="input-method">
-              <div class="box-input d-flex align-items-center justify-content-between">
-                <div class="img-payment d-flex gap-2">
-                  <img src="/visa.png" alt="" />
-                  <p class="text-capitalize">pay with visa</p>
+              <div
+                class="box-input mb-3 d-flex align-items-center justify-content-between"
+                v-for="(item, index) in itemsCard"
+                :key="index"
+                :class="{ 'active-box': selectedBox === index }"
+              >
+                <div class="img-payment d-flex gap-2 align-items-center">
+                  <img :src="item.imgCard" alt="" />
+                  <p class="text-capitalize">{{ item.nameBank }}</p>
                 </div>
-                <input type="checkbox" class="custom-checkbox">
+                <input
+                  type="checkbox"
+                  class="custom-checkbox"
+                  :checked="selectedBox === index"
+                  @change="toggleSelected(index)"
+                />
+              </div>
+              <div class="button-accept">
+                <div>
+                  <ButtonCard textButton="accept and pay" />
+
+                  <div class="test">By using this website means your acceptance of Policy and Terms of use</div>
+                </div>
               </div>
             </div>
           </div>
@@ -64,68 +81,49 @@
   </div>
 </template>
 
+<script setup>
+let itemsCard = ref([
+  {
+    imgCard: "visa.png",
+    nameBank: "pay with visa",
+  },
+  {
+    imgCard: "masterCard.png",
+    nameBank: "master Card",
+  },
+  {
+    imgCard: "with tabby.png",
+    nameBank: "pay with tabby ",
+  },
+  {
+    imgCard: "cach.png",
+    nameBank: "cach",
+  },
+  {
+    imgCard: "with tamara.png",
+    nameBank: "pay with tamara ",
+  },
+]);
+let selectedBox = ref(null);
+
+function toggleSelected(index) {
+  if (selectedBox.value === index) {
+    selectedBox.value = null;
+  } else {
+    selectedBox.value = index;
+  }
+}
+</script>
+
 <style scoped>
 @import "./assets/css/premiumdetails.css";
 
-.mb {
-  margin-bottom: 50px;
+.active-box {
+  background-color: #fffcea;
+  border: 3px solid var(--main-color);
 }
 
-.poup {
-  background-color: #ffffff;
-  box-shadow: 0px 0px 15px 0px #0000000d;
-
-  padding: 60px 80px;
-  left: 50%;
-  top: 0%;
-  transform: translateX(-50%);
-}
-.fw {
-  font-weight: 400;
-}
-.input-method {
-  margin-top: 30px;
-}
-.box-input {
-  width: 100%;
-  background-color: #ffffff;
-  padding: 16px;
-  border-radius: 40px;
-  border: 1px solid  #eaecf0;
-}
-
-.box-input .custom-checkbox {
-  border-radius: 50%;
-  background-color: #ffffff;
-  border: 1px solid #eaecf0;
-  height: 24px;
-  width: 24px;
-  appearance: none;
-  position: relative;
-  cursor: pointer;
-}
-
-.custom-checkbox:checked::after {
-  content: "✔";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: var(--main-color);
-  color: #ffffff;
-  font-size: 20px;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-}
-
-/* ✅ إزالة البوردر اللي بيظهر عند الضغط */
-.custom-checkbox:focus {
-  outline: none;
-  box-shadow: none;
-  border: 1px solid var(--main-color);
+.test{
+  width: 300px;
 }
 </style>
