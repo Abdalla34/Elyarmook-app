@@ -91,6 +91,7 @@
               </svg>
             </div>
           </div>
+
           <div class="date-title-cach">
             <h4 class="h4 text-capitalize">{{ item.nameItems }}</h4>
             <p class="p-color-fs">{{ item.dateItems }}</p>
@@ -102,6 +103,12 @@
           <span class="span"> point</span>
         </div>
       </div>
+
+      <div v-if="itemPoints.length === 0" class="not-point text-center">
+        <img src="/notPoints.png" alt="no points" />
+        <p>not points yet</p>
+      </div>
+
     </div>
   </div>
 </template>
@@ -192,5 +199,18 @@ defineProps({
   background-color: #fae1e7;
   padding: 5px 12px;
   border-radius: 50%;
+}
+
+.not-point p {
+  margin-top: 24px;
+  font-family: var(--font-main);
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 18px;
+  letter-spacing: 0px;
+  text-align: center;
+  vertical-align: middle;
+  text-transform: capitalize;
+  padding-left: 30px;
 }
 </style>

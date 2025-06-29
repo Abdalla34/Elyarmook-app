@@ -2,11 +2,6 @@
   <div class="point">
     <div class="container">
       <PointPages :itemPoints="myItems" />
-
-      <div class="not-point text-center">
-        <img src="/notPoints.png" alt="no points" />
-        <p>not points yet</p>
-      </div>
     </div>
   </div>
 </template>
