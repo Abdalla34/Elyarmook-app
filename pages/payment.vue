@@ -23,7 +23,7 @@
               <div class="position-absolute bg-hover"></div>
               <div class="name text-capitalize fw-bold">pay whith stc</div>
               <div class="icon-pay">
-                <img src="/ImageStc.png" alt="" />
+                <!-- <img src="/ImageStc.png" alt="" /> -->
               </div>
             </div>
 
