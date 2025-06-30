@@ -23,7 +23,7 @@
               <div class="position-absolute bg-hover"></div>
               <div class="name text-capitalize fw-bold">pay whith stc</div>
               <div class="icon-pay">
-                <!-- <img src="/ImageStc.png" alt="" /> -->
+              testimg
               </div>
             </div>
 
@@ -33,7 +33,7 @@
               <div class="position-absolute bg-hover"></div>
               <div class="name text-capitalize fw-bold">apple pay</div>
               <div class="icon-pay">
-                <img src="/paymentimg.png" alt="" />
+                <img src="/paymentImg.png" alt="" />
               </div>
             </div>
 
@@ -43,7 +43,7 @@
               <div class="position-absolute bg-hover"></div>
               <div class="name text-capitalize fw-bold">apple pay</div>
               <div class="icon-pay">
-                <img src="/paymentimg.png" alt="" />
+                <img src="/paymentImg.png" alt="" />
               </div>
             </div>
 
@@ -53,7 +53,7 @@
               <div class="position-absolute bg-hover"></div>
               <div class="name text-capitalize fw-bold">apple pay</div>
               <div class="icon-pay">
-                <img src="/paymentimg.png" alt="" />
+                <img src="/paymentImg.png" alt="" />
               </div>
             </div>
           </div>
