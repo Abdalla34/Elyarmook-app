@@ -119,6 +119,11 @@ button {
   color: #040505;
 }
 
+
+.add-card{
+  background-color:red;
+}
+
 @media (max-width: 768px) {
   .member {
     flex-direction: column;

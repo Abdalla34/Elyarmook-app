@@ -4,7 +4,6 @@
       <div class="row justify-content-center">
         <div class="col-8">
           <div class="membership">
-            
             <div
               class="member d-flex align-items-center justify-content-between"
             >
@@ -77,6 +76,7 @@
               get membership
             </button>
           </div>
+
         </div>
       </div>
     </div>
@@ -84,5 +84,5 @@
 </template>
 
 <style scoped>
-@import './assets/css/premium.css';
+@import "./assets/css/premium.css";
 </style>
