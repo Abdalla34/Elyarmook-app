@@ -14,29 +14,16 @@
   letter-spacing: 0%;
 }
 
-.learn-more-box {
-  margin: 29px 0px 40px 0px;
-  background: linear-gradient(90deg, #ffebeb 0%, #eff8ff 100%);
-  padding: 16px 12px;
-  border-radius: 20px;
-}
+
 
 .size-font {
   font-size: 35px;
 }
 
-.tabby-img {
-  width: 90px;
-  height: auto;
-  object-fit: contain;
+.member{
+  margin-bottom: 50px;
 }
 
-.tabby-text {
-  font-size: 16px;
-  color: #333;
-  line-height: 1.2;
-  white-space: nowrap;
-}
 
 .now {
   font-family: var(--font-main);
@@ -96,7 +83,11 @@
   color: #262338;
 }
 
-
+.date {
+  font-size: 14px;
+  color: #888;
+  margin-top: 5px;
+}
 
 .button-member {
   text-align: center;
@@ -119,9 +110,18 @@ button {
   color: #040505;
 }
 
+<<<<<<< HEAD
 
 .add-card{
   background-color:red;
+=======
+.add-card {
+  background-color: #FDFDFF;
+  border: 1px solid #ebebeb;
+}
+.add-card:hover{
+  background-color: #ebebeb;
+>>>>>>> c9f414217aeafd28d26777f716e3508b2bfc25d7
 }
 
 @media (max-width: 768px) {
