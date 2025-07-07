@@ -101,5 +101,5 @@ let activeIcon = ref(true);
 </script>
 
 <style scoped>
-@import "../assets/css/singleoffer.css"; 
+@import "/assets/css/singleoffer.css";
 </style>
