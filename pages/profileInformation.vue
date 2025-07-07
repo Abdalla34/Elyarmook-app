@@ -223,9 +223,35 @@ let profileImg = ref(false);
 function ChangeProfile() {
   profileImg.value = !profileImg.value;
 }
+let inputs = ref([]);
+let codeNotTrue = ref(false);
+const codeNum = ref("1234");
 
+function checkOtp() {
+  const code = inputs.value.map((input) => input.value).join("");
 
-let coifg
+  if (code === codeNum.value) {
+    console.log("✅ OTP صح: done code");
+    codeNotTrue.value = false; 
+  } else {
+    codeNotTrue.value = true; 
+  }
+}
+
+function handleInput(index, event) {
+  let value = event.target.value;
+
+  // ينقل للعنصر اللي بعده
+  if (value.length === 1 && index < inputs.value.length - 1) {
+    inputs.value[index + 1].focus();
+  }
+
+  // التحقق بعد ملء كل الخانات
+  const filled = inputs.value.every((input) => input.value !== "");
+  if (filled) {
+    checkOtp();
+  }
+}
 </script>
 
 <style>
