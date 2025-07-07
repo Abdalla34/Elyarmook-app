@@ -224,7 +224,7 @@ function ChangeProfile() {
   profileImg.value = !profileImg.value;
 }
 console.log(profileImg.value);
-console.log('hello world')
+console.log('')
 </script>
 
 <style>
