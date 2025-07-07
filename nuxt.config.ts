@@ -7,5 +7,10 @@ export default defineNuxtConfig({
     "@fortawesome/fontawesome-free/css/all.min.css",
     "@/assets/style.css", // الخطوط مستوردة جوه الملف ده
   ],
-    modules: ['@pinia/nuxt'],
+  modules: ["@pinia/nuxt"],
+  runtimeConfig: {
+    public: {
+      apiBase: "https://alyarmook.demo.asol-tec.com/api", // ده الـ Base URL
+    },
+  },
 });

@@ -155,5 +155,5 @@ let ordersGet = ref([
 </script>
 
 <style scoped>
-@import "./assets/css/confirmorder.css"
+@import "../assets/css/confirmorder.css"
 </style>

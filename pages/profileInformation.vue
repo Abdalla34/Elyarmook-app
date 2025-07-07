@@ -223,10 +223,11 @@ let profileImg = ref(false);
 function ChangeProfile() {
   profileImg.value = !profileImg.value;
 }
-console.log(profileImg.value);
-console.log('')
+
+
+let coifg
 </script>
 
 <style>
-@import "./assets/css/profileInformation.css";
+@import "../assets/css/profileInformation.css";
 </style>

@@ -72,8 +72,6 @@
             </button>
           </div>
 
-<<<<<<< HEAD
-=======
           <div class="button-member position" v-if="isAddCart">
             <button @click="toggleButton" class="text-capitalize add-card">
               <svg
@@ -92,7 +90,7 @@
               added to card
             </button>
           </div>
->>>>>>> c9f414217aeafd28d26777f716e3508b2bfc25d7
+
         </div>
       </div>
     </div>
@@ -110,5 +108,5 @@ const toggleButton = () => {
 </script>
 
 <style scoped>
-@import "./assets/css/premium.css";
+@import "../assets/css/premium.css";
 </style>

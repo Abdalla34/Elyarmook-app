@@ -116,7 +116,7 @@ function toggleSelected(index) {
 </script>
 
 <style scoped>
-@import "./assets/css/premiumdetails.css";
+@import "../assets/css/premiumdetails.css";
 
 .active-box {
   background-color: #fffcea;

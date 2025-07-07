@@ -194,5 +194,5 @@
 </template>
 
 <style scoped>
-@import "./assets/css/ourbranch.css"
+@import "../assets/css/ourbranch.css"
 </style>

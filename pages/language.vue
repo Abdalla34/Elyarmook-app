@@ -126,5 +126,5 @@ function cancelEnglish() {
 </script>
 
 <style scoped>
-@import "./assets/css/language.css";
+@import "../assets/css/language.css";
 </style>

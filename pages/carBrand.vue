@@ -73,5 +73,5 @@ let carBrands = ref([
 </script>
 
 <style scoped>
-@import "./assets/css/carbrand.css";
+@import "../assets/css/carbrand.css";
 </style>

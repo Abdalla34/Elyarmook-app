@@ -115,5 +115,5 @@ function deletedOrder(id) {
 </script>
 
 <style scoped>
-@import "./assets/css/cardorder.css";
+@import "../assets/css/cardorder.css";
 </style>

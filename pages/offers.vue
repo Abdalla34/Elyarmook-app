@@ -115,5 +115,5 @@ onMounted(() => {
 </script>
 
 <style scoped>
-@import "./assets/css/offers.css";
+@import "../assets/css/offers.css";
 </style>

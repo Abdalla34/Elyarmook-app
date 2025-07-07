@@ -110,5 +110,5 @@ function toggleIcon(index) {
 
 <style scoped>
 
-@import "./assets/css/faqfromhelp.css"
+@import "../assets/css/faqfromhelp.css"
 </style>

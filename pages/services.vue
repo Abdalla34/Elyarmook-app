@@ -75,5 +75,5 @@ let activeIcon = ref(true);
 </script>
 
 <style scoped>
-@import "./assets/css/services.css";
+@import "../assets/css/services.css";
 </style>

@@ -73,5 +73,5 @@
 
 <style scoped>
 
-@import "./assets/css/payment.css"
+@import "../assets/css/payment.css"
 </style>

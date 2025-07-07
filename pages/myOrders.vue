@@ -210,7 +210,7 @@ let ordersAll = ref([
 </script>
 
 <style scoped>
-@import "./assets/css/myorders.css"
+@import "../assets/css/myorders.css"
 /* @media (min-width: 992px) and (max-width: 1199px) {
   a {
     font-size: 13px;

@@ -46,5 +46,5 @@
 </template>
 
 <style scoped>
-@import "/assets/css/carseries.css";
+@import "../assets/css/carseries.css";
 </style>

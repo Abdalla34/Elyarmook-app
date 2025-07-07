@@ -94,5 +94,5 @@
 </template>
 
 <style scoped>
-@import "./assets/css/orderDetails.css";
+@import "../assets/css/orderDetails.css";
 </style>

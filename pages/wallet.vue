@@ -114,5 +114,5 @@ let wallets = ref([
 </script>
 
 <style scoped>
-@import "./assets/css/wallet.css"
+@import "../assets/css/wallet.css"
 </style>
