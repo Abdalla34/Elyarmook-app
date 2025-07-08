@@ -28,7 +28,14 @@ import { useRoute } from "vue-router";
 
 const route = useRoute();
 
-const noLayoutPages = ["/contactUs", "/carBrand", "/car-series" , "/ordersteps/[id]"];
+const noLayoutPages = [
+  "/contactUs",
+  "/carBrand",
+  "/car-series",
+  "/ordersteps/[id]",
+  "/otp",
+  "/createaccount",
+];
 
 const showLayout = computed(() => !noLayoutPages.includes(route.path));
 
