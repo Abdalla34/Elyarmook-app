@@ -24,16 +24,40 @@
                   {{ order.price }}
                   <span class="p-color-fs span">SAR</span>
                 </p>
+                <div class="qty-controls d-flex align-items-center mt-2">
+                  <button
+                    class="qty-btn"
+                    :disabled="loadingQty[order.id] || order.qty <= 1"
+                    @click="updateQty(order, order.qty - 1)"
+                  >
+                    -
+                  </button>
+                  <span class="mx-2">{{ order.qty }}</span>
+                  <button
+                    class="qty-btn"
+                    :disabled="loadingQty[order.id]"
+                    @click="updateQty(order, order.qty + 1)"
+                  >
+                    +
+                  </button>
+                  <span v-if="loadingQty[order.id]" class="ms-2"
+                    >Loading...</span
+                  >
+                </div>
               </div>
             </div>
-            <div class="delete-icon">
+            <div class="delete-icon" @click="deletedOrder(order.id)">
               <svg
-                @click="deletedOrder(order.id)"
                 width="28"
                 height="24"
                 viewBox="0 0 28 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
+                :style="
+                  loadingDelete[order.id]
+                    ? 'opacity:0.5;pointer-events:none;'
+                    : ''
+                "
               >
                 <path
                   d="M24.5 5.98047C20.615 5.65047 16.7067 5.48047 12.81 5.48047C10.5 5.48047 8.19 5.58047 5.88 5.78047L3.5 5.98047"
@@ -71,6 +95,7 @@
                   stroke-linejoin="round"
                 />
               </svg>
+              <span v-if="loadingDelete[order.id]">Loading...</span>
             </div>
           </div>
           <div
@@ -86,31 +111,78 @@
 </template>
 
 <script setup>
-const { getMyCart } = useApi();
+const { getMyCart, deleteItemFromCart, updateCartItemQuantity } = useApi();
 
 const orders = ref([]);
 const loading = ref(true);
 const error = ref(null);
+const loadingDelete = ref({}); // { [id]: boolean }
+const loadingQty = ref({}); // { [id]: boolean }
 
-onMounted(async () => {
+async function fetchCart() {
   loading.value = true;
   error.value = null;
   try {
     const res = await getMyCart();
-    // Use services array from API response
     orders.value = res?.data?.services || [];
   } catch (err) {
     error.value = err;
   } finally {
     loading.value = false;
   }
-});
+}
 
-function deletedOrder(id) {
-  orders.value = orders.value.filter((order) => order.id !== id);
+onMounted(fetchCart);
+
+async function deletedOrder(id) {
+  const item = orders.value.find((o) => o.id === id);
+  if (!item) return;
+  loadingDelete.value[id] = true;
+  try {
+    // type: 'service', order_id: cart id, cart_item_id: item id
+    // Assume order_id is available in the item or from getMyCart response (e.g., res.data.id)
+    // For now, try to get order_id from the last getMyCart response
+    const cartRes = await getMyCart();
+    const order_id = cartRes?.data?.id;
+    await deleteItemFromCart("service", order_id, id);
+    await fetchCart();
+  } catch (err) {
+    error.value = err;
+  } finally {
+    loadingDelete.value[id] = false;
+  }
+}
+
+async function updateQty(order, newQty) {
+  if (newQty < 1) return;
+  loadingQty.value[order.id] = true;
+  try {
+    const cartRes = await getMyCart();
+    const order_id = cartRes?.data?.id;
+    await updateCartItemQuantity("service", order_id, order.id, newQty);
+    await fetchCart();
+  } catch (err) {
+    error.value = err;
+  } finally {
+    loadingQty.value[order.id] = false;
+  }
 }
 </script>
 
 <style scoped>
 @import "@/assets/css/cardorder.css";
+.qty-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+  background: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.qty-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
 </style>

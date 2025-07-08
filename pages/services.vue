@@ -26,8 +26,9 @@
             </div>
             <div class="div-button">
               <ButtonCard
-                textButton="add to card"
-                isActive="activeIcon"
+                :textButton="loadingAddToCart[service.id] ? 'Loading...' : 'add to cart'"
+                :isActive="activeIcon"
+                :disabled="loadingAddToCart[service.id]"
                 @click="handleAddToCart(service)"
               />
             </div>
@@ -47,6 +48,7 @@ const loading = ref(true);
 const error = ref(null);
 const feedbackMessage = ref("");
 const feedbackType = ref(""); // 'success' or 'error'
+const loadingAddToCart = ref({}); // { [serviceId]: boolean }
 
 onMounted(async () => {
   loading.value = true;
@@ -65,19 +67,30 @@ onMounted(async () => {
 let activeIcon = ref(true);
 
 async function handleAddToCart(service) {
+  loadingAddToCart.value[service.id] = true;
   try {
     const res = await addToCart("service", service.id, 1);
+    if (res && res.status === false && res.message === "Unauthenticated") {
+      return navigateTo("/createaccount");
+    }
     feedbackMessage.value = "Item added to cart!";
     feedbackType.value = "success";
-    setTimeout(() => { feedbackMessage.value = ""; }, 2000);
+    setTimeout(() => {
+      feedbackMessage.value = "";
+    }, 2000);
     // Optionally show a toast or update UI
     console.log("Added to cart:", res);
   } catch (err) {
     feedbackMessage.value = "Failed to add item to cart.";
     feedbackType.value = "error";
-    setTimeout(() => { feedbackMessage.value = ""; }, 2000);
+    setTimeout(() => {
+      feedbackMessage.value = "";
+    }, 2000);
     // Handle error (show toast, etc.)
     console.error("Add to cart failed:", err);
+    return navigateTo("/createaccount");
+  } finally {
+    loadingAddToCart.value[service.id] = false;
   }
 }
 </script>
