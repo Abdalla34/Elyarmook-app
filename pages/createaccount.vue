@@ -130,6 +130,21 @@
   </div>
 </template>
 
+<script setup>
+
+// let appconfig = useAppConfig();
+// let baseUrl = appconfig.baseURL;
+// const { data } = await useFetch(`${baseUrl}/auth/send-otp`, {
+//   method: "POST",
+//   headers: {
+//     Authorization: `Bearer`,
+//   },
+//   body: {
+//     phone: "01000000000",
+//   },
+// });
+</script>
+
 <style scoped>
 .parent-create {
   min-height: 100vh;

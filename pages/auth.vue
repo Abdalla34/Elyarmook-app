@@ -56,7 +56,7 @@ function checkOtp() {
   let code = codeDigits.value.join("");
   if (code === codeNum.value) {
     codeNoteTrue.value = false;
-    navigateTo("/createaccount");
+    // navigateTo("/createaccount");
   } else {
     codeNoteTrue.value = true;
   }

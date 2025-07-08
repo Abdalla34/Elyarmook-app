@@ -33,6 +33,7 @@
 </template>
 
 <script setup>
+
 let imagesServices = ref([
   {
     img: "/car-fix.png",
@@ -71,6 +72,7 @@ let imagesServices = ref([
     sar: "SAR",
   },
 ]);
+
 let activeIcon = ref(true);
 </script>
 
