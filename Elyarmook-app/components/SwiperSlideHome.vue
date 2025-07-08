@@ -1,0 +1,254 @@
+<template>
+  <div class="parent-swiper margin-bottom-section">
+    <Swiper
+      :modules="[Pagination, Autoplay, Navigation]"
+      :slides-per-view="1"
+      :loop="true"
+      :pagination="{ clickable: true }"
+      navigation
+      class="mySwiper p-2 mt-4"
+    >
+      <SwiperSlide v-for="(item, index) in imagesSliders" :key="index">
+        <div class="container">
+          <div class="row d-flex align-items-center justify-content-center">
+            <div class="col-10">
+              <div
+                class="slide-content d-flex align-items-center justify-content-center"
+              >
+                <div>
+                  <h1 class="title-sec-main">{{ item.title }}</h1>
+                  <p class="desc">{{ item.des }}</p>
+                  <div class="width-button">
+                    <button class="button padding-button text-capitalize">
+                      learn More
+                    </button>
+                  </div>
+                </div>
+                <img :src="item.img" alt="Slide Image" class="slide-img" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </SwiperSlide>
+    </Swiper>
+  </div>
+</template>
+
+<script setup>
+import { Swiper, SwiperSlide } from "swiper/vue";
+import { Pagination, Autoplay, Navigation } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+let imagesSliders = ref([
+  {
+    img: "/character.png",
+    title: "Offer",
+    des: "Lorem ipsum dolor sit amet consectetur adipisicing elit ipsum dolor sit amet consectetur adipisicing elit.",
+  },
+  {
+    img: "/Yarmook Logo.png",
+    title: "Offer",
+    des: "Lorem ipsum dolor sit amet consectetur adipisicing elit ipsum dolor sit amet consectetur adipisicing elit.",
+  },
+  {
+    img: "/profile.jpg",
+    title: "Offer",
+    des: "Lorem ipsum dolor sit amet consectetur adipisicing elit ipsum dolor sit amet consectetur adipisicing elit.",
+  },
+]);
+</script>
+
+<style scoped>
+
+.mySwiper {
+  width: 100%;
+  height: 300px;
+  background-color: white;
+  box-shadow: 0 0px 8px rgba(0, 0, 0, 0.08);
+  border-radius: 60px;
+}
+
+.slide-img {
+  width: 364px;
+  height: 270px;
+  object-fit: contain;
+  border-radius: 10px;
+  transition: all 0.4s ease;
+  cursor: pointer;
+}
+.slide-img:hover {
+  transform: scale(1.1) rotate(3deg);
+  filter: brightness(1.1) drop-shadow(0 8px 16px rgba(255, 230, 84, 0.3));
+}
+
+.mySwiper :deep(.swiper-button-prev),
+.mySwiper :deep(.swiper-button-next) {
+  width: 48px;
+  height: 48px;
+  background-color: #ebebeb;
+  color: #333;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: absolute;
+}
+
+/* .mySwiper :deep(.swiper-button-prev),
+.mySwiper :deep(.swiper-button-next) {
+  width: 40px;
+  height: 40px;
+  color: #585858;
+  transition: all 0.3s ease;
+  font-weight: bold;
+} */
+
+.mySwiper :deep(.swiper-button-prev) {
+  left: 68px;
+}
+.mySwiper :deep(.swiper-button-next) {
+  right: 68px;
+}
+
+.mySwiper :deep(.swiper-button-prev)::after {
+  font-size: 25px;
+  content: "←";
+}
+
+.mySwiper :deep(.swiper-button-next)::after {
+  font-size: 25px;
+  content: "→";
+}
+
+.mySwiper :deep(.swiper-button-prev:hover),
+.mySwiper :deep(.swiper-button-next:hover) {
+  color: black;
+  transform: scale(1.2);
+}
+
+.mySwiper :deep(.swiper-pagination-bullet) {
+  background: #585858;
+  opacity: 0.5;
+  border-radius: 4px;
+  bottom: 22px;
+}
+
+.mySwiper :deep(.swiper-pagination-bullet-active) {
+  opacity: 1;
+  width: 15px;
+}
+
+.title-sec-main {
+  font-family: var(--font-main);
+  font-weight: 600;
+  font-size: 36px;
+  line-height: 44px;
+  letter-spacing: -2%;
+}
+
+.desc {
+  width: 444px;
+  height: 44px;
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 28px;
+}
+
+.width-button {
+  width: 187px;
+  height: 67px;
+}
+.padding-button {
+  padding: 20px 49px;
+  font-size: 16px;
+  color: var(--color-black);
+  font-weight: 500;
+  border-radius: 36px;
+}
+
+@media (max-width: 768px) {
+  .slide-content {
+    flex-direction: column;
+  }
+
+  .slide-img {
+    width: 224px;
+    height: 120px;
+    margin-top: -29px;
+  }
+
+  .title-sec-main {
+    font-size: 30px;
+    line-height: 32px;
+    text-align: center;
+  }
+
+  .desc {
+    width: 100%;
+    font-size: 10px;
+    margin-bottom: 3px;
+    text-align: center;
+  }
+
+  .padding-button {
+    padding: 5px 12px;
+    font-size: 12px;
+    position: relative;
+    left: 50%;
+    transform: translateX(-9%);
+  }
+
+  .mySwiper :deep(.swiper-button-prev),
+  .mySwiper :deep(.swiper-button-next) {
+    width: 20px;
+    height: 20px;
+  }
+
+  .mySwiper :deep(.swiper-button-prev)::after {
+    font-size: 18px;
+    content: "←";
+  }
+
+  .mySwiper :deep(.swiper-button-next)::after {
+    font-size: 18px;
+    content: "→";
+  }
+
+  .mySwiper :deep(.swiper-button-prev) {
+    left: 10px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .mySwiper :deep(.swiper-button-next) {
+    right: 10px;
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 992px) {
+  .slide-img {
+    width: 220px;
+    height: 150px;
+  }
+
+  .title-sec-main {
+    font-size: 20px;
+    line-height: 32px;
+  }
+  .desc {
+    width: 100%;
+    font-size: 13px;
+    margin-bottom: 15px;
+  }
+  .padding-button {
+    padding: 10px 20px;
+    font-size: 12px;
+  }
+}
+
+</style>

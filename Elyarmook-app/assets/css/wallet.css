@@ -1,0 +1,45 @@
+.wallet-margin {
+  margin-bottom: 192px;
+}
+
+.price {
+  font-family: var(--font-main);
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 38px;
+  letter-spacing: 0%;
+  color: var(--color-black);
+}
+
+.fs {
+  font-size: 14px;
+}
+
+.span {
+  color: #7e7e7e;
+}
+.name-wallet h5 {
+  font-family: var(--font-main);
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 28px;
+  letter-spacing: 0%;
+}
+
+.pricewall {
+  font-size: 24px;
+  font-weight: 600;
+  font-family: var(--font-main);
+}
+
+.background-plus {
+  background-color: #ecfaf2;
+}
+
+.background {
+  background-color: #eecece;
+}
+.radius-padding {
+  padding: 5px;
+  border-radius: 6px;
+}

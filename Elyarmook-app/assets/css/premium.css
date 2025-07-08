@@ -1,0 +1,143 @@
+.membership {
+  margin-top: 80px;
+}
+
+.title {
+  margin-bottom: 50px;
+}
+
+.title h1 {
+  font-family: var(--font-main);
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 38px;
+  letter-spacing: 0%;
+}
+
+.size-font {
+  font-size: 35px;
+}
+
+.member {
+  margin-bottom: 50px;
+}
+
+.now {
+  font-family: var(--font-main);
+  font-weight: 600;
+  font-size: 36px;
+  line-height: 44px;
+  letter-spacing: -2%;
+  text-align: center;
+  color: #c71f45;
+}
+
+.span {
+  color: #c71f45;
+  font-size: 18px;
+}
+
+.desc {
+  font-family: var(--font-main);
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 28px;
+  letter-spacing: 0%;
+  text-decoration: line-through;
+  text-align: center;
+  text-decoration: line-through;
+  color: #6e7191;
+  text-align: end;
+}
+
+.about-title {
+  font-family: var(--font-main);
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 28px;
+  letter-spacing: 0%;
+  color: #262338;
+  margin-bottom: 18px;
+}
+
+.details p {
+  font-family: var(--font-main);
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 28px;
+  letter-spacing: 0%;
+  color: #262338;
+}
+
+.member-features h3 {
+  margin-top: 54px;
+  margin-bottom: 16px;
+  font-family: var(--font-main);
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 28px;
+  letter-spacing: 0%;
+  color: #262338;
+}
+
+.date {
+  font-size: 14px;
+  color: #888;
+  margin-top: 5px;
+}
+
+.button-member {
+  text-align: center;
+  margin-top: 54px;
+  margin-bottom: 80px;
+}
+
+button {
+  width: 40%;
+  gap: 8px;
+  border-radius: 36px;
+  padding: 21px 0px;
+  border: none;
+  background-color: var(--main-color);
+  font-family: var(--font-main);
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0%;
+  color: #040505;
+}
+
+.add-card {
+  background-color: red;
+}
+
+.add-card {
+  background-color: #fdfdff;
+  border: 1px solid #ebebeb;
+}
+.add-card:hover {
+  background-color: #ebebeb;
+}
+
+@media (max-width: 768px) {
+  .member {
+    flex-direction: column;
+  }
+  .title {
+    flex-direction: column;
+  }
+  .title h1 {
+    font-family: var(--font-main);
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 38px;
+    letter-spacing: 0%;
+    text-align: center;
+  }
+  .price {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+}

@@ -1,0 +1,226 @@
+.background {
+  background-color: #ffffff;
+  border: 1px solid #e4e4e4;
+  border-radius: 36px;
+}
+.h1 {
+  font-family: var(--font-main);
+  font-weight: 500;
+  font-style: Medium;
+  font-size: 24px;
+  line-height: 22.78px;
+  letter-spacing: 0%;
+}
+.price {
+  font-family: var(--font-main);
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 32px;
+  letter-spacing: 0%;
+}
+.span {
+  font-size: 15px;
+  color: #3d3d3d;
+  font-weight: 400;
+  color: #7e7e7e;
+}
+.status-parent {
+  background-color: #fef5bf;
+  padding: 0px 12px;
+  border-radius: 20px;
+  color: #fdd800;
+  font-family: var(--font-alt);
+  font-weight: 500;
+  font-style: Medium;
+  font-size: 16px;
+}
+.box-car {
+  border: 1px solid #f7f7fc;
+  border-radius: 28px;
+  width: 50%;
+  padding: 20px;
+}
+
+.icons-car {
+  background-color: #f7f7fc;
+  padding: 8px;
+  border-radius: 12px;
+}
+.name-order {
+  font-family: var(--font-main);
+  font-weight: 400;
+  font-size: 16px;
+  color: #3d3d3d;
+}
+.parag {
+  font-family: Poppins;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 12px;
+  color: #7e7e7e;
+}
+.margin-60px {
+  margin-top: 60px;
+}
+
+.margin-20px {
+  margin-top: 20px;
+}
+
+.box-order {
+  background-color: #fcfcfc;
+  width: 50%;
+  padding: 36px;
+}
+.box-icon {
+  background-color: #ecfaf2;
+  width: fit-content;
+  margin: auto;
+  padding: 8px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+.days-time h4 {
+  font-family: var(--font-main);
+  font-weight: 400;
+  font-size: 16px;
+  text-transform: capitalize;
+}
+.color-Eb {
+  color: #eb5757;
+  font-family: var(--font-main);
+  font-weight: 500;
+  font-size: 16px;
+}
+.title-step {
+  margin-top: 16px;
+  font-family: var(--font-main);
+  font-weight: 600;
+  font-size: 18px;
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.width-p {
+  font-family: var(--font-main);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  width: 494px;
+  margin: auto;
+}
+
+.steps {
+  margin-top: 28px;
+}
+
+.step-name {
+  font-family: var(--font-alt);
+  font-weight: 500;
+  font-size: 12px;
+  color: #7e7e7e;
+  text-transform: capitalize;
+}
+
+.bg-icons {
+  background-color: #f7f7fc;
+  padding: 12px;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  margin: auto;
+  text-align: center;
+}
+.input-code input {
+  padding: 12px 16px;
+  border: 1px solid #f1f3f9;
+  border-radius: 12px;
+}
+.apply-btn {
+  top: 50%;
+  right: 2px;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  background-color: #f1f3f9;
+  height: 90%;
+  padding: 15px;
+}
+.apply {
+  font-family: var(--font-main);
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.order-amount {
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  padding: 8px 24px;
+}
+.amount {
+  font-family: var(--font-main);
+  font-weight: 400;
+  font-size: 16px;
+  color: #667379;
+}
+.num-order-amount {
+  font-weight: 600;
+  font-size: 16px;
+  color: #1b2124;
+}
+
+.totla-amount {
+  background-color: #ecfaf2;
+  padding: 12px 20px;
+  border-radius: 12px;
+}
+.total {
+  font-family: var(--font-alt);
+  font-weight: 600;
+  font-size: 20px;
+  color: #2f2f2f;
+}
+.price-total {
+  font-weight: 600;
+  font-size: 30px;
+  color: #2f2f2f;
+}
+
+.cancel-order button {
+  color: #eb5757;
+  font-family: var(--font-main);
+  font-weight: 500;
+  font-size: 16px;
+  border: none;
+  background-color: transparent;
+  width: 100%;
+  height: 50px;
+  text-align: center;
+  text-transform: capitalize;
+  transition: all ease 0.4s;
+}
+
+.cancel-order button::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0%;
+  height: 100%;
+  background-color: #eb5757;
+  border-radius: 36px;
+  z-index: -1;
+  transition: width 0.4s ease;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.cancel-order button:hover::after {
+  width: 100%;
+  opacity: 1;
+}
+
+.cancel-order button:hover {
+  color: white;
+}
