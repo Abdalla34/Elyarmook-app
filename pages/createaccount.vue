@@ -9,11 +9,16 @@
 
       <div class="phone-number d-flex flex-column">
         <label class="label" for="phone-number">Phone Number</label>
-        <input type="text" class="input-phone" placeholder="+966 XX XXX XXXX" />
+        <input
+          v-model="phone"
+          type="text"
+          class="input-phone"
+          placeholder="+966 XX XXX XXXX"
+        />
       </div>
 
       <div class="btn-continue w-100">
-        <ButtonCard textButton="continue" />
+        <ButtonCard :textButton="loading ? 'Loading...' : 'continue'" @click="handleContinue" :disabled="loading" />
       </div>
 
       <div class="position-relative or-divider">
@@ -130,19 +135,45 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
+import { ref } from 'vue'
+const phone = ref('')
+const loading = ref(false)
+const { sendOTP } = useApi()
+const router = useRouter()
 
-// let appconfig = useAppConfig();
-// let baseUrl = appconfig.baseURL;
-// const { data } = await useFetch(`${baseUrl}/auth/send-otp`, {
-//   method: "POST",
-//   headers: {
-//     Authorization: `Bearer`,
-//   },
-//   body: {
-//     phone: "01000000000",
-//   },
-// });
+// Replace the SendOTPResponse interface with the correct structure
+// Add this at the top of the file or in composables/useApi.ts if shared
+interface SendOTPResponse {
+  status: boolean;
+  data: {
+    registered: boolean;
+  };
+  message: string;
+}
+
+const handleContinue = async () => {
+  if (!phone.value) return
+  loading.value = true
+  try {
+    const res = await sendOTP(phone.value)
+    if (res && res.data && typeof res.data.registered !== 'undefined') {
+      router.push({
+        path: '/auth',
+        query: {
+          phone: phone.value,
+          registered: res.data.registered.toString()
+        }
+      })
+    } else {
+      alert('Unexpected response from server')
+    }
+  } catch (e) {
+    alert('Failed to send OTP')
+  } finally {
+    loading.value = false
+  }
+}
 </script>
 
 <style scoped>

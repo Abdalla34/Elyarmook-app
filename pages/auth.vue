@@ -10,27 +10,22 @@
           <div class="mt-60px">
             <h6 class="text-start h6">insert code</h6>
 
-            <form @submit.prevent="checkOtp">
-              <div
-                class="parent d-flex align-items-center justify-content-center"
-              >
-                <input
-                  v-for="(input, index) in inputs"
-                  type="text"
-                  placeholder="-"
-                  class="input-style-otp text-center"
-                  maxlength="1"
-                  :ref="(el) => (inputs[index] = el)"
-                  @input="handleInput(index, $event)"
-                  v-model="codeDigits[index]"
-                />
-              </div>
-              <button-card
-                text-button="continue"
-                type="submit"
-                class="mt-32px"
-              />
-            </form>
+            <v-otp-input
+              v-model:value="code"
+              :num-inputs="4"
+              input-classes="input-style-otp text-center"
+              :should-auto-focus="true"
+              :should-focus-order="true"
+              input-type="number"
+              @on-complete="handleCheckOTP"
+              :is-disabled="loading"
+              :placeholder="['-', '-', '-', '-']"
+            />
+            <ButtonCard
+              :textButton="loading ? 'Verifying...' : 'Verify'"
+              @click="handleCheckOTP"
+              :disabled="loading || code.length !== 4"
+            />
 
             <div class="code-true mt-3" v-if="codeNoteTrue">
               <p class="text-danger text-center text-uupercase">
@@ -44,7 +39,12 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
+import { ref } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { useApi } from "@/composables/useApi";
+import VOtpInput from "vue3-otp-input";
+import { useCookie } from "#app";
 
 let inputs = ref(["", "", "", ""]);
 let codeNum = ref("1234");
@@ -52,15 +52,51 @@ let codeDigits = ref(["", "", "", ""]);
 let codeNoteTrue = ref(false);
 let codeChecked = ref(false);
 
-function checkOtp() {
-  let code = codeDigits.value.join("");
-  if (code === codeNum.value) {
-    codeNoteTrue.value = false;
-    // navigateTo("/createaccount");
-  } else {
-    codeNoteTrue.value = true;
+const route = useRoute();
+const router = useRouter();
+const { checkOTP, loginOrRegister } = useApi();
+
+const getQueryString = (val: any): string =>
+  Array.isArray(val) ? val[0] : val || "";
+const getQueryBool = (val: any): boolean => {
+  if (Array.isArray(val)) val = val[0];
+  return val === "true" || val === true;
+};
+
+const phone = ref(getQueryString(route.query.phone));
+const registered = ref(getQueryBool(route.query.registered));
+const code = ref("");
+const loading = ref(false);
+
+const handleCheckOTP = async (otpValue?: string) => {
+  const otp = otpValue || code.value;
+  if (!phone.value || !otp) return;
+  loading.value = true;
+  try {
+    const res = await checkOTP(phone.value, otp);
+    if (res && res.status && res.message === "Code Is Correct") {
+      if (registered.value) {
+        const loginRes = await loginOrRegister({ phone: phone.value, otp_code: otp, registered: registered.value });
+        if (loginRes && loginRes.status && loginRes.data && loginRes.data.token && loginRes.data.user) {
+          // Save token and user data for future usage
+          const token = useCookie("token", { maxAge: 365 * 24 * 60 * 60 });
+          const user = useCookie("user", { maxAge: 365 * 24 * 60 * 60 });
+          token.value = loginRes.data.token;
+          user.value = JSON.stringify(loginRes.data.user);
+        }
+        router.push("/");
+      } else {
+        // Continue registration flow
+      }
+    } else {
+      alert("Invalid code");
+    }
+  } catch (e) {
+    alert("Failed to verify code");
+  } finally {
+    loading.value = false;
   }
-}
+};
 
 function valideOtp() {
   let code = codeDigits.value.join("");
@@ -68,7 +104,6 @@ function valideOtp() {
 }
 
 function handleInput(index, event) {
-
   let value = event.target.value;
   if (value.length === 1 && index < inputs.value.length - 1) {
     inputs.value[index + 1].focus();
@@ -90,21 +125,9 @@ function handleInput(index, event) {
     codeChecked.value = false;
   }
 }
-
-const appConfig = useAppConfig();
-const baseUrl = appConfig.baseURL;
-const { data } = await useFetch(`${baseUrl}/auth/send-otp`, {
-  method: "POST",
-  headers: {
-    Authorization: `Bearer`,
-  },
-  body: {
-    phone: "01000000000",
-  },
-});
 </script>
 
-<style scoped>
+<style>
 .otp {
   background-color: #ffffff;
   box-shadow: 0px 0px 15px 0px #0000000d;
@@ -134,13 +157,21 @@ const { data } = await useFetch(`${baseUrl}/auth/send-otp`, {
   color: #7e7e7e;
 }
 .input-style-otp {
-  width: 126px;
-  border-radius: 12px;
-  padding: 28px 16px;
-  border-width: 1px;
-  border: none;
-  border: 1px solid #f1f3f9;
+  width: 40px;
+  height: 40px;
+  padding: 5px;
+  margin: 0 10px;
   font-size: 20px;
+  border-radius: 12px;
+  border: 1px solid #f1f3f9;
+  text-align: center;
+  background: #fff;
+}
+.input-style-otp.is-complete {
+  background-color: #e4e4e4;
+}
+.text-center {
+  text-align: center;
 }
 .mt-60px {
   margin-top: 60px;

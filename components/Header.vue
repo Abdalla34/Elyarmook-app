@@ -24,7 +24,7 @@
         >
           <div
             class="background-color-cart d-flex align-items-center justify-content-center"
-            @click="navigateTo('/myOrders')"
+            @click="navigateTo('/cart')"
           >
             <button class="buttons">
               <CarIconCard />

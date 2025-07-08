@@ -16,13 +16,13 @@
           >
             <div class="details-cart d-flex align-items-center gap-2">
               <div class="img">
-                <img :src="order.imgorder" alt="" />
+                <img :src="order.image" :alt="order.title" />
               </div>
               <div class="name-cart">
-                <h4 class="item-name">{{ order.nameorder }}</h4>
+                <h4 class="item-name">{{ order.title }}</h4>
                 <p class="price">
-                  {{ order.priceorder }}
-                  <span class="p-color-fs span">{{ order.currency }}</span>
+                  {{ order.price }}
+                  <span class="p-color-fs span">SAR</span>
                 </p>
               </div>
             </div>
@@ -86,29 +86,26 @@
 </template>
 
 <script setup>
-let orders = ref([
-  {
-    id: 1,
-    imgorder: "car Brake Icon.png",
-    nameorder: "Brakes Services",
-    priceorder: "90",
-    currency: "SAR",
-  },
-  {
-    id: 2,
-    imgorder: "car Brake Icon.png",
-    nameorder: "Brakes Services",
-    priceorder: "70",
-    currency: "SAR",
-  },
-  {
-    id: 3,
-    imgorder: "car Brake Icon.png",
-    nameorder: "Brakes Services",
-    priceorder: "60",
-    currency: "SAR",
-  },
-]);
+const { getMyCart } = useApi();
+
+const orders = ref([]);
+const loading = ref(true);
+const error = ref(null);
+
+onMounted(async () => {
+  loading.value = true;
+  error.value = null;
+  try {
+    const res = await getMyCart();
+    // Use services array from API response
+    orders.value = res?.data?.services || [];
+  } catch (err) {
+    error.value = err;
+  } finally {
+    loading.value = false;
+  }
+});
+
 function deletedOrder(id) {
   orders.value = orders.value.filter((order) => order.id !== id);
 }
