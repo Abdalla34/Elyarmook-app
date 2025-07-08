@@ -33,7 +33,7 @@ const noLayoutPages = [
   "/carBrand",
   "/car-series",
   "/ordersteps/[id]",
-  "/otp",
+  "/auth",
   "/createaccount",
 ];
 
