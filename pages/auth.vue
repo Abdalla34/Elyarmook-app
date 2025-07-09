@@ -10,28 +10,30 @@
           <div class="mt-60px">
             <h6 class="text-start h6">insert code</h6>
 
-            <v-otp-input
-              v-model:value="code"
-              :num-inputs="4"
-              input-classes="input-style-otp text-center"
-              :should-auto-focus="true"
-              :should-focus-order="true"
-              input-type="number"
-              @on-complete="handleCheckOTP"
-              :is-disabled="loading"
-              :placeholder="['-', '-', '-', '-']"
-            />
+            <div class="d-flex justify-content-center gap-4 mb-32px">
+              <v-otp-input
+                v-model:value="code"
+                :num-inputs="4"
+                input-classes="input-style-otp"
+                :should-auto-focus="true"
+                :should-focus-order="true"
+                input-type="number"
+                @on-complete="handleCheckOTP"
+                :is-disabled="loading"
+                :placeholder="['-', '-', '-', '-']"
+              />
+            </div>
             <ButtonCard
               :textButton="loading ? 'Verifying...' : 'Verify'"
               @click="handleCheckOTP"
               :disabled="loading || code.length !== 4"
             />
 
-            <div class="code-true mt-3" v-if="codeNoteTrue">
+            <!-- <div class="code-true mt-3" v-if="codeNoteTrue">
               <p class="text-danger text-center text-uupercase">
                 code not true
               </p>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -46,11 +48,11 @@ import { useApi } from "@/composables/useApi";
 import VOtpInput from "vue3-otp-input";
 import { useCookie } from "#app";
 
-let inputs = ref(["", "", "", ""]);
-let codeNum = ref("1234");
-let codeDigits = ref(["", "", "", ""]);
-let codeNoteTrue = ref(false);
-let codeChecked = ref(false);
+// let inputs = ref(["", "", "", ""]);
+// let codeNum = ref("1234");
+// let codeDigits = ref(["", "", "", ""]);
+// let codeNoteTrue = ref(false);
+// let codeChecked = ref(false);
 
 const route = useRoute();
 const router = useRouter();
@@ -76,8 +78,18 @@ const handleCheckOTP = async (otpValue?: string) => {
     const res = await checkOTP(phone.value, otp);
     if (res && res.status && res.message === "Code Is Correct") {
       if (registered.value) {
-        const loginRes = await loginOrRegister({ phone: phone.value, otp_code: otp, registered: registered.value });
-        if (loginRes && loginRes.status && loginRes.data && loginRes.data.token && loginRes.data.user) {
+        const loginRes = await loginOrRegister({
+          phone: phone.value,
+          otp_code: otp,
+          registered: registered.value,
+        });
+        if (
+          loginRes &&
+          loginRes.status &&
+          loginRes.data &&
+          loginRes.data.token &&
+          loginRes.data.user
+        ) {
           // Save token and user data for future usage
           const token = useCookie("token", { maxAge: 365 * 24 * 60 * 60 });
           const user = useCookie("user", { maxAge: 365 * 24 * 60 * 60 });
@@ -98,33 +110,7 @@ const handleCheckOTP = async (otpValue?: string) => {
   }
 };
 
-function valideOtp() {
-  let code = codeDigits.value.join("");
-  codeNoteTrue.value = code !== codeNum.value;
-}
 
-function handleInput(index, event) {
-  let value = event.target.value;
-  if (value.length === 1 && index < inputs.value.length - 1) {
-    inputs.value[index + 1].focus();
-  }
-
-  if (
-    value === "" &&
-    event.inputType === "deleteContentBackward" &&
-    index > 0
-  ) {
-    inputs.value[index - 1].focus();
-  }
-
-  let filled = codeDigits.value.every((input) => input !== "");
-  if (filled) {
-    codeChecked.value = true;
-    valideOtp();
-  } else {
-    codeChecked.value = false;
-  }
-}
 </script>
 
 <style>
@@ -156,9 +142,14 @@ function handleInput(index, event) {
 
   color: #7e7e7e;
 }
+
+.otp-input-container{
+  margin-bottom: 32px;
+}
+
 .input-style-otp {
-  width: 40px;
-  height: 40px;
+  width: 120px;
+  height: 80px;
   padding: 5px;
   margin: 0 10px;
   font-size: 20px;
@@ -167,12 +158,11 @@ function handleInput(index, event) {
   text-align: center;
   background: #fff;
 }
+
 .input-style-otp.is-complete {
   background-color: #e4e4e4;
 }
-.text-center {
-  text-align: center;
-}
+
 .mt-60px {
   margin-top: 60px;
 }
@@ -185,8 +175,8 @@ function handleInput(index, event) {
 .parent {
   gap: 10px;
 }
-
 .mt-32px {
   margin-top: 32px;
 }
+
 </style>

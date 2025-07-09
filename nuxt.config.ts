@@ -7,7 +7,7 @@ export default defineNuxtConfig({
     "@fortawesome/fontawesome-free/css/all.min.css",
     "@/assets/style.css", // الخطوط مستوردة جوه الملف ده
   ],
-  modules: ["@pinia/nuxt", "@vee-validate/nuxt"],
+  modules: ["@pinia/nuxt", "@vee-validate/nuxt", "dayjs-nuxt"],
   runtimeConfig: {
     public: {
      apiBase: 'https://alyarmook.demo.asol-tec.com/api', // هنا بتحط الرابط الأساسي (Base URL)

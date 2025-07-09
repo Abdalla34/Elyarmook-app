@@ -16,17 +16,19 @@
                 <img class="img" :src="service.image" :alt="service.title" />
               </div>
             </div>
-
+            <!-- {{ service }} -->
             <div class="service-content">
               <TitleServices
                 :title="service.title"
-                :currency="'SAR'"
-                :sar="service.price"
+                :currency="service.price"
+                :sar="'sar'"
               />
             </div>
             <div class="div-button">
               <ButtonCard
-                :textButton="loadingAddToCart[service.id] ? 'Loading...' : 'add to cart'"
+                :textButton="
+                  loadingAddToCart[service.id] ? 'Loading...' : 'add to cart'
+                "
                 :isActive="activeIcon"
                 :disabled="loadingAddToCart[service.id]"
                 @click="handleAddToCart(service)"

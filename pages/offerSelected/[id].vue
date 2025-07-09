@@ -1,37 +1,42 @@
 <template>
-  <Views />
   <div class="offer-selected">
     <div class="container">
       <div class="row">
         <div class="col-7 col-padding">
-          <div class="offer-box margin-bottom-24px" v-if="selectedCard">
+          <div class="offer-box margin-bottom-24px" v-if="offerId?.data?.offer">
             <GoPageArrow title="offer Details" backPath="/offers" />
 
             <div class="img-offer-card position-relative margin-bottom-24px">
-              <img :src="selectedCard.imgPrice" alt="Offer Image" />
+              <img :src="offerId.data.offer.image" alt="Offer Image" />
               <span class="offers-sale position-absolute sale-offer">
-                {{ selectedCard.sale }}
+                {{ Math.trunc(offerId.data.offer.discount_percentage) }}% OFF
               </span>
             </div>
 
             <div class="d-flex align-items-center justify-content-between">
-              <h1 class="item-name">{{ selectedCard.title }}</h1>
+              <h1 class="item-name">{{ offerId.data.offer.title }}</h1>
               <p class="price-value size-font color mb-0">
-                {{ selectedCard.prices }}
+                {{ offerId.data.offer.price_after_discount }}
                 <span class="font-size-currency text-uppercase color">
-                  {{ selectedCard.currency }}
+                  sar
                 </span>
               </p>
             </div>
 
             <div class="date-end d-flex justify-content-between mt-3">
               <div>
-                <span class="text-capitalize date color-gray">End date:</span>
+                <span class="text-capitalize date color-gray">End date: </span>
                 <span class="text-capitalize date-end">
-                  {{ selectedCard.endDate }}
+                  {{
+                    dayjs(offerId.data.offer.expires_at).format(
+                      "ddd, MMM D ,YYYY"
+                    )
+                  }}
                 </span>
               </div>
-              <p class="text-line color-gray">80 {{ selectedCard.currency }}</p>
+              <p class="text-line color-gray">
+                {{ offerId.data.offer.discount_percentage }}
+              </p>
             </div>
 
             <div
@@ -58,15 +63,18 @@
               <div class="d-flex gap-1">
                 <span>1.</span>
                 <p class="pragaraph">
-                  {{ selectedCard.details }}
+                  {{ offerId.data.offer.description }}
                 </p>
               </div>
             </div>
           </div>
 
           <!-- زرار الإضافة للكارت -->
-          <div class="width-button">
+          <div class="width-button" v-if="offerId?.data?.offer">
             <ButtonCard textButton="add to cart" :isActive="activeIcon" />
+          </div>
+          <div class="no-offer" v-if="thisTrue">
+            <img src="/Car Brake Icon.png" alt="" />
           </div>
         </div>
       </div>
@@ -76,26 +84,18 @@
 
 <script setup>
 let route = useRoute();
-
-let idRoute = Number(route.params.id);
-
-let selectedCard = ref(null);
-
+let idParams = route.params.id;
+const dayjs = useDayjs();
+let offerId = ref(null);
+offerId.value = await useApi().getOfferSingle(idParams);
+let thisTrue = ref(false);
 onMounted(() => {
-  let getStorage = localStorage.getItem("testsave");
-  if (getStorage) {
-    let offers = JSON.parse(getStorage);
-    if (offers.id === idRoute) {
-      selectedCard.value = offers;
-    }
+  if (offerId?.data?.offer.length === 0) {
+    thisTrue.value = true;
+  } else {
+    thisTrue.value = false;
   }
 });
-
-// let route = useRoute();
-// let idParams = route.params.id;
-// let cardsOffer = ref([]);
-// const { data } = await useFetch(`/apiOffers/${idParams}`);
-// cardsOffer.value = data.value ? [data.value] : [];
 </script>
 
 <style scoped>
