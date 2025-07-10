@@ -7,7 +7,7 @@
             <GoPageArrow title="offer Details" backPath="/offers" />
 
             <div class="img-offer-card position-relative margin-bottom-24px">
-              <img :src="offerId.data.offer.image" alt="Offer Image" />
+              <img src="/offerImage.png" alt="Offer Image" />
               <span class="offers-sale position-absolute sale-offer">
                 {{ Math.trunc(offerId.data.offer.discount_percentage) }}% OFF
               </span>
@@ -35,7 +35,7 @@
                 </span>
               </div>
               <p class="text-line color-gray">
-                {{ offerId.data.offer.discount_percentage }}
+                {{ Math.trunc(offerId.data.offer.price_before_discount) }} SAR
               </p>
             </div>
 
@@ -60,12 +60,15 @@
 
             <div class="offer-features margin-bottom-24px">
               <h1 class="margin-bottom-24px features-size">offer features</h1>
-              <div class="d-flex gap-1">
-                <span>1.</span>
-                <p class="pragaraph">
-                  {{ offerId.data.offer.description }}
-                </p>
+              <div
+                v-for="(step, index) in steps"
+                :key="index"
+                class="d-flex gap-1"
+              >
+                <span>{{ index + 1 }}</span>
+                : <p class="pragaraph">{{ step.replace(/^\d+\.\s*/, "") }}</p>
               </div>
+             
             </div>
           </div>
 
@@ -83,6 +86,15 @@
 </template>
 
 <script setup>
+let extract = (textstep) => {
+  if (!textstep) return [];
+  return textstep.match(/(\d+\.\s?.+?)(?=\d+\.\s?|$)/gs) || [];
+};
+let steps = computed(() => {
+  return extract(offerId.value?.data?.offer.description);
+});
+
+let activeIcon = ref(false);
 let route = useRoute();
 let idParams = route.params.id;
 const dayjs = useDayjs();

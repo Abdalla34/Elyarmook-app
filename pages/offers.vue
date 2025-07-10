@@ -11,7 +11,11 @@
             >
               <div class="offer-card margin-bottom-24px" @click="toBox(item)">
                 <div class="img-offer text-center">
-                  <img :src="item.image" alt="" class="margin-bottom-24px" />
+                  <img
+                    src="/offerImage.png"
+                    alt=""
+                    class="margin-bottom-24px"
+                  />
                 </div>
 
                 <div
@@ -24,30 +28,34 @@
                   </span>
                 </div>
 
-                <!-- السعرين -->
-                <!-- <div class="price-section currency d-flex justify-content-between align-items-center mb-2">
-                  <p class="price-value price mb-0">
-                    <del>{{ item.price_before_discount }}</del>
-                  </p>
-                  <p class="price-value price mb-0 fw-bold">
-                    {{ item.price_after_discount }}
-                    <span class="price-currency sar">sar</span>
-                  </p>
-                </div> -->
-
-                <!-- تاريخ الانتهاء -->
-                <!-- <div class="date currency d-flex justify-content-between">
-                  <span class="text-capitalize date-item price-value">
-                    end date:
-                  {{ dayjs(item.expires_at).format("ddd, MMM D, YYYY") }}
-                  </span>
-                </div> -->
+                <div
+                  class="parent-price d-flex align-items-center justify-content-between"
+                >
+                  <div class="price-section d-flex align-items-end gap-3">
+                    <p class="price">
+                      {{ item.price_after_discount }}
+                      <span class="sar">SAR</span>
+                    </p>
+                    <p class="end-date">
+                      {{ item.price_before_discount }}
+                      <span class="span">SAR</span>
+                    </p>
+                  </div>
+                  <div class="date text-center">
+                    <span class="end-date-span text-capitalize">end date</span>
+                    <p class="">
+                      {{ dayjs(item.expires_at).format("ddd, MMM D, YYYY") }}
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
 
-            <!-- <div class="ing-false" v-if="isNotOffers">
-              <img src="/Yarmook-Website.htm" alt="" />
-            </div> -->
+            <div class="ing-false text-center not-offer" v-if="isNotOffers">
+              <icon-not-offers />
+              <h1>There are no Offer</h1>
+              <p>There are no Offer, Stay stand</p>
+            </div>
           </div>
         </div>
       </div>
@@ -56,71 +64,14 @@
 </template>
 
 <script setup>
-import dayjs from "dayjs";
+let dayjs = useDayjs();
+
 let offers = await useApi().getOffers();
-// let offers = ref([
-//   {
-//     id: 1,
-//     imgPrice: "/img-price2.png",
-//     title: "Periodic Maintenance",
-//     prices: "50",
-//     currency: "SAR",
-//     sale: "30% OFF",
-//     endDate: "Dec 3, 2024",
-//   },
-//   {
-//     id: 2,
-//     imgPrice: "/img-price2.png",
-//     title: "Periodic Maintenance",
-//     prices: "60",
-//     currency: "SAR",
-//     sale: "20% OFF",
-//     endDate: "Jan 1, 2024",
-//   },
-//   {
-//     id: 3,
-//     imgPrice: "/img-price2.png",
-//     title: "Periodic Maintenancee",
-//     prices: "70",
-//     currency: "SAR",
-//     sale: "20% OFF",
-//     endDate: "Jan 1, 2022",
-//   },
-//   {
-//     id: 4,
-//     imgPrice: "/img-price2.png",
-//     title: "Periodic Maintenance",
-//     prices: "80",
-//     currency: "SAR",
-//     sale: "20% OFF",
-//     endDate: "Jan 1, 3030",
-//   },
-//   {
-//     id: 5,
-//     imgPrice: "/img-price2.png",
-//     title: "Periodic Maintenance",
-//     prices: "90",
-//     currency: "SAR",
-//     sale: "20% OFF",
-//     endDate: "Jan 1, 2026",
-//   },
-//   {
-//     id: 6,
-//     imgPrice: "/img-price2.png",
-//     title: "Periodic Maintenance",
-//     prices: "100",
-//     currency: "SAR",
-//     sale: "20% OFF",
-//     endDate: "Jan 1, 2020",
-//   },
-// ]);
 
 let router = useRouter();
 function toBox(item) {
   router.push(`/offerSelected/${item.id}`);
 }
-
-
 
 let isNotOffers = ref(false);
 onMounted(() => {
@@ -129,14 +80,22 @@ onMounted(() => {
   } else {
     isNotOffers.value = false;
   }
-  console.log(offers.data);
 });
-
-// const offers = ref([]);
-// const { data } = await useFetch("/api/offers");
-// offers.value = data.value;
 </script>
 
 <style scoped>
 @import "@/assets/css/offers.css";
+
+.not-offer h1 {
+  font-family: var(--font-main);
+  font-weight: 600;
+  font-size: 18px;
+  color: #14142b;
+}
+.not-offer p {
+  font-family: var(--font-main);
+  font-weight: 400;
+  font-size: 12px;
+  color: #14142b;
+}
 </style>

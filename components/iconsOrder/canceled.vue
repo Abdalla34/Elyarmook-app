@@ -17,7 +17,7 @@
       />
       <path
         d="M13.8594 14.6406L11.1094 17.3906"
-        :fill="iaActive ? '#000' : 'none'"
+        :fill="isActive ? '#000' : 'none'"
         stroke="currentColor"
         stroke-width="1.5"
         stroke-miterlimit="10"

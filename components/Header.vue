@@ -46,7 +46,7 @@
                 class="profile-img z-index-after"
                 src="/public/img-icon.jpg"
                 alt=""
-                @click="navigateTo('/profileInformation')"
+                @click="navigateTo('/personalInformation')"
               />
             </button>
           </div>

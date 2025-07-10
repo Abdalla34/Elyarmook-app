@@ -50,7 +50,7 @@
             </li>
           </ul>
 
-          <div
+          <!-- <div
             class="box-orders border-radius-36px d-flex align-items-center justify-content-between position-relative"
             v-for="order in ordersAll"
             :key="order.id"
@@ -117,7 +117,7 @@
             >
               {{ order.status }}
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
       <!-- <div class="position-absolute test">
@@ -130,130 +130,132 @@
 
 <script setup>
 
-let ordersAll = ref([
-  {
-    imgOrder: "/Car Brake Icon.png",
-    nameOrder: "Brakes Services",
-    priceOrder: "60",
-    currency: "SAR",
-    day: "wed",
-    dayNumber: 23,
-    month: "oct",
-    year: 2024,
-    time: 10,
-    meinute: "00",
-    branch: "Riadah",
-    area: "senaeyah",
-    stret: "25 soliman",
-    status: "requested",
-    orderNumber: 1540,
-    nameIcon: "like",
-    details:
-      "Lorem ipsum dolor sit amet,Lorem ipsum dolor sit amet,  Lorem ipsum dolor sit amet",
-    totalprice: 80,
-    vatnum: 300315382500003,
-    orderamount: 300315382500003,
-  },
-  {
-    imgOrder: "/Car Brake Icon.png",
-    nameOrder: "Brakes Services",
-    priceOrder: "60",
-    currency: "SAR",
-    day: "wed",
-    dayNumber: 23,
-    month: "oct",
-    year: 2024,
-    time: 10,
-    meinute: "00",
-    branch: "Riadah",
-    area: "senaeyah",
-    stret: "25 soliman",
-    status: "inspection",
-    orderNumber: 1540,
-    nameIcon: "like",
-    details:
-      "Lorem ipsum dolor sit amet,Lorem ipsum dolor sit amet,  Lorem ipsum dolor sit amet",
-    totalprice: 80,
-    vatnum: 300315382500003,
-    orderamount: 300315382500003,
-  },
-  {
-    imgOrder: "/Car Brake Icon.png",
-    nameOrder: "Brakes Services",
-    priceOrder: "60",
-    currency: "SAR",
-    day: "wed",
-    dayNumber: 23,
-    month: "oct",
-    year: 2024,
-    time: 10,
-    meinute: "00",
-    branch: "Riadah",
-    area: "senaeyah",
-    stret: "25 soliman",
-    status: "report",
-    orderNumber: 1540,
-    nameIcon: "like",
-    details:
-      "Lorem ipsum dolor sit amet,Lorem ipsum dolor sit amet,  Lorem ipsum dolor sit amet",
-    totalprice: 80,
-    vatnum: 300315382500003,
-    orderamount: 300315382500003,
-  },
-  {
-    imgOrder: "/Car Brake Icon.png",
-    nameOrder: "Brakes Services",
-    priceOrder: "60",
-    currency: "SAR",
-    day: "wed",
-    dayNumber: 23,
-    month: "oct",
-    year: 2024,
-    time: 10,
-    meinute: "00",
-    branch: "Riadah",
-    area: "senaeyah",
-    stret: "25 soliman",
-    status: "canceled",
-    orderNumber: 1540,
-    nameIcon: "like",
-    details:
-      "Lorem ipsum dolor sit amet,Lorem ipsum dolor sit amet,  Lorem ipsum dolor sit amet",
-    totalprice: 80,
-    vatnum: 300315382500003,
-    orderamount: 300315382500003,
-  },
-  {
-    imgOrder: "/Car Brake Icon.png",
-    nameOrder: "Brakes Services",
-    priceOrder: "60",
-    currency: "SAR",
-    day: "wed",
-    dayNumber: 23,
-    month: "oct",
-    year: 2024,
-    time: 10,
-    meinute: "00",
-    branch: "Riadah",
-    area: "senaeyah",
-    stret: "25 soliman",
-    status: "car is ready",
-    orderNumber: 1540,
-    nameIcon: "like",
-    details:
-      "Lorem ipsum dolor sit amet,Lorem ipsum dolor sit amet,  Lorem ipsum dolor sit amet",
-    totalprice: 80,
-    vatnum: 300315382500003,
-    orderamount: 300315382500003,
-  },
-]);
+let ordersAll = await useApi().getMyOrders();
+console.log(ordersAll.data.items);
 
-let router = useRouter();
-function clickGoToOrder(item) {
-  localStorage.setItem("orderget", JSON.stringify(item));
-  router.push(`/ordersteps/${item.id}`);
-}
+// let ordersAll = ref([
+//   {
+//     imgOrder: "/Car Brake Icon.png",
+//     nameOrder: "Brakes Services",
+//     priceOrder: "60",
+//     currency: "SAR",
+//     day: "wed",
+//     dayNumber: 23,
+//     month: "oct",
+//     year: 2024,
+//     time: 10,
+//     meinute: "00",
+//     branch: "Riadah",
+//     area: "senaeyah",
+//     stret: "25 soliman",
+//     status: "requested",
+//     orderNumber: 1540,
+//     nameIcon: "like",
+//     details:
+//       "Lorem ipsum dolor sit amet,Lorem ipsum dolor sit amet,  Lorem ipsum dolor sit amet",
+//     totalprice: 80,
+//     vatnum: 300315382500003,
+//     orderamount: 300315382500003,
+//   },
+//   {
+//     imgOrder: "/Car Brake Icon.png",
+//     nameOrder: "Brakes Services",
+//     priceOrder: "60",
+//     currency: "SAR",
+//     day: "wed",
+//     dayNumber: 23,
+//     month: "oct",
+//     year: 2024,
+//     time: 10,
+//     meinute: "00",
+//     branch: "Riadah",
+//     area: "senaeyah",
+//     stret: "25 soliman",
+//     status: "inspection",
+//     orderNumber: 1540,
+//     nameIcon: "like",
+//     details:
+//       "Lorem ipsum dolor sit amet,Lorem ipsum dolor sit amet,  Lorem ipsum dolor sit amet",
+//     totalprice: 80,
+//     vatnum: 300315382500003,
+//     orderamount: 300315382500003,
+//   },
+//   {
+//     imgOrder: "/Car Brake Icon.png",
+//     nameOrder: "Brakes Services",
+//     priceOrder: "60",
+//     currency: "SAR",
+//     day: "wed",
+//     dayNumber: 23,
+//     month: "oct",
+//     year: 2024,
+//     time: 10,
+//     meinute: "00",
+//     branch: "Riadah",
+//     area: "senaeyah",
+//     stret: "25 soliman",
+//     status: "report",
+//     orderNumber: 1540,
+//     nameIcon: "like",
+//     details:
+//       "Lorem ipsum dolor sit amet,Lorem ipsum dolor sit amet,  Lorem ipsum dolor sit amet",
+//     totalprice: 80,
+//     vatnum: 300315382500003,
+//     orderamount: 300315382500003,
+//   },
+//   {
+//     imgOrder: "/Car Brake Icon.png",
+//     nameOrder: "Brakes Services",
+//     priceOrder: "60",
+//     currency: "SAR",
+//     day: "wed",
+//     dayNumber: 23,
+//     month: "oct",
+//     year: 2024,
+//     time: 10,
+//     meinute: "00",
+//     branch: "Riadah",
+//     area: "senaeyah",
+//     stret: "25 soliman",
+//     status: "canceled",
+//     orderNumber: 1540,
+//     nameIcon: "like",
+//     details:
+//       "Lorem ipsum dolor sit amet,Lorem ipsum dolor sit amet,  Lorem ipsum dolor sit amet",
+//     totalprice: 80,
+//     vatnum: 300315382500003,
+//     orderamount: 300315382500003,
+//   },
+//   {
+//     imgOrder: "/Car Brake Icon.png",
+//     nameOrder: "Brakes Services",
+//     priceOrder: "60",
+//     currency: "SAR",
+//     day: "wed",
+//     dayNumber: 23,
+//     month: "oct",
+//     year: 2024,
+//     time: 10,
+//     meinute: "00",
+//     branch: "Riadah",
+//     area: "senaeyah",
+//     stret: "25 soliman",
+//     status: "car is ready",
+//     orderNumber: 1540,
+//     nameIcon: "like",
+//     details:
+//       "Lorem ipsum dolor sit amet,Lorem ipsum dolor sit amet,  Lorem ipsum dolor sit amet",
+//     totalprice: 80,
+//     vatnum: 300315382500003,
+//     orderamount: 300315382500003,
+//   },
+// ]);
 
+// let router = useRouter();
+// function clickGoToOrder(item) {
+//   localStorage.setItem("orderget", JSON.stringify(item));
+//   router.push(`/ordersteps/${item.id}`);
+// }
 </script>
 
 <style scoped>

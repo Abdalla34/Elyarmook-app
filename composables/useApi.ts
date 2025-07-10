@@ -224,6 +224,12 @@ export const useApi = () => {
     });
   };
 
+  const getMyOrders = async () => {
+    return await $fetch(`${baseURL}/order/orders`, {
+      headers,
+    });
+  };
+
   const getSingleOrder = async (order_id) => {
     return await $fetch(`${baseURL}/order/orders/${order_id}`, {
       headers,
@@ -271,6 +277,7 @@ export const useApi = () => {
     updateCartDetails,
     getServices,
     getSpareParts,
+    getMyOrders,
     getSingleOrder,
     getOffers,
     getOfferSingle,
