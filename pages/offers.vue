@@ -31,7 +31,7 @@
                 <div
                   class="parent-price d-flex align-items-center justify-content-between"
                 >
-                  <div class="price-section d-flex align-items-end gap-3">
+                  <div class="price-section d-flex align-items-end gap-2">
                     <p class="price">
                       {{ item.price_after_discount }}
                       <span class="sar">SAR</span>

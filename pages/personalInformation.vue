@@ -2,7 +2,6 @@
   <div>
     <ProfileDetails />
     <div class="personal-information">
-
       <div class="container">
         <div class="row">
           <div class="col-8 col-padding">
@@ -52,19 +51,29 @@
               <div class="row-inputs">
                 <div class="input d-flex flex-column">
                   <label class="label">first name</label>
-                  <input type="text" placeholder="your name" />
+                  <input
+                    v-model="user.first_name"
+                    type="text"
+                    placeholder="your name"
+                    disabled
+                  />
                 </div>
 
                 <div class="input d-flex flex-column">
                   <label class="label">last name</label>
-                  <input type="text" placeholder="your name" />
+                  <input
+                    type="text"
+                    placeholder="your name"
+                    v-model="user.last_name"
+                    disabled
+                  />
                 </div>
               </div>
 
               <div class="row-inputs">
                 <div class="input d-flex flex-column">
                   <label class="label">phone Number</label>
-                  <input type="text" placeholder="your phone" />
+                  <input type="text" placeholder="your phone"  v-model="user.phone" disabled />
                 </div>
                 <div class="input d-flex flex-column">
                   <label class="label">email addrees</label>
@@ -75,11 +84,11 @@
               <div class="row-inputs">
                 <div class="input d-flex flex-column">
                   <label class="label" for="">area</label>
-                  <input type="text" placeholder="central region" />
+                  <input type="text" placeholder="central region" v-model="user.area.title" disabled />
                 </div>
                 <div class="input d-flex flex-column">
                   <label class="label" for="">city</label>
-                  <input type="text" placeholder="central region" />
+                  <input type="text" placeholder="central region" v-model="user.city.title" disabled/>
                 </div>
               </div>
             </div>
@@ -107,6 +116,7 @@
 
 <script setup>
 const user = useCookie("user", { maxAge: 365 * 24 * 60 * 60 });
+
 let profileImg = ref(false);
 function ChangeProfile() {
   profileImg.value = !profileImg.value;
