@@ -25,6 +25,9 @@ export const useApi = () => {
   const loginOrRegister = async (form) => {
     return await $fetch(`${baseURL}/auth/login-or-register`, {
       method: "POST",
+      headers: {
+        "user-type": "user",
+      },
       body: form,
     });
   };

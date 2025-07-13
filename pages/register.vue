@@ -95,12 +95,14 @@
                   <span v-if="errors.city">{{ errors.city }}</span>
                 </div>
               </div>
-              
             </div>
 
-            <div class="text-center btn-register button border-radius-36px">
-              <button class="text-capitalize" type="submit">save</button>
-            </div>
+            <button
+              class="text-capitalize text-center btn-register button border-radius-36px"
+              type="submit"
+            >
+              save
+            </button>
           </form>
 
           <div
@@ -122,8 +124,8 @@
 <script setup>
 import { useForm, useField } from "vee-validate";
 import * as yup from "yup";
-
-
+const cities = ref([]);
+const areas = ref([]);
 const schema = yup.object({
   firstName: yup.string().required("please enter your name").min(3),
   lastName: yup.string().required("please enter your last name").min(3),
@@ -132,8 +134,6 @@ const schema = yup.object({
     .required("please enter your phone number")
     .min(11)
     .matches(/^\d+$/, "digits only"),
-  area: yup.object().required("please select your area"),
-  city: yup.object().required("please select your city"),
 });
 
 const { handleSubmit, errors } = useForm({
@@ -145,6 +145,34 @@ const { value: lastName } = useField("lastName");
 const { value: phoneNumber } = useField("phoneNumber");
 const { value: area } = useField("area");
 const { value: city } = useField("city");
+
+// let route = useRoute();
+// let phone = route.query.phone || "";
+// let otp = route.query.otp_code || "";
+// let registered = route.query.registered === "true";
+
+// const onSubmit = handleSubmit(async (values) => {
+//   const res = await useApi().loginOrRegister({
+//     first_name: values.firstName,
+//     last_name: values.lastName,
+//     phone: phone,
+//     city_id: 34,
+//     area_id: 16,
+//     registered: registered,
+//     otp_code: otp,
+//   });
+
+//   if (res && res.status && res.data.token && res.data.user) {
+//     const token = useCookie("token", { maxAge: 365 * 24 * 60 * 60 });
+//     const user = useCookie("user", { maxAge: 365 * 24 * 60 * 60 });
+
+//     token.value = res.data.token;
+//     user.value = JSON.stringify(res.data.user);
+
+//     router.push("/");
+//   }
+//   console.log(res);
+// });
 </script>
 
 <style>
