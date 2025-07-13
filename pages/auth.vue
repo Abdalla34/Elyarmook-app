@@ -98,10 +98,12 @@ const handleCheckOTP = async (otpValue) => {
 
         router.push("/");
       } else {
-        navigateTo("/register", {
+        router.push({
+          path: "/register",
           query: {
             phone: phone.value,
             registered: registered.value,
+            otp_code: otp
           },
         });
       }

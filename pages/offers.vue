@@ -12,7 +12,7 @@
               <div class="offer-card margin-bottom-24px" @click="toBox(item)">
                 <div class="img-offer text-center">
                   <img
-                    src="/offerImage.png"
+                    :src="item.image"
                     alt=""
                     class="margin-bottom-24px"
                   />

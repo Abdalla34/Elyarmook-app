@@ -7,7 +7,7 @@
             <GoPageArrow title="offer Details" backPath="/offers" />
 
             <div class="img-offer-card position-relative margin-bottom-24px">
-              <img src="/offerImage.png" alt="Offer Image" />
+              <img :src="offerId?.data?.offer.image" alt="Offer Image" />
               <span class="offers-sale position-absolute sale-offer">
                 {{ Math.trunc(offerId.data.offer.discount_percentage) }}% OFF
               </span>
