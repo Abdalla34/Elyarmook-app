@@ -42,13 +42,8 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import { useApi } from "@/composables/useApi";
 import VOtpInput from "vue3-otp-input";
-import { useCookie } from "#app";
 
-// تعاريف المتغيرات الأساسية
 const route = useRoute();
 const router = useRouter();
 const { checkOTP, loginOrRegister } = useApi();
@@ -96,7 +91,7 @@ const handleCheckOTP = async (otpValue) => {
           user.value = JSON.stringify(loginRes.data.user);
         }
 
-        router.push("/");
+        router.push("/services");
       } else {
         router.push({
           path: "/register",
@@ -117,76 +112,6 @@ const handleCheckOTP = async (otpValue) => {
   }
 };
 </script>
-
-<!-- <script setup lang="ts">
-import { ref } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import { useApi } from "@/composables/useApi";
-import VOtpInput from "vue3-otp-input";
-import { useCookie } from "#app";
-
-// let inputs = ref(["", "", "", ""]);
-// let codeNum = ref("1234");
-// let codeDigits = ref(["", "", "", ""]);
-// let codeNoteTrue = ref(false);
-// let codeChecked = ref(false);
-
-const route = useRoute();
-const router = useRouter();
-const { checkOTP, loginOrRegister } = useApi();
-
-const getQueryString = (val: any): string =>
-  Array.isArray(val) ? val[0] : val || "";
-const getQueryBool = (val: any): boolean => {
-  if (Array.isArray(val)) val = val[0];
-  return val === "true" || val === true;
-};
-
-const phone = ref(getQueryString(route.query.phone));
-const registered = ref(getQueryBool(route.query.registered));
-const code = ref("");
-const loading = ref(false);
-
-const handleCheckOTP = async (otpValue?: string) => {
-  const otp = otpValue || code.value;
-  if (!phone.value || !otp) return;
-  loading.value = true;
-  try {
-    const res = await checkOTP(phone.value, otp);
-    if (res && res.status && res.message === "Code Is Correct") {
-      if (registered.value) {
-        const loginRes = await loginOrRegister({
-          phone: phone.value,
-          otp_code: otp,
-          registered: registered.value,
-        });
-        if (
-          loginRes &&
-          loginRes.status &&
-          loginRes.data &&
-          loginRes.data.token &&
-          loginRes.data.user
-        ) {
-          // Save token and user data for future usage
-          const token = useCookie("token", { maxAge: 365 * 24 * 60 * 60 });
-          const user = useCookie("user", { maxAge: 365 * 24 * 60 * 60 });
-          token.value = loginRes.data.token;
-          user.value = JSON.stringify(loginRes.data.user);
-        }
-        router.push("/");
-      } else {
-        // Continue registration flow
-      }
-    } else {
-      alert("Invalid code");
-    }
-  } catch (e) {
-    alert("Failed to verify code");
-  } finally {
-    loading.value = false;
-  }
-};
-</script> -->
 
 <style>
 .otp {

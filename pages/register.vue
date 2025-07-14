@@ -63,31 +63,27 @@
                 <div class="input d-flex flex-column">
                   <label class="label" for="area">area</label>
                   <select id="area" class="select" v-model="area">
-                    <option value="" disabled selected class="option">
-                      Select area
-                    </option>
+                    <option value="" disabled>Select area</option>
                     <option
-                      v-for="areaItem in areas"
+                      v-for="areaItem in allAreas"
                       :key="areaItem.id"
-                      :value="areaItem"
-                      class="option"
+                      :value="areaItem.id"
                     >
                       {{ areaItem.title }}
                     </option>
                   </select>
+
                   <span v-if="errors.area">{{ errors.area }}</span>
                 </div>
 
                 <div class="input d-flex flex-column">
                   <label class="label" for="city">city</label>
                   <select id="city" class="select" v-model="city">
-                    <option value="" disabled selected class="option">
-                      Select city
-                    </option>
+                    <option value="" disabled>Select city</option>
                     <option
-                      v-for="cityItem in cities"
+                      v-for="cityItem in allCities"
                       :key="cityItem.id"
-                      :value="cityItem"
+                      :value="cityItem.id"
                     >
                       {{ cityItem.title }}
                     </option>
@@ -98,7 +94,7 @@
             </div>
 
             <button
-              class="text-capitalize text-center btn-register button border-radius-36px"
+              class="text-capitalize text-center btn-register button border-radius-36px d-flex justify-content-center"
               type="submit"
             >
               save
@@ -122,10 +118,14 @@
 </template>
 
 <script setup>
+
 import { useForm, useField } from "vee-validate";
 import * as yup from "yup";
-const cities = ref([]);
-const areas = ref([]);
+
+let allAreas = ref([]);
+let countryId = ref(null);
+let allCities = ref([]);
+
 const schema = yup.object({
   firstName: yup.string().required("please enter your name").min(3),
   lastName: yup.string().required("please enter your last name").min(3),
@@ -134,6 +134,8 @@ const schema = yup.object({
     .required("please enter your phone number")
     .min(11)
     .matches(/^\d+$/, "digits only"),
+  city: yup.string().required("please enter your city"),
+  area: yup.string().required("please enter your area"),
 });
 
 const { handleSubmit, errors } = useForm({
@@ -146,63 +148,54 @@ const { value: phoneNumber } = useField("phoneNumber");
 const { value: area } = useField("area");
 const { value: city } = useField("city");
 
-// let route = useRoute();
-// let phone = route.query.phone || "";
-// let otp = route.query.otp_code || "";
-// let registered = route.query.registered === "true";
+onMounted(async () => {
+  let countries = await useApi().getCountries();
+  countryId.value = countries?.data?.[0]?.id;
 
-// const onSubmit = handleSubmit(async (values) => {
-//   const res = await useApi().loginOrRegister({
-//     first_name: values.firstName,
-//     last_name: values.lastName,
-//     phone: phone,
-//     city_id: 34,
-//     area_id: 16,
-//     registered: registered,
-//     otp_code: otp,
-//   });
+  if (countryId.value) {
+    let res = await useApi().getAreasByCountry(countryId.value);
+    allAreas.value = res?.data || [];
+  }
+});
 
-//   if (res && res.status && res.data.token && res.data.user) {
-//     const token = useCookie("token", { maxAge: 365 * 24 * 60 * 60 });
-//     const user = useCookie("user", { maxAge: 365 * 24 * 60 * 60 });
+watch(area, async (newAreaId) => {
+  if (newAreaId) {
+    let res = await useApi().getCitiesByArea(newAreaId);
+    allCities.value = res?.data || [];
+  } else {
+    allCities.value = [];
+  }
+});
 
-//     token.value = res.data.token;
-//     user.value = JSON.stringify(res.data.user);
+let router = useRouter();
+let route = useRoute();
+let phone = route.query.phone;
+let registered = route.query.registered === "true";
+let otp = route.query.otp_code;
 
-//     router.push("/");
-//   }
-//   console.log(res);
-// });
+let onSubmit = handleSubmit(async (values) => {
+  let res = await useApi().loginOrRegister({
+    first_name: values.firstName,
+    last_name: values.lastName,
+    area_id: values.area,
+    city_id: values.city,
+    phone: phone,
+    registered: registered,
+    otp_code: otp,
+  });
+
+  if (res && res.status && res.data.token && res.data.user) {
+    const token = useCookie("token", { maxAge: 365 * 24 * 60 * 60 });
+    const user = useCookie("user", { maxAge: 365 * 24 * 60 * 60 });
+    token.value = res.data.token;
+    user.value = JSON.stringify(res.data.user);
+  }
+  router.push("/services");
+});
+
+
 </script>
 
 <style>
 @import "@/assets/css/personalInformation.css";
-.select {
-  border-radius: 12px;
-  padding: 12px 16px;
-  border: 1px solid #f1f3f9;
-}
-.select:focus {
-  outline: 2px solid #ffe654;
-}
-.option {
-  color: #040505;
-  font-size: 16px;
-  font-weight: 400;
-  font-family: var(--font-main);
-}
-.btn-register {
-  background-color: #ffe654;
-  width: 50%;
-  margin: auto;
-  padding: 16px 0;
-  cursor: pointer;
-}
-.btn-register button {
-  border: none;
-  background-color: transparent;
-  font-family: var(--font-main);
-  font-weight: 500;
-  color: #040505;
-}
 </style>

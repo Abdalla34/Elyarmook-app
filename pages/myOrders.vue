@@ -130,8 +130,17 @@
 
 <script setup>
 
-let ordersAll = await useApi().getMyOrders();
-console.log(ordersAll.data.items);
+
+onMounted(async () => {
+  try {
+    const res = await useApi().getMyOrders();
+    console.log(res); // تأكد هل فيه بيانات جاية
+  } catch (error) {
+    console.error("Error fetching orders:", error);
+  }
+});
+
+
 
 // let ordersAll = ref([
 //   {

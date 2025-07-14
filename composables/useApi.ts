@@ -228,6 +228,7 @@ export const useApi = () => {
   };
 
   const getMyOrders = async () => {
+    const token = useCookie("token");
     return await $fetch(`${baseURL}/order/orders`, {
       headers,
     });
