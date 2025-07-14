@@ -50,27 +50,26 @@
             </li>
           </ul>
 
-          <!-- <div
+           <div
             class="box-orders border-radius-36px d-flex align-items-center justify-content-between position-relative"
-            v-for="order in ordersAll"
-            :key="order.id"
-            @click="clickGoToOrder(order)"
+           
           >
-            <div
+            <!-- <div
               v-if="order.status === 'requested' || order.status === 'report'"
               class="action position-absolute text-capitalize"
             >
               action nedeed
-            </div>
+            </div> -->
+          
             <div class="details-title d-flex align-items-center gap-3">
               <div>
-                <img :src="order.imgOrder" alt="" />
+                <img src="" alt="imageOrder" />
               </div>
               <div class="name price">
-                <h4 class="text-capitalize">{{ order.nameOrder }}</h4>
+                <h4 class="text-capitalize"></h4>
                 <p class="price">
-                  {{ order.priceOrder }}
-                  <span class="p-color-fs span">{{ order.currency }}</span>
+                  
+                  <span class="p-color-fs span"></span>
                 </p>
               </div>
             </div>
@@ -82,12 +81,10 @@
                 </div>
                 <div class="time-order">
                   <p class="paragarph text-capitalize">
-                    {{ order.day }} , {{ order.dayNumber }} ,
-                    {{ order.month }} ,
-                    {{ order.year }}
+                  aasas
                   </p>
                   <p class="paragarph text-capitalize">
-                    {{ order.time }} : {{ order.meinute }}
+                    asasas
                   </p>
                 </div>
               </div>
@@ -98,14 +95,16 @@
                 </div>
                 <div class="title-order">
                   <p class="paragarph">
-                    {{ order.branch }} , {{ order.area }} ,
+                   sasasasas
                   </p>
-                  <p class="paragarph">{{ order.stret }}</p>
+                  <p class="paragarph">asasasas</p>
                 </div>
               </div>
             </div>
 
-            <div
+            <div>requsted</div>
+      
+            <!-- <div
               class="status text-capitalize"
               :class="{
                 'bg-requested': order.status === 'requested',
@@ -115,9 +114,10 @@
                 'bg-ready': order.status === 'car is ready',
               }"
             >
-              {{ order.status }}
-            </div>
-          </div> -->
+             req
+            </div> -->
+          
+          </div> 
         </div>
       </div>
       <!-- <div class="position-absolute test">
@@ -129,18 +129,16 @@
 </template>
 
 <script setup>
-
-
+let orders = ref([]);
 onMounted(async () => {
   try {
     const res = await useApi().getMyOrders();
-    console.log(res); // تأكد هل فيه بيانات جاية
+    console.log("Orders fetched: ", res);
+    orders.value = res?.data?.items;
   } catch (error) {
-    console.error("Error fetching orders:", error);
+    console.error("Error fetching orders:", error?.response?._data || error);
   }
 });
-
-
 
 // let ordersAll = ref([
 //   {
