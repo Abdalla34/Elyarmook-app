@@ -5,7 +5,7 @@
         <Veiws />
       </div> -->
       <div class="row justify-content-center">
-        <!-- الجزء اليسار -->
+       
         <div class="col-lg-5 col-md-7">
           <div class="h-100">
             <h4 class="mb-4 fw-bold">Order Details</h4>

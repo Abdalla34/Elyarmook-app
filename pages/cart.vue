@@ -1,14 +1,13 @@
 <template>
-  <div class="cart-parent">
+  <div class="cart-parent mt-5">
+    <!-- <div v-if="test">
+        <Veiws />
+      </div> -->
     <div class="container">
-      <div class="row">
-        <div class="col-8 col-padding">
-          <div class="cart-name">
-            <h1 class="title-pages">
-              Cart <span class="p-color-fs">({{ orders.length }})</span>
-            </h1>
-          </div>
-
+      <div class="row justify-content-center">
+        <!-- left section -->
+        <div class="col-5 col-md-6">
+          <h4 class="mb-4 fw-bold">Order Details</h4>
           <div
             class="cart d-flex justify-content-between align-items-center border-radius-36px mb-3"
             v-for="order in orders"
@@ -98,11 +97,103 @@
               <span v-if="loadingDelete[order.id]">Loading...</span>
             </div>
           </div>
-          <div
+          <!-- <div
             class="button-continue width"
             @click="navigateTo('/orderDetails')"
           >
             <ButtonCard textButton="continue" />
+          </div> -->
+        </div>
+
+        <!-- right section -->
+        <div class="col-md-4 col-test">
+          <div class="h-100">
+            <div class="">
+              <h6 class="fw-bold">Order Details</h6>
+              <div class="box-design">
+                <div
+                  class="branch d-flex justify-content-between align-items-center"
+                >
+                  <h4 class="label">branch</h4>
+                  <p class="text-capitalize">branch.title</p>
+                </div>
+
+                <div
+                  class="model d-flex justify-content-between align-items-center"
+                >
+                  <h4 class="label">car model</h4>
+                  <ClientOnly>
+                    <p>"ddd, MMM D, YYYY"</p>
+                  </ClientOnly>
+                </div>
+
+                <div
+                  class="reservation-date d-flex justify-content-between align-items-center"
+                >
+                  <h4 class="label">Reservation Date</h4>
+                  <ClientOnly>
+                    <p>hh:mm A"</p>
+                  </ClientOnly>
+                </div>
+
+                <div
+                  class="reservation-time d-flex justify-content-between align-items-center"
+                >
+                  <h4 class="label">Reservation time</h4>
+                  <p class="text-capitalize">hh:mm A"</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- تفاصيل السعر -->
+            <div class="">
+              <h6 class="fw-bold">Cost Details</h6>
+              <div class="box-design">
+                <div
+                  class="total-order d-flex justify-content-between align-items-center"
+                >
+                  <h4 class="label">Total Order</h4>
+                  <p class="text-capitalize">order_num</p>
+                </div>
+
+                <div
+                  class="vat d-flex justify-content-between align-items-center"
+                >
+                  <h4 class="label">vat</h4>
+                  <p class="text-capitalize">vat_amount</p>
+                </div>
+
+                <div
+                  class="final-amount d-flex justify-content-between align-items-center"
+                >
+                  <h4 class="label">Final Amount</h4>
+                  <p class="text-capitalize">total_amount</p>
+                </div>
+              </div>
+
+              <div class="input-code position-relative">
+                <input
+                  type="text"
+                  class="w-100 input-with-apply text-capitalize"
+                  placeholder="promocode"
+                />
+                <button class="apply-btn position-absolute">
+                  <span class="text-capitalize me-2 spanbutton">apply</span>
+                  <iconsOrder-applyCode />
+                </button>
+              </div>
+
+              <div
+                class="total-amount d-flex align-items-center justify-content-between"
+              >
+                <h1 class="amount text-capitalize">total</h1>
+                <p>total_amount sar</p>
+              </div>
+
+              <div class="buttion-confirm">
+                <ButtonCard textButton="continue" />
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -111,13 +202,14 @@
 </template>
 
 <script setup>
+let test = ref(false);
 const { getMyCart, deleteItemFromCart, updateCartItemQuantity } = useApi();
 
 const orders = ref([]);
 const loading = ref(true);
 const error = ref(null);
-const loadingDelete = ref({}); 
-const loadingQty = ref({}); 
+const loadingDelete = ref({});
+const loadingQty = ref({});
 
 loading.value = true;
 error.value = null;
