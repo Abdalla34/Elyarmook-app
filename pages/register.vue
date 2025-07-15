@@ -31,7 +31,7 @@
                     placeholder="your name"
                     v-model="firstName"
                   />
-                  <span v-if="errors.firstName">{{ errors.firstName }}</span>
+                  <span class="text-danger text-capitalize mt-2" v-if="errors.firstName">{{ errors.firstName }}</span>
                 </div>
 
                 <div class="input d-flex flex-column">
@@ -41,7 +41,7 @@
                     placeholder="your name"
                     v-model="lastName"
                   />
-                  <span v-if="errors.lastName">{{ errors.lastName }}</span>
+                  <span class="text-danger text-capitalize mt-2" v-if="errors.lastName">{{ errors.lastName }}</span>
                 </div>
               </div>
 
@@ -53,7 +53,7 @@
                     placeholder="your phone"
                     v-model="phoneNumber"
                   />
-                  <span v-if="errors.phoneNumber">{{
+                  <span class="text-danger text-capitalize mt-2" v-if="errors.phoneNumber">{{
                     errors.phoneNumber
                   }}</span>
                 </div>
@@ -73,7 +73,7 @@
                     </option>
                   </select>
 
-                  <span v-if="errors.area">{{ errors.area }}</span>
+                  <span class="text-danger text-capitalize mt-2" v-if="errors.area">{{ errors.area }}</span>
                 </div>
 
                 <div class="input d-flex flex-column">
@@ -88,7 +88,7 @@
                       {{ cityItem.title }}
                     </option>
                   </select>
-                  <span v-if="errors.city">{{ errors.city }}</span>
+                  <span class="text-danger text-capitalize mt-2" v-if="errors.city">{{ errors.city }}</span>
                 </div>
               </div>
             </div>

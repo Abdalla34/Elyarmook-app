@@ -14,7 +14,7 @@
             v-for="order in orders"
             :key="order.id"
           >
-            <div class="details-cart d-flex align-items-center gap-2">
+            <div class="details-cart d-flex align-items-center gap-3">
               <div class="img">
                 <img :src="order.image" :alt="order.title" />
               </div>
@@ -116,32 +116,20 @@ const { getMyCart, deleteItemFromCart, updateCartItemQuantity } = useApi();
 const orders = ref([]);
 const loading = ref(true);
 const error = ref(null);
-const loadingDelete = ref({}); // { [id]: boolean }
-const loadingQty = ref({}); // { [id]: boolean }
+const loadingDelete = ref({}); 
+const loadingQty = ref({}); 
 
-async function fetchCart() {
-  loading.value = true;
-  error.value = null;
-  try {
-    const res = await getMyCart();
-    orders.value = res?.data?.services || [];
-  } catch (err) {
-    error.value = err;
-  } finally {
-    loading.value = false;
-  }
-}
+loading.value = true;
+error.value = null;
 
-onMounted(fetchCart);
+const res = await getMyCart();
+orders.value = res?.data?.services || [];
 
 async function deletedOrder(id) {
   const item = orders.value.find((o) => o.id === id);
   if (!item) return;
   loadingDelete.value[id] = true;
   try {
-    // type: 'service', order_id: cart id, cart_item_id: item id
-    // Assume order_id is available in the item or from getMyCart response (e.g., res.data.id)
-    // For now, try to get order_id from the last getMyCart response
     const cartRes = await getMyCart();
     const order_id = cartRes?.data?.id;
     await deleteItemFromCart("service", order_id, id);
@@ -184,5 +172,9 @@ async function updateQty(order, newQty) {
 .qty-btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+.img img {
+  width: 80px;
 }
 </style>

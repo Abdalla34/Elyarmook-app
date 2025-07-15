@@ -23,12 +23,13 @@
           class="profile-card d-flex justify-content-center align-items-center gap-2"
         >
           <div
-            class="background-color-cart d-flex align-items-center justify-content-center"
+            class="background-color-cart position-relative d-flex align-items-center justify-content-center"
             @click="navigateTo('/cart')"
           >
             <button class="buttons">
               <CarIconCard />
             </button>
+            <!-- <span class="span-length">50</span> -->
           </div>
           <div
             class="background-color-cart d-flex align-items-center justify-content-center"
@@ -56,7 +57,21 @@
   </div>
 </template>
 
-<script></script>
+<script>
+// const { getMyCart } = useApi();
+
+// const cartLength = ref(0);
+
+// onMounted(async () => {
+//   try {
+//     const res = await getMyCart();
+//     cartLength.value = res?.data?.services?.length || 0;
+//   } catch (err) {
+//     console.error("Error loading cart:", err);
+//     cartLength.value = 0;
+//   }
+// });
+</script>
 
 <style scoped>
 /* start logo card */
@@ -64,6 +79,7 @@
   background-color: #ffffff;
   width: 100%;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  padding: 5px; 
 }
 .width-image {
   width: 120px;
@@ -162,7 +178,7 @@
   padding: 20px;
   position: relative;
   transition: all 0.3s ease;
-  overflow: hidden;
+  /* overflow: hidden; */
   z-index: 1;
   cursor: pointer;
 }
@@ -224,5 +240,22 @@
   .profile-card {
     display: none;
   }
+}
+
+.span-length {
+  position: absolute;
+  background-color: var(--main-color);
+  border-radius: 50%;
+  padding: 8px;
+  left: 0%;
+  top: -16px;
+  z-index: 10;
+  width: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 10px;
+  color: black;
+  font-weight: bold;
 }
 </style>

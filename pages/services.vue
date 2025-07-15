@@ -4,10 +4,11 @@
       <div v-if="feedbackMessage" :class="['cart-feedback', feedbackType]">
         {{ feedbackMessage }}
       </div>
+      <div v-if="pending">جاري التحميل...</div>
       <div class="row">
         <div
           class="col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center"
-          v-for="(service, index) in imagesServices"
+          v-for="(service, index) in allParts"
           :key="index"
         >
           <div class="service-card text-center margin-bottom-24px">
@@ -16,7 +17,7 @@
                 <img class="img" :src="service.image" :alt="service.title" />
               </div>
             </div>
-            <!-- {{ service }} -->
+          
             <div class="service-content">
               <TitleServices
                 :title="service.title"
@@ -45,26 +46,20 @@
 <script setup>
 const { getServices, addToCart } = useApi();
 
-const imagesServices = ref([]);
-const loading = ref(true);
-const error = ref(null);
-const feedbackMessage = ref("");
-const feedbackType = ref(""); // 'success' or 'error'
-const loadingAddToCart = ref({}); // { [serviceId]: boolean }
 
-onMounted(async () => {
-  loading.value = true;
-  error.value = null;
-  try {
-    const res = await getServices();
-    // Adjust this mapping if your API response structure is different
-    imagesServices.value = res?.data?.items || res?.data || [];
-  } catch (err) {
-    error.value = err;
-  } finally {
-    loading.value = false;
-  }
-});
+const loading = ref(true);
+const feedbackMessage = ref("");
+const feedbackType = ref(""); 
+const loadingAddToCart = ref({}); 
+
+
+
+const { data: servicesData, pending, error } = await useAsyncData("services", () =>
+  getServices()
+);
+
+const allParts = computed(() => servicesData.value?.data?.items || []);
+
 
 let activeIcon = ref(true);
 

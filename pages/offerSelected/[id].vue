@@ -76,7 +76,7 @@
           <div class="width-button" v-if="offerId?.data?.offer">
             <ButtonCard textButton="add to cart" :isActive="activeIcon" />
           </div>
-          <div class="no-offer" v-if="thisTrue">
+          <div class="no-offer" v-if="pageEmpty">
             <img src="/Car Brake Icon.png" alt="" />
           </div>
         </div>
@@ -90,6 +90,7 @@ let extract = (textstep) => {
   if (!textstep) return [];
   return textstep.match(/(\d+\.\s?.+?)(?=\d+\.\s?|$)/gs) || [];
 };
+
 let steps = computed(() => {
   return extract(offerId.value?.data?.offer.description);
 });
@@ -100,12 +101,12 @@ let idParams = route.params.id;
 const dayjs = useDayjs();
 let offerId = ref(null);
 offerId.value = await useApi().getOfferSingle(idParams);
-let thisTrue = ref(false);
+let pageEmpty = ref(false);
 onMounted(() => {
   if (offerId?.data?.offer.length === 0) {
-    thisTrue.value = true;
+    pageEmpty.value = true;
   } else {
-    thisTrue.value = false;
+    pageEmpty.value = false;
   }
 });
 </script>

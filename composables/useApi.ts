@@ -6,6 +6,7 @@ export const useApi = () => {
   const headers = {
     Authorization: `Bearer ${token.value}`,
     "Content-Type": "application/json",
+    "Accept": "application/json",
   };
 
   const sendOTP = async (phone) => {

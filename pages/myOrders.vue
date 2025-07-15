@@ -3,7 +3,10 @@
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-lg-7 col-md-10 col-sm-12">
-          <ul class="links d-flex justify-content-center align-items-end ul">
+          <ul
+            v-if="!msgError && !loading"
+            class="links d-flex justify-content-center align-items-end ul"
+          >
             <li class="">
               <NuxtLink
                 to="/"
@@ -49,10 +52,18 @@
               </NuxtLink>
             </li>
           </ul>
+          
+          <div class="msg-error text-capitalize" v-if="!loading && msgError">
+            <p class="text-danger">You must create an account to continue</p>
+            <button class="goAcc" @click="navigateTo('/createaccount')">
+              Go To Create Acc
+            </button>
+          </div>
 
-           <div
+          <div
             class="box-orders border-radius-36px d-flex align-items-center justify-content-between position-relative"
-           
+            v-if="!msgError && !loading"
+            v-for="order in orders?.data?.items"
           >
             <!-- <div
               v-if="order.status === 'requested' || order.status === 'report'"
@@ -60,16 +71,19 @@
             >
               action nedeed
             </div> -->
-          
+
             <div class="details-title d-flex align-items-center gap-3">
               <div>
-                <img src="" alt="imageOrder" />
+                <!-- <img :src="orders?.data?.items." alt="imageOrder" /> -->
               </div>
               <div class="name price">
-                <h4 class="text-capitalize"></h4>
+                <h4 class="text-capitalize">
+                  {{ order.data.items.vendor_name }}
+                </h4>
                 <p class="price">
-                  
-                  <span class="p-color-fs span"></span>
+                  <span class="p-color-fs span">{{
+                    order.data.items.total_amount
+                  }}</span>
                 </p>
               </div>
             </div>
@@ -81,11 +95,13 @@
                 </div>
                 <div class="time-order">
                   <p class="paragarph text-capitalize">
-                  aasas
+                    {{
+                      dayjs(order?.data?.items.created_at).format(
+                        "ddd, MMM D ,YYYY"
+                      )
+                    }}
                   </p>
-                  <p class="paragarph text-capitalize">
-                    asasas
-                  </p>
+                  <p class="paragarph text-capitalize">  {{ dayjs(order?.data?.items.created_at).format("hh:mm A") }}</p>
                 </div>
               </div>
 
@@ -94,16 +110,14 @@
                   <iconsOrder-timer />
                 </div>
                 <div class="title-order">
-                  <p class="paragarph">
-                   sasasasas
-                  </p>
+                  <p class="paragarph">sasasasas</p>
                   <p class="paragarph">asasasas</p>
                 </div>
               </div>
             </div>
 
             <div>requsted</div>
-      
+
             <!-- <div
               class="status text-capitalize"
               :class="{
@@ -116,8 +130,7 @@
             >
              req
             </div> -->
-          
-          </div> 
+          </div>
         </div>
       </div>
       <!-- <div class="position-absolute test">
@@ -129,140 +142,31 @@
 </template>
 
 <script setup>
-let orders = ref([]);
+let dayjs = useDayjs();
+let msgError = ref(false);
+let loading = ref(true);
+
+const orders = ref([]);
 onMounted(async () => {
+  loading.value = true;
+  msgError.value = false;
   try {
     const res = await useApi().getMyOrders();
-    console.log("Orders fetched: ", res);
-    orders.value = res?.data?.items;
-  } catch (error) {
-    console.error("Error fetching orders:", error?.response?._data || error);
+    if (res?.status === false && res?.message === "Unauthenticated") {
+      msgError.value = true;
+    } else {
+      orders.value = res?.data?.items ?? [];
+    }
+  } catch (err) {
+    if (err?.response?.status === 401) {
+      msgError.value = true;
+    } else {
+      console.error("حدث خطأ غير متوقع:", err);
+    }
+  } finally {
+    loading.value = false;
   }
 });
-
-// let ordersAll = ref([
-//   {
-//     imgOrder: "/Car Brake Icon.png",
-//     nameOrder: "Brakes Services",
-//     priceOrder: "60",
-//     currency: "SAR",
-//     day: "wed",
-//     dayNumber: 23,
-//     month: "oct",
-//     year: 2024,
-//     time: 10,
-//     meinute: "00",
-//     branch: "Riadah",
-//     area: "senaeyah",
-//     stret: "25 soliman",
-//     status: "requested",
-//     orderNumber: 1540,
-//     nameIcon: "like",
-//     details:
-//       "Lorem ipsum dolor sit amet,Lorem ipsum dolor sit amet,  Lorem ipsum dolor sit amet",
-//     totalprice: 80,
-//     vatnum: 300315382500003,
-//     orderamount: 300315382500003,
-//   },
-//   {
-//     imgOrder: "/Car Brake Icon.png",
-//     nameOrder: "Brakes Services",
-//     priceOrder: "60",
-//     currency: "SAR",
-//     day: "wed",
-//     dayNumber: 23,
-//     month: "oct",
-//     year: 2024,
-//     time: 10,
-//     meinute: "00",
-//     branch: "Riadah",
-//     area: "senaeyah",
-//     stret: "25 soliman",
-//     status: "inspection",
-//     orderNumber: 1540,
-//     nameIcon: "like",
-//     details:
-//       "Lorem ipsum dolor sit amet,Lorem ipsum dolor sit amet,  Lorem ipsum dolor sit amet",
-//     totalprice: 80,
-//     vatnum: 300315382500003,
-//     orderamount: 300315382500003,
-//   },
-//   {
-//     imgOrder: "/Car Brake Icon.png",
-//     nameOrder: "Brakes Services",
-//     priceOrder: "60",
-//     currency: "SAR",
-//     day: "wed",
-//     dayNumber: 23,
-//     month: "oct",
-//     year: 2024,
-//     time: 10,
-//     meinute: "00",
-//     branch: "Riadah",
-//     area: "senaeyah",
-//     stret: "25 soliman",
-//     status: "report",
-//     orderNumber: 1540,
-//     nameIcon: "like",
-//     details:
-//       "Lorem ipsum dolor sit amet,Lorem ipsum dolor sit amet,  Lorem ipsum dolor sit amet",
-//     totalprice: 80,
-//     vatnum: 300315382500003,
-//     orderamount: 300315382500003,
-//   },
-//   {
-//     imgOrder: "/Car Brake Icon.png",
-//     nameOrder: "Brakes Services",
-//     priceOrder: "60",
-//     currency: "SAR",
-//     day: "wed",
-//     dayNumber: 23,
-//     month: "oct",
-//     year: 2024,
-//     time: 10,
-//     meinute: "00",
-//     branch: "Riadah",
-//     area: "senaeyah",
-//     stret: "25 soliman",
-//     status: "canceled",
-//     orderNumber: 1540,
-//     nameIcon: "like",
-//     details:
-//       "Lorem ipsum dolor sit amet,Lorem ipsum dolor sit amet,  Lorem ipsum dolor sit amet",
-//     totalprice: 80,
-//     vatnum: 300315382500003,
-//     orderamount: 300315382500003,
-//   },
-//   {
-//     imgOrder: "/Car Brake Icon.png",
-//     nameOrder: "Brakes Services",
-//     priceOrder: "60",
-//     currency: "SAR",
-//     day: "wed",
-//     dayNumber: 23,
-//     month: "oct",
-//     year: 2024,
-//     time: 10,
-//     meinute: "00",
-//     branch: "Riadah",
-//     area: "senaeyah",
-//     stret: "25 soliman",
-//     status: "car is ready",
-//     orderNumber: 1540,
-//     nameIcon: "like",
-//     details:
-//       "Lorem ipsum dolor sit amet,Lorem ipsum dolor sit amet,  Lorem ipsum dolor sit amet",
-//     totalprice: 80,
-//     vatnum: 300315382500003,
-//     orderamount: 300315382500003,
-//   },
-// ]);
-
-// let router = useRouter();
-// function clickGoToOrder(item) {
-//   localStorage.setItem("orderget", JSON.stringify(item));
-//   router.push(`/ordersteps/${item.id}`);
-// }
 </script>
 
 <style scoped>
@@ -280,5 +184,31 @@ onMounted(async () => {
   top: 0;
   background-color: rgba(0, 0, 0, 0.4);
   z-index: 11;
+}
+.msg-error {
+  background-color: white;
+  box-shadow: 0px 0px 20px 0px #0000000a;
+  border-radius: 30px;
+  padding: 20px;
+  text-align: center;
+  width: 50%;
+  margin: auto;
+}
+.goAcc {
+  border: none;
+  background-color: var(--main-color);
+  padding: 3px 20px;
+  margin-top: 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-family: var(--font-main);
+  font-weight: 500;
+  font-size: 16px;
+  color: #040505;
+}
+.goAcc:hover {
+  border: none;
+  background-color: var(--main-color);
+  box-shadow: 0px 0px 20px 0px var(--main-color);
 }
 </style>
