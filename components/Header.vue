@@ -4,7 +4,7 @@
       class="container p-2 d-flex justify-content-between align-items-center pt-3"
     >
       <div class="logo d-flex align-items-center gap-3 position-relative">
-        <div class="image-logo">
+        <div class="image-logo" @click="navigateTo('/')">
           <img class="width-image" src="/Yarmook Logo.png" alt="Logo" />
         </div>
 
@@ -79,7 +79,7 @@
   background-color: #ffffff;
   width: 100%;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-  padding: 5px; 
+  padding: 5px;
 }
 .width-image {
   width: 120px;
@@ -87,35 +87,51 @@
   transition: transform 0.3s ease, filter 0.3s ease;
   cursor: pointer;
 }
-.width-image:hover {
-  transform: scale(1.1) rotate(5deg);
-  filter: brightness(1.1) drop-shadow(0 4px 8px rgba(255, 230, 84, 0.4));
-}
+
 .search {
-  width: 339px;
+  position: relative;
+  width: 100%;
+  max-width: 339px;
 }
+
 .input-search {
-  max-width: 100%;
-  padding: 20px 262px 20px 20px;
-  transition: all 0.3s ease;
+  width: 100%;
+  padding: 20px 48px 20px 16px; 
+  border: none;
+  border-radius: 36px;
   background-color: #f7f7fc;
+  font-size: 16px;
 }
+
+.input-search:focus {
+  outline: 2px solid var(--main-color);
+}
+
+.icon-search {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #939393;
+  pointer-events: none;
+}
+
+
+
+
+
+
 .focus-input {
   border: none;
   background-color: rgba(247, 242, 244, 1);
   transition: all 0.3s ease;
 }
-.focus-input:hover {
-  box-shadow: 0 4px 15px rgba(255, 230, 84, 0.2);
-  transform: translateY(-1px);
-}
+
 .focus-input:focus {
-  transform: translateY(-2px);
   outline: 2px solid var(--main-color);
 }
 .focus-input::placeholder {
   color: #939393;
-
   font-size: 16px;
   font-weight: 400;
   font-family: var(--font-main);
