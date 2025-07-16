@@ -6,7 +6,7 @@ export const useApi = () => {
   const headers = {
     Authorization: `Bearer ${token.value}`,
     "Content-Type": "application/json",
-    "Accept": "application/json",
+    Accept: "application/json",
   };
 
   const sendOTP = async (phone) => {
@@ -253,6 +253,13 @@ export const useApi = () => {
     });
   };
 
+  const getCarBrands = async () => {
+    return await $fetch(`${baseURL}/core/brands`, {
+      method: "GET",
+      headers,
+    });
+  };
+
   return {
     sendOTP,
     checkOTP,
@@ -286,5 +293,6 @@ export const useApi = () => {
     getSingleOrder,
     getOffers,
     getOfferSingle,
+    getCarBrands,
   };
 };

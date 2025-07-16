@@ -20,7 +20,7 @@
                 </li>
                 <li class="border-radius-36px">
                   <NuxtLink
-                    to="/myOrders"
+                    to="/myorders"
                     exact-active-class="active"
                     class="d-flex align-items-center gap-1 border-radius-36px p-color-fs"
                   >

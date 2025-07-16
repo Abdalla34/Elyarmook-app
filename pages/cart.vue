@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row justify-content-center">
         <!-- left section -->
-        <div class="col-12 col-md-12 col-lg-6 col-md-6 ">
+        <div class="col-12 col-md-12 col-lg-6 col-md-6">
           <h4 class="mb-4 fw-bold">Order Details</h4>
           <div
             class="cart d-flex justify-content-between align-items-center border-radius-36px mb-3"
@@ -103,7 +103,7 @@
         </div>
 
         <!-- right section -->
-        <div class="col-12 col-md-12 col-lg-4 col-test ">
+        <div class="col-12 col-md-12 col-lg-4 col-test">
           <div class="h-100">
             <div class="">
               <h6 class="fw-bold">Order Details</h6>
@@ -112,7 +112,7 @@
                   class="branch d-flex justify-content-between align-items-center"
                 >
                   <h4 class="label">branch</h4>
-                  <p class="text-capitalize">branch.title</p>
+                  <p class="text-capitalize">riyddah</p>
                 </div>
 
                 <div
@@ -120,7 +120,7 @@
                 >
                   <h4 class="label">car model</h4>
 
-                  <p>"ddd, MMM D, YYYY"</p>
+                  <p>BMW</p>
                 </div>
 
                 <div
@@ -128,14 +128,14 @@
                 >
                   <h4 class="label">Reservation Date</h4>
 
-                  <p>hh:mm A"</p>
+                  <p>sun , oct 5 , 2025</p>
                 </div>
 
                 <div
                   class="reservation-time d-flex justify-content-between align-items-center"
                 >
                   <h4 class="label">Reservation time</h4>
-                  <p class="text-capitalize">hh:mm A"</p>
+                  <p class="text-capitalize">10:40</p>
                 </div>
               </div>
             </div>
@@ -148,21 +148,21 @@
                   class="total-order d-flex justify-content-between align-items-center"
                 >
                   <h4 class="label">Total Order</h4>
-                  <p class="text-capitalize">order_num</p>
+                  <p class="text-capitalize">1112151545237</p>
                 </div>
 
                 <div
                   class="vat d-flex justify-content-between align-items-center"
                 >
                   <h4 class="label">vat</h4>
-                  <p class="text-capitalize">vat_amount</p>
+                  <p class="text-capitalize">2415151245</p>
                 </div>
 
                 <div
                   class="final-amount d-flex justify-content-between align-items-center"
                 >
                   <h4 class="label">Final Amount</h4>
-                  <p class="text-capitalize">total_amount</p>
+                  <p class="text-capitalize">400</p>
                 </div>
               </div>
 
@@ -182,7 +182,7 @@
                 class="total-amount d-flex align-items-center justify-content-between"
               >
                 <h1 class="amount text-capitalize">total</h1>
-                <p>total_amount sar</p>
+                <p>400sar</p>
               </div>
 
               <div class="buttion-confirm">
@@ -197,7 +197,12 @@
 </template>
 
 <script setup>
-const { getMyCart, deleteItemFromCart, updateCartItemQuantity } = useApi();
+const {
+  getMyCart,
+  deleteItemFromCart,
+  updateCartItemQuantity,
+  getSingleOrder,
+} = useApi();
 
 const orders = ref([]);
 const loading = ref(true);
@@ -241,6 +246,11 @@ async function updateQty(order, newQty) {
     loadingQty.value[order.id] = false;
   }
 }
+
+// let test = ref([]);
+// let resTest = await getSingleOrder();
+// test.value = resTest?.data;
+// console.log(test);
 </script>
 
 <style scoped>

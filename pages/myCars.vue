@@ -57,20 +57,10 @@
 </template>
 
 <script setup>
-let cars = ref([
-  {
-    carNAme: "BMW,x6,2022",
-    carLogo: "BMW.png",
-  },
-  {
-    carNAme: "BMW,x6,2022",
-    carLogo: "BMW.png",
-  },
-  {
-    carNAme: "BMW,x6,2022",
-    carLogo: "BMW.png",
-  },
-]);
+let carsBrand = ref([]);
+let res = await useApi().getCarBrands();
+carsBrand.value = res?.data?.items;
+console.log(carsBrand);
 </script>
 
 <style scoped>

@@ -30,7 +30,7 @@ const route = useRoute();
 
 const noLayoutPages = [
   "/contactUs",
-  "/carBrand",
+  "/car-brand",
   "/car-series",
   "/ordersteps/[id]",
   "/auth",
@@ -40,8 +40,8 @@ const noLayoutPages = [
 const showLayout = computed(() => !noLayoutPages.includes(route.path));
 
 const showViews = computed(() => {
-  const path = route.path;
-  return path !== "/cart";
+  const path = ["/cart", "/order-details"];
+  return !path.includes(route.path);
 });
 </script>
 

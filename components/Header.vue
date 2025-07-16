@@ -33,7 +33,7 @@
           </div>
           <div
             class="background-color-cart d-flex align-items-center justify-content-center"
-            @click="navigateTo('/myCars')"
+            @click="navigateTo('/mycars')"
           >
             <button class="buttons">
               <img class="bmw-img z-index-after" src="/public/BMW.png" alt="" />

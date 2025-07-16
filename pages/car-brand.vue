@@ -50,26 +50,10 @@
 </template>
 
 <script setup>
-let carBrands = ref([
-  {
-    id: 1,
-    label: "A",
-    carModel: "Audi",
-    imgLogo: "BMW.png",
-  },
-  {
-    id: 2,
-    label: "B",
-    carModel: "BYD",
-    imgLogo: "BMW.png",
-  },
-  {
-    id: 2,
-    label: "c",
-    carModel: "chery",
-    imgLogo: "BMW.png",
-  },
-]);
+let carsBrand = ref([]);
+let res = await useApi().getCarBrands();
+carsBrand.value = res?.data?.items;
+console.log(carsBrand);
 </script>
 
 <style scoped>

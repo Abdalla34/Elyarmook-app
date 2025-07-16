@@ -51,11 +51,24 @@
                   <input
                     type="text"
                     placeholder="your phone"
-                    v-model="phoneNumber"
+                    v-model="phone"
+                    disabled
                   />
                   <span class="text-danger text-capitalize mt-2" v-if="errors.phoneNumber">{{
                     errors.phoneNumber
                   }}</span>
+                </div>
+
+
+                       <div class="input d-flex flex-column">
+                  <label class="label">email</label>
+                  <input
+                    type="text"
+                    placeholder="your phone"
+                    v-model="email"
+                    disabled
+                  />
+              
                 </div>
               </div>
 
@@ -136,6 +149,7 @@ const schema = yup.object({
     .matches(/^\d+$/, "digits only"),
   city: yup.string().required("please enter your city"),
   area: yup.string().required("please enter your area"),
+  email : yup.string()
 });
 
 const { handleSubmit, errors } = useForm({

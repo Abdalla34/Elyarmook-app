@@ -8,29 +8,52 @@
           </h1>
 
           <div class="order">
-            <div class="input-user d-flex flex-column">
+            <div class="input-user position-relative d-flex flex-column">
               <label for="" class="label">my car</label>
-              <input type="text" class="input-style" placeholder="test name" />
+              <select class="input-style">
+                <option disabled selected>Ex, Ahmed Khaled</option>
+                <option>Toyota Corolla</option>
+                <option>Hyundai Elantra</option>
+                <option>BMW X5</option>
+              </select>
+              <div class="icon-shape position-absolute">
+                <icons-order-iconunion />
+              </div>
             </div>
 
             <div
               class="branch-date d-flex align-items-center justify-content-between gap-3"
             >
-              <div class="input-barnch fix d-flex flex-column">
-                <label for="" class="label">barnch</label>
-                <input
-                  class="input-style"
-                  type="text"
-                  placeholder="test branch"
-                />
+              <div
+                class="input-barnch position-relative fix d-flex flex-column"
+              >
+                <label for="" class="label">branch</label>
+                <select class="input-style">
+                  <option disabled selected>Select Branch</option>
+                  <option>Riyadh</option>
+                  <option>Jeddah</option>
+                  <option>Dammam</option>
+                </select>
+                <div class="icon-shape position-absolute">
+                  <icons-order-iconunion />
+                </div>
               </div>
-              <div class="input-date fix d-flex flex-column">
-                <label for="" class="label">date</label>
-                <input
-                  class="input-style"
-                  type="text"
-                  placeholder="test date"
-                />
+
+              <div class="input-date position-relative fix d-flex flex-column">
+                <label class="label">Date</label>
+
+                <div class="datepicker-wrapper position-relative w-100">
+                  <datepicker
+                    v-model="seletctedDate"
+                    placeholder="selecte date"
+                    :value="formatDate"
+                    class="input-style w-100"
+                  />
+
+                  <div class="icon-shape position-absolute data-picker-icon">
+                    <icons-order-iconunion />
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -75,13 +98,16 @@
             </div>
 
             <div class="buttons-order d-flex justify-content-center gap-2">
-              <button class="additems text-capitalize label">
+              <button
+                @click="navigateTo('/services')"
+                class="additems text-capitalize label"
+              >
                 <i class="fa-solid fa-plus"></i>
                 add another items
               </button>
               <button
                 class="continue text-capitalize label button"
-                @click="navigateTo('/orderContinue')"
+                @click="navigateTo('')"
               >
                 continue
               </button>
@@ -93,6 +119,30 @@
   </div>
 </template>
 
+<script setup>
+import Datepicker from "vue3-datepicker";
+import { format } from "date-fns";
+
+let seletctedDate = ref(null);
+let formatDate = computed(() => {
+  return seletctedDate.value
+    ? format(seletctedDate.value, "dd, MMM, yyyy")
+    : "";
+});
+</script>
+
 <style scoped>
 @import "@/assets/css/orderDetails.css";
+.icon-shape {
+  right: 10px;
+  top: 50%;
+  pointer-events: none;
+}
+select {
+  appearance: none;
+}
+.data-picker-icon {
+  top: 50%;
+  transform: translateY(-80%);
+}
 </style>
