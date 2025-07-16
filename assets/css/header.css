@@ -1,0 +1,193 @@
+.header-parent {
+  background-color: #ffffff;
+  width: 100%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  padding: 5px;
+}
+.width-image {
+  width: 120px;
+  height: 48px;
+  transition: transform 0.3s ease, filter 0.3s ease;
+  cursor: pointer;
+}
+.search {
+  position: relative;
+  width: 100%;
+  max-width: 339px;
+}
+
+.input-search {
+  width: 100%;
+  padding: 20px 48px 20px 16px; 
+  border: none;
+  border-radius: 36px;
+  background-color: #f7f7fc;
+  font-size: 16px;
+}
+
+.input-search:focus {
+  outline: 2px solid var(--main-color);
+}
+
+.icon-search {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #939393;
+  pointer-events: none;
+}
+
+.focus-input {
+  border: none;
+  background-color: rgba(247, 242, 244, 1);
+  transition: all 0.3s ease;
+}
+
+.focus-input:focus {
+  outline: 2px solid var(--main-color);
+}
+.focus-input::placeholder {
+  color: #939393;
+  font-size: 16px;
+  font-weight: 400;
+  font-family: var(--font-main);
+}
+.focus-input:focus {
+  border: none;
+  outline: none;
+}
+.icon-search {
+  right: 20px;
+  top: 50%;
+  transform: translatey(-50%);
+  color: #939393;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.icon-search:hover {
+  color: blac;
+  transform: translateY(-50%) scale(1.2);
+}
+
+.profile-ds {
+  display: flex;
+}
+
+@media (max-width: 576px) {
+  .search {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .search {
+    display: none;
+  }
+  .profile-ds {
+    display: none;
+  }
+}
+
+/* start prfile card */
+.profile-img {
+  width: 64px;
+  padding: 5px;
+  border-radius: 16px;
+  height: 64px;
+}
+.buttons {
+  border: none;
+}
+.bmw-img {
+  width: 21px;
+}
+.background-color-cart {
+  background-color: rgba(255, 249, 212, 1);
+  height: 64px;
+  width: 64px;
+  border-radius: 16px;
+  padding: 20px;
+  position: relative;
+  transition: all 0.3s ease;
+  /* overflow: hidden; */
+  z-index: 1;
+  cursor: pointer;
+}
+
+.background-color-cart:hover {
+  transform: scale(1.01) translateY(-1px);
+  box-shadow: 0 8px 20px rgba(255, 230, 84, 0.4);
+  background-color: var(--main-color);
+}
+
+.background-color-cart::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.3), transparent);
+  width: 0;
+  height: 0;
+  transition: all 0.4s ease;
+  z-index: 0;
+}
+
+.background-color-cart:hover::after {
+  width: 100px;
+  height: 100px;
+}
+
+.buttons {
+  border: none;
+  background: transparent;
+  transition: transform 0.2s ease;
+  z-index: 2;
+  position: relative;
+}
+
+.buttons:hover {
+  transform: scale(1.03);
+}
+
+.z-index-after {
+  position: relative;
+  z-index: 2;
+  transition: all 0.2s ease;
+}
+
+.profile-img,
+.bmw-img {
+  transition: all 0.3s ease;
+}
+
+.profile-img:hover,
+.bmw-img:hover {
+  transform: scale(1.05);
+  filter: brightness(1.1);
+}
+
+@media (max-width: 768px) {
+  .profile-card {
+    display: none;
+  }
+}
+
+.span-length {
+  position: absolute;
+  background-color: var(--main-color);
+  border-radius: 50%;
+  padding: 8px;
+  left: 0%;
+  top: -16px;
+  z-index: 10;
+  width: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 10px;
+  color: black;
+  font-weight: bold;
+}

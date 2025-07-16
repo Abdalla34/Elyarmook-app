@@ -15,7 +15,7 @@
                 <img :src="order.image" :alt="order.title" />
               </div>
               <div class="name-cart">
-                <h4 class="item-name">{{ order.title }}</h4>
+                <h4 class="item-name item-left">{{ order.title }}</h4>
                 <p class="price">
                   {{ order.price }}
                   <span class="p-color-fs span">SAR</span>
@@ -244,99 +244,5 @@ async function updateQty(order, newQty) {
 </script>
 
 <style scoped>
-@import "@/assets/css/cardorder.css";
-/* @import "@/assets/css/confirmorder.css"; */
-.qty-btn {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  border: 1px solid #ccc;
-  background: #fff;
-  font-size: 18px;
-  font-weight: bold;
-  cursor: pointer;
-}
-.qty-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-.img img {
-  width: 80px;
-}
-
-.box-design {
-  background-color: #f7f9f9;
-  padding: 20px;
-  border-radius: 12px;
-  margin-top: 24px;
-  margin-bottom: 40px;
-}
-.input-code {
-  position: relative;
-}
-
-.input-with-apply {
-  border-radius: 12px;
-  padding: 12px 104px 12px 16px;
-  gap: 8px;
-  border: 1px solid #f1f3f9;
-}
-
-.input-with-apply::placeholder {
-  font-family: var(--font-main);
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 150%;
-  letter-spacing: 0%;
-}
-
-.apply-btn {
-  right: 0px;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: #f1f3f9;
-  color: white;
-  border: none;
-  padding: 6px 16px;
-  border-radius: 6px;
-  cursor: pointer;
-  height: 100%;
-  border: 1px solid #f1f3f9;
-}
-
-.spanbutton {
-  font-family: var(--font-main);
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 20px;
-  letter-spacing: 0%;
-  text-align: right;
-  color: #7e7e7e;
-}
-
-.total-amount {
-  background-color: #ecfaf2;
-  padding: 20px 23px;
-  border-radius: 12px;
-  margin-top: 16px;
-}
-
-.amount {
-  font-family: var(--font-alt);
-  font-weight: 600;
-  font-size: 20px;
-  line-height: 16px;
-  letter-spacing: 0px;
-  text-align: center;
-}
-.buttion-confirm{
-  margin-top: 40px;
-}
-
-@media (max-width:576px) {
-  
-.cart{
-  flex-direction: column;
-}
-}
+@import "@/assets/css/cartorder.css";
 </style>
