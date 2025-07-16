@@ -30,8 +30,13 @@
                     type="text"
                     placeholder="your name"
                     v-model="firstName"
+                    class="text-capitalize"
                   />
-                  <span class="text-danger text-capitalize mt-2" v-if="errors.firstName">{{ errors.firstName }}</span>
+                  <span
+                    class="text-danger text-capitalize mt-2"
+                    v-if="errors.firstName"
+                    >{{ errors.firstName }}</span
+                  >
                 </div>
 
                 <div class="input d-flex flex-column">
@@ -40,8 +45,13 @@
                     type="text"
                     placeholder="your name"
                     v-model="lastName"
+                    class="text-capitalize"
                   />
-                  <span class="text-danger text-capitalize mt-2" v-if="errors.lastName">{{ errors.lastName }}</span>
+                  <span
+                    class="text-danger text-capitalize mt-2"
+                    v-if="errors.lastName"
+                    >{{ errors.lastName }}</span
+                  >
                 </div>
               </div>
 
@@ -51,24 +61,13 @@
                   <input
                     type="text"
                     placeholder="your phone"
-                    v-model="phone"
-                    disabled
+                    v-model="phoneNumber"
                   />
-                  <span class="text-danger text-capitalize mt-2" v-if="errors.phoneNumber">{{
-                    errors.phoneNumber
-                  }}</span>
-                </div>
-
-
-                       <div class="input d-flex flex-column">
-                  <label class="label">email</label>
-                  <input
-                    type="text"
-                    placeholder="your phone"
-                    v-model="email"
-                    disabled
-                  />
-              
+                  <span
+                    class="text-danger text-capitalize mt-2"
+                    v-if="errors.phoneNumber"
+                    >{{ errors.phoneNumber }}</span
+                  >
                 </div>
               </div>
 
@@ -86,7 +85,11 @@
                     </option>
                   </select>
 
-                  <span class="text-danger text-capitalize mt-2" v-if="errors.area">{{ errors.area }}</span>
+                  <span
+                    class="text-danger text-capitalize mt-2"
+                    v-if="errors.area"
+                    >{{ errors.area }}</span
+                  >
                 </div>
 
                 <div class="input d-flex flex-column">
@@ -101,7 +104,11 @@
                       {{ cityItem.title }}
                     </option>
                   </select>
-                  <span class="text-danger text-capitalize mt-2" v-if="errors.city">{{ errors.city }}</span>
+                  <span
+                    class="text-danger text-capitalize mt-2"
+                    v-if="errors.city"
+                    >{{ errors.city }}</span
+                  >
                 </div>
               </div>
             </div>
@@ -131,7 +138,6 @@
 </template>
 
 <script setup>
-
 import { useForm, useField } from "vee-validate";
 import * as yup from "yup";
 
@@ -149,7 +155,6 @@ const schema = yup.object({
     .matches(/^\d+$/, "digits only"),
   city: yup.string().required("please enter your city"),
   area: yup.string().required("please enter your area"),
-  email : yup.string()
 });
 
 const { handleSubmit, errors } = useForm({
@@ -206,8 +211,6 @@ let onSubmit = handleSubmit(async (values) => {
   }
   router.push("/services");
 });
-
-
 </script>
 
 <style>
