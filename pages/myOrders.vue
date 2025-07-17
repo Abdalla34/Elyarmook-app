@@ -2,6 +2,7 @@
   <div class="my-orders position-relative">
     <div class="container position-relative">
       <div class="position-relative">
+        
         <div class="msg-error text-capitalize" v-if="!loading && msgError">
           <p class="text-danger">You must create an account to continue</p>
           <button class="goAcc" @click="navigateTo('/createaccount')">
@@ -66,6 +67,7 @@
             class="box-orders border-radius-36px d-flex align-items-center justify-content-between position-relative"
             v-if="!msgError && !loading"
             v-for="order in orders"
+            :key="order.id"
           >
             <!-- <div
               v-if="order.status === 'requested' || order.status === 'report'"
@@ -76,7 +78,7 @@
 
             <div class="details-title d-flex align-items-center gap-3">
               <div>
-                <!-- <img :src="orders?.data?.items." alt="imageOrder" /> -->
+                <img src="/newLogo.png" alt="imageOrder" />
               </div>
               <div class="name price">
                 <h4 class="text-capitalize">
@@ -146,25 +148,25 @@ let loading = ref(true);
 let token = useCookie("token");
 
 const orders = ref([]);
-  try {
-    const res = await useApi().getMyOrders();
-    if (res?.status === false && res?.message === "Unauthenticated") {
-      msgError.value = true;
-    } else if(token.value) {
-      orders.value = res?.data?.items ?? [];
-    }
-  } catch (err) {
-    if (err?.response?.status === 401) {
-      msgError.value = true;
-    } else {
-      console.error("حدث خطأ غير متوقع:", err);
-    }
-  } finally {
-    loading.value = false;
+try {
+  const res = await useApi().getMyOrders();
+  if (res?.status === false && res?.message === "Unauthenticated") {
+    msgError.value = true;
+  } else if (token.value) {
+    orders.value = res?.data?.items ?? [];
   }
+} catch (err) {
+  if (err?.response?.status === 401) {
+    msgError.value = true;
+  } else {
+    console.error("حدث خطأ غير متوقع:", err);
+  }
+} finally {
+  loading.value = false;
+}
 
 console.log(token.value);
-// console.log(orders.value)
+console.log(orders);
 </script>
 
 <style scoped>
