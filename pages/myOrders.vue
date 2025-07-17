@@ -1,6 +1,7 @@
 <template>
   <div class="my-orders position-relative">
     <div class="container position-relative">
+      
       <div class="position-relative">
         <div class="msg-error text-capitalize" v-if="!loading && msgError">
           <p class="text-danger">You must create an account to continue</p>
@@ -66,17 +67,13 @@
             class="box-orders border-radius-36px d-flex align-items-center justify-content-between position-relative"
             v-if="!msgError && !loading"
             v-for="order in orders"
-            :key="order.id"
           >
-            <div
-              v-if="
-                order.status_value === 'requested' ||
-                order.status_value === 'report'
-              "
+            <!-- <div
+              v-if="order.status === 'requested' || order.status === 'report'"
               class="action position-absolute text-capitalize"
             >
               action nedeed
-            </div>
+            </div> -->
 
             <div class="details-title d-flex align-items-center gap-3">
               <div>
@@ -84,10 +81,12 @@
               </div>
               <div class="name price">
                 <h4 class="text-capitalize">
-                  {{ order.vendor_name }}
+                  {{ order.data.items.vendor_name }}
                 </h4>
                 <p class="price">
-                  <span class="p-color-fs span">{{ order.total_amount }}</span>
+                  <span class="p-color-fs span">{{
+                    order.data.items.total_amount
+                  }}</span>
                 </p>
               </div>
             </div>
@@ -100,11 +99,13 @@
                 <div class="time-order">
                   <p class="paragarph text-capitalize">
                     {{
-                      dayjs(order.created_at).format("ddd, MMM D ,YYYY")
+                      dayjs(order?.data?.items.created_at).format(
+                        "ddd, MMM D ,YYYY"
+                      )
                     }}
                   </p>
                   <p class="paragarph text-capitalize">
-                    {{ dayjs(order.created_at).format("hh:mm A") }}
+                    {{ dayjs(order?.data?.items.created_at).format("hh:mm A") }}
                   </p>
                 </div>
               </div>
@@ -146,6 +147,10 @@
 </template>
 
 <script setup>
+let dayjs = useDayjs();
+let msgError = ref(false);
+let loading = ref(true);
+
 const orders = ref([]);
 onMounted(async () => {
   loading.value = true;
