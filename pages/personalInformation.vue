@@ -1,11 +1,12 @@
 <template>
   <div>
-    <ProfileDetails />
+    <ProfileDetails v-if="user" />
     <div class="personal-information">
       <div class="container">
         <div class="row">
           <div class="col-8 col-padding">
             <div
+              v-if="user"
               class="profiel-img d-flex justify-content-between align-items-center margin-bottom-24px"
             >
               <h1 class="margin-bottom-24px text-capitalize personal mb-0">
@@ -47,7 +48,18 @@
           </div>
 
           <div class="col-8 col-padding margin-bottom-24px">
-            <div class="inputs">
+            <div v-if="!user">
+              <div class="msg-error text-center text-capitalize alert alert-warning">
+                <p class="text-danger">
+                  You must create an account to continue
+                </p>
+                <button class="goAcc mt-4" @click="navigateTo('/createaccount')">
+                  Go To Create Account
+                </button>
+              </div>
+            </div>
+
+            <div v-if="user" class="inputs">
               <div class="row-inputs">
                 <div class="input d-flex flex-column">
                   <label class="label">first name</label>
@@ -73,7 +85,12 @@
               <div class="row-inputs">
                 <div class="input d-flex flex-column">
                   <label class="label">phone Number</label>
-                  <input type="text" placeholder="your phone"  v-model="user.phone" disabled />
+                  <input
+                    type="text"
+                    placeholder="your phone"
+                    v-model="user.phone"
+                    disabled
+                  />
                 </div>
                 <div class="input d-flex flex-column">
                   <label class="label">email addrees</label>
@@ -84,47 +101,89 @@
               <div class="row-inputs">
                 <div class="input d-flex flex-column">
                   <label class="label" for="">area</label>
-                  <input type="text" placeholder="central region" v-model="user.area.title" disabled />
+                  <input
+                    type="text"
+                    placeholder="central region"
+                    v-model="user.area.title"
+                    disabled
+                  />
                 </div>
                 <div class="input d-flex flex-column">
                   <label class="label" for="">city</label>
-                  <input type="text" placeholder="central region" v-model="user.city.title" disabled/>
+                  <input
+                    type="text"
+                    placeholder="central region"
+                    v-model="user.city.title"
+                    disabled
+                  />
                 </div>
               </div>
             </div>
+
           </div>
         </div>
 
-        <div class="button-save border-radius-36px width-height">
-          <button class="text-capitalize">continue</button>
+        <div v-if="user">
+          <div class="button-save border-radius-36px width-height">
+            <button class="text-capitalize">continue</button>
+          </div>
+
+          <div
+            class="button-delete border-radius-36px width-height d-flex justify-content-center margin-bottom-90px"
+          >
+            <button
+              class="text-capitalize color-but d-flex align-items-center gap-3"
+            >
+              <Trash />
+              <span>delete my account</span>
+            </button>
+          </div>
         </div>
 
-        <div
-          class="button-delete border-radius-36px width-height d-flex justify-content-center margin-bottom-90px"
-        >
-          <button
-            class="text-capitalize color-but d-flex align-items-center gap-3"
-          >
-            <Trash />
-            <span>delete my account</span>
-          </button>
-        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-const user = useCookie("user", { maxAge: 365 * 24 * 60 * 60 });
+const cookie = useCookie("user", { maxAge: 365 * 24 * 60 * 60 });
+const user = cookie.value;
 
 let profileImg = ref(false);
 function ChangeProfile() {
   profileImg.value = !profileImg.value;
 }
-
-console.log(user);
 </script>
 
 <style>
 @import "@/assets/css/personalInformation.css";
+
+.msg-error {
+  background-color: white;
+  box-shadow: 0px 0px 20px 0px #0000000a;
+  border-radius: 30px;
+  padding: 20px;
+  text-align: center;
+  width: 100%;
+  margin: auto;
+  margin-bottom: 300px;
+  margin-top: 100px;
+}
+.goAcc {
+  border: none;
+  background-color: var(--main-color);
+  padding: 10px 20px;
+  margin-top: 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-family: var(--font-main);
+  font-weight: 500;
+  font-size: 16px;
+  color: #040505;
+}
+.goAcc:hover {
+  border: none;
+  background-color: var(--main-color);
+  box-shadow: 0px 0px 20px 0px var(--main-color);
+}
 </style>

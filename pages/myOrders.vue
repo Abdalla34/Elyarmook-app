@@ -1,7 +1,6 @@
 <template>
   <div class="my-orders position-relative">
     <div class="container position-relative">
-      
       <div class="position-relative">
         <div class="msg-error text-capitalize" v-if="!loading && msgError">
           <p class="text-danger">You must create an account to continue</p>
@@ -81,12 +80,10 @@
               </div>
               <div class="name price">
                 <h4 class="text-capitalize">
-                  {{ order.data.items.vendor_name }}
+                  {{ order.vendor_name }}
                 </h4>
                 <p class="price">
-                  <span class="p-color-fs span">{{
-                    order.data.items.total_amount
-                  }}</span>
+                  <span class="p-color-fs span">{{ order.total_amount }}</span>
                 </p>
               </div>
             </div>
@@ -98,14 +95,10 @@
                 </div>
                 <div class="time-order">
                   <p class="paragarph text-capitalize">
-                    {{
-                      dayjs(order?.data?.items.created_at).format(
-                        "ddd, MMM D ,YYYY"
-                      )
-                    }}
+                    {{ dayjs(order.created_at).format("ddd, MMM D ,YYYY") }}
                   </p>
                   <p class="paragarph text-capitalize">
-                    {{ dayjs(order?.data?.items.created_at).format("hh:mm A") }}
+                    {{ dayjs(order.created_at).format("hh:mm A") }}
                   </p>
                 </div>
               </div>
@@ -150,16 +143,14 @@
 let dayjs = useDayjs();
 let msgError = ref(false);
 let loading = ref(true);
+let token = useCookie("token");
 
 const orders = ref([]);
-onMounted(async () => {
-  loading.value = true;
-  msgError.value = false;
   try {
     const res = await useApi().getMyOrders();
     if (res?.status === false && res?.message === "Unauthenticated") {
       msgError.value = true;
-    } else {
+    } else if(token.value) {
       orders.value = res?.data?.items ?? [];
     }
   } catch (err) {
@@ -171,7 +162,9 @@ onMounted(async () => {
   } finally {
     loading.value = false;
   }
-});
+
+console.log(token.value);
+// console.log(orders.value)
 </script>
 
 <style scoped>

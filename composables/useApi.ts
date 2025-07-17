@@ -231,10 +231,13 @@ export const useApi = () => {
   const getMyOrders = async () => {
     const token = useCookie("token");
     return await $fetch(`${baseURL}/order/orders`, {
-      headers,
+      headers: {
+        Authorization: `Bearer ${token.value}`,
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
     });
   };
-
   const getSingleOrder = async (order_id) => {
     return await $fetch(`${baseURL}/order/orders/${order_id}`, {
       headers,
