@@ -209,7 +209,7 @@ let onSubmit = handleSubmit(async (values) => {
     token.value = res.data.token;
     user.value = JSON.stringify(res.data.user);
   }
-  router.push("/services");
+  router.push("/car-brand");
 });
 </script>
 

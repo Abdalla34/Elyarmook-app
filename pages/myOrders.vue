@@ -1,6 +1,15 @@
 <template>
   <div class="my-orders position-relative">
-    <div class="container">
+    <div class="container position-relative">
+      <div class="position-relative">
+        <div class="msg-error text-capitalize" v-if="!loading && msgError">
+          <p class="text-danger">You must create an account to continue</p>
+          <button class="goAcc" @click="navigateTo('/createaccount')">
+            Go To Create Acc
+          </button>
+        </div>
+      </div>
+
       <div class="row justify-content-center">
         <div class="col-lg-7 col-md-10 col-sm-12">
           <ul
@@ -52,25 +61,22 @@
               </NuxtLink>
             </li>
           </ul>
-          
-          <div class="msg-error text-capitalize" v-if="!loading && msgError">
-            <p class="text-danger">You must create an account to continue</p>
-            <button class="goAcc" @click="navigateTo('/createaccount')">
-              Go To Create Acc
-            </button>
-          </div>
 
           <div
             class="box-orders border-radius-36px d-flex align-items-center justify-content-between position-relative"
             v-if="!msgError && !loading"
-            v-for="order in orders?.data?.items"
+            v-for="order in orders"
+            :key="order.id"
           >
-            <!-- <div
-              v-if="order.status === 'requested' || order.status === 'report'"
+            <div
+              v-if="
+                order.status_value === 'requested' ||
+                order.status_value === 'report'
+              "
               class="action position-absolute text-capitalize"
             >
               action nedeed
-            </div> -->
+            </div>
 
             <div class="details-title d-flex align-items-center gap-3">
               <div>
@@ -78,12 +84,10 @@
               </div>
               <div class="name price">
                 <h4 class="text-capitalize">
-                  {{ order.data.items.vendor_name }}
+                  {{ order.vendor_name }}
                 </h4>
                 <p class="price">
-                  <span class="p-color-fs span">{{
-                    order.data.items.total_amount
-                  }}</span>
+                  <span class="p-color-fs span">{{ order.total_amount }}</span>
                 </p>
               </div>
             </div>
@@ -96,12 +100,12 @@
                 <div class="time-order">
                   <p class="paragarph text-capitalize">
                     {{
-                      dayjs(order?.data?.items.created_at).format(
-                        "ddd, MMM D ,YYYY"
-                      )
+                      dayjs(order.created_at).format("ddd, MMM D ,YYYY")
                     }}
                   </p>
-                  <p class="paragarph text-capitalize">  {{ dayjs(order?.data?.items.created_at).format("hh:mm A") }}</p>
+                  <p class="paragarph text-capitalize">
+                    {{ dayjs(order.created_at).format("hh:mm A") }}
+                  </p>
                 </div>
               </div>
 
@@ -143,30 +147,34 @@
 
 <script setup>
 let dayjs = useDayjs();
+let orders = ref([]);
+let resOrder = await useApi().getMyOrders();
+orders.value = resOrder?.data?.items;
+console.log(resOrder?.data?.items);
 let msgError = ref(false);
 let loading = ref(true);
 
-const orders = ref([]);
-onMounted(async () => {
-  loading.value = true;
-  msgError.value = false;
-  try {
-    const res = await useApi().getMyOrders();
-    if (res?.status === false && res?.message === "Unauthenticated") {
-      msgError.value = true;
-    } else {
-      orders.value = res?.data?.items ?? [];
-    }
-  } catch (err) {
-    if (err?.response?.status === 401) {
-      msgError.value = true;
-    } else {
-      console.error("حدث خطأ غير متوقع:", err);
-    }
-  } finally {
-    loading.value = false;
-  }
-});
+// const orders = ref([]);
+// onMounted(async () => {
+//   loading.value = true;
+//   msgError.value = false;
+//   try {
+//     const res = await useApi().getMyOrders();
+//     if (res?.status === false && res?.message === "Unauthenticated") {
+//       msgError.value = true;
+//     } else {
+//       orders.value = res?.data?.items ?? [];
+//     }
+//   } catch (err) {
+//     if (err?.response?.status === 401) {
+//       msgError.value = true;
+//     } else {
+//       console.error("حدث خطأ غير متوقع:", err);
+//     }
+//   } finally {
+//     loading.value = false;
+//   }
+// });
 </script>
 
 <style scoped>
@@ -193,11 +201,13 @@ onMounted(async () => {
   text-align: center;
   width: 50%;
   margin: auto;
+  margin-bottom: 300px;
+  margin-top: 100px;
 }
 .goAcc {
   border: none;
   background-color: var(--main-color);
-  padding: 3px 20px;
+  padding: 10px 20px;
   margin-top: 20px;
   border-radius: 20px;
   cursor: pointer;

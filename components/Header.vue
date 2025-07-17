@@ -39,17 +39,25 @@
               <img class="bmw-img z-index-after" src="/public/BMW.png" alt="" />
             </button>
           </div>
-          <div
-            class="background-color-cart d-flex align-items-center justify-content-center"
-          >
-            <button class="buttons">
-              <img
-                class="profile-img z-index-after"
-                src="/public/img-icon.jpg"
-                alt=""
-                @click="navigateTo('/personalInformation')"
-              />
-            </button>
+
+          <div class="position-relative">
+            <div
+              class="background-color-cart d-flex align-items-center justify-content-center position-relative"
+            >
+              <button class="buttons">
+                <img
+                  class="profile-img z-index-after"
+                  src="/public/img-icon.jpg"
+                  alt=""
+                  @click="navigateTo('/personalInformation')"
+                />
+              </button>
+
+              <!-- <div class="menu-profile-log">
+                <div class="login">login</div>
+              </div> -->
+
+            </div>
           </div>
         </div>
       </div>
@@ -75,4 +83,33 @@
 
 <style scoped>
 @import "@/assets/css/header.css";
+
+.menu-profile-log {
+  position: absolute;
+  top: 80px;
+  right: 0;
+  width: 250px;
+  height: 150px;
+  padding: 16px 0;
+  background-color: #eee;
+  border-radius: 36px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  z-index: 9999 !important;
+  margin-bottom: 10px;
+}
+
+.login {
+  padding: 10px 60px;
+  background-color: var(--main-color);
+  width: fit-content;
+  margin: auto auto 10px;
+  border-radius: 20px;
+  color: var(--colo-black);
+  font-weight: bold;
+  text-align: center;
+  position: relative;
+  top: 50%;
+  transform: translate(0, -50%);
+}
 </style>

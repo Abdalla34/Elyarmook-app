@@ -8,7 +8,7 @@
             <GoPageArrow title="my cars" :showIcon="false" />
             <div
               class="cars margin-bottom-24px"
-              v-for="(item, index) in cars"
+              v-for="(item, index) in carsBrand"
               :key="index"
             >
               <div class="car-box d-flex justify-content-between box-main">
