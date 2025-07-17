@@ -146,35 +146,27 @@
 </template>
 
 <script setup>
-let dayjs = useDayjs();
-let orders = ref([]);
-let resOrder = await useApi().getMyOrders();
-orders.value = resOrder?.data?.items;
-console.log(resOrder?.data?.items);
-let msgError = ref(false);
-let loading = ref(true);
-
-// const orders = ref([]);
-// onMounted(async () => {
-//   loading.value = true;
-//   msgError.value = false;
-//   try {
-//     const res = await useApi().getMyOrders();
-//     if (res?.status === false && res?.message === "Unauthenticated") {
-//       msgError.value = true;
-//     } else {
-//       orders.value = res?.data?.items ?? [];
-//     }
-//   } catch (err) {
-//     if (err?.response?.status === 401) {
-//       msgError.value = true;
-//     } else {
-//       console.error("حدث خطأ غير متوقع:", err);
-//     }
-//   } finally {
-//     loading.value = false;
-//   }
-// });
+const orders = ref([]);
+onMounted(async () => {
+  loading.value = true;
+  msgError.value = false;
+  try {
+    const res = await useApi().getMyOrders();
+    if (res?.status === false && res?.message === "Unauthenticated") {
+      msgError.value = true;
+    } else {
+      orders.value = res?.data?.items ?? [];
+    }
+  } catch (err) {
+    if (err?.response?.status === 401) {
+      msgError.value = true;
+    } else {
+      console.error("حدث خطأ غير متوقع:", err);
+    }
+  } finally {
+    loading.value = false;
+  }
+});
 </script>
 
 <style scoped>
