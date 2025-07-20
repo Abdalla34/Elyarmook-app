@@ -73,6 +73,12 @@
   background-color: #ebebeb;
   padding: 21px 23px;
   border-radius: 36px;
+  cursor: pointer;
+  transition: all ease-in-out 0.4s;
+}
+
+.visit-box:hover {
+  background-color: var(--main-color);
 }
 .visit-box h1 {
   display: flex;

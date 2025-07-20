@@ -9,23 +9,41 @@
       </div>
       <div class="row">
         <div
-          class="col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center"
-          v-for="(service, index) in soonGifts"
-          :key="index"
+          class="col-lg-12 col-md-6 col-sm-12 d-flex justify-content-center gap-4"
         >
-          <div class="service-card text-center mb-3">
+          <div class="service-card text-center mb-3"  @click="navigateTo('/services')">
             <div class="service-icon-wrapper">
               <div class="service-icon">
-                <img
-                  class="img"
-                  :src="service.imageSoon"
-                  :alt="service.title"
-                />
+                <img class="img" src="/car-fix.png" alt="service.title" />
               </div>
             </div>
             <div class="service-content">
-              <h3 class="service-title text-capitalize">{{ service.title }}</h3>
-              <p class="p-color-fs">{{ service.des }}</p>
+              <h3 class="service-title text-capitalize">services</h3>
+              <p class="p-color-fs">Lorem ipsum dolor sit amet</p>
+            </div>
+          </div>
+
+          <div class="service-card text-center mb-3"  @click="navigateTo('/offers')">
+            <div class="service-icon-wrapper">
+              <div class="service-icon">
+                <img class="img" src="/Discount Gift.png" alt="service.title" />
+              </div>
+            </div>
+            <div class="service-content">
+              <h3 class="service-title text-capitalize">offers</h3>
+              <p class="p-color-fs">Lorem ipsum dolor sit amet</p>
+            </div>
+          </div>
+
+          <div class="service-card text-center mb-3" @click="navigateTo('/spareparts')">
+            <div class="service-icon-wrapper">
+              <div class="service-icon">
+                <img class="img" src="/parts.png" alt="service.title" />
+              </div>
+            </div>
+            <div class="service-content">
+              <h3 class="service-title text-capitalize">spare Parts</h3>
+              <p class="p-color-fs">Lorem ipsum dolor sit amet</p>
             </div>
           </div>
         </div>
@@ -40,23 +58,6 @@ import { Pagination, Autoplay, Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-let soonGifts = ref([
-  {
-    imageSoon: "/car-fix.png",
-    title: "services",
-    des: "Lorem ipsum dolor sit amet ",
-  },
-  {
-    imageSoon: "/Discount Gift.png",
-    title: "offers",
-    des: "Lorem ipsum dolor sit amet ",
-  },
-  {
-    imageSoon: "/parts.png",
-    title: "pare Parts",
-    des: "Lorem ipsum dolor sit amet ",
-  },
-]);
 </script>
 
 <style scoped>
@@ -93,14 +94,14 @@ let soonGifts = ref([
   border: 1px solid rgba(255, 255, 255, 0.8);
   background-color: #ffffff;
   border-radius: 64px;
+  cursor: pointer;
 }
 
 .service-card:hover {
   transform: translateY(-2px) scale(1.02);
   box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15), 0 10px 30px rgba(0, 0, 0, 0.1);
-  background-color: #ebebeb
+  background-color: #ebebeb;
 }
-
 
 .img {
   width: 160px;
@@ -122,6 +123,4 @@ let soonGifts = ref([
     padding: 0 20px;
   }
 }
-
-
 </style>

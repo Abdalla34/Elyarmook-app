@@ -11,14 +11,17 @@
         <label class="label" for="phone-number">Phone Number</label>
         <input
           v-model="phone"
-          type="text"
           class="input-phone"
           placeholder="+966 XX XXX XXXX"
         />
       </div>
 
       <div class="btn-continue w-100">
-        <ButtonCard :textButton="loading ? 'Loading...' : 'continue'" @click="handleContinue" :disabled="loading" />
+        <ButtonCard
+          :textButton="loading ? 'Loading...' : 'continue'"
+          @click="handleContinue"
+          :disabled="loading"
+        />
       </div>
 
       <div class="position-relative or-divider">
@@ -118,11 +121,12 @@
         </div>
 
         <div
+          @click="navigateTo('/')"
           class="visit-box d-flex align-items-center justify-content-center gap-2"
         >
           <div class="icon"><ProfileIcon /></div>
           <div>
-            <h1>Fast Scheduling Order</h1>
+            <h1>Enter as a visitor</h1>
           </div>
         </div>
       </div>
@@ -136,14 +140,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-const phone = ref('')
-const loading = ref(false)
-const { sendOTP } = useApi()
-const router = useRouter()
+// import VueTelInput from "vue-tel-input";
 
-// Replace the SendOTPResponse interface with the correct structure
-// Add this at the top of the file or in composables/useApi.ts if shared
+const loading = ref(false);
+const { sendOTP } = useApi();
+const router = useRouter();
+let phone = ref('')
+
 interface SendOTPResponse {
   status: boolean;
   data: {
@@ -153,143 +156,30 @@ interface SendOTPResponse {
 }
 
 const handleContinue = async () => {
-  if (!phone.value) return
-  loading.value = true
+  if (!phone.value) return;
+  loading.value = true;
   try {
-    const res = await sendOTP(phone.value)
-    if (res && res.data && typeof res.data.registered !== 'undefined') {
+    const res = await sendOTP(phone.value);
+    if (res && res.data && typeof res.data.registered !== "undefined") {
       router.push({
-        path: '/auth',
+        path: "/auth",
         query: {
           phone: phone.value,
-          registered: res.data.registered.toString()
-        }
-      })
+          registered: res.data.registered.toString(),
+        },
+      });
     } else {
-      alert('Unexpected response from server')
+      alert("Unexpected response from server");
     }
   } catch (e) {
-    alert('Failed to send OTP')
+    alert("Failed to send OTP");
   } finally {
-    loading.value = false
+    loading.value = false;
   }
-}
+};
 </script>
 
 <style scoped>
-.parent-create {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.create-acc {
-  background-color: #ffffff;
-  box-shadow: 0px 0px 15px 0px #0000000d;
-  width: fit-content;
-  padding: 60px 40px;
-  border-radius: 50px;
-}
-.create-acc h1 {
-  font-family: var(--font-main);
-  font-weight: 700;
-  font-style: Bold;
-  font-size: 24px;
-  text-align: center;
-  color: #262338;
-  margin-top: 28px;
-  margin-bottom: 8px;
-}
-.create-acc p {
-  font-family: var(--font-main);
-  font-weight: 400;
-  font-size: 16px;
-  color: #6c757d;
-}
-
-.phone-number {
-  margin-top: 60px;
-  margin-bottom: 40px;
-}
-.phone-number label {
-  text-align: left;
-}
-.input-phone {
-  width: 100%;
-  border: 1px solid #f1f3f9;
-  border-radius: 5px;
-  padding: 12px 16px;
-  border-radius: 12px;
-}
-.input-phone::placeholder {
-  font-weight: 400;
-  font-size: 16px;
-  color: #7e7e7e;
-}
-
-.or-divider {
-  width: 100%;
-  height: 1px;
-  background-color: #cbcad7;
-  margin-top: 32px;
-}
-.span-position {
-  background-color: white;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #686677;
-  font-size: 18px;
-}
-
-.parent-boxes {
-  margin-top: 32px;
-}
-.visit-box {
-  background-color: #ebebeb;
-  padding: 21px 23px;
-  border-radius: 36px;
-}
-.visit-box h1 {
-  display: flex;
-  align-items: center;
-  margin: 0;
-  font-weight: 500;
-  font-size: 18px;
-  color: #040505;
-}
-
-.box-soon {
-  position: relative;
-}
-.box-soon span {
-  background-color: #f9cbcb;
-  top: -20px;
-  right: 0%;
-  padding: 4px 16px;
-  border-radius: 20px;
-  font-size: 16px;
-  font-weight: 500;
-  color: #eb5757;
-}
-
-.using {
-  font-family: var(--font-main);
-  font-weight: 400;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 32px;
-  margin-bottom: 15px;
-  color: #7e7e7e;
-}
-.policy {
-  font-family: var(--font-main);
-  font-weight: 400;
-  font-size: 12px;
-
-  color: #49475a !important;
-}
+/* @import "vue-tel-input/vue-tel-input.css"; */
+@import "@/assets/css/createacc.css";
 </style>

@@ -15,7 +15,7 @@
   cursor: pointer;
 }
 .slide-img:hover {
-  transform: scale(1.1) rotate(3deg);
+  transform: scale(1.1) ;
   filter: brightness(1.1) drop-shadow(0 8px 16px rgba(255, 230, 84, 0.3));
 }
 
