@@ -275,7 +275,6 @@ export const useApi = () => {
     return await $fetch(`${baseURL}/core/car-types`, {
       method: "GET",
       headers,
-      
       params: {
         per_page: 15,
         brand_id: brandId,

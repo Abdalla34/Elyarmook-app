@@ -26,7 +26,6 @@
 let carsBrand = ref([]);
 let res = await useApi().getCarBrands();
 carsBrand.value = res?.data?.items;
-
 const goToCarBrand = (item) => {
   navigateTo(`/cartypes/${item.id}`);
   localStorage.setItem("idbrand", JSON.stringify(item.id));

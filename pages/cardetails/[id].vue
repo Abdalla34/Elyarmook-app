@@ -6,18 +6,13 @@
           <div class="row">
             <div class="col-8 col-padding">
               <!-- <h1>{{ brandName }}</h1> -->
-              <div
-                class="parent"
-                v-for="model in models"
-                :key="model.id"
-                @click="goToDetailsCar(model)"
-              >
+              <div class="parent">
                 <div class="d-flex align-items-center gap-3 box-hover">
                   <div class="img-car">
-                    <img :src="model.image" alt="" />
+                    <img src="" alt="testimage" />
                   </div>
                   <div class="title-car">
-                    <h1>{{ model.title }}</h1>
+                    <h1>testdeails</h1>
                   </div>
                 </div>
               </div>
@@ -30,18 +25,9 @@
 </template>
 
 <script setup>
-const route = useRoute();
-const brandId = route.params.id;
-let brandName = ref("");
-
-const models = ref([]);
-const res = await useApi().cartypes(brandId);
-models.value = res?.data?.items ?? [];
-brandName.value = res?.data?.items.title ?? [];
-const goToDetailsCar = (item) => {
-  navigateTo(`/cardetails/${item.id}`);
-  localStorage.setItem("cardetails", JSON.stringify(item.id));
-};
+let route = useRoute();
+let idDetails = route.params.id;
+console.log(idDetails);
 </script>
 
 <style scoped>
