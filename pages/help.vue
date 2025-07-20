@@ -29,7 +29,7 @@
 
               <!-- fa1 -->
               <div class="help margin-bottom-24px box-pages">
-                <div class="help-box" @click="navigateTo('faqFromHelp')">
+                <div class="help-box" @click="navigateTo('faq-from-help')">
                   <div
                     class="help-detalis d-flex justify-content-between align-items-center"
                   >
@@ -63,7 +63,7 @@
 
               <!-- visit branch -->
               <div class="help margin-bottom-24px box-pages">
-                <div class="help-box" @click="navigateTo('ourBranches')">
+                <div class="help-box" @click="navigateTo('our-branches')">
                   <div
                     class="help-detalis d-flex justify-content-between align-items-center"
                   >

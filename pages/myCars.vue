@@ -8,17 +8,16 @@
             <GoPageArrow title="my cars" :showIcon="false" />
             <div
               class="cars margin-bottom-24px"
-              v-for="(item, index) in carsBrand"
-              :key="index"
+       
             >
               <div class="car-box d-flex justify-content-between box-main">
                 <div class="position-absolute bg-hover"></div>
                 <div class="car-detalis d-flex gap-2">
                   <div class="car-img z-index position-relative">
-                    <img :src="item.carLogo" alt="" />
+                    <!-- <img :src="item.carLogo" alt="" /> -->
                   </div>
                   <div class="car-name z-index position-relative">
-                    <p>{{ item.carNAme }}</p>
+                    <p>item.carNAme </p>
                   </div>
                 </div>
                 <div class="position-relative z-index">
@@ -42,7 +41,7 @@
             </div>
             <div
               class="button-save border-radius-36px width-height margin-bottom-287px"
-              @click="navigateTo('carBrand')"
+              @click="navigateTo('car-brand')"
             >
               <button class="text-capitalize">
                 <i class="fa-solid fa-plus"></i>

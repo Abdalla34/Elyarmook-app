@@ -1,46 +1,19 @@
 <template>
-  <div>
-    <div>
-      <div class="add-car">
-        <div class="container">
-          <div class="row">
-            <div class="col-8 col-padding">
-              <TitlePageCars namePage="BMW" backPath="/myCars" />
-
-              <!-- <div class="title-page d-flex align-items-center gap">
-                <div
-                  class="icon-to-page d-flex justify-content-center align-items-center"
-                  @click="navigateTo('/myCars')"
-                >
-                  <i class="fa-solid fa-xmark"></i>
-                </div>
-                <div class="d-flex gap-2 align-items-center">
-                <img src="public/BMW.png" alt="">
-                  <h1 class="title-pages">BMW</h1>
-                </div>
-              </div> -->
-
-              <div class="search-input">
-                <input class="search" type="text" placeholder="search" />
-              </div>
-
-              <div class="inputs" @click="navigateTo('/car-series')">
-                <div
-                  class="label-car position-relative"
-                  v-for="item in carBrands"
-                  :key="item.id"
-                >
-                  <div>
-                    <label class="pb-2" for="">{{ item.label }}</label>
-                    <input class="input-brand" type="text" />
-                  </div>
-
-                  <div class="position-absolute bmw-img d-flex gap-2">
-                    <img class="h-100" :src="item.imgLogo" alt="" />
-                    <h1 class="name-car">{{ item.carModel }}</h1>
-                  </div>
-                </div>
-              </div>
+  <div class="add-car">
+    <div class="container">
+      <div class="row">
+        <div
+          class="col-6 col-md-4 col-lg-3 mb-4"
+          v-for="brand in carsBrand"
+          :key="brand.id"
+          @click="goToCarBrand(brand)"
+        >
+          <div class="brand-card text-center">
+            <div class="img-brand">
+              <img :src="brand.image" alt="brand" />
+            </div>
+            <div class="title-brand">
+              <h6>{{ brand.title }}</h6>
             </div>
           </div>
         </div>
@@ -53,9 +26,44 @@
 let carsBrand = ref([]);
 let res = await useApi().getCarBrands();
 carsBrand.value = res?.data?.items;
-console.log(carsBrand);
+
+const goToCarBrand = (item) => {
+  navigateTo(`/cartypes/${item.id}`);
+  localStorage.setItem("idbrand", JSON.stringify(item.id));
+};
 </script>
 
 <style scoped>
-@import "@/assets/css/carbrand.css";
+.brand-card {
+  height: 200px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.2s ease;
+}
+
+.brand-card:hover {
+  transform: scale(1.03);
+  cursor: pointer;
+}
+
+.img-brand {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.img-brand img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
 </style>

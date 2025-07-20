@@ -30,7 +30,7 @@ const route = useRoute();
 
 const noLayoutPages = [
   "/contactUs",
-  "/car-brand",
+
   "/car-series",
   "/ordersteps/[id]",
   "/auth",

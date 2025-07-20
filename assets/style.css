@@ -334,7 +334,7 @@ button:hover {
 }
 
 .box-pages:hover {
-  transform: scale(1.04) translateY(-2px);
+  transform: scale(1.04);
 }
 
 /* background-icon help*/

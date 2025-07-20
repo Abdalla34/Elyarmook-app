@@ -260,6 +260,7 @@ export const useApi = () => {
     return await $fetch(`${baseURL}/core/brands`, {
       method: "GET",
       headers,
+   
     });
   };
 
@@ -267,6 +268,18 @@ export const useApi = () => {
     await $fetch(`${baseURL}/auth/logout`, {
       method: "POST",
       headers,
+    });
+  };
+
+  const cartypes = async (brandId) => {
+    return await $fetch(`${baseURL}/core/car-types`, {
+      method: "GET",
+      headers,
+      
+      params: {
+        per_page: 15,
+        brand_id: brandId,
+      },
     });
   };
 
@@ -305,5 +318,6 @@ export const useApi = () => {
     getOffers,
     getOfferSingle,
     getCarBrands,
+    cartypes,
   };
 };
