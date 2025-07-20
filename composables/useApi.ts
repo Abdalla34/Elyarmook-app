@@ -237,7 +237,6 @@ export const useApi = () => {
         Accept: "application/json",
       },
     });
-    
   };
   const getSingleOrder = async (order_id) => {
     return await $fetch(`${baseURL}/order/orders/${order_id}`, {
@@ -264,10 +263,18 @@ export const useApi = () => {
     });
   };
 
+  const logout = async () => {
+    await $fetch(`${baseURL}/auth/logout`, {
+      method: "POST",
+      headers,
+    });
+  };
+
   return {
     sendOTP,
     checkOTP,
     loginOrRegister,
+    logout,
     getCountries,
     getAreasByCountry,
     getCitiesByArea,

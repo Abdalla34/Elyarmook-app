@@ -49,11 +49,16 @@
 
           <div class="col-8 col-padding margin-bottom-24px">
             <div v-if="!user">
-              <div class="msg-error text-center text-capitalize alert alert-warning">
+              <div
+                class="msg-error text-center text-capitalize alert alert-warning"
+              >
                 <p class="text-danger">
                   You must create an account to continue
                 </p>
-                <button class="goAcc mt-4" @click="navigateTo('/createaccount')">
+                <button
+                  class="goAcc mt-4"
+                  @click="navigateTo('/createaccount')"
+                >
                   Go To Create Account
                 </button>
               </div>
@@ -119,13 +124,16 @@
                 </div>
               </div>
             </div>
-
           </div>
         </div>
 
         <div v-if="user">
           <div class="button-save border-radius-36px width-height">
             <button class="text-capitalize">continue</button>
+          </div>
+
+          <div @click="logOut" class="log-out width-height border-radius-36px">
+            <button class="text-capitalize">log out</button>
           </div>
 
           <div
@@ -139,13 +147,15 @@
             </button>
           </div>
         </div>
-
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
+let router = useRouter();
+let token = useCookie("token", { maxAge: 365 * 24 * 60 * 60 });
+
 const cookie = useCookie("user", { maxAge: 365 * 24 * 60 * 60 });
 const user = cookie.value;
 
@@ -153,6 +163,12 @@ let profileImg = ref(false);
 function ChangeProfile() {
   profileImg.value = !profileImg.value;
 }
+let logOut = async () => {
+  await useApi().logout();
+  token.value = null;
+  cookie.value = null;
+  router.push("/");
+};
 </script>
 
 <style>
@@ -185,5 +201,22 @@ function ChangeProfile() {
   border: none;
   background-color: var(--main-color);
   box-shadow: 0px 0px 20px 0px var(--main-color);
+}
+
+.log-out {
+  background-color: aliceblue;
+}
+
+.button-delete {
+  transition: all 0.3s ease-in-out;
+}
+.button-delete:hover {
+  background-color: #eb5757;
+}
+.button-delete:hover button {
+  color: white;
+}
+.button-delete:hover svg path {
+  stroke: white;
 }
 </style>

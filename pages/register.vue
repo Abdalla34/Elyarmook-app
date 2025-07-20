@@ -114,23 +114,12 @@
             </div>
 
             <button
-              class="text-capitalize text-center btn-register button border-radius-36px d-flex justify-content-center"
+              class="text-capitalize margin-bottom text-center btn-register button border-radius-36px d-flex justify-content-center"
               type="submit"
             >
               save
             </button>
           </form>
-
-          <div
-            class="button-delete border-radius-36px width-height d-flex justify-content-center margin-bottom-90px mt-3"
-          >
-            <button
-              class="text-capitalize color-but d-flex align-items-center gap-3"
-            >
-              <Trash />
-              <span>delete my account</span>
-            </button>
-          </div>
         </div>
       </div>
     </div>
@@ -215,4 +204,7 @@ let onSubmit = handleSubmit(async (values) => {
 
 <style>
 @import "@/assets/css/personalInformation.css";
+.margin-bottom {
+  margin-bottom: 90px;
+}
 </style>
