@@ -47,27 +47,9 @@ let images = ref([]);
 let res = await $fetch(`${baseURL}/home`);
 images.value = res?.data?.sliders;
 
-console.log(res);
-
-// let imagesSliders = ref([
-//   {
-//     img: "/character.png",
-//     title: "Offer",
-//     des: "Lorem ipsum dolor sit amet consectetur adipisicing elit ipsum dolor sit amet consectetur adipisicing elit.",
-//   },
-//   {
-//     img: "/Yarmook Logo.png",
-//     title: "Offer",
-//     des: "Lorem ipsum dolor sit amet consectetur adipisicing elit ipsum dolor sit amet consectetur adipisicing elit.",
-//   },
-//   {
-//     img: "/profile.jpg",
-//     title: "Offer",
-//     des: "Lorem ipsum dolor sit amet consectetur adipisicing elit ipsum dolor sit amet consectetur adipisicing elit.",
-//   },
-// ]);
+// console.log(res?.data?.sliders);
 </script>
 
 <style scoped>
-@import "@/assets/css/slidershome.css"
+@import "@/assets/css/slidershome.css";
 </style>

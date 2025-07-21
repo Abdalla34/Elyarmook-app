@@ -9,21 +9,21 @@
 
             <div
               class="box-main padding-left-25px d-flex align-items-center justify-content-between box-hover-bg"
-              v-for="(item, index) in questions"
-              :key="index"
-              @click="toggleIcon(index)"
-              :class="{ active: activeIndexes[index] }"
+              v-for="item in faqs"
+              :key="item.id"
+              @click="toggleIcon(item.id)"
+              :class="{ active: activeIndexes[item.id] }"
             >
-             <!-- hover -->
+              <!-- hover -->
               <div class="position-absolute bg-hover"></div>
 
               <div class="detalis position-relative z-index">
                 <h6 class="text-capitalize font-p fw-bold">
-                  {{ item.title }}
+                  {{ item.question }}
                 </h6>
                 <transition name="fade-slide">
                   <p
-                    v-if="activeIndexes[index]"
+                    v-if="activeIndexes[item.id]"
                     class="font-p display-paragraph d-block"
                   >
                     {{ item.answer }}
@@ -34,7 +34,7 @@
               <div class="icon-arrow position-relative z-index">
                 <div
                   class="arrow-bottom"
-                  :class="{ 'd-none': activeIndexes[index] }"
+                  :class="{ 'd-none': activeIndexes[item.id] }"
                 >
                   <svg
                     class="font-icon"
@@ -53,7 +53,7 @@
                     />
                   </svg>
                 </div>
-                <div class="arrow-top" v-if="activeIndexes[index]">
+                <div class="arrow-top" v-if="activeIndexes[item.id]">
                   <svg
                     class="font-icon"
                     width="12"
@@ -81,27 +81,10 @@
 </template>
 
 <script setup>
-const questions = ref([
-  {
-    title: "title",
-    answer:
-      "Answer the frequently asked question in a simple sentence, a longish paragraph, or even in a list.",
-  },
-  {
-    title: "tilt",
-    answer: "This is the second answer content.",
-  },
-  {
-    title: "tilt",
-    answer: "This is the second answer content.",
-  },
-  {
-    title: "tilt",
-    answer: "This is the second answer content.",
-  },
-]);
-
-const activeIndexes = ref(questions.value.map(() => false));
+let faqs = ref([]);
+let res = await useApi().getFaqs();
+faqs.value = res?.data?.items;
+const activeIndexes = ref(faqs.value.map(() => false));
 
 function toggleIcon(index) {
   activeIndexes.value[index] = !activeIndexes.value[index];
@@ -109,6 +92,5 @@ function toggleIcon(index) {
 </script>
 
 <style scoped>
-
-@import "@/assets/css/faqfromhelp.css"
+@import "@/assets/css/faqfromhelp.css";
 </style>

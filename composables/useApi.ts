@@ -260,7 +260,6 @@ export const useApi = () => {
     return await $fetch(`${baseURL}/core/brands`, {
       method: "GET",
       headers,
-   
     });
   };
 
@@ -282,6 +281,16 @@ export const useApi = () => {
     });
   };
 
+  const getFaqs = async () => {
+    return await $fetch(`${baseURL}/core/faqs`, {
+      method: "GET",
+      headers,
+      params: {
+        per_page: 15,
+      },
+    });
+  };
+
   return {
     sendOTP,
     checkOTP,
@@ -297,7 +306,7 @@ export const useApi = () => {
     getSettings,
     getCancelReasons,
     getDeactivatedReasons,
-    getFAQs,
+    getFaqs,
     getSliders,
     rateBranch,
     rateAppAndBranch,
