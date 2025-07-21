@@ -90,7 +90,6 @@
 </template>
 
 <script setup>
-// let router = useRouter();
 let extract = (textstep) => {
   if (!textstep) return [];
   return textstep.match(/(\d+\.\s?.+?)(?=\d+\.\s?|$)/gs) || [];
@@ -114,15 +113,13 @@ onMounted(() => {
     pageEmpty.value = false;
   }
 });
-const { addToCart } = useAddToCart();
 
+const { addToCart } = useApi();
 const token = useCookie("token").value;
-
 const handleAddToCart = async () => {
   if (!token) {
     return navigateTo("/createaccount");
   }
-
   try {
     const res = await addToCart("offer", Number(idParams), 1);
     console.log("Added to cart:", res);
