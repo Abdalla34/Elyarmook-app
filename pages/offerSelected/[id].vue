@@ -66,15 +66,19 @@
                 class="d-flex gap-1"
               >
                 <span>{{ index + 1 }}</span>
-                : <p class="pragaraph">{{ step.replace(/^\d+\.\s*/, "") }}</p>
+                :
+                <p class="pragaraph">{{ step.replace(/^\d+\.\s*/, "") }}</p>
               </div>
-             
             </div>
           </div>
 
           <!-- زرار الإضافة للكارت -->
           <div class="width-button" v-if="offerId?.data?.offer">
-            <ButtonCard textButton="add to cart" :isActive="activeIcon" />
+            <ButtonCard
+              textButton="add to cart"
+              :isActive="activeIcon"
+              @click="handleAddToCart"
+            />
           </div>
           <div class="no-offer" v-if="pageEmpty">
             <img src="/Car Brake Icon.png" alt="" />
@@ -86,6 +90,7 @@
 </template>
 
 <script setup>
+// let router = useRouter();
 let extract = (textstep) => {
   if (!textstep) return [];
   return textstep.match(/(\d+\.\s?.+?)(?=\d+\.\s?|$)/gs) || [];
@@ -95,7 +100,7 @@ let steps = computed(() => {
   return extract(offerId.value?.data?.offer.description);
 });
 
-let activeIcon = ref(false);
+let activeIcon = ref(true);
 let route = useRoute();
 let idParams = route.params.id;
 const dayjs = useDayjs();
@@ -109,6 +114,22 @@ onMounted(() => {
     pageEmpty.value = false;
   }
 });
+const { addToCart } = useAddToCart();
+
+const token = useCookie("token").value;
+
+const handleAddToCart = async () => {
+  if (!token) {
+    return navigateTo("/createaccount");
+  }
+
+  try {
+    const res = await addToCart("offer", Number(idParams), 1);
+    console.log("Added to cart:", res);
+  } catch (err) {
+    console.error("Add to cart failed:", err);
+  }
+};
 </script>
 
 <style scoped>
