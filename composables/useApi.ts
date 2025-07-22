@@ -103,12 +103,12 @@ export const useApi = () => {
     });
   };
 
-  const getFAQs = async () => {
-    return await $fetch(`${baseURL}/core/faqs`, {
-      method: "GET",
-      headers,
-    });
-  };
+  // const getFAQs = async () => {
+  //   return await $fetch(`${baseURL}/core/faqs`, {
+  //     method: "GET",
+  //     headers,
+  //   });
+  // };
 
   const getSliders = async () => {
     return await $fetch(`${baseURL}/core/sliders`, {

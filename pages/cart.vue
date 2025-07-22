@@ -4,8 +4,8 @@
       <div class="row justify-content-center">
         
         <div v-if="notRegister" class="text-center py-5">
-          <h1 class="text-capitalize create">you must create account</h1>
-          <button @click="navigateTo('/createaccount')" class="btn-create mt-3">
+          <h1 class="text-capitalize create text-danger">you must create account</h1>
+          <button @click="navigateTo('/createaccount')" class="btn-create mt-3 text-capitalize">
             create account
           </button>
         </div>
