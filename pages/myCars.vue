@@ -8,7 +8,7 @@
             <GoPageArrow title="my cars" :showIcon="false" />
 
             <div class="cars margin-bottom-24px position-relative">
-              <div class="car-box d-flex justify-content-between box-main">
+              <div @click="toggleEdit" class="car-box d-flex justify-content-between box-main">
                 <div class="position-absolute bg-hover"></div>
                 <div class="car-detalis d-flex gap-2">
                   <div class="car-img z-index position-relative">
@@ -18,7 +18,7 @@
                     <p>item.carNAme</p>
                   </div>
                 </div>
-                <div class="position-relative z-index" @click="toggleEdit">
+                <div class="position-relative z-index" >
                   <svg
                     width="14"
                     height="4"
