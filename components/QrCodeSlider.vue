@@ -289,7 +289,7 @@ let offersCards = ref([
 
 @media (min-width: 992px) {
   .box-diesign {
-    width: 85%;
+    width: 90%;
     padding: 40px 30px;
   }
 }

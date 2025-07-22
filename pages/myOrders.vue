@@ -6,7 +6,7 @@
         <div class="msg-error text-capitalize" v-if="!loading && msgError">
           <p class="text-danger">You must create an account to continue</p>
           <button class="goAcc" @click="navigateTo('/createaccount')">
-            Go To Create Acc
+            Go To Create Account
           </button>
         </div>
       </div>

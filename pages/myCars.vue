@@ -6,10 +6,8 @@
         <div class="row">
           <div class="col-8 col-padding">
             <GoPageArrow title="my cars" :showIcon="false" />
-            <div
-              class="cars margin-bottom-24px"
-       
-            >
+
+            <div class="cars margin-bottom-24px position-relative">
               <div class="car-box d-flex justify-content-between box-main">
                 <div class="position-absolute bg-hover"></div>
                 <div class="car-detalis d-flex gap-2">
@@ -17,10 +15,10 @@
                     <!-- <img :src="item.carLogo" alt="" /> -->
                   </div>
                   <div class="car-name z-index position-relative">
-                    <p>item.carNAme </p>
+                    <p>item.carNAme</p>
                   </div>
                 </div>
-                <div class="position-relative z-index">
+                <div class="position-relative z-index" @click="toggleEdit">
                   <svg
                     width="14"
                     height="4"
@@ -38,7 +36,36 @@
                   </svg>
                 </div>
               </div>
+              <div v-if="boxEdit" class="poup-edit text-center">
+                <h6 class="text-capitalize mb-3">car model</h6>
+
+                <div
+                  class="default box-main-color box-btn d-flex align-items-center gap-2 justify-content-center mb-3"
+                >
+                  <input class="set-default" type="checkbox" id="setDefault" />
+                  <label for="setDefault" class="text-capitalize label-cursor"
+                    >set as default</label
+                  >
+                </div>
+
+                <div
+                  class="edit box-main-color box-btn d-flex align-items-center gap-2 justify-content-center mb-2"
+                >
+                  <div><IconsOrderEdit /></div>
+                  <h6 class="text-capitalize">edit</h6>
+                </div>
+
+                <div
+                  class="delete box-btn d-flex align-items-center gap-2 justify-content-center"
+                >
+                  <div>
+                    <Trash />
+                  </div>
+                  <h6 class="text-capitalize">delete</h6>
+                </div>
+              </div>
             </div>
+
             <div
               class="button-save border-radius-36px width-height margin-bottom-287px"
               @click="navigateTo('car-brand')"
@@ -59,9 +86,93 @@
 let carsBrand = ref([]);
 let res = await useApi().getCarBrands();
 carsBrand.value = res?.data?.items;
-console.log(carsBrand);
+let boxEdit = ref(false);
+function toggleEdit() {
+  boxEdit.value = !boxEdit.value;
+}
 </script>
 
 <style scoped>
 @import "@/assets/css/mycars.css";
+.poup-edit {
+  position: absolute;
+  right: 13px;
+  top: 45px;
+  width: 300px;
+  z-index: 10;
+  padding: 32px;
+  background-color: #ffffff;
+  box-shadow: 0px 0px 20px 0px #0000000a;
+  border-top-left-radius: 64px;
+  border-top-right-radius: 8px;
+  border-bottom-left-radius: 64px;
+  border-bottom-right-radius: 64px;
+}
+.box-btn {
+  border: 1px solid #d4d4d4;
+  padding: 21px;
+  border-radius: 36px;
+  cursor: pointer;
+  transition: all 0.4s ease-in-out;
+  font-family: var(--font-main);
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.delete {
+  border: 1px solid #f9cbcb;
+  background-color: #f9cbcb;
+  color: #eb5757;
+}
+.delete:hover {
+  color: white;
+  background-color: #eb5757;
+}
+.delete:hover .trash-icon path {
+  stroke: white;
+  fill: white;
+}
+
+.box-main-color:hover {
+  background-color: var(--main-color);
+  border: 1px solid var(--main-color);
+}
+
+.set-default {
+  appearance: none;
+  -webkit-appearance: none;
+  border-radius: 4px;
+  border: 1px solid var(--main-color);
+  width: 18px;
+  height: 18px;
+  background-color: transparent;
+  cursor: pointer;
+  transition: border-color 0.3s, background-color 0.3s;
+  position: relative;
+}
+.label-cursor {
+  cursor: pointer;
+}
+.set-default:hover {
+  border-color: black;
+}
+.default:hover .set-default {
+  border-color: black;
+}
+.set-default:checked {
+  border-color: var(--main-color);
+  background-color: var(--main-color);
+}
+.set-default:checked::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 1px;
+  width: 5px;
+  height: 10px;
+  border: solid black;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  display: block;
+}
 </style>

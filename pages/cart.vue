@@ -2,8 +2,53 @@
   <div class="cart-parent mt-5">
     <div class="container">
       <div class="row justify-content-center">
+        
+        <div v-if="notRegister" class="text-center py-5">
+          <h1 class="text-capitalize create">you must create account</h1>
+          <button @click="navigateTo('/createaccount')" class="btn-create mt-3">
+            create account
+          </button>
+        </div>
+
+        <div class="empty-cart text-center" v-if="token && orders.length === 0">
+          <div>
+            <img src="/Vector.png" alt="" />
+            <h3 class="text-capitalize create">your cart is empty</h3>
+            <div class="btn-items">
+              <button @click="navigateTo('/services')">
+                <svg
+                  width="25"
+                  height="25"
+                  viewBox="0 0 25 25"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M6.5 12.5H18.5"
+                    stroke="#040505"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M12.5 18.5V6.5"
+                    stroke="#040505"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+                Add Items
+              </button>
+            </div>
+          </div>
+        </div>
+
         <!-- left section -->
-        <div class="col-12 col-md-12 col-lg-6 col-md-6">
+        <div
+          class="col-12 col-md-12 col-lg-6 col-md-6"
+          v-if="token && orders.length"
+        >
           <h4 class="mb-4 fw-bold">Order Details</h4>
           <div
             class="cart d-flex justify-content-between align-items-center border-radius-36px mb-3"
@@ -103,7 +148,10 @@
         </div>
 
         <!-- right section -->
-        <div class="col-12 col-md-12 col-lg-4 col-test">
+        <div
+          class="col-12 col-md-12 col-lg-4 col-test"
+          v-if="token && orders.length"
+        >
           <div class="h-100">
             <div class="">
               <h6 class="fw-bold">Order Details</h6>
@@ -197,24 +245,23 @@
 </template>
 
 <script setup>
-const {
-  getMyCart,
-  deleteItemFromCart,
-  updateCartItemQuantity,
-  getSingleOrder,
-} = useApi();
-
+const { getMyCart, deleteItemFromCart, updateCartItemQuantity } = useApi();
 const orders = ref([]);
-const loading = ref(true);
-const error = ref(null);
 const loadingDelete = ref({});
 const loadingQty = ref({});
 
-loading.value = true;
-error.value = null;
+let notRegister = ref(false);
+let token = useCookie("token").value;
+if (!token) {
+  notRegister.value = true;
+} else {
+  const res = await getMyCart();
+  orders.value = res?.data?.services || [];
 
-const res = await getMyCart();
-orders.value = res?.data?.services || [];
+  if (res?.status === false && res?.message === "Unauthenticated") {
+    notRegister.value = true;
+  }
+}
 
 async function deletedOrder(id) {
   const item = orders.value.find((o) => o.id === id);
@@ -224,9 +271,9 @@ async function deletedOrder(id) {
     const cartRes = await getMyCart();
     const order_id = cartRes?.data?.id;
     await deleteItemFromCart("service", order_id, id);
-    await fetchCart();
+    orders.value = orders.value.filter((o) => o.id !== id);
   } catch (err) {
-    error.value = err;
+    console.log("test", err);
   } finally {
     loadingDelete.value[id] = false;
   }
@@ -239,20 +286,44 @@ async function updateQty(order, newQty) {
     const cartRes = await getMyCart();
     const order_id = cartRes?.data?.id;
     await updateCartItemQuantity("service", order_id, order.id, newQty);
-    await fetchCart();
+    order.qty = newQty;
   } catch (err) {
-    error.value = err;
+    console.log("test", err);
   } finally {
     loadingQty.value[order.id] = false;
   }
 }
-
-// let test = ref([]);
-// let resTest = await getSingleOrder();
-// test.value = resTest?.data;
-// console.log(test);
 </script>
 
 <style scoped>
 @import "@/assets/css/cartorder.css";
+.btn-create {
+  background-color: var(--main-color);
+  border: none;
+  padding: 10px 60px;
+  border-radius: 20px;
+}
+.empty-cart {
+  margin-bottom: 200px;
+}
+
+.btn-items {
+  width: fit-content;
+  margin: auto;
+}
+.btn-items button {
+  background-color: var(--main-color);
+  border: none;
+  padding: 21px 125px;
+  border-radius: 36px;
+}
+.create {
+  font-family: var(--font-main);
+  font-weight: 600;
+  font-style: SemiBold;
+  font-size: 28px;
+  color: #27273c;
+  margin-bottom: 25px;
+  margin-top: 25px;
+}
 </style>
