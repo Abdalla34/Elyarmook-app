@@ -1,10 +1,9 @@
 <template>
   <div class="add-car">
-    <div class="container">
-      
+    <div class="container mt-5">
       <div class="row justify-content-center" v-if="step == 0">
         <div
-          class="col-6 col-md-4 col-lg-2 brand-card me-3 mb-4"
+          class="col-md-4 col-lg-2 brand-card me-3 mb-4"
           v-for="car in carBrands"
           :key="car.id"
           @click="carTypes(car)"
@@ -47,6 +46,22 @@
             <div class="title-car">{{ year }}</div>
           </div>
         </div>
+      </div>
+
+      <div class="chassis" v-if="step == 3">
+        <form @submit.prevent="onSubmit" class="chassis-form">
+          <label class="chassis-label text-capitalize" for="chassisNumber">
+            chassis number</label
+          >
+          <input
+            id="chassisNumber"
+            type="text"
+            placeholder="write chassis Number"
+            class="chassis-input"
+            v-model="carForm.chassis_number"
+          />
+          <button-card text-button="add car" class="mt-4" type="submit" />
+        </form>
       </div>
 
       <!-- <div class="row" v-if="step == 0">
@@ -124,7 +139,7 @@ let carBrands = ref([]);
 let resBrands = await useApi().getCarBrands();
 carBrands.value = resBrands?.data?.items;
 
-const carForm = ref({
+const carForm = reactive({
   brand_id: null,
   car_type_id: null,
   manufacture_year: null,
@@ -133,7 +148,7 @@ const carForm = ref({
 
 let modelsCar = ref([]);
 const carTypes = async (item) => {
-  carForm.value.brand_id = item.id;
+  carForm.brand_id = item.id;
   let resTypes = (await useApi().cartypes(item.id)) ?? [];
   modelsCar.value = resTypes?.data?.items;
   step.value = 1;
@@ -141,15 +156,18 @@ const carTypes = async (item) => {
 };
 
 const selecteCarType = (car_type_id) => {
-  carForm.value.car_type_id = car_type_id;
+  carForm.car_type_id = car_type_id;
   step.value = 2;
   console.log(`car Type id : ${car_type_id}`);
 };
 
 const selectYear = (year) => {
-  carForm.value.manufacture_year = year;
+  carForm.manufacture_year = year;
   console.log(year);
   step.value = 3;
+};
+const onSubmit = () => {
+  console.log("carForm submitted:", carForm);
 };
 
 // const startYear = 1970;
@@ -257,5 +275,38 @@ h1 {
 }
 .box-hover:hover h1 {
   color: #040505;
+}
+
+.chassis {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  background-color: #f9f9f9;
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  width: 60%;
+  margin: auto;
+  margin-bottom: 200px;
+}
+
+.chassis-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.chassis-input {
+  padding: 12px 14px;
+  border: 2px solid var(--main-color);
+  border-radius: 8px;
+  font-size: 16px;
+  transition: 0.3s border-color;
+}
+
+.chassis-input:focus {
+  outline: none;
 }
 </style>

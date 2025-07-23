@@ -302,6 +302,7 @@ async function updateQty(order, newQty) {
   border: none;
   padding: 10px 60px;
   border-radius: 20px;
+  margin-bottom: 200px;
 }
 .empty-cart {
   margin-bottom: 200px;
