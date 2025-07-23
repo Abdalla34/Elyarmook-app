@@ -4,7 +4,7 @@
       <div v-if="feedbackMessage" :class="['cart-feedback', feedbackType]">
         {{ feedbackMessage }}
       </div>
-      <div v-if="pending">جاري التحميل...</div>
+      <!-- <div v-if="pending">جاري التحميل...</div> -->
       <div class="row">
         <div
           class="col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center"
@@ -46,7 +46,7 @@
 <script setup>
 const { getServices, addToCart } = useApi();
 
-const loading = ref(true);
+// const loading = ref(true);
 const feedbackMessage = ref("");
 const feedbackType = ref("");
 const loadingAddToCart = ref({});
