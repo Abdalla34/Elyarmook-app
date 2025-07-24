@@ -11,14 +11,16 @@
               <div
                 @click="toggleEdit"
                 class="car-box d-flex justify-content-between box-main"
+                v-for="car in myCars"
+                :key="car.id"
               >
                 <div class="position-absolute bg-hover"></div>
                 <div class="car-detalis d-flex gap-2">
                   <div class="car-img z-index position-relative">
-                    <!-- <img :src="item.carLogo" alt="" /> -->
+                    <img :src="car.car_type.image" :alt="car.car_type.title" />
                   </div>
                   <div class="car-name z-index position-relative">
-                    <p>item.carNAme</p>
+                    <p>{{ car.car_type.title }}</p>
                   </div>
                 </div>
                 <div class="position-relative z-index">
@@ -86,14 +88,16 @@
 </template>
 
 <script setup>
+let token = useCookie("token").value;
+let myCars = ref([]);
+let res = await useApi().gerMycars();
+myCars.value = res?.data;
 
-let carsBrand = ref([]);
-let res = await useApi().getCarBrands();
-carsBrand.value = res?.data?.items;
 let boxEdit = ref(false);
 function toggleEdit() {
   boxEdit.value = !boxEdit.value;
 }
+// console.log(res);
 </script>
 
 <style scoped>

@@ -290,11 +290,18 @@ export const useApi = () => {
       },
     });
   };
-  
+
   const createCar = async (form) => {
     return await $fetch(`${baseURL}/customer/create-car`, {
       method: "POST",
       body: form,
+      headers,
+    });
+  };
+
+  const gerMycars = async () => {
+    return await $fetch(`${baseURL}/customer/cars`, {
+      method: "GET",
       headers,
     });
   };
@@ -320,6 +327,7 @@ export const useApi = () => {
     rateAppAndBranch,
     scanImage,
     getMyCart,
+    gerMycars,
     addToCart,
     addToCartMulti,
     updateCartItemQuantity,
