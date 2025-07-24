@@ -15,15 +15,6 @@
               <div
                 class="slide-content d-flex align-items-center justify-content-center"
               >
-                <!-- <div>
-                  <h1 class="title-sec-main">{{ item.title }}</h1>
-                  <p class="desc">{{ item.des }}</p>
-                  <div class="width-button">
-                    <button class="button padding-button text-capitalize">
-                      learn More
-                    </button>
-                  </div>
-                </div> -->
                 <img :src="item.image" alt="Slide Image" class="slide-img" />
               </div>
             </div>

@@ -193,52 +193,143 @@ let activeIcon = ref(true)
 /* Responsive Design */
 
 /* Mobile Devices (≤576px) */
-@media (max-width: 576px) {
+
+@media (max-width: 350px) {
   .box-diesign {
-    width: 95%;
-    padding: 30px 15px;
-    border-radius: 40px;
-  }
-
-  .mini-box {
-    padding: 20px 15px;
-    border-radius: 30px;
-  }
-
-  .preview-slide {
-    padding: 15px;
-  }
-
-  .img-offer {
-    width: 180px;
-    height: 200px;
+    width: 100%;
+    padding: 15px 8px;
     border-radius: 20px;
   }
 
-  .img-offer:hover {
-    transform: scale(1.02) rotate(1deg);
+  .text-title h1 {
+    font-size: 18px;
+  }
+
+  .text-title p {
+    font-size: 13px;
+    line-height: 1.5;
+    padding: 0 5px;
+  }
+
+  .mini-box {
+    padding: 10px;
+    border-radius: 18px;
+  }
+
+  .img-offer {
+    width: 100%;
+    max-width: 140px;
+    height: 160px;
+    border-radius: 12px;
   }
 
   .swiper-button-prev-custom,
   .swiper-button-next-custom {
-    width: 34px;
-    height: 30px;
+    width: 26px;
+    height: 26px;
     font-size: 12px;
+    top: 40%;
+  }
+
+  .swiper-button-prev-custom {
+    left: -10px;
+  }
+
+  .swiper-button-next-custom {
+    right: -10px;
   }
 
   .swper-card {
-    max-width: 220px;
+    max-width: 180px;
   }
-  .swiper-button-prev-custom {
-    left: -38px;
+
+  .width-button-component {
+    margin-top: 15px;
+    padding: 0 5px;
   }
-  .swiper-button-next-custom {
-    right: -38px;
+
+  .preview-slide {
+    padding: 5px;
   }
-  
 }
 
-/* Tablet Devices (577px - 768px) */
+
+
+@media (max-width: 576px) {
+  .box-diesign {
+    width: 100%;
+    padding: 20px 10px;
+    border-radius: 25px;
+  }
+
+  .text-title {
+    margin-bottom: 20px;
+  }
+
+  .text-title h1 {
+    font-size: 22px;
+  }
+
+  .text-title p {
+    font-size: 14px;
+    padding: 0 10px;
+    line-height: 1.6;
+  }
+
+  .mini-box {
+    padding: 15px 10px;
+    border-radius: 20px;
+  }
+
+  .preview-slide {
+    padding: 10px;
+  }
+
+  .img-card {
+    margin-bottom: 15px;
+  }
+
+  .img-offer {
+    width: 100%;
+    max-width: 160px;
+    height: 180px;
+    border-radius: 15px;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .width-button-component {
+    width: 100%;
+    padding: 0 10px;
+    margin-top: 18px;
+  }
+
+  .swper-card {
+    width: 100%;
+    max-width: 220px;
+  }
+
+  .swiper-button-prev-custom,
+  .swiper-button-next-custom {
+    width: 30px;
+    height: 30px;
+    font-size: 14px;
+    top: 42%;
+    box-shadow: none;
+    border: 1px solid #ffd94b;
+  }
+
+  .swiper-button-prev-custom {
+    left: -40px;
+  }
+
+  .swiper-button-next-custom {
+    right: -40px;
+  }
+}
+
+
+
 @media (min-width: 577px) and (max-width: 768px) {
   .box-diesign {
     width: 92%;
@@ -269,7 +360,7 @@ let activeIcon = ref(true)
   }
 }
 
-/* Large Tablet/Small Desktop (769px - 991px) */
+
 @media (min-width: 769px) and (max-width: 991px) {
   .box-diesign {
     width: 88%;
@@ -294,7 +385,7 @@ let activeIcon = ref(true)
   }
 }
 
-/* Large Desktop (≥992px) */
+
 @media (min-width: 992px) {
   .box-diesign {
     width: 85%;

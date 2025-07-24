@@ -1,35 +1,55 @@
 <template>
   <div class="add-car">
     <div class="container mt-5">
-      <div class="row justify-content-center" v-if="step == 0">
-        <div
-          class="col-md-4 col-lg-2 brand-card me-3 mb-4"
-          v-for="car in carBrands"
-          :key="car.id"
-          @click="carTypes(car)"
-        >
-          <div class="img-brand">
-            <img :src="car.image" alt="brand" />
-          </div>
-          <div class="title-brand">
-            <h6>{{ car.title }}</h6>
+      <div v-if="step == 0">
+        <div class="text-center search d-block mb-4">
+          <input
+            type="search"
+            placeholder="Search for car brand"
+            v-model="searchInBrands"
+            class="form-control search-input"
+          />
+        </div>
+        <div class="row justify-content-center">
+          <div
+            class="col-md-4 col-lg-2 brand-card me-3 mb-4"
+            v-for="car in filterBrands"
+            :key="car.id"
+            @click="carTypes(car)"
+          >
+            <div class="img-brand">
+              <img :src="car.image" alt="brand" />
+            </div>
+            <div class="title-brand">
+              <h6>{{ car.title }}</h6>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="row justify-content-center">
-        <div class="col-lg-7 col-md-6 parent-types" v-if="step == 1">
-          <div
-            v-for="model in modelsCar"
-            :key="model.id"
-            class="d-flex align-items-center gap-3 box-hover"
-            @click.prevent="selecteCarType(model.id)"
-          >
-            <div class="img-car">
-              <img :src="model.image" alt="" />
-            </div>
-            <div class="title-car">
-              <h1>{{ model.title }}</h1>
+      <div v-if="step == 1">
+        <div class="text-center search d-block mb-4">
+          <input
+            type="search"
+            placeholder="Search for car model"
+            v-model="searchInTypes"
+            class="form-control search-input"
+          />
+        </div>
+        <div class="row justify-content-center">
+          <div class="col-lg-7 col-md-6 parent-types">
+            <div
+              v-for="model in filterTypesCar"
+              :key="model.id"
+              class="d-flex align-items-center gap-3 box-hover"
+              @click.prevent="selecteCarType(model.id)"
+            >
+              <div class="img-car">
+                <img :src="model.image" alt="" />
+              </div>
+              <div class="title-car">
+                <h1>{{ model.title }}</h1>
+              </div>
             </div>
           </div>
         </div>
@@ -170,143 +190,27 @@ const onSubmit = () => {
   console.log("carForm submitted:", carForm);
 };
 
-// const startYear = 1970;
-// const endYear = new Date().getFullYear();
-// const years = Array.from({ length: endYear - startYear + 1 }, (_, i) =>
-//   (endYear - i).toString()
-// );
+let searchInBrands = ref("");
+let filterBrands = computed(() => {
+  if (!searchInBrands.value) return carBrands.value;
+  return carBrands.value.filter((car) => {
+    return car.title
+      ?.toLowerCase()
+      .includes(searchInBrands.value.toLowerCase());
+  });
+});
 
-// const step = ref(0);
-// const carForm = ref({
-//   brand_id: null,
-//   car_type_id: null,
-//   chassis_number: "",
-//   manufacture_year: null,
-//   is_default: 0,
-// });
-
-// let carsBrand = ref([]);
-// let res = await useApi().getCarBrands();
-// carsBrand.value = res?.data?.items;
-
-// const models = ref([]);
-// const carBrand = async (item) => {
-//   carForm.value.brand_id = item.id;
-//   models.value = (await useApi().cartypes(item.id)) ?? [];
-//   step.value = 1;
-// };
-
-// const selectCarType = (car_type_id) => {
-//   carForm.value.car_type_id = car_type_id;
-//   step.value = 2;
-//   console.log(car_type_id)
-// };
-
-// const selectYear = (year) => {
-//   carForm.value.manufacture_year = year;
-//   step.value = 3;
-//   console.log(year)
-// };
+let searchInTypes = ref("");
+let filterTypesCar = computed(() => {
+  if (!searchInTypes.value) return modelsCar.value;
+  return modelsCar.value.filter((carType) => {
+    return carType.title
+      ?.toLowerCase()
+      .includes(searchInTypes.value.toLowerCase());
+  });
+});
 </script>
 
 <style scoped>
-.brand-card {
-  height: 200px;
-  background-color: #f9f9f9;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  padding: 15px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  transition: transform 0.2s ease;
-}
-.brand-card:hover {
-  transform: scale(1.03);
-  cursor: pointer;
-}
-.img-brand {
-  width: 100px;
-  height: 100px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 10px;
-}
-.img-brand img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-}
-
-.box-hover {
-  border: 1px solid #ebebeb;
-  border-radius: 12px;
-  padding: 20px 16px;
-  cursor: pointer;
-  margin-bottom: 16px;
-  position: relative;
-  overflow: hidden;
-  z-index: 1;
-  transition: transform 0.3s ease, background-color 0.4s ease;
-}
-.box-hover::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-color: rgba(247, 242, 244, 1);
-  z-index: -1;
-  transform: translateY(100%);
-  transition: transform 0.4s ease;
-}
-.box-hover:hover::before {
-  transform: translateY(0%);
-}
-.img-car img {
-  width: 30px;
-}
-h1 {
-  font-family: var(--font-main);
-  font-size: 16px;
-  line-height: 150%;
-  letter-spacing: 0%;
-  color: #96a0b6;
-}
-.box-hover:hover h1 {
-  color: #040505;
-}
-
-.chassis {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 40px 20px;
-  background-color: #f9f9f9;
-  border-radius: 16px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-  width: 60%;
-  margin: auto;
-  margin-bottom: 200px;
-}
-
-.chassis-form {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  width: 100%;
-  max-width: 400px;
-}
-
-.chassis-input {
-  padding: 12px 14px;
-  border: 2px solid var(--main-color);
-  border-radius: 8px;
-  font-size: 16px;
-  transition: 0.3s border-color;
-}
-
-.chassis-input:focus {
-  outline: none;
-}
+@import "@/assets/css/carbrand.css"
 </style>

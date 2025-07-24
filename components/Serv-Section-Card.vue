@@ -7,11 +7,13 @@
           >Soon</span
         >
       </div>
+
       <div class="row">
-        <div
-          class="col-lg-12 col-md-6 col-sm-12 d-flex justify-content-center gap-4"
-        >
-          <div class="service-card text-center mb-3"  @click="navigateTo('/services')">
+        <div class="col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center">
+          <div
+            class="service-card text-center mb-4"
+            @click="navigateTo('/services')"
+          >
             <div class="service-icon-wrapper">
               <div class="service-icon">
                 <img class="img" src="/car-fix.png" alt="service.title" />
@@ -22,8 +24,13 @@
               <p class="p-color-fs">Lorem ipsum dolor sit amet</p>
             </div>
           </div>
+        </div>
 
-          <div class="service-card text-center mb-3"  @click="navigateTo('/offers')">
+        <div class="col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center">
+          <div
+            class="service-card text-center mb-4"
+            @click="navigateTo('/offers')"
+          >
             <div class="service-icon-wrapper">
               <div class="service-icon">
                 <img class="img" src="/Discount Gift.png" alt="service.title" />
@@ -34,8 +41,13 @@
               <p class="p-color-fs">Lorem ipsum dolor sit amet</p>
             </div>
           </div>
+        </div>
 
-          <div class="service-card text-center mb-3" @click="navigateTo('/spareparts')">
+        <div class="col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center">
+          <div
+            class="service-card text-center mb-4"
+            @click="navigateTo('/spareparts')"
+          >
             <div class="service-icon-wrapper">
               <div class="service-icon">
                 <img class="img" src="/parts.png" alt="service.title" />
@@ -117,10 +129,76 @@ import "swiper/css/navigation";
   color: #4e4b66;
 }
 
+/* موبايل */
 @media (max-width: 576px) {
-  /* Services Section Mobile Responsive */
   .services-container {
-    padding: 0 20px;
+    padding: 0 12px;
+  }
+
+  .service-card {
+    width: 100%;
+    height: auto;
+    padding: 20px 15px;
+    border-radius: 30px;
+  }
+
+  .img {
+    width: 100px;
+    height: 100px;
+  }
+
+  .service-title {
+    font-size: 22px;
+    line-height: 30px;
+    margin-top: 10px;
+  }
+
+  .p-color-fs {
+    font-size: 14px;
+    line-height: 1.6;
+    padding: 0 10px;
   }
 }
+
+/* تابلت */
+@media (min-width: 577px) and (max-width: 991px) {
+  .service-card {
+    width: 100%;
+    height: auto;
+    padding: 25px;
+    border-radius: 40px;
+  }
+
+  .img {
+    width: 120px;
+    height: 120px;
+  }
+
+  .service-title {
+    font-size: 28px;
+    line-height: 36px;
+  }
+}
+
+/* ديسكتوب */
+@media (min-width: 992px) {
+  .service-card {
+    width: 100%;
+    max-width: 380px;
+    height: 420px;
+    padding: 30px;
+    border-radius: 64px;
+  }
+
+  .img {
+    width: 140px;
+    height: 140px;
+  }
+
+  .service-title {
+    font-size: 32px;
+    line-height: 40px;
+  }
+}
+
 </style>
