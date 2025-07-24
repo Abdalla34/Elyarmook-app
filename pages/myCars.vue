@@ -80,6 +80,14 @@
             </div>
 
             <div
+              v-if="myCars.length === 0"
+              class="empty-message text-center p-4 mb-2"
+            >
+              <p class="text-muted fs-5">🚗 لا توجد سيارات مضافة حاليًا</p>
+              <p class="text-secondary">قم بإضافة سيارتك لعرضها هنا.</p>
+            </div>
+
+            <div
               class="button-save border-radius-36px width-height margin-bottom-287px"
               @click="navigateTo('car-brand')"
             >
@@ -204,5 +212,11 @@ async function deleted(id) {
   border-width: 0 2px 2px 0;
   transform: rotate(45deg);
   display: block;
+}
+.empty-message {
+  background-color: #f8f9fa;
+  border: 1px dashed #ced4da;
+  border-radius: 10px;
+  margin-top: 20px;
 }
 </style>
