@@ -40,36 +40,43 @@
                     />
                   </svg>
                 </div>
-                    <div v-if="activeCarId === car.id" class="poup-edit text-center">
-                <h6 class="text-capitalize mb-3">car model</h6>
-
                 <div
-                  class="default box-main-color box-btn d-flex align-items-center gap-2 justify-content-center mb-3"
+                  v-if="activeCarId === car.id"
+                  class="poup-edit text-center"
                 >
-                  <input class="set-default" type="checkbox" id="setDefault" />
-                  <label for="setDefault" class="text-capitalize label-cursor"
-                    >set as default</label
+                  <h6 class="text-capitalize mb-3">car model</h6>
+
+                  <div
+                    class="default box-main-color box-btn d-flex align-items-center gap-2 justify-content-center mb-3"
                   >
-                </div>
-
-                <div
-                  class="edit box-main-color box-btn d-flex align-items-center gap-2 justify-content-center mb-2"
-                >
-                  <div><IconsOrderEdit /></div>
-                  <h6 class="text-capitalize">edit</h6>
-                </div>
-
-                <div
-                  class="delete box-btn d-flex align-items-center gap-2 justify-content-center"
-                >
-                  <div>
-                    <Trash />
+                    <input
+                      class="set-default"
+                      type="checkbox"
+                      id="setDefault"
+                    />
+                    <label for="setDefault" class="text-capitalize label-cursor"
+                      >set as default</label
+                    >
                   </div>
-                  <h6 class="text-capitalize">delete</h6>
+
+                  <div
+                    class="edit box-main-color box-btn d-flex align-items-center gap-2 justify-content-center mb-2"
+                  >
+                    <div><IconsOrderEdit /></div>
+                    <h6 class="text-capitalize">edit</h6>
+                  </div>
+
+                  <div
+                    @click="deleted(car.id)"
+                    class="delete box-btn d-flex align-items-center gap-2 justify-content-center"
+                  >
+                    <div>
+                      <Trash />
+                    </div>
+                    <h6 class="text-capitalize">delete</h6>
+                  </div>
                 </div>
               </div>
-              </div>
-          
             </div>
 
             <div
@@ -99,7 +106,19 @@ let activeCarId = ref(null);
 function toggleEdit(carId) {
   activeCarId.value = activeCarId.value === carId ? null : carId;
 }
-// console.log(res);
+
+async function deleted(id) {
+  try {
+    const res = await useApi().deleteCar(id);
+    if (res?.status) {
+      myCars.value = myCars.value.filter((car) => car.id !== id);
+    } else {
+      console.error("فشل في الحذف", res?.message);
+    }
+  } catch (err) {
+    console.error("حصل خطأ أثناء الحذف", err);
+  }
+}
 </script>
 
 <style scoped>

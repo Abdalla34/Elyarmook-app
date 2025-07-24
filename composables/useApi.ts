@@ -306,6 +306,14 @@ export const useApi = () => {
     });
   };
 
+  const deleteCar = async (car_id) => {
+    return $fetch(`${baseURL}/customer/delete-car/${car_id}`, {
+      method: "POST",
+      headers,
+      body: car_id,
+    });
+  };
+
   return {
     sendOTP,
     checkOTP,
@@ -344,5 +352,6 @@ export const useApi = () => {
     getCarBrands,
     cartypes,
     createCar,
+    deleteCar,
   };
 };
