@@ -9,10 +9,10 @@
 
             <div class="cars margin-bottom-24px position-relative">
               <div
-                @click="toggleEdit"
                 class="car-box d-flex justify-content-between box-main"
                 v-for="car in myCars"
                 :key="car.id"
+                @click="toggleEdit(car.id)"
               >
                 <div class="position-absolute bg-hover"></div>
                 <div class="car-detalis d-flex gap-2">
@@ -40,8 +40,7 @@
                     />
                   </svg>
                 </div>
-              </div>
-              <div v-if="boxEdit" class="poup-edit text-center">
+                    <div v-if="activeCarId === car.id" class="poup-edit text-center">
                 <h6 class="text-capitalize mb-3">car model</h6>
 
                 <div
@@ -69,6 +68,8 @@
                   <h6 class="text-capitalize">delete</h6>
                 </div>
               </div>
+              </div>
+          
             </div>
 
             <div
@@ -93,9 +94,10 @@ let myCars = ref([]);
 let res = await useApi().gerMycars();
 myCars.value = res?.data;
 
-let boxEdit = ref(false);
-function toggleEdit() {
-  boxEdit.value = !boxEdit.value;
+let activeCarId = ref(null);
+
+function toggleEdit(carId) {
+  activeCarId.value = activeCarId.value === carId ? null : carId;
 }
 // console.log(res);
 </script>
@@ -115,6 +117,7 @@ function toggleEdit() {
   border-top-right-radius: 8px;
   border-bottom-left-radius: 64px;
   border-bottom-right-radius: 64px;
+  z-index: 50;
 }
 .box-btn {
   border: 1px solid #d4d4d4;
