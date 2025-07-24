@@ -290,6 +290,14 @@ export const useApi = () => {
       },
     });
   };
+  
+  const createCar = async (form) => {
+    return await $fetch(`${baseURL}/customer/create-car`, {
+      method: "POST",
+      body: form,
+      headers,
+    });
+  };
 
   return {
     sendOTP,
@@ -327,5 +335,6 @@ export const useApi = () => {
     getOfferSingle,
     getCarBrands,
     cartypes,
+    createCar,
   };
 };

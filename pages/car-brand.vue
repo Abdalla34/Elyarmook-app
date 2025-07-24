@@ -69,7 +69,7 @@
       </div>
 
       <div class="chassis" v-if="step == 3">
-        <form @submit.prevent="onSubmit" class="chassis-form">
+        <form @submit.prevent="postDetails" class="chassis-form">
           <label class="chassis-label text-capitalize" for="chassisNumber">
             chassis number</label
           >
@@ -83,65 +83,6 @@
           <button-card text-button="add car" class="mt-4" type="submit" />
         </form>
       </div>
-
-      <!-- <div class="row" v-if="step == 0">
-        
-        <div
-          class="col-6 col-md-4 col-lg-3 mb-4"
-          v-for="brand in carsBrand"
-          :key="brand.id"
-          @click="carBrand(brand)"
-        >
-          <div class="brand-card text-center">
-            <div class="img-brand">
-              <img :src="brand.image" alt="brand" />
-            </div>
-            <div class="title-brand">
-              <h6>{{ brand.title }}</h6>
-            </div>
-          </div>
-        </div>
-
-      </div> -->
-
-      <!-- <div
-        class="parent"
-        v-if="step == 1"
-        v-for="model in models?.data?.items"
-        :key="model.id"
-        @click.prevent="selectCarType(model.id)"
-      >
-        <div class="d-flex align-items-center gap-3 box-hover">
-          <div class="img-car">
-            <img :src="model.image" alt="" />
-          </div>
-          q
-          <div class="title-car">
-            <h1>{{ model.title }}</h1>
-          </div>
-        </div>
-      </div>
-
-      <div
-        class="parent"
-        v-if="step == 2"
-        v-for="year in years"
-        :key="year"
-        @click.prevent="selectYear(year)"
-      >
-        <div class="d-flex align-items-center gap-3 box-hover">
-          <div class="title-car">
-            <h1>{{ year }}</h1>
-          </div>
-        </div>
-      </div>
-
-      <div v-if="step == 3">
-        step 3
-        <button>
-          submit
-        </button>
-      </div> -->
     </div>
   </div>
 </template>
@@ -149,8 +90,9 @@
 <script setup>
 let startYear = 2000;
 let endYear = new Date().getFullYear();
-let years = Array.from({ length: endYear - startYear + 1 }, (_, i) =>
-  (endYear - i).toString()
+let years = Array.from(
+  { length: endYear - startYear + 1 },
+  (_, i) => endYear - i
 );
 
 const router = useRouter();
@@ -209,8 +151,30 @@ let filterTypesCar = computed(() => {
       .includes(searchInTypes.value.toLowerCase());
   });
 });
+
+async function postDetails() {
+  try {
+    let res = await useApi().createCar({
+      brand_id: carForm.brand_id,
+      car_type_id: carForm.car_type_id,
+      manufacture_year: carForm.manufacture_year,
+      chassis_number: carForm.chassis_number,
+    });
+    navigateTo('/mycars')
+  } catch (err) {
+    if (err?.response?.status === 401) {
+      return navigateTo("/createaccount");
+    }
+  }
+  console.log(res)
+}
 </script>
 
 <style scoped>
-@import "@/assets/css/carbrand.css"
+@import "@/assets/css/carbrand.css";
+.search .search-input::placeholder {
+  color: #7e7e7e;
+  font-size: 14px;
+  font-family: var(--font-main);
+}
 </style>
