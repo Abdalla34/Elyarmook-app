@@ -12,7 +12,6 @@
                 class="car-box d-flex justify-content-between box-main"
                 v-for="car in myCars"
                 :key="car.id"
-                @click="toggleEdit(car.id)"
               >
                 <div class="position-absolute bg-hover"></div>
                 <div class="car-detalis d-flex gap-2">
@@ -23,7 +22,10 @@
                     <p>{{ car.car_type.title }}</p>
                   </div>
                 </div>
-                <div class="position-relative z-index">
+                <div
+                  class="position-relative z-index"
+                  @click="toggleEdit(car.id)"
+                >
                   <svg
                     width="14"
                     height="4"
@@ -42,7 +44,7 @@
                 </div>
                 <div
                   v-if="activeCarId === car.id"
-                  class="poup-edit text-center"
+                  class="poup-edit text-center mb-3"
                 >
                   <h6 class="text-capitalize mb-3">car model</h6>
 
@@ -60,18 +62,11 @@
                   </div>
 
                   <div
-                    class="edit box-main-color box-btn d-flex align-items-center gap-2 justify-content-center mb-2"
-                  >
-                    <div><IconsOrderEdit /></div>
-                    <h6 class="text-capitalize">edit</h6>
-                  </div>
-
-                  <div
                     @click="deleted(car.id)"
                     class="delete box-btn d-flex align-items-center gap-2 justify-content-center"
                   >
                     <div>
-                      <Trash />
+                      <Trash class="trash-icon" />
                     </div>
                     <h6 class="text-capitalize">delete</h6>
                   </div>
@@ -104,6 +99,7 @@
 </template>
 
 <script setup>
+
 let token = useCookie("token").value;
 let myCars = ref([]);
 let res = await useApi().gerMycars();
@@ -166,10 +162,11 @@ async function deleted(id) {
   color: white;
   background-color: #eb5757;
 }
-.delete:hover .trash-icon path {
-  stroke: white;
-  fill: white;
+.delete:hover .trash-icon svg path {
+  stroke: white !important;
+  fill: white !important;
 }
+
 
 .box-main-color:hover {
   background-color: var(--main-color);

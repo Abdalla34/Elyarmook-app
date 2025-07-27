@@ -2,7 +2,6 @@
   <div class="my-orders position-relative">
     <div class="container position-relative">
       <div class="position-relative">
-        
         <div class="msg-error text-capitalize" v-if="!loading && msgError">
           <p class="text-danger">You must create an account to continue</p>
           <button class="goAcc" @click="navigateTo('/createaccount')">
@@ -13,56 +12,6 @@
 
       <div class="row justify-content-center">
         <div class="col-lg-7 col-md-10 col-sm-12">
-          <ul
-            v-if="!msgError && !loading"
-            class="links d-flex justify-content-center align-items-end ul"
-          >
-            <li class="">
-              <NuxtLink
-                to="/"
-                exact-active-class="active"
-                class="d-flex align-items-center gap-1 border-radius-36px p-color-fs link-fix"
-              >
-                <iconsOrder-iconAll :isActive="$route.path === '/AllOrder'" />
-                <h6 class="text-capitalize link-sm">all</h6>
-              </NuxtLink>
-            </li>
-
-            <li class="">
-              <NuxtLink
-                to="/myOrders"
-                exact-active-class="active"
-                class="d-flex align-items-center gap-1 border-radius-36px p-color-fs link-fix"
-              >
-                <iconsOrder-requested :isActive="$route.path === '/myOrders'" />
-                <h6 class="text-capitalize link-sm">requested</h6>
-              </NuxtLink>
-            </li>
-
-            <li class="">
-              <NuxtLink
-                to="/"
-                exact-active-class="active"
-                class="d-flex align-items-center gap-1 border-radius-36px p-color-fs link-fix"
-              >
-                <iconsOrder-canceled :isActive="$route.path === '/canceled'" />
-                <h6 class="text-capitalize link-sm">canceled</h6>
-              </NuxtLink>
-            </li>
-
-            <li class="">
-              <NuxtLink
-                to="/"
-                exact-active-class="active"
-                class="d-flex align-items-center gap-1 border-radius-36px p-color-fs link-fix"
-              >
-                <iconsOrder-spareOrder :isActive="$route.path === '/'" />
-
-                <h6 class="text-capitalize link-sm">spare parts</h6>
-              </NuxtLink>
-            </li>
-          </ul>
-
           <div
             class="box-orders border-radius-36px d-flex align-items-center justify-content-between position-relative"
             v-if="!msgError && !loading"

@@ -1,27 +1,28 @@
 <template>
   <div class="add-car">
     <div class="container mt-5">
+      
       <div v-if="step == 0">
         <div class="text-center search d-block mb-4">
           <input
             type="search"
             placeholder="Search for car brand"
-            v-model="searchInBrands"
             class="form-control search-input"
+            v-model="searchInBrands"
           />
         </div>
         <div class="row justify-content-center">
           <div
             class="col-md-4 col-lg-2 brand-card me-3 mb-4"
-            v-for="car in filterBrands"
-            :key="car.id"
-            @click="carTypes(car)"
+            v-for="brand in filterBrands"
+            :key="brand.id"
+            @click="carTypes(brand)"
           >
             <div class="img-brand">
-              <img :src="car.image" alt="brand" />
+              <img :src="brand.image" alt="brand" />
             </div>
             <div class="title-brand">
-              <h6>{{ car.title }}</h6>
+              <h6>{{ brand.title }}</h6>
             </div>
           </div>
         </div>
@@ -32,18 +33,18 @@
           <input
             type="search"
             placeholder="Search for car model"
-            v-model="searchInTypes"
             class="form-control search-input"
+            v-model="searchInTypes"
           />
         </div>
         <div class="row justify-content-center">
-          <div class="col-lg-7 col-md-6 parent-types">
-            <div
-              v-for="model in filterTypesCar"
-              :key="model.id"
-              class="d-flex align-items-center gap-3 box-hover"
-              @click.prevent="selecteCarType(model.id)"
-            >
+          <div
+            class="col-lg-7 col-md-6 parent-types"
+            v-for="model in filterTypes"
+            :key="model.id"
+            @click="selecteCarType(model)"
+          >
+            <div class="d-flex align-items-center gap-3 box-hover">
               <div class="img-car">
                 <img :src="model.image" alt="" />
               </div>
@@ -60,7 +61,7 @@
           class="col-lg-7 col-md-6 parent-types"
           v-for="year in years"
           :key="year"
-          @click="selectYear(year)"
+          @click="selecteYears(year)"
         >
           <div class="d-flex align-items-center gap-3 box-hover">
             <div class="title-car">{{ year }}</div>
@@ -69,7 +70,7 @@
       </div>
 
       <div class="chassis" v-if="step == 3">
-        <form @submit.prevent="postDetails" class="chassis-form">
+        <form @submit.prevent="SendData" class="chassis-form">
           <label class="chassis-label text-capitalize" for="chassisNumber">
             chassis number</label
           >
@@ -83,6 +84,7 @@
           <button-card text-button="add car" class="mt-4" type="submit" />
         </form>
       </div>
+
     </div>
   </div>
 </template>
@@ -95,79 +97,143 @@ let years = Array.from(
   (_, i) => endYear - i
 );
 
-const router = useRouter();
 let step = ref(0);
 let carBrands = ref([]);
 let resBrands = await useApi().getCarBrands();
 carBrands.value = resBrands?.data?.items;
-
-const carForm = reactive({
-  brand_id: null,
-  car_type_id: null,
-  manufacture_year: null,
-  chassis_number: null,
-});
-
-let modelsCar = ref([]);
-const carTypes = async (item) => {
-  carForm.brand_id = item.id;
-  let resTypes = (await useApi().cartypes(item.id)) ?? [];
-  modelsCar.value = resTypes?.data?.items;
-  step.value = 1;
-  console.log(`car Brnad id : ${item.id}`);
-};
-
-const selecteCarType = (car_type_id) => {
-  carForm.car_type_id = car_type_id;
-  step.value = 2;
-  console.log(`car Type id : ${car_type_id}`);
-};
-
-const selectYear = (year) => {
-  carForm.manufacture_year = year;
-  console.log(year);
-  step.value = 3;
-};
-const onSubmit = () => {
-  console.log("carForm submitted:", carForm);
-};
-
 let searchInBrands = ref("");
 let filterBrands = computed(() => {
   if (!searchInBrands.value) return carBrands.value;
   return carBrands.value.filter((car) => {
-    return car.title
-      ?.toLowerCase()
+    return car?.title
+      .toLowerCase()
       .includes(searchInBrands.value.toLowerCase());
   });
 });
 
+let carForm = reactive({
+  brand_id: null,
+  car_type_id: null,
+  manufacture_year: null,
+  chassis_number: null,
+  is_default: null,
+});
+
 let searchInTypes = ref("");
-let filterTypesCar = computed(() => {
-  if (!searchInTypes.value) return modelsCar.value;
-  return modelsCar.value.filter((carType) => {
-    return carType.title
-      ?.toLowerCase()
+let carModels = ref([]);
+let carTypes = async (barnd) => {
+  carForm.brand_id = barnd.id;
+  let res = await useApi().cartypes(barnd.id);
+  carModels.value = res?.data?.items;
+  step.value = 1;
+  console.log(`car brand id ${carForm.brand_id}`);
+};
+let filterTypes = computed(() => {
+  if (!searchInTypes.value) carModels.value;
+  return carModels.value.filter((carType) => {
+    return carType?.title
+      .toLowerCase()
       .includes(searchInTypes.value.toLowerCase());
   });
 });
 
-async function postDetails() {
+let selecteCarType = async (car_Type) => {
+  carForm.car_type_id = car_Type.id;
+  step.value = 2;
+  console.log(`car Type ${carForm.car_type_id}`);
+};
+let selecteYears = async (year) => {
+  carForm.manufacture_year = year;
+  step.value = 3;
+  console.log(`made in ${carForm.manufacture_year}`);
+};
+
+async function SendData() {
   try {
+    let resAllCar = await useApi().gerMycars();
+    let isFirst = resAllCar?.data.length === 0;
     let res = await useApi().createCar({
       brand_id: carForm.brand_id,
       car_type_id: carForm.car_type_id,
       manufacture_year: carForm.manufacture_year,
       chassis_number: carForm.chassis_number,
+      is_default: isFirst ? true : false,
     });
-    navigateTo('/mycars')
+    navigateTo("/mycars");
+    console.log(res);
   } catch (err) {
     if (err?.response?.status === 401) {
       return navigateTo("/createaccount");
     }
   }
-  console.log(res)
 }
+// const carForm = reactive({
+//   brand_id: null,
+//   car_type_id: null,
+//   manufacture_year: null,
+//   chassis_number: null,
+// });
+
+// let modelsCar = ref([]);
+// const carTypes = async (item) => {
+//   carForm.brand_id = item.id;
+//   let resTypes = (await useApi().cartypes(item.id)) ?? [];
+//   modelsCar.value = resTypes?.data?.items;
+//   step.value = 1;
+//   console.log(`car Brnad id : ${item.id}`);
+// };
+
+// const selecteCarType = (car_type_id) => {
+//   carForm.car_type_id = car_type_id;
+//   step.value = 2;
+//   console.log(`car Type id : ${car_type_id}`);
+// };
+
+// const selectYear = (year) => {
+//   carForm.manufacture_year = year;
+//   console.log(year);
+//   step.value = 3;
+// };
+// const onSubmit = () => {
+//   console.log("carForm submitted:", carForm);
+// };
+
+// let searchInBrands = ref("");
+// let filterBrands = computed(() => {
+//   if (!searchInBrands.value) return carBrands.value;
+//   return carBrands.value.filter((car) => {
+//     return car.title
+//       ?.toLowerCase()
+//       .includes(searchInBrands.value.toLowerCase());
+//   });
+// });
+
+// let searchInTypes = ref("");
+// let filterTypesCar = computed(() => {
+//   if (!searchInTypes.value) return modelsCar.value;
+//   return modelsCar.value.filter((carType) => {
+//     return carType.title
+//       ?.toLowerCase()
+//       .includes(searchInTypes.value.toLowerCase());
+//   });
+// });
+
+// async function postDetails() {
+//   try {
+//     let res = await useApi().createCar({
+//       brand_id: carForm.brand_id,
+//       car_type_id: carForm.car_type_id,
+//       manufacture_year: carForm.manufacture_year,
+//       chassis_number: carForm.chassis_number,
+//     });
+//     navigateTo('/mycars')
+//   } catch (err) {
+//     if (err?.response?.status === 401) {
+//       return navigateTo("/createaccount");
+//     }
+//   }
+//   console.log(res)
+// }
 </script>
 
 <style scoped>
