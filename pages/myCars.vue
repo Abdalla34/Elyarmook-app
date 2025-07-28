@@ -50,13 +50,19 @@
 
                   <div
                     class="default box-main-color box-btn d-flex align-items-center gap-2 justify-content-center mb-3"
+                    :class="{ isDefault: car.is_default }"
                   >
                     <input
                       class="set-default"
                       type="checkbox"
-                      id="setDefault"
+                      :id="setDefault"
+                      :checked="car.is_default"
+                      :disabled="car.is_default"
+                      @change="setDefault(car.id)"
                     />
-                    <label for="setDefault" class="text-capitalize label-cursor"
+                    <label
+                      :for="setDefault"
+                      class="text-capitalize label-cursor"
                       >set as default</label
                     >
                   </div>
@@ -99,10 +105,9 @@
 </template>
 
 <script setup>
-
-let token = useCookie("token").value;
+// let token = useCookie("token").value;
 let myCars = ref([]);
-let res = await useApi().gerMycars();
+let res = await useApi().getMycars();
 myCars.value = res?.data;
 
 let activeCarId = ref(null);
@@ -123,6 +128,19 @@ async function deleted(id) {
     console.error("حصل خطأ أثناء الحذف", err);
   }
 }
+
+async function setDefault(carId) {
+  try {
+    let res = await useApi().toDefault(carId);
+    if (res?.status) {
+      let updatedCars = await useApi().getMycars();
+      myCars.value = updatedCars?.data || [];
+    }
+  } catch (err) {
+    console.error("فشل تعيين السيارة كافتراضية", err);
+  }
+}
+console.log(myCars);
 </script>
 
 <style scoped>
@@ -167,7 +185,6 @@ async function deleted(id) {
   fill: white !important;
 }
 
-
 .box-main-color:hover {
   background-color: var(--main-color);
   border: 1px solid var(--main-color);
@@ -195,7 +212,7 @@ async function deleted(id) {
   border-color: black;
 }
 .set-default:checked {
-  border-color: var(--main-color);
+  border: 2px solid white;
   background-color: var(--main-color);
 }
 .set-default:checked::after {
@@ -215,5 +232,10 @@ async function deleted(id) {
   border: 1px dashed #ced4da;
   border-radius: 10px;
   margin-top: 20px;
+}
+.isDefault {
+  background-color: var(--main-color);
+  border: 1px solid var(--main-color);
+  color: black;
 }
 </style>

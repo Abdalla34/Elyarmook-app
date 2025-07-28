@@ -150,7 +150,7 @@ let selecteYears = async (year) => {
 
 async function SendData() {
   try {
-    let resAllCar = await useApi().gerMycars();
+    let resAllCar = await useApi().getMycars();
     let isFirst = resAllCar?.data.length === 0;
     let res = await useApi().createCar({
       brand_id: carForm.brand_id,
@@ -164,76 +164,11 @@ async function SendData() {
   } catch (err) {
     if (err?.response?.status === 401) {
       return navigateTo("/createaccount");
+    }else{
+      console.log('send data',err)
     }
   }
 }
-// const carForm = reactive({
-//   brand_id: null,
-//   car_type_id: null,
-//   manufacture_year: null,
-//   chassis_number: null,
-// });
-
-// let modelsCar = ref([]);
-// const carTypes = async (item) => {
-//   carForm.brand_id = item.id;
-//   let resTypes = (await useApi().cartypes(item.id)) ?? [];
-//   modelsCar.value = resTypes?.data?.items;
-//   step.value = 1;
-//   console.log(`car Brnad id : ${item.id}`);
-// };
-
-// const selecteCarType = (car_type_id) => {
-//   carForm.car_type_id = car_type_id;
-//   step.value = 2;
-//   console.log(`car Type id : ${car_type_id}`);
-// };
-
-// const selectYear = (year) => {
-//   carForm.manufacture_year = year;
-//   console.log(year);
-//   step.value = 3;
-// };
-// const onSubmit = () => {
-//   console.log("carForm submitted:", carForm);
-// };
-
-// let searchInBrands = ref("");
-// let filterBrands = computed(() => {
-//   if (!searchInBrands.value) return carBrands.value;
-//   return carBrands.value.filter((car) => {
-//     return car.title
-//       ?.toLowerCase()
-//       .includes(searchInBrands.value.toLowerCase());
-//   });
-// });
-
-// let searchInTypes = ref("");
-// let filterTypesCar = computed(() => {
-//   if (!searchInTypes.value) return modelsCar.value;
-//   return modelsCar.value.filter((carType) => {
-//     return carType.title
-//       ?.toLowerCase()
-//       .includes(searchInTypes.value.toLowerCase());
-//   });
-// });
-
-// async function postDetails() {
-//   try {
-//     let res = await useApi().createCar({
-//       brand_id: carForm.brand_id,
-//       car_type_id: carForm.car_type_id,
-//       manufacture_year: carForm.manufacture_year,
-//       chassis_number: carForm.chassis_number,
-//     });
-//     navigateTo('/mycars')
-//   } catch (err) {
-//     if (err?.response?.status === 401) {
-//       return navigateTo("/createaccount");
-//     }
-//   }
-//   console.log(res)
-// }
 </script>
 
 <style scoped>

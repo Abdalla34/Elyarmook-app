@@ -29,8 +29,11 @@
             <button class="buttons">
               <CarIconCard />
             </button>
-            <!-- <span class="span-length">50</span> -->
+            <span v-if="cartLength > 0" class="span-length">{{
+              cartLength
+            }}</span>
           </div>
+
           <div
             class="background-color-cart d-flex align-items-center justify-content-center"
             @click="navigateTo('/mycars')"
@@ -56,7 +59,6 @@
               <!-- <div class="menu-profile-log">
                 <div class="login">login</div>
               </div> -->
-
             </div>
           </div>
         </div>
@@ -65,20 +67,20 @@
   </div>
 </template>
 
-<script>
-// const { getMyCart } = useApi();
+<script setup>
+// const { getMyCart } = useApi()
 
-// const cartLength = ref(0);
+// const cartLength = ref(0)
 
 // onMounted(async () => {
 //   try {
-//     const res = await getMyCart();
-//     cartLength.value = res?.data?.services?.length || 0;
+//     const res = await getMyCart()
+//     cartLength.value = res?.data?.services?.length || 0
 //   } catch (err) {
-//     console.error("Error loading cart:", err);
-//     cartLength.value = 0;
+//     console.error("Error loading cart:", err)
+//     cartLength.value = 0
 //   }
-// });
+// })
 </script>
 
 <style scoped>
@@ -111,5 +113,17 @@
   position: relative;
   top: 50%;
   transform: translate(0, -50%);
+}
+
+.span-length {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: red;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 12px;
+  font-weight: bold;
 }
 </style>

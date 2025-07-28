@@ -140,7 +140,7 @@
 </template>
 
 <script setup lang="ts">
-// import VueTelInput from "vue-tel-input";
+
 
 const loading = ref(false);
 const { sendOTP } = useApi();
@@ -180,6 +180,6 @@ const handleContinue = async () => {
 </script>
 
 <style scoped>
-/* @import "vue-tel-input/vue-tel-input.css"; */
+
 @import "@/assets/css/createacc.css";
 </style>

@@ -299,7 +299,7 @@ export const useApi = () => {
     });
   };
 
-  const gerMycars = async () => {
+  const getMycars = async () => {
     return await $fetch(`${baseURL}/customer/cars`, {
       method: "GET",
       headers,
@@ -312,6 +312,16 @@ export const useApi = () => {
       headers,
       body: car_id,
     });
+  };
+
+  const toDefault = async (id_default) => {
+    return await $fetch(
+      `${baseURL}/customer/change-car-to-default/${id_default}`,
+      {
+        method: "POST",
+        headers,
+      }
+    );
   };
 
   return {
@@ -335,7 +345,7 @@ export const useApi = () => {
     rateAppAndBranch,
     scanImage,
     getMyCart,
-    gerMycars,
+    getMycars,
     addToCart,
     addToCartMulti,
     updateCartItemQuantity,
@@ -353,5 +363,6 @@ export const useApi = () => {
     cartypes,
     createCar,
     deleteCar,
+    toDefault,
   };
 };
