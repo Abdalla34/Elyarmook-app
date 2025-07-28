@@ -298,16 +298,6 @@
 <script setup>
 let activeFalse = ref(false);
 let orderSelected = ref(null);
-
-onMounted(() => {
-  let getOrder = localStorage.getItem("orderget");
-  if (getOrder) {
-    let orderDone = JSON.parse(getOrder);
-    if (orderDone) {
-      orderSelected.value = orderDone;
-    }
-  }
-});
 </script>
 
 <style scoped>

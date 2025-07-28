@@ -17,14 +17,8 @@
             v-if="!msgError && !loading"
             v-for="order in orders"
             :key="order.id"
+            @click="toOrderStatus(order.id)"
           >
-            <!-- <div
-              v-if="order.status === 'requested' || order.status === 'report'"
-              class="action position-absolute text-capitalize"
-            >
-              action nedeed
-            </div> -->
-
             <div class="details-title d-flex align-items-center gap-3">
               <div>
                 <img src="/newLogo.png" alt="imageOrder" />
@@ -34,7 +28,8 @@
                   {{ order.vendor_name }}
                 </h4>
                 <p class="price">
-                  <span class="p-color-fs span">{{ order.total_amount }}</span>
+                  {{ Math.round(Number(order.total_amount)) }}
+                  <span class="SAR">SAR</span>
                 </p>
               </div>
             </div>
@@ -53,32 +48,21 @@
                   </p>
                 </div>
               </div>
-
-              <div class="barnch d-flex gap-2 align-items-center">
-                <div class="icon-branch icon-design">
-                  <iconsOrder-timer />
-                </div>
-                <div class="title-order">
-                  <p class="paragarph">sasasasas</p>
-                  <p class="paragarph">asasasas</p>
-                </div>
-              </div>
             </div>
 
-            <div>requsted</div>
-
-            <!-- <div
+            <div
               class="status text-capitalize"
               :class="{
-                'bg-requested': order.status === 'requested',
-                'bg-report': order.status === 'report',
-                'bg-inspection': order.status === 'inspection',
+                'bg-requested': order.status === 'request_done',
+                'bg-report': order.status === 'on_our_date',
+                'bg-inspection': order.status === 'booking_done',
                 'bg-canceled': order.status === 'canceled',
                 'bg-ready': order.status === 'car is ready',
+                'bg-finished': order.status === 'order_finished',
               }"
             >
-             req
-            </div> -->
+              {{ order.status_value }}
+            </div>
           </div>
         </div>
       </div>
@@ -114,8 +98,10 @@ try {
   loading.value = false;
 }
 
-console.log(token.value);
-console.log(orders);
+async function toOrderStatus(orderId) {
+  let res = await useApi().getSingleOrder(orderId);
+  console.log(res);
+}
 </script>
 
 <style scoped>
@@ -161,5 +147,17 @@ console.log(orders);
   border: none;
   background-color: var(--main-color);
   box-shadow: 0px 0px 20px 0px var(--main-color);
+}
+.bg-finished {
+  background-color: green;
+  color: white;
+}
+.SAR {
+  font-family: var(--font-main);
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 32px;
+  letter-spacing: 0%;
+  color: #7e7e7e;
 }
 </style>

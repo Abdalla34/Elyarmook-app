@@ -11,10 +11,10 @@
             <div class="input-user position-relative d-flex flex-column">
               <label for="" class="label">my car</label>
               <select class="input-style">
-                <option disabled selected>Ex, Ahmed Khaled</option>
-                <option>Toyota Corolla</option>
-                <option>Hyundai Elantra</option>
-                <option>BMW X5</option>
+                <option disabled selected>Ex : {{ user.name }}</option>
+                <option v-for="car in mycars" :key="car.id" :value="car.id">
+                  {{ car.car_type.title }}
+                </option>
               </select>
               <div class="icon-shape position-absolute">
                 <icons-order-iconunion />
@@ -30,9 +30,9 @@
                 <label for="" class="label">branch</label>
                 <select class="input-style">
                   <option disabled selected>Select Branch</option>
-                  <option>Riyadh</option>
-                  <option>Jeddah</option>
-                  <option>Dammam</option>
+                  <option v-for="branch in branches" :key="branch.id">
+                    {{ branch.title }}
+                  </option>
                 </select>
                 <div class="icon-shape position-absolute">
                   <icons-order-iconunion />
@@ -129,6 +129,20 @@ let formatDate = computed(() => {
     ? format(seletctedDate.value, "dd, MMM, yyyy")
     : "";
 });
+
+let mycars = ref([]);
+
+let res = await useApi().getMycars();
+console.log("API Response:", res);
+mycars.value = res?.data || [];
+
+let branches = ref([]);
+let resBranshes = await useApi().getBranches();
+branches.value = resBranshes?.data?.items;
+console.log(branches);
+
+let user = useCookie("user").value;
+console.log(user.name);
 </script>
 
 <style scoped>
@@ -144,5 +158,11 @@ select {
 .data-picker-icon {
   top: 50%;
   transform: translateY(-80%);
+}
+.selected {
+  color: #7e7e7e;
+}
+.input-style{
+  cursor: pointer;
 }
 </style>

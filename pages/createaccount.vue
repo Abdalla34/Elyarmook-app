@@ -140,20 +140,10 @@
 </template>
 
 <script setup lang="ts">
-
-
 const loading = ref(false);
 const { sendOTP } = useApi();
 const router = useRouter();
 let phone = ref('')
-
-interface SendOTPResponse {
-  status: boolean;
-  data: {
-    registered: boolean;
-  };
-  message: string;
-}
 
 const handleContinue = async () => {
   if (!phone.value) return;
