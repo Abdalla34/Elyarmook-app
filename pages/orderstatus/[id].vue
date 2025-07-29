@@ -7,32 +7,30 @@
             <div
               class="order-img-name pt-5 d-flex align-items-center justify-content-between"
             >
-              <div class="img-title d-flex align-items-center gap-3">
-                <img :src="orderSelected.imgOrder" alt="" />
+              <div class="img-title d-flex align-items-center gap-4">
+               <img v-if="orderSelected?.car_type?.image" :src="orderSelected.car_type.image" alt="" />
+
                 <div class="title">
-                  <h1 class="h1 text-capitalize">
-                    {{ orderSelected.nameOrder }}
-                  </h1>
+                  <h1 class="h1 text-capitalize">{{ orderSelected.type }}</h1>
                   <p class="price">
-                    {{ orderSelected.priceOrder }}
-                    <span class="span text-uppercase">{{
-                      orderSelected.currency
-                    }}</span>
+                    {{ Math.trunc(orderSelected.total_amount) }}
+                    <span class="span text-uppercase">sar</span>
                   </p>
                 </div>
               </div>
 
               <div
                 :class="{
-                  'bg-requested': orderSelected.status === 'requested',
-                  'bg-report': orderSelected.status === 'report',
-                  'bg-inspection': orderSelected.status === 'inspection',
+                  'bg-requested': orderSelected.status === 'request_done',
+                  'bg-report': orderSelected.status === 'on_our_date',
+                  'bg-inspection': orderSelected.status === 'booking_done',
                   'bg-canceled': orderSelected.status === 'canceled',
                   'bg-ready': orderSelected.status === 'car is ready',
+                  'bg-finished': orderSelected.status === 'order_finished',
                 }"
               >
                 <p class="status text-capitalize">
-                  {{ orderSelected.status }}
+                  {{ orderSelected.status_value }}
                 </p>
               </div>
             </div>
@@ -63,7 +61,7 @@
                 </div>
                 <div class="name">
                   <p class="text-capitalize parag">car model</p>
-                  <p class="name-order">{{ orderSelected.nameOrder }}</p>
+                  <p class="name-order">{{ orderSelected.car_type.title }}</p>
                 </div>
               </div>
 
@@ -90,7 +88,7 @@
                 </div>
                 <div class="number">
                   <p class="text-capitalize parag">order nunmber</p>
-                  <p class="name-order"># {{ orderSelected.orderNumber }}</p>
+                  <p class="name-order">{{ orderSelected.order_num }}</p>
                 </div>
               </div>
             </div>
@@ -105,26 +103,20 @@
                   <TimeIcon />
                 </div>
                 <div class="days-time">
-                  <h4>
-                    {{ orderSelected.day }} {{ orderSelected.dayNumber }}
-                    {{ orderSelected.month }} {{ orderSelected.year }}
-                    {{ orderSelected.time }} {{ orderSelected.meinute }}
-                  </h4>
+                  <h4>{{ orderSelected.reservation_time }}</h4>
                   <p class="color-Eb">Reschedule Order</p>
                 </div>
               </div>
 
               <div
                 class="order-location text-center box-order border-radius-36px border-radius-36px"
+                v-if="orderSelected?.branch"
               >
                 <div class="box-icon">
                   <LocationIcon />
                 </div>
                 <div class="days-time">
-                  <h4>
-                    {{ orderSelected.branch }} {{ orderSelected.area }}
-                    {{ orderSelected.stret }}
-                  </h4>
+                  <h4 v-if="orderSelected.branch?.title">{{ orderSelected.branch.title }}</h4>
                   <p class="color-Eb text-capitalize">show in maps</p>
                 </div>
               </div>
@@ -148,10 +140,8 @@
                 />
               </svg>
 
-              <h1 class="title-step">{{ orderSelected.nameIcon }}</h1>
-              <p class="width-p">
-                {{ orderSelected.details }}
-              </p>
+              <h1 class="title-step"></h1>
+              <p class="width-p"></p>
             </div>
 
             <div class="steps">
@@ -249,16 +239,14 @@
               class="order-amount d-flex align-items-center justify-content-between margin-20px"
             >
               <div class="amount text-capitalize">order amount</div>
-              <div class="num-order-amount">
-                {{ orderSelected.orderamount }}
-              </div>
+              <div class="num-order-amount"></div>
             </div>
 
             <div
               class="order-amount d-flex align-items-center justify-content-between margin-20px"
             >
               <div class="amount">VAT</div>
-              <div class="num-order-amount">{{ vatnum }}</div>
+              <div class="num-order-amount">{{ orderSelected.vat_amount }}</div>
             </div>
 
             <div
@@ -266,9 +254,11 @@
             >
               <div class="total text-capitalize">total amount</div>
               <div class="price-total">
-                {{ orderSelected.totalprice }} <span class="span">SAR</span>
+                {{ Math.trunc(orderSelected.total_amount) }}
+                <span class="span">SAR</span>
               </div>
             </div>
+
             <div
               v-if="
                 orderSelected.status === 'requested' ||
@@ -297,7 +287,12 @@
 
 <script setup>
 let activeFalse = ref(false);
+let route = useRoute();
+let id = route.params.id;
 let orderSelected = ref(null);
+let res = await useApi().getSingleOrder(id);
+orderSelected.value = res?.data ?? {};
+console.log(orderSelected);
 </script>
 
 <style scoped>
@@ -334,5 +329,8 @@ let orderSelected = ref(null);
   color: #41c980;
   border-radius: 12px;
   padding: 0px 28px;
+}
+img{
+  width: 80px;
 }
 </style>

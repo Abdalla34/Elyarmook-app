@@ -100,7 +100,7 @@ try {
 
 async function toOrderStatus(orderId) {
   let res = await useApi().getSingleOrder(orderId);
-  console.log(res);
+  navigateTo(`orderstatus/${orderId}`);
 }
 </script>
 
