@@ -17,7 +17,7 @@
                 <div
                   class="d-flex align-items-center gap-2 justify-conent-center"
                 >
-                  <p class="price">50.6</p>
+                  <p class="price">{{ wallets?.balance }}</p>
                   <span class="text-uppercase span">sar</span>
                 </div>
               </div>
@@ -25,8 +25,8 @@
 
             <div
               class="box-pages margin-bottom-24px col-padding"
-              v-for="(item, index) in wallets"
-              :key="index"
+              v-for="item in wallets?.transactions?.items"
+              :key="item.id"
             >
               <div
                 class="flex-box d-flex align-items-center justify-content-between"
@@ -35,7 +35,7 @@
                   <div class="icon">
                     <div class="icon">
                       <div
-                        v-if="item.nameWall === 'Deposit'"
+                        v-if="item.type === 'deposit'"
                         class="background-plus radius-padding"
                       >
                         <svg
@@ -52,7 +52,7 @@
                         </svg>
                       </div>
                       <div
-                        v-else-if="item.nameWall === 'Withdraw'"
+                        v-else-if="item.type === 'withdraw'"
                         class="background radius-padding"
                       >
                         <svg
@@ -71,12 +71,17 @@
                     </div>
                   </div>
                   <div class="name-wallet">
-                    <h5>{{ item.nameWall }}</h5>
-                    <p class="p-color-fs">{{ item.dateWall }}</p>
+                    <h5>{{ item.type }}</h5>
+                    <p class="p-color-fs">
+                      {{ dayjs(item.created_at).format("dddd, MMM D, YYYY") }} 
+                      <span>{{
+                        dayjs(item.created_at).format("hh:mm A")
+                      }}</span>
+                    </p>
                   </div>
                 </div>
                 <div class="pricewall">
-                  {{ item.priceWall }}
+                  {{ item.amount }}
                   <span class="span fs">SAR</span>
                 </div>
               </div>
@@ -89,28 +94,11 @@
 </template>
 
 <script setup>
-let wallets = ref([
-  {
-    nameWall: "Deposit",
-    dateWall: "Tuesday, Nov, 12, 6:22 AM",
-    priceWall: "50.6",
-  },
-  {
-    nameWall: "Deposit",
-    dateWall: "Tuesday, Nov, 12, 6:22 AM",
-    priceWall: "50.6",
-  },
-  {
-    nameWall: "Withdraw",
-    dateWall: "Tuesday, Nov, 12, 6:22 AM",
-    priceWall: "50.6",
-  },
-  {
-    nameWall: "Withdraw",
-    dateWall: "Tuesday, Nov, 12, 6:22 AM",
-    priceWall: "50.6",
-  },
-]);
+let dayjs = useDayjs();
+let wallets = ref(null);
+let res = await useApi().getWallet();
+wallets.value = res?.data;
+console.log(res?.data?.transactions?.items);
 </script>
 
 <style scoped>

@@ -83,6 +83,7 @@ try {
     msgError.value = true;
   } else if (token.value) {
     orders.value = res?.data?.items ?? [];
+    console.log(res?.data)
   }
 } catch (err) {
   if (err?.response?.status === 401) {

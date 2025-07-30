@@ -8,9 +8,9 @@ export default defineNuxtConfig({
     "@/assets/style.css", // الخطوط مستوردة جوه الملف ده
   ],
   modules: ["@pinia/nuxt", "@vee-validate/nuxt", "dayjs-nuxt"],
-  runtimeConfig: {
-    public: {
-     apiBase: 'https://alyarmook.demo.asol-tec.com/api', // هنا بتحط الرابط الأساسي (Base URL)
-    },
-  },
+  // runtimeConfig: {
+  //   public: {
+  //    apiBase: 'https://alyarmook.demo.asol-tec.com/api', // هنا بتحط الرابط الأساسي (Base URL)
+  //   },
+  // },
 });

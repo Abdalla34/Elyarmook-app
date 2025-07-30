@@ -17,6 +17,7 @@
 
 .span {
   color: #7e7e7e;
+  margin-top: 10px;
 }
 .name-wallet h5 {
   font-family: var(--font-main);

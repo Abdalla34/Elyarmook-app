@@ -324,6 +324,13 @@ export const useApi = () => {
     );
   };
 
+  const getWallet = async () => {
+    return await $fetch(`${baseURL}/customer/wallet`, {
+      method: "GET",
+      headers,
+    });
+  };
+
   return {
     sendOTP,
     checkOTP,
@@ -364,5 +371,6 @@ export const useApi = () => {
     createCar,
     deleteCar,
     toDefault,
+    getWallet,
   };
 };

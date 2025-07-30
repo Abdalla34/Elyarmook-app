@@ -118,7 +118,7 @@ let token = useCookie("token").value;
 let myCars = ref([]);
 let IsNotRegitser = ref(false);
 
-onMounted(async () => {
+
   if (!token) {
     IsNotRegitser.value = true;
   } else {
@@ -128,7 +128,6 @@ onMounted(async () => {
       IsNotRegitser.value = true;
     }
   }
-});
 
 let activeCarId = ref(null);
 

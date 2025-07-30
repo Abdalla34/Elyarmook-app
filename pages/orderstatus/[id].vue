@@ -8,7 +8,11 @@
               class="order-img-name pt-5 d-flex align-items-center justify-content-between"
             >
               <div class="img-title d-flex align-items-center gap-4">
-               <img v-if="orderSelected?.car_type?.image" :src="orderSelected.car_type.image" alt="" />
+                <img
+                  v-if="orderSelected?.car_type?.image"
+                  :src="orderSelected.car_type.image"
+                  alt=""
+                />
 
                 <div class="title">
                   <h1 class="h1 text-capitalize">{{ orderSelected.type }}</h1>
@@ -116,7 +120,9 @@
                   <LocationIcon />
                 </div>
                 <div class="days-time">
-                  <h4 v-if="orderSelected.branch?.title">{{ orderSelected.branch.title }}</h4>
+                  <h4 v-if="orderSelected.branch?.title">
+                    {{ orderSelected.branch.title }}
+                  </h4>
                   <p class="color-Eb text-capitalize">show in maps</p>
                 </div>
               </div>
@@ -149,7 +155,7 @@
                 class="d-flex justify-content-center align-items-center gap-4"
               >
                 <li>
-                  <div class="bg-icons text-center">
+                  <div class="bg-icons bg-active text-center">
                     <svg
                       width="24"
                       height="25"
@@ -171,8 +177,13 @@
                 </li>
 
                 <li>
-                  <div class="bg-icons text-center">
-                    <icons-status-step-booked />
+                  <div
+                    class="bg-icons text-center"
+                    :class="{
+                      'bg-active': orderSelected.status === 'on_our_date',
+                    }"
+                  >
+                    <icons-status-step-booked :status="orderSelected.status" />
                   </div>
                   <p class="step-name">booked</p>
                 </li>
@@ -193,7 +204,9 @@
 
                 <li>
                   <div class="bg-icons text-center">
-                    <icons-status-step-car-fine />
+                    <icons-status-step-car-fine
+                      :status="orderSelected.status"
+                    />
                   </div>
                   <p class="step-name">car is fine</p>
                 </li>
@@ -213,15 +226,26 @@
                 </li>
 
                 <li>
-                  <div class="bg-icons text-center">
-                    <icons-status-step-completed />
+                  <div
+                    class="bg-icons text-center"
+                    :class="{
+                      'bg-active': orderSelected.status === 'order_finished',
+                    }"
+                  >
+                    <icons-status-step-completed
+                      :status="orderSelected.status"
+                    />
                   </div>
                   <p class="step-name">completed</p>
                 </li>
+
               </ul>
             </div>
 
-            <div class="input-code position-relative margin-60px">
+            <div
+              v-if="orderSelected.status === 'request_done'"
+              class="input-code position-relative margin-60px"
+            >
               <input
                 type="text"
                 class="w-100 input-with-apply text-capitalize"
@@ -236,18 +260,24 @@
             </div>
 
             <div
+              v-for="order in orderSelected?.order_attributes"
+              :key="order.id"
               class="order-amount d-flex align-items-center justify-content-between margin-20px"
             >
-              <div class="amount text-capitalize">order amount</div>
-              <div class="num-order-amount"></div>
+              <div class="amount text-capitalize">
+                {{ order.label }}
+              </div>
+              <div class="num-order-amount">
+                {{ order.value }}
+              </div>
             </div>
 
-            <div
+            <!-- <div
               class="order-amount d-flex align-items-center justify-content-between margin-20px"
             >
               <div class="amount">VAT</div>
               <div class="num-order-amount">{{ orderSelected.vat_amount }}</div>
-            </div>
+            </div> -->
 
             <div
               class="totla-amount margin-20px d-flex align-items-center justify-content-between"
@@ -261,8 +291,8 @@
 
             <div
               v-if="
-                orderSelected.status === 'requested' ||
-                orderSelected.status === 'report'
+                orderSelected.status === 'request_done'
+                // orderSelected.status === 'report'
               "
             >
               <div class="button-order margin-20px">
@@ -330,7 +360,10 @@ console.log(orderSelected);
   border-radius: 12px;
   padding: 0px 28px;
 }
-img{
+img {
   width: 80px;
+}
+.bg-active {
+  background-color: #fff9d4;
 }
 </style>

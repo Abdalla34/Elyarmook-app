@@ -101,10 +101,10 @@
                     disabled
                   />
                 </div>
-                <div class="input d-flex flex-column">
+                <!-- <div class="input d-flex flex-column">
                   <label class="label">email addrees</label>
-                  <input type="text" placeholder="your email" />
-                </div>
+                  <input v-model="" type="text" placeholder="your email" />
+                </div> -->
               </div>
 
               <div class="row-inputs">
