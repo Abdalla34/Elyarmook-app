@@ -2,13 +2,10 @@
   <div class="cart-parent mt-5">
     <div class="container">
       <div class="row justify-content-center">
-        
-        <div v-if="notRegister" class="text-center py-5">
-          <h1 class="text-capitalize create text-danger">you must create account</h1>
-          <button @click="navigateTo('/createaccount')" class="btn-create mt-3 text-capitalize">
-            create account
-          </button>
-        </div>
+        <NotRegister
+          :IsNotRegitser="notRegister"
+          message="cart is Empty you must create account "
+        />
 
         <div class="empty-cart text-center" v-if="token && orders.length === 0">
           <div>

@@ -1,14 +1,10 @@
 <template>
   <div class="my-orders position-relative">
     <div class="container position-relative">
-      <div class="position-relative">
-        <div class="msg-error text-capitalize" v-if="!loading && msgError">
-          <p class="text-danger">You must create an account to continue</p>
-          <button class="goAcc" @click="navigateTo('/createaccount')">
-            Go To Create Account
-          </button>
-        </div>
-      </div>
+      <NotRegister
+        :IsNotRegitser="!loading && msgError"
+        message="your orders is Empty you must create account"
+      />
 
       <div class="row justify-content-center">
         <div class="col-lg-7 col-md-10 col-sm-12">

@@ -3,6 +3,10 @@
     <ProfileDetails v-if="user" />
     <div class="personal-information">
       <div class="container">
+        <NotRegister
+          :IsNotRegitser="!user"
+          message="not Information you must create account"
+        />
         <div class="row">
           <div class="col-8 col-padding">
             <div
@@ -48,7 +52,7 @@
           </div>
 
           <div class="col-8 col-padding margin-bottom-24px">
-            <div v-if="!user">
+            <!-- <div v-if="!user">
               <div
                 class="msg-error text-center text-capitalize alert alert-warning"
               >
@@ -62,7 +66,7 @@
                   Go To Create Account
                 </button>
               </div>
-            </div>
+            </div> -->
 
             <div v-if="user" class="inputs">
               <div class="row-inputs">

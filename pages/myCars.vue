@@ -1,11 +1,19 @@
 <template>
   <div>
-    <ProfileDetails />
+    <ProfileDetails v-if="!IsNotRegitser" />
     <div class="mycars-information">
       <div class="container">
+        <NotRegister
+          :IsNotRegitser="IsNotRegitser"
+          message="your cars Empty you must create account "
+        />
         <div class="row">
           <div class="col-8 col-padding">
-            <GoPageArrow title="my cars" :showIcon="false" />
+            <GoPageArrow
+              title="my cars"
+              :showIcon="false"
+              v-if="myCars.length === 0 && token"
+            />
 
             <div class="cars margin-bottom-24px position-relative">
               <div
@@ -81,7 +89,7 @@
             </div>
 
             <div
-              v-if="myCars.length === 0"
+              v-if="myCars.length === 0 && token"
               class="empty-message text-center p-4 mb-2"
             >
               <p class="text-muted fs-5">🚗 لا توجد سيارات مضافة حاليًا</p>
@@ -89,6 +97,7 @@
             </div>
 
             <div
+              v-if="myCars.length === 0 && token"
               class="button-save border-radius-36px width-height margin-bottom-287px"
               @click="navigateTo('car-brand')"
             >
@@ -105,10 +114,21 @@
 </template>
 
 <script setup>
-// let token = useCookie("token").value;
+let token = useCookie("token").value;
 let myCars = ref([]);
-let res = await useApi().getMycars();
-myCars.value = res?.data;
+let IsNotRegitser = ref(false);
+
+onMounted(async () => {
+  if (!token) {
+    IsNotRegitser.value = true;
+  } else {
+    let res = await useApi().getMycars();
+    myCars.value = res?.data;
+    if (res && res.status === false && res.message === "unauthenticated") {
+      IsNotRegitser.value = true;
+    }
+  }
+});
 
 let activeCarId = ref(null);
 
@@ -145,97 +165,4 @@ console.log(myCars);
 
 <style scoped>
 @import "@/assets/css/mycars.css";
-.poup-edit {
-  position: absolute;
-  right: 13px;
-  top: 45px;
-  width: 300px;
-  z-index: 10;
-  padding: 32px;
-  background-color: #ffffff;
-  box-shadow: 0px 0px 20px 0px #0000000a;
-  border-top-left-radius: 64px;
-  border-top-right-radius: 8px;
-  border-bottom-left-radius: 64px;
-  border-bottom-right-radius: 64px;
-  z-index: 50;
-}
-.box-btn {
-  border: 1px solid #d4d4d4;
-  padding: 21px;
-  border-radius: 36px;
-  cursor: pointer;
-  transition: all 0.4s ease-in-out;
-  font-family: var(--font-main);
-  font-weight: 500;
-  font-size: 16px;
-}
-
-.delete {
-  border: 1px solid #f9cbcb;
-  background-color: #f9cbcb;
-  color: #eb5757;
-}
-.delete:hover {
-  color: white;
-  background-color: #eb5757;
-}
-.delete:hover .trash-icon svg path {
-  stroke: white !important;
-  fill: white !important;
-}
-
-.box-main-color:hover {
-  background-color: var(--main-color);
-  border: 1px solid var(--main-color);
-}
-
-.set-default {
-  appearance: none;
-  -webkit-appearance: none;
-  border-radius: 4px;
-  border: 1px solid var(--main-color);
-  width: 18px;
-  height: 18px;
-  background-color: transparent;
-  cursor: pointer;
-  transition: border-color 0.3s, background-color 0.3s;
-  position: relative;
-}
-.label-cursor {
-  cursor: pointer;
-}
-.set-default:hover {
-  border-color: black;
-}
-.default:hover .set-default {
-  border-color: black;
-}
-.set-default:checked {
-  border: 2px solid white;
-  background-color: var(--main-color);
-}
-.set-default:checked::after {
-  content: "";
-  position: absolute;
-  left: 4px;
-  top: 1px;
-  width: 5px;
-  height: 10px;
-  border: solid black;
-  border-width: 0 2px 2px 0;
-  transform: rotate(45deg);
-  display: block;
-}
-.empty-message {
-  background-color: #f8f9fa;
-  border: 1px dashed #ced4da;
-  border-radius: 10px;
-  margin-top: 20px;
-}
-.isDefault {
-  background-color: var(--main-color);
-  border: 1px solid var(--main-color);
-  color: black;
-}
 </style>
