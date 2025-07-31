@@ -97,7 +97,7 @@
             </div>
 
             <div
-              v-if="myCars.length === 0 && token"
+              v-if="token"
               class="button-save border-radius-36px width-height margin-bottom-287px"
               @click="navigateTo('car-brand')"
             >
