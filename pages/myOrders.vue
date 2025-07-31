@@ -83,7 +83,7 @@ try {
     msgError.value = true;
   } else if (token.value) {
     orders.value = res?.data?.items ?? [];
-    console.log(res?.data)
+    console.log(res?.data);
   }
 } catch (err) {
   if (err?.response?.status === 401) {
@@ -97,8 +97,14 @@ try {
 
 async function toOrderStatus(orderId) {
   let res = await useApi().getSingleOrder(orderId);
-  navigateTo(`orderstatus/${orderId}`);
+  navigateTo(`orderdetails/${orderId}`);
 }
+let statusorder = ref(null);
+let responseStatus = await useApi().getStatusorders();
+
+
+statusorder.value = responseStatus?.data;
+console.log("this is available", statusorder.value?.["wench-order"]);
 </script>
 
 <style scoped>

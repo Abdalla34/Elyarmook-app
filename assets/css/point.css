@@ -1,0 +1,93 @@
+.point {
+  margin-bottom: 219px;
+}
+
+.redeem {
+  color: #14142b;
+  background-color: var(--main-color);
+  padding: 10px 16px;
+  box-shadow: 0px 1px 2px 0px #1018280d;
+}
+.ul-point {
+  margin-bottom: 44px;
+}
+.hand-ul {
+  background-color: #f7f7fc;
+  width: fit-content;
+  margin: auto;
+  padding: 0px 5px;
+  margin-top: 44px;
+  border-radius: 16px;
+}
+
+.li-point {
+  font-family: var(--font-alt);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-align: center;
+  cursor: pointer;
+  /* margin-left: 20px; */
+}
+
+.active {
+  background-color: #14142b;
+  padding: 14px 27px;
+  color: white;
+  border-radius: 12px;
+  outline: none;
+}
+
+.h4 {
+  font-family: var(--font-main);
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 28px;
+  letter-spacing: 0%;
+  color: #3d3d3d;
+}
+
+.background-plus {
+  background-color: #ecfaf2;
+  padding: 8px;
+  border-radius: 10px;
+}
+
+.num {
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 32px;
+  letter-spacing: 0%;
+  color: #3d3d3d;
+}
+
+.span {
+  font-size: 18px;
+  color: #3d3d3d;
+  font-family: var(--font-main);
+}
+
+.background-negative {
+  background-color: #fffcea;
+  padding: 8px;
+  border-radius: 10px;
+}
+
+.background-ex {
+  background-color: #fae1e7;
+  padding: 5px 12px;
+  border-radius: 50%;
+}
+
+.not-point p {
+  margin-top: 24px;
+  font-family: var(--font-main);
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 18px;
+  letter-spacing: 0px;
+  text-align: center;
+  vertical-align: middle;
+  text-transform: capitalize;
+  padding-left: 30px;
+}

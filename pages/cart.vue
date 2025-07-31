@@ -230,7 +230,7 @@
                 <p>400sar</p>
               </div>
 
-              <div class="buttion-confirm">
+              <div class="buttion-confirm" @click="navigateTo('/payment')">
                 <ButtonCard textButton="continue" />
               </div>
             </div>

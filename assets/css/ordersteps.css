@@ -224,3 +224,43 @@
 .cancel-order button:hover {
   color: white;
 }
+
+.bg-requested {
+  background-color: #fef5bf;
+  color: #fdd800;
+  padding: 0px 28px;
+  border-radius: 12px;
+}
+
+.bg-inspection {
+  background-color: #ecfaf2;
+  color: #41c980;
+  padding: 0px 28px;
+  border-radius: 12px;
+}
+
+.bg-report {
+  background-color: #fef5bf;
+  color: #fdd800;
+  padding: 0px 28px;
+  border-radius: 12px;
+}
+
+.bg-canceled {
+  background-color: #f9cbcb;
+  color: #eb5757;
+  padding: 0px 28px;
+  border-radius: 12px;
+}
+.bg-ready {
+  background-color: #ecfaf2;
+  color: #41c980;
+  border-radius: 12px;
+  padding: 0px 28px;
+}
+img {
+  width: 80px;
+}
+.bg-active {
+  background-color: #fff9d4;
+}

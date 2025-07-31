@@ -28,6 +28,7 @@ export const useApi = () => {
       method: "POST",
       headers: {
         "user-type": "user",
+        
       },
       body: form,
     });
@@ -331,6 +332,20 @@ export const useApi = () => {
     });
   };
 
+  const getStatusorders = async () => {
+    return await $fetch(`${baseURL}/core/all-available-order-statuses`, {
+      method: "GET",
+      headers,
+    });
+  };
+
+  const getPoints = async () => {
+    return await $fetch(`${baseURL}/customer/points-history`, {
+      method: "GET",
+      headers,
+    });
+  };
+
   return {
     sendOTP,
     checkOTP,
@@ -372,5 +387,7 @@ export const useApi = () => {
     deleteCar,
     toDefault,
     getWallet,
+    getStatusorders,
+    getPoints,
   };
 };

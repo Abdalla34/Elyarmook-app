@@ -45,6 +45,19 @@
                   <h6 class="text-capitalize link-sm">language</h6>
                 </NuxtLink>
               </li>
+
+              <li class="">
+                <NuxtLink
+                  to="/point"
+                  exact-active-class="active"
+                  class="d-flex align-items-center gap-1 border-radius-36px p-color-fs"
+                >
+                  <pointStar />
+
+                  <h6 class="text-capitalize link-sm">point</h6>
+                </NuxtLink>
+              </li>
+
               <li class="">
                 <NuxtLink
                   to="/help"
@@ -94,7 +107,7 @@
 }
 
 .active {
- background-color: rgba(247, 242, 244, 1);
+  background-color: rgba(247, 242, 244, 1);
   color: var(--color-black);
 }
 

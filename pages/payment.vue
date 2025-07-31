@@ -23,7 +23,7 @@
               <div class="position-absolute bg-hover"></div>
               <div class="name text-capitalize fw-bold">pay whith stc</div>
               <div class="icon-pay">
-              testimg
+                <img src="/image 19.png" alt="" />
               </div>
             </div>
 
@@ -72,6 +72,5 @@
 </template>
 
 <style scoped>
-
 @import "@/assets/css/payment.css";
 </style>
