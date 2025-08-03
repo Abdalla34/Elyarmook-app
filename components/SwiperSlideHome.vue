@@ -32,13 +32,10 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 
-const appConfig = useAppConfig();
-const baseURL = appConfig.baseURL;
 let images = ref([]);
-let res = await $fetch(`${baseURL}/home`);
+let res = await useApi().gethome();
 images.value = res?.data?.sliders;
-
-// console.log(res?.data?.sliders);
+console.log(res)
 </script>
 
 <style scoped>

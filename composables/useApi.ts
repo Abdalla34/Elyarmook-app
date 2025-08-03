@@ -28,7 +28,6 @@ export const useApi = () => {
       method: "POST",
       headers: {
         "user-type": "user",
-        
       },
       body: form,
     });
@@ -346,6 +345,15 @@ export const useApi = () => {
     });
   };
 
+  const gethome = async () => {
+    return await $fetch(`${baseURL}/home`, {
+      method: "GET",
+      params: {
+        slider_type: "website",
+      },
+    });
+  };
+
   return {
     sendOTP,
     checkOTP,
@@ -389,5 +397,6 @@ export const useApi = () => {
     getWallet,
     getStatusorders,
     getPoints,
+    gethome,
   };
 };
