@@ -180,7 +180,7 @@
                   <div
                     class="bg-icons text-center"
                     :class="{
-                      'bg-active': orderSelected.status === 'on_our_date',
+                      'bg-active': orderSelected.status === 'booking_done',
                     }"
                   >
                     <icons-status-step-booked :status="orderSelected.status" />

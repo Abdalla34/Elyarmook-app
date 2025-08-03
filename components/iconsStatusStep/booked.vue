@@ -1,7 +1,7 @@
 <template>
   <svg
     :class="{
-      'icon-color': status === 'on_our_date',
+      'icon-color': status === 'booking_done',
       'text-gray-400': status !== 'on_our_date',
     }"
     width="24"
