@@ -1,3 +1,5 @@
+import appConfig from "~/app.config";
+
 export const useApi = () => {
   const appConfig = useAppConfig();
   const baseURL = appConfig.baseURL;
@@ -354,6 +356,28 @@ export const useApi = () => {
     });
   };
 
+  const deleteaccount = async (idAcc) => {
+    return await $fetch(`${baseURL}/customer/delete-account`, {
+      method: "POST",
+      body: idAcc,
+    });
+  };
+
+  const usePayment = async (orderId, brand) => {
+    return await $fetch(`${baseURL}/payment/hyper-pay/prepare-checkout`, {
+      method: "POST",
+      body: { order_id: orderId, brand: brand },
+      headers,
+    });
+  };
+
+const getHyperpayStatus = async (id) => {
+  return await $fetch(`${baseURL}/payment/hyper-pay/check-status`, {
+    method: "GET",
+    params: { id },
+  });
+};
+
   return {
     sendOTP,
     checkOTP,
@@ -398,5 +422,23 @@ export const useApi = () => {
     getStatusorders,
     getPoints,
     gethome,
+    deleteaccount,
+    usePayment,
+    getHyperpayStatus,
   };
 };
+
+// export const usePayment = () => {
+//   const createCheckout = async () => {
+//   const appConfig = useAppConfig();
+//   const baseURL = appConfig.baseURL;
+//     const res = await $fetch(`${baseURL}/payment/hyper-pay/prepare-checkout`); // دي API عندك في الباك
+//     if (res.status) {
+//       return res.data;
+//     } else {
+//       throw new Error("فشل إنشاء الدفع");
+//     }
+//   };
+
+//   return { createCheckout };
+// };

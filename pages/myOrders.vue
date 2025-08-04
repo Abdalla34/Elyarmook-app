@@ -36,11 +36,21 @@
                   <iconsOrder-timer />
                 </div>
                 <div class="time-order">
-                  <p class="paragarph text-capitalize">
-                    {{ dayjs(order.created_at).format("ddd, MMM D ,YYYY") }}
+                  <p v-if="order.created_at" class="paragarph text-capitalize">
+                    {{
+                      dayjs(
+                        order.created_at.replace("ص", "AM").replace("م", "PM"),
+                        "MMM D, YYYY hh:mm A"
+                      ).format("ddd, MMM D ,YYYY")
+                    }}
                   </p>
-                  <p class="paragarph text-capitalize">
-                    {{ dayjs(order.created_at).format("hh:mm A") }}
+                  <p v-if="order.created_at" class="paragarph text-capitalize">
+                    {{
+                      dayjs(
+                        order.created_at.replace("ص", "AM").replace("م", "PM"),
+                        "MMM D, YYYY hh:mm A"
+                      ).format("hh:mm A")
+                    }}
                   </p>
                 </div>
               </div>
@@ -71,7 +81,9 @@
 </template>
 
 <script setup>
-let dayjs = useDayjs();
+const dayjs = useDayjs();
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+dayjs.extend(customParseFormat);
 let msgError = ref(false);
 let loading = ref(true);
 let token = useCookie("token");
@@ -83,7 +95,7 @@ try {
     msgError.value = true;
   } else if (token.value) {
     orders.value = res?.data?.items ?? [];
-    console.log(res?.data);
+    console.log("orders ", res?.data?.items?.[0].created_at);
   }
 } catch (err) {
   if (err?.response?.status === 401) {
@@ -99,12 +111,11 @@ async function toOrderStatus(orderId) {
   let res = await useApi().getSingleOrder(orderId);
   navigateTo(`orderdetails/${orderId}`);
 }
-let statusorder = ref(null);
-let responseStatus = await useApi().getStatusorders();
+// let statusorder = ref(null);
+// let responseStatus = await useApi().getStatusorders();
 
-
-statusorder.value = responseStatus?.data;
-console.log("this is available", statusorder.value?.["wench-order"]);
+// statusorder.value = responseStatus?.data;
+// console.log("this is available", statusorder.value?.["wench-order"]);
 </script>
 
 <style scoped>

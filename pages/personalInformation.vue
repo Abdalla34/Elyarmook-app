@@ -144,6 +144,7 @@
             class="button-delete border-radius-36px width-height d-flex justify-content-center margin-bottom-90px"
           >
             <button
+              @click="deleteaccount(user)"
               class="text-capitalize color-but d-flex align-items-center gap-3"
             >
               <Trash />
@@ -173,6 +174,16 @@ let logOut = async () => {
   cookie.value = null;
   router.push("/");
 };
+
+
+// const deleteaccount = async (user) => {
+//   try {
+//     let res = await useApi().deleteaccount(user.id);
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };
+// console.log('id user',user.id)
 </script>
 
 <style>
