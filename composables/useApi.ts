@@ -10,22 +10,22 @@ export const useApi = () => {
     "Content-Type": "application/json",
     Accept: "application/json",
   };
-
-  const sendOTP = async (phone) => {
+  // done
+  const sendOTP = async (phone: any) => {
     return await $fetch(`${baseURL}/auth/send-otp`, {
       method: "POST",
       body: { phone },
     });
   };
-
-  const checkOTP = async (phone, code) => {
+  // done
+  const checkOTP = async (phone: any, code: any) => {
     return await $fetch(`${baseURL}/auth/check-code`, {
       method: "POST",
       body: { phone, code },
     });
   };
-
-  const loginOrRegister = async (form) => {
+  // done
+  const loginOrRegister = async (form: any) => {
     return await $fetch(`${baseURL}/auth/login-or-register`, {
       method: "POST",
       headers: {
@@ -34,28 +34,28 @@ export const useApi = () => {
       body: form,
     });
   };
-
+  // done
   const getCountries = async () => {
     return await $fetch(`${baseURL}/core/countries`, {
       method: "GET",
       headers,
     });
   };
-
-  const getAreasByCountry = async (countryId) => {
+  // done
+  const getAreasByCountry = async (countryId: any) => {
     return await $fetch(`${baseURL}/core/countries/${countryId}/areas`, {
       method: "GET",
       headers,
     });
   };
-
-  const getCitiesByArea = async (areaId) => {
+  // done
+  const getCitiesByArea = async (areaId: any) => {
     return await $fetch(`${baseURL}/core/countries/${areaId}/cities`, {
       method: "GET",
       headers,
     });
   };
-
+  // done
   const getBranches = async () => {
     return await $fetch(`${baseURL}/core/branches`, {
       method: "GET",
@@ -69,7 +69,7 @@ export const useApi = () => {
       headers,
     });
   };
-
+  // done
   const getCarTypes = async () => {
     return await $fetch(`${baseURL}/core/car-types`, {
       method: "GET",
@@ -105,13 +105,7 @@ export const useApi = () => {
     });
   };
 
-  // const getFAQs = async () => {
-  //   return await $fetch(`${baseURL}/core/faqs`, {
-  //     method: "GET",
-  //     headers,
-  //   });
-  // };
-
+  // done
   const getSliders = async () => {
     return await $fetch(`${baseURL}/core/sliders`, {
       method: "GET",
@@ -119,7 +113,7 @@ export const useApi = () => {
     });
   };
 
-  const rateBranch = async (branchId, rating, comment) => {
+  const rateBranch = async (branchId: any, rating: any, comment: any) => {
     return await $fetch(`${baseURL}/core/branch/rate/${branchId}`, {
       method: "POST",
       body: { rating, comment },
@@ -127,7 +121,7 @@ export const useApi = () => {
     });
   };
 
-  const rateAppAndBranch = async (form) => {
+  const rateAppAndBranch = async (form: any) => {
     return await $fetch(`${baseURL}/core/app/branch/rate`, {
       method: "POST",
       body: form,
@@ -135,7 +129,7 @@ export const useApi = () => {
     });
   };
 
-  const scanImage = async (image) => {
+  const scanImage = async (image: any) => {
     return await $fetch(`${baseURL}/core/scan-image`, {
       method: "POST",
       body: { image },
@@ -143,14 +137,15 @@ export const useApi = () => {
     });
   };
 
+  // done
   const getMyCart = async () => {
     return await $fetch(`${baseURL}/marketplace/cart/my-cart`, {
       method: "GET",
       headers,
     });
   };
-
-  const addToCart = async (type, item_id, qty) => {
+  // done
+  const addToCart = async (type: any, item_id: any, qty: any) => {
     return await $fetch(`${baseURL}/marketplace/cart/add-to-cart`, {
       method: "POST",
       body: { type, item_id, qty },
@@ -158,7 +153,7 @@ export const useApi = () => {
     });
   };
 
-  const addToCartMulti = async (items) => {
+  const addToCartMulti = async (items: any) => {
     return await $fetch(`${baseURL}/marketplace/cart/add-to-cart-multi`, {
       method: "POST",
       body: { items },
@@ -166,15 +161,25 @@ export const useApi = () => {
     });
   };
 
-  const updateCartItemQuantity = async (type, order_id, cart_item_id, qty) => {
+  // done
+  const updateCartItemQuantity = async (
+    type: any,
+    order_id: any,
+    cart_item_id: any,
+    qty: any
+  ) => {
     return await $fetch(`${baseURL}/marketplace/cart/update-quantity-cart`, {
       method: "POST",
       body: { type, order_id, cart_item_id, qty },
       headers,
     });
   };
-
-  const deleteItemFromCart = async (type, order_id, cart_item_id) => {
+  // done
+  const deleteItemFromCart = async (
+    type: any,
+    order_id: any,
+    cart_item_id: any
+  ) => {
     return await $fetch(`${baseURL}/marketplace/cart/delete-item-from-cart`, {
       method: "POST",
       body: { type, order_id, cart_item_id },
@@ -182,7 +187,7 @@ export const useApi = () => {
     });
   };
 
-  const applyVoucherToCart = async (cart_id, promo_code_id) => {
+  const applyVoucherToCart = async (cart_id: any, promo_code_id: any) => {
     return await $fetch(
       `${baseURL}/marketplace/cart/apply-voucher/${cart_id}`,
       {
@@ -193,7 +198,7 @@ export const useApi = () => {
     );
   };
 
-  const deleteVoucherFromCart = async (cart_id) => {
+  const deleteVoucherFromCart = async (cart_id: any) => {
     return await $fetch(
       `${baseURL}/marketplace/cart/delete-voucher/${cart_id}`,
       {
@@ -204,14 +209,14 @@ export const useApi = () => {
     );
   };
 
-  const updateCartDetails = async (cart_id, details) => {
+  const updateCartDetails = async (cart_id: any, details: any) => {
     return await $fetch(`${baseURL}/marketplace/cart/cart-details/${cart_id}`, {
       method: "POST",
       body: details,
       headers,
     });
   };
-
+  // done
   const getServices = async (params = {}) => {
     return await $fetch(`${baseURL}/car/services`, {
       method: "GET",
@@ -229,7 +234,7 @@ export const useApi = () => {
       params,
     });
   };
-
+  // done
   const getMyOrders = async () => {
     const token = useCookie("token");
     return await $fetch(`${baseURL}/order/orders`, {
@@ -240,39 +245,40 @@ export const useApi = () => {
       },
     });
   };
-  const getSingleOrder = async (order_id) => {
+  // done
+  const getSingleOrder = async (order_id: any) => {
     return await $fetch(`${baseURL}/order/orders/${order_id}`, {
       headers,
     });
   };
-
+  // done
   const getOffers = async () => {
     return await $fetch(`${baseURL}/offer/offers`, {
       headers,
     });
   };
-
-  const getOfferSingle = async (id) => {
+  // done
+  const getOfferSingle = async (id: any) => {
     return await $fetch(`${baseURL}/offer/offers/${id}`, {
       headers,
     });
   };
-
+  // done
   const getCarBrands = async () => {
     return await $fetch(`${baseURL}/core/brands`, {
       method: "GET",
       headers,
     });
   };
-
+  // done
   const logout = async () => {
     await $fetch(`${baseURL}/auth/logout`, {
       method: "POST",
       headers,
     });
   };
-
-  const cartypes = async (brandId) => {
+  // done
+  const cartypes = async (brandId: any) => {
     return await $fetch(`${baseURL}/core/car-types`, {
       method: "GET",
       headers,
@@ -282,7 +288,7 @@ export const useApi = () => {
       },
     });
   };
-
+  // done
   const getFaqs = async () => {
     return await $fetch(`${baseURL}/core/faqs`, {
       method: "GET",
@@ -292,31 +298,31 @@ export const useApi = () => {
       },
     });
   };
-
-  const createCar = async (form) => {
+  // done
+  const createCar = async (form: any) => {
     return await $fetch(`${baseURL}/customer/create-car`, {
       method: "POST",
       body: form,
       headers,
     });
   };
-
+  // done
   const getMycars = async () => {
     return await $fetch(`${baseURL}/customer/cars`, {
       method: "GET",
       headers,
     });
   };
-
-  const deleteCar = async (car_id) => {
+  // done
+  const deleteCar = async (car_id: any) => {
     return $fetch(`${baseURL}/customer/delete-car/${car_id}`, {
       method: "POST",
       headers,
       body: car_id,
     });
   };
-
-  const toDefault = async (id_default) => {
+  // done
+  const toDefault = async (id_default: any) => {
     return await $fetch(
       `${baseURL}/customer/change-car-to-default/${id_default}`,
       {
@@ -325,7 +331,7 @@ export const useApi = () => {
       }
     );
   };
-
+  // done
   const getWallet = async () => {
     return await $fetch(`${baseURL}/customer/wallet`, {
       method: "GET",
@@ -339,14 +345,14 @@ export const useApi = () => {
       headers,
     });
   };
-
+  // done
   const getPoints = async () => {
     return await $fetch(`${baseURL}/customer/points-history`, {
       method: "GET",
       headers,
     });
   };
-
+  // done
   const gethome = async () => {
     return await $fetch(`${baseURL}/home`, {
       method: "GET",
@@ -355,28 +361,47 @@ export const useApi = () => {
       },
     });
   };
-
-  const deleteaccount = async (idAcc) => {
+  // done
+  const deleteaccount = async (idAcc: any) => {
     return await $fetch(`${baseURL}/customer/delete-account`, {
       method: "POST",
       body: idAcc,
     });
   };
-
-  const usePayment = async (orderId, brand) => {
+  // done
+  const usePayment = async (orderId: any, brand: any) => {
     return await $fetch(`${baseURL}/payment/hyper-pay/prepare-checkout`, {
       method: "POST",
       body: { order_id: orderId, brand: brand },
       headers,
     });
   };
+  // done
+  const getHyperpayStatus = async (id: any) => {
+    return await $fetch(`${baseURL}/payment/hyper-pay/check-status`, {
+      method: "GET",
+      params: { id },
+      headers,
+    });
+  };
 
-const getHyperpayStatus = async (id) => {
-  return await $fetch(`${baseURL}/payment/hyper-pay/check-status`, {
-    method: "GET",
-    params: { id },
-  });
-};
+  const tamaraPayment = async (
+    orderid: any,
+    _successUrl: String,
+    failureUrl: string,
+    cancelUrl: string
+  ) => {
+    return await $fetch(`${baseURL}/payment/tamara/prepare-checkout`, {
+      method: "POST",
+      headers,
+      body: {
+        order_id: orderid,
+        success_url: _successUrl,
+        failure_url: failureUrl,
+        cancel_url: cancelUrl,
+      },
+    });
+  };
 
   return {
     sendOTP,
@@ -425,20 +450,8 @@ const getHyperpayStatus = async (id) => {
     deleteaccount,
     usePayment,
     getHyperpayStatus,
+    tamaraPayment,
   };
+
+  // 4111111111111111
 };
-
-// export const usePayment = () => {
-//   const createCheckout = async () => {
-//   const appConfig = useAppConfig();
-//   const baseURL = appConfig.baseURL;
-//     const res = await $fetch(`${baseURL}/payment/hyper-pay/prepare-checkout`); // دي API عندك في الباك
-//     if (res.status) {
-//       return res.data;
-//     } else {
-//       throw new Error("فشل إنشاء الدفع");
-//     }
-//   };
-
-//   return { createCheckout };
-// };

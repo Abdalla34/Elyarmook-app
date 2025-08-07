@@ -16,12 +16,16 @@
               class="box-method border-radius-36px p-color-fs text-center mb-4 position-relative box-hover-bg"
             >
               <div class="position-absolute bg-hover"></div>
-              <div @click="sendDetails" class="name text-capitalize fw-bold">
+              <div
+                @click="selecteBrand('visa')"
+                class="name text-capitalize fw-bold"
+              >
                 Pay with debit or credit card
               </div>
             </div>
 
             <div
+              @click="selecteBrand('mada')"
               class="box-method d-flex gap-4 justify-content-center border-radius-36px p-color-fs align-items-center mb-4 position-relative box-hover-bg"
             >
               <div class="position-absolute bg-hover"></div>
@@ -29,6 +33,7 @@
             </div>
 
             <div
+              @click="selecteBrand('applepay')"
               class="box-method d-flex gap-4 justify-content-center border-radius-36px p-color-fs align-items-center mb-4 position-relative box-hover-bg"
             >
               <div class="position-absolute bg-hover"></div>
@@ -39,10 +44,19 @@
             </div>
 
             <div
+              @click="selecteBrand('master')"
               class="box-method d-flex gap-4 justify-content-center border-radius-36px p-color-fs align-items-center mb-4 position-relative box-hover-bg"
             >
               <div class="position-absolute bg-hover"></div>
               <div class="name text-capitalize fw-bold">master</div>
+            </div>
+
+            <div
+              @click="paywithTamara"
+              class="box-method d-flex gap-4 justify-content-center border-radius-36px p-color-fs align-items-center mb-4 position-relative box-hover-bg"
+            >
+              <div class="position-absolute bg-hover"></div>
+              <div class="name text-capitalize fw-bold">tamara</div>
             </div>
           </div>
 
@@ -51,9 +65,10 @@
               amount to pay {{ amount }}
             </h4>
             <form
+              method="POST"
               action="/payment-status"
               class="paymentWidgets"
-              data-brands="VISA MASTER"
+              :data-brands="brand.toUpperCase()"
             />
           </div>
         </div>
@@ -67,7 +82,7 @@ let orderId = ref(null);
 let res = await useApi().getMyCart();
 orderId.value = res?.data?.id;
 
-let brand = ref("visa");
+let brand = ref("");
 let checkoutId = ref(null);
 let amount = ref(null);
 
@@ -77,18 +92,17 @@ let sendDetails = async () => {
     if (res) {
       checkoutId.value = res?.data?.checkoutId;
       amount.value = res?.data?.amount_to_pay;
-      console.log(
-        "id",
-        checkoutId.value,
-        "total",
-        amount.value,
-        "brand",
-        brand.value
-      );
 
       window.wpwlOptions = {
         style: "card",
         locale: "en",
+        applePay: {
+          displayName: "Your Store Name",
+          total: {
+            label: "Total",
+            amount: amount.value,
+          },
+        },
       };
 
       const script = document.createElement("script");
@@ -96,19 +110,43 @@ let sendDetails = async () => {
       script.async = true;
       document.body.appendChild(script);
     }
+    console.log(
+      "id",
+      checkoutId.value,
+      "total",
+      amount.value,
+      "brand",
+      brand.value
+    );
   } catch (err) {
     console.log(err);
   }
 };
 
-let route = useRoute();
-let statusPayment = ref(null);
-let id = route.query.id;
-
-function test() {
-  navigateTo("/");
-  console.log("test");
+function selecteBrand(brandPay) {
+  brand.value = brandPay;
+  sendDetails();
 }
+
+let paywithTamara = async () => {
+  try {
+    const config = useRuntimeConfig();
+    const domain = config.public.baseURL;
+
+    let res = await useApi().tamaraPayment(orderId.value, {
+      success_url: `${domain}/paymentTamara/success`,
+      failure_url: `${domain}/paymentTamara/failure`,
+      cancel_url: `${domain}/paymentTamara/cancel`
+    });
+
+    if (res?.data?.checkout_url) {
+      checkoutId.value = res.data.checkoutId;
+      window.location.href = res.data.checkout_url;
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
 </script>
 
 <style scoped>
