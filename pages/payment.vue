@@ -58,6 +58,14 @@
               <div class="position-absolute bg-hover"></div>
               <div class="name text-capitalize fw-bold">tamara</div>
             </div>
+
+            <div
+              @click="paywithTaby"
+              class="box-method d-flex gap-4 justify-content-center border-radius-36px p-color-fs align-items-center mb-4 position-relative box-hover-bg"
+            >
+              <div class="position-absolute bg-hover"></div>
+              <div class="name text-capitalize fw-bold">tabby</div>
+            </div>
           </div>
 
           <div v-if="checkoutId" class="text-center">
@@ -66,7 +74,7 @@
             </h4>
             <form
               method="POST"
-              action="/payment-status"
+              :action="formAction"
               class="paymentWidgets"
               :data-brands="brand.toUpperCase()"
             />
@@ -78,17 +86,22 @@
 </template>
 
 <script setup>
-let orderId = ref(null);
-let res = await useApi().getMyCart();
-orderId.value = res?.data?.id;
+let route = useRoute();
+let id = route.query.id;
 
 let brand = ref("");
 let checkoutId = ref(null);
 let amount = ref(null);
 
+const formAction = ref("");
+
+onMounted(() => {
+  // هنا بتحدد لينك صفحة الـ status بعد الدفع
+  formAction.value = `${window.location.origin}/payment-tamara-status`;
+});
 let sendDetails = async () => {
   try {
-    let res = await useApi().usePayment(orderId.value, brand.value);
+    let res = await useApi().usePayment(id, brand.value);
     if (res) {
       checkoutId.value = res?.data?.checkoutId;
       amount.value = res?.data?.amount_to_pay;
@@ -130,18 +143,29 @@ function selecteBrand(brandPay) {
 
 let paywithTamara = async () => {
   try {
-    const config = useRuntimeConfig();
-    const domain = config.public.baseURL;
-
-    let res = await useApi().tamaraPayment(orderId.value, {
-      success_url: `${domain}/paymentTamara/success`,
-      failure_url: `${domain}/paymentTamara/failure`,
-      cancel_url: `${domain}/paymentTamara/cancel`
+    const domain = window.location.origin;
+    let res = await useApi().tamaraPayment({
+      order_id: id,
+      success_url: `${domain}/payment-tamara-status/success`,
+      failure_url: `${domain}/payment-tamara-status/failed`,
+      cancel_url: `${domain}/payment-tamara-status/cancel`,
     });
-
     if (res?.data?.checkout_url) {
       checkoutId.value = res.data.checkoutId;
       window.location.href = res.data.checkout_url;
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+let paywithTaby = async () => {
+  try {
+    let res = await useApi().tabyPayment(id);
+    if (res && res?.data?.checkout_url) {
+      checkoutId.value = res?.data?.checkoutId;
+      window.location.href = res.data.checkout_url;
+      console.log("taby", res);
     }
   } catch (err) {
     console.log(err);

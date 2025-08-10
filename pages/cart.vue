@@ -7,7 +7,7 @@
           message="cart is Empty you must create account "
         />
 
-        <div class="empty-cart text-center" v-if="token && orders.length === 0">
+        <div class="empty-cart text-center" v-if="token && items.length === 0">
           <div>
             <img src="/Vector.png" alt="" />
             <h3 class="text-capitalize create">your cart is empty</h3>
@@ -44,12 +44,12 @@
         <!-- left section -->
         <div
           class="col-12 col-md-12 col-lg-6 col-md-6"
-          v-if="token && orders.length"
+          v-if="token && items.length"
         >
           <h4 class="mb-4 fw-bold">Order Details</h4>
           <div
             class="cart d-flex justify-content-between align-items-center border-radius-36px mb-3"
-            v-for="order in orders"
+            v-for="order in items"
             :key="order.id"
           >
             <div class="details-cart d-flex align-items-center gap-3">
@@ -147,7 +147,7 @@
         <!-- right section -->
         <div
           class="col-12 col-md-12 col-lg-4 col-test"
-          v-if="token && orders.length"
+          v-if="token && items.length"
         >
           <div class="h-100">
             <div class="">
@@ -185,7 +185,7 @@
               </div>
             </div>
 
-            <!-- تفاصيل السعر -->
+            <!-- price details -->
             <div class="">
               <h6 class="fw-bold">Cost Details</h6>
               <div class="box-design">
@@ -230,7 +230,7 @@
                 <p>400sar</p>
               </div>
 
-              <div class="buttion-confirm" @click="navigateTo('/payment')">
+              <div class="buttion-confirm" @click="toContinue()">
                 <ButtonCard textButton="continue" />
               </div>
             </div>
@@ -243,32 +243,30 @@
 
 <script setup>
 const { getMyCart, deleteItemFromCart, updateCartItemQuantity } = useApi();
-const orders = ref([]);
+const items = ref([]);
 const loadingDelete = ref({});
 const loadingQty = ref({});
-
+const cartRes = await getMyCart();
+const order_id = cartRes?.data?.id;
 let notRegister = ref(false);
 let token = useCookie("token").value;
 if (!token) {
   notRegister.value = true;
 } else {
-  const res = await getMyCart();
-  orders.value = res?.data?.services || [];
+  items.value = cartRes?.data?.services || [];
 
-  if (res?.status === false && res?.message === "Unauthenticated") {
+  if (cartRes?.status === false && cartRes?.message === "Unauthenticated") {
     notRegister.value = true;
   }
 }
 
 async function deletedOrder(id) {
-  const item = orders.value.find((o) => o.id === id);
+  const item = items.value.find((o) => o.id === id);
   if (!item) return;
   loadingDelete.value[id] = true;
   try {
-    const cartRes = await getMyCart();
-    const order_id = cartRes?.data?.id;
     await deleteItemFromCart("service", order_id, id);
-    orders.value = orders.value.filter((o) => o.id !== id);
+    items.value = items.value.filter((o) => o.id !== id);
   } catch (err) {
     console.log("test", err);
   } finally {
@@ -280,8 +278,6 @@ async function updateQty(order, newQty) {
   if (newQty < 1) return;
   loadingQty.value[order.id] = true;
   try {
-    const cartRes = await getMyCart();
-    const order_id = cartRes?.data?.id;
     await updateCartItemQuantity("service", order_id, order.id, newQty);
     order.qty = newQty;
   } catch (err) {
@@ -290,6 +286,18 @@ async function updateQty(order, newQty) {
     loadingQty.value[order.id] = false;
   }
 }
+let router = useRouter();
+
+function toContinue() {
+  router.push({
+    path: `/payment`,
+    query: {
+      id: order_id,
+    },
+  });
+  console.log("test");
+}
+console.log("orders is ", items);
 </script>
 
 <style scoped>
