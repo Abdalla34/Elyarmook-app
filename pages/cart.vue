@@ -144,6 +144,47 @@
           </div> -->
         </div>
 
+        <!-- <div
+          class="cart d-flex justify-content-between align-items-center border-radius-36px mb-3"
+          v-for="order in items"
+          :key="order.id"
+        >
+          <div class="details-cart d-flex align-items-center gap-3">
+            <div class="img">
+              <img :src="order.image" :alt="order.title" />
+            </div>
+            <div class="name-cart">
+              <h4 class="item-name item-left">{{ order.title }}</h4>
+              <p class="price">
+                {{ order.price }}
+                <span class="p-color-fs span">SAR</span>
+              </p>
+              <div class="qty-controls d-flex align-items-center mt-2">
+                <button
+                  class="qty-btn"
+                  :disabled="loadingQty[order.id] || order.qty <= 1"
+                  @click="updateQty(order, order.qty - 1)"
+                >
+                  -
+                </button>
+                <span class="mx-2">{{ order.qty }}</span>
+                <button
+                  class="qty-btn"
+                  :disabled="loadingQty[order.id]"
+                  @click="updateQty(order, order.qty + 1)"
+                >
+                  +
+                </button>
+                <span v-if="loadingQty[order.id]" class="ms-2">Loading...</span>
+              </div>
+            </div>
+          </div>
+          <div class="delete-icon" @click="deletedOrder(order.id)">
+            <Trash />
+            <span v-if="loadingDelete[order.id]">Loading...</span>
+          </div>
+        </div> -->
+
         <!-- right section -->
         <div
           class="col-12 col-md-12 col-lg-4 col-test"
@@ -250,6 +291,10 @@ const cartRes = await getMyCart();
 const order_id = cartRes?.data?.id;
 let notRegister = ref(false);
 let token = useCookie("token").value;
+let offers = ref([]);
+offers.value = cartRes?.data?.offers || [];
+console.log("offers are ", offers);
+
 if (!token) {
   notRegister.value = true;
 } else {
@@ -297,39 +342,8 @@ function toContinue() {
   });
   console.log("test");
 }
-console.log("orders is ", items);
 </script>
 
 <style scoped>
 @import "@/assets/css/cartorder.css";
-.btn-create {
-  background-color: var(--main-color);
-  border: none;
-  padding: 10px 60px;
-  border-radius: 20px;
-  margin-bottom: 200px;
-}
-.empty-cart {
-  margin-bottom: 200px;
-}
-
-.btn-items {
-  width: fit-content;
-  margin: auto;
-}
-.btn-items button {
-  background-color: var(--main-color);
-  border: none;
-  padding: 21px 125px;
-  border-radius: 36px;
-}
-.create {
-  font-family: var(--font-main);
-  font-weight: 600;
-  font-style: SemiBold;
-  font-size: 28px;
-  color: #27273c;
-  margin-bottom: 25px;
-  margin-top: 25px;
-}
 </style>

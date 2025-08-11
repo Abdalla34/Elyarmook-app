@@ -22,10 +22,10 @@
   background-color: #eb5757;
 }
 
-.delete-icon:hover svg path {
+/* .delete-icon:hover svg path {
   stroke: white;
   fill: white;
-}
+} */
 
 .width {
   width: 50%;
@@ -187,7 +187,36 @@
 }
 
 
+.btn-create {
+  background-color: var(--main-color);
+  border: none;
+  padding: 10px 60px;
+  border-radius: 20px;
+  margin-bottom: 200px;
+}
+.empty-cart {
+  margin-bottom: 200px;
+}
 
+.btn-items {
+  width: fit-content;
+  margin: auto;
+}
+.btn-items button {
+  background-color: var(--main-color);
+  border: none;
+  padding: 21px 125px;
+  border-radius: 36px;
+}
+.create {
+  font-family: var(--font-main);
+  font-weight: 600;
+  font-style: SemiBold;
+  font-size: 28px;
+  color: #27273c;
+  margin-bottom: 25px;
+  margin-top: 25px;
+}
 
 
 

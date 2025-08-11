@@ -398,11 +398,24 @@ export const useApi = () => {
     });
   };
 
-  const tabyPayment = async (orderid: any) => {
+  const tabyPayment = async (payload: {
+    order_id: any;
+    success_url: any;
+    failure_url: any;
+    cancel_url: any;
+  }) => {
     return await $fetch(`${baseURL}/payment/tabby/prepare-checkout`, {
       method: "POST",
       headers,
-      body: { order_id : orderid },
+      body: payload,
+    });
+  };
+
+  const tabbyStatus = async (id: any) => {
+    return await $fetch(`${baseURL}/payment/tabby/success`, {
+      method: "GET",
+      params: { payment_id: id },
+      headers,
     });
   };
 
@@ -455,6 +468,7 @@ export const useApi = () => {
     getHyperpayStatus,
     tamaraPayment,
     tabyPayment,
+    tabbyStatus
   };
 
   // 4111111111111111
