@@ -25,7 +25,13 @@ const message = ref(null);
 try {
   let paymentId = route.query.payment_id;
   if (paymentId) {
-    res = await useApi().tabbyStatus(paymentId);
+    res = await useApi().tabbyStatusSuccess(paymentId);
+  }
+  if (paymentId) {
+    res = await useApi().tabbyStatusFailure(paymentId);
+  }
+  if (paymentId) {
+    res = await useApi().tabbyStatusCancel(paymentId);
   }
 
   const rawId = route.query.id;

@@ -100,7 +100,7 @@ onMounted(() => {
   formAction.value = `${window.location.origin}/payment-tamara-status`;
 });
 
-let sendDetails = async () => {
+let paymentWithHyperPay = async () => {
   try {
     let res = await useApi().usePayment(id, brand.value);
     if (res) {
@@ -124,14 +124,6 @@ let sendDetails = async () => {
       script.async = true;
       document.body.appendChild(script);
     }
-    console.log(
-      "id",
-      checkoutId.value,
-      "total",
-      amount.value,
-      "brand",
-      brand.value
-    );
   } catch (err) {
     console.log(err);
   }
@@ -139,7 +131,7 @@ let sendDetails = async () => {
 
 function selecteBrand(brandPay) {
   brand.value = brandPay;
-  sendDetails();
+  paymentWithHyperPay();
 }
 const domain = window.location.origin;
 
@@ -152,7 +144,7 @@ let paywithTamara = async () => {
       cancel_url: `${domain}/payment-tamara-status/cancel`,
     });
     if (res?.data?.checkout_url) {
-      checkoutId.value = res.data.checkoutId;
+      // checkoutId.value = res.data.checkoutId;
       window.location.href = res.data.checkout_url;
     }
   } catch (err) {
@@ -169,17 +161,13 @@ let paymentWihtTbby = async () => {
       cancel_url: `${domain}/payment-tamara-status/cancel`,
     });
     if (res && res?.data?.checkout_url) {
-      checkoutId.value = res?.data?.checkoutId;
+      // checkoutId.value = res?.data?.checkoutId;
       window.location.href = res?.data?.checkout_url;
     }
   } catch (err) {
     console.log(err);
   }
 };
-
-
-// 500000001
-// otp.success@tabby.ai
 </script>
 
 <style scoped>
