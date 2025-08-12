@@ -10,7 +10,7 @@
           <div class="order">
             <div class="input-user position-relative d-flex flex-column">
               <label for="" class="label">my car</label>
-              <select class="input-style">
+              <select v-model="selectedCar" class="input-style">
                 <option disabled selected>Ex : {{ user.name }}</option>
                 <option v-for="car in mycars" :key="car.id" :value="car.id">
                   {{ car.car_type.title }}
@@ -28,10 +28,14 @@
                 class="input-barnch position-relative fix d-flex flex-column"
               >
                 <label for="" class="label">branch</label>
-                <select class="input-style">
-                  <option disabled selected>Select Branch</option>
-                  <option v-for="branch in branches" :key="branch.id">
-                    {{ branch.title }}
+                <select
+                  @click="branshshow"
+                  v-model="selectedBranch"
+                  class="input-style"
+                >
+                  <option disabled value="">Select Branch</option>
+                  <option v-for="br in branches" :key="br.id" :value="br.id">
+                    {{ br.title }}
                   </option>
                 </select>
                 <div class="icon-shape position-absolute">
@@ -44,9 +48,8 @@
 
                 <div class="datepicker-wrapper position-relative w-100">
                   <datepicker
-                    v-model="seletctedDate"
-                    placeholder="selecte date"
-                    :value="formatDate"
+                    v-model="selectedDate"
+                    placeholder="select date"
                     class="input-style w-100"
                   />
 
@@ -64,6 +67,7 @@
                 id=""
                 class="textarea"
                 placeholder="issues details"
+                v-model="note"
               ></textarea>
             </div>
 
@@ -106,8 +110,8 @@
                 add another items
               </button>
               <button
+                @click="UpdateOrderDetails"
                 class="continue text-capitalize label button"
-                @click="navigateTo('')"
               >
                 continue
               </button>
@@ -122,27 +126,50 @@
 <script setup>
 import Datepicker from "vue3-datepicker";
 import { format } from "date-fns";
+import dayjs from "#build/dayjs.imports.mjs";
 
-let seletctedDate = ref(null);
-let formatDate = computed(() => {
-  return seletctedDate.value
-    ? format(seletctedDate.value, "dd, MMM, yyyy")
-    : "";
-});
+let selectedCar = ref(null);
+let selectedBranch = ref(null);
+let selectedDate = ref(null);
+let note = ref("");
 
 let mycars = ref([]);
-
 let res = await useApi().getMycars();
-console.log("API Response:", res);
 mycars.value = res?.data || [];
 
 let branches = ref([]);
 let resBranshes = await useApi().getBranches();
 branches.value = resBranshes?.data?.items;
-console.log(branches);
-
 let user = useCookie("user").value;
-console.log(user.name);
+
+let route = useRoute();
+let idCart = route.query.id;
+let router = useRouter();
+let UpdateOrderDetails = async () => {
+  try {
+    let response = await useApi().updateCartDetails(idCart, {
+      branch_id: selectedBranch.value,
+      reservation_time: dayjs(selectedDate.value).format("YYYY-MM-DD HH:mm:ss"),
+      user_car_id: selectedCar.value,
+      customer_note: note.value,
+    });
+    if (response && response.data) {
+      router.push({
+        path: "/cart",
+        query: {
+          id: idCart,
+        },
+      });
+    }
+    console.log(response);
+  } catch (err) {
+    if (response?.status === 404) {
+      console.log(err);
+    }
+  }
+};
+
+console.log(idCart);
 </script>
 
 <style scoped>
@@ -162,7 +189,7 @@ select {
 .selected {
   color: #7e7e7e;
 }
-.input-style{
+.input-style {
   cursor: pointer;
 }
 </style>

@@ -8,8 +8,8 @@
       <div class="row">
         <div
           class="col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center"
-          v-for="(service, index) in allParts"
-          :key="index"
+          v-for="service in allParts"
+          :key="service.id"
         >
           <div class="service-card text-center margin-bottom-24px">
             <div class="service-icon-wrapper">
@@ -35,6 +35,12 @@
                 @click="handleAdd(service)"
               />
             </div>
+
+            <!-- <div class="div-button">
+              <button class="additems text-capitalize label">
+                added to cart
+              </button>
+            </div>  -->
           </div>
         </div>
         <div class="isEmpty"></div>
@@ -46,7 +52,6 @@
 <script setup>
 const { getServices, addToCart } = useApi();
 
-// const loading = ref(true);
 const feedbackMessage = ref("");
 const feedbackType = ref("");
 const loadingAddToCart = ref({});

@@ -532,3 +532,25 @@ textarea {
   z-index: 2;
   background-color: rgba(0, 0, 0, 0.4);
 }
+
+.additems {
+  background-color: #ffffff;
+}
+.additems:hover {
+  background-color: var(--color-secound-main);
+}
+
+.additems,
+.continue {
+  width: 100%;
+  border-radius: 36px;
+  padding: 16px 0px;
+  border: 1px solid #d4d4d4;
+  color: #040505;
+}
+@media (max-width: 576px) {
+  .additems,
+  .continue {
+    width: 100%;
+  }
+}

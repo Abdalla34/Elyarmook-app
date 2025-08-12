@@ -37,21 +37,7 @@
   margin-bottom: 193px;
 }
 
-.additems {
-  background-color: #ffffff;
-}
-.additems:hover {
-  background-color: var(--color-secound-main);
-}
 
-.additems,
-.continue {
-  width: 100%;
-  border-radius: 36px;
-  padding: 16px 0px;
-  border: 1px solid #d4d4d4;
-  color: #040505;
-}
 
 .continue {
   background-color: var(--main-color);

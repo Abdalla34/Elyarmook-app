@@ -20,8 +20,6 @@
 <script setup>
 const route = useRoute();
 
-const status = ref(null);
-const message = ref(null);
 try {
   let paymentId = route.query.payment_id;
   if (paymentId) {
@@ -32,17 +30,6 @@ try {
   }
   if (paymentId) {
     res = await useApi().tabbyStatusCancel(paymentId);
-  }
-
-  const rawId = route.query.id;
-  const res = await useApi().getHyperpayStatus(rawId);
-
-  if (res?.status === true || res?.status === "true") {
-    status.value = true;
-    message.value = res?.data?.message || "✅ تم الدفع بنجاح ";
-  } else {
-    status.value = false;
-    message.value = res?.data?.message || "فشل الدفع";
   }
 } catch (err) {
   console.log(err);

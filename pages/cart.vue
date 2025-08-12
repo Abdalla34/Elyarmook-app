@@ -251,33 +251,49 @@
               <h6 class="fw-bold">Order Details</h6>
               <div class="box-design">
                 <div
+                  v-if="cartRes?.data?.branch"
                   class="branch d-flex justify-content-between align-items-center"
                 >
                   <h4 class="label">branch</h4>
-                  <p class="text-capitalize">riyddah</p>
+                  <p class="text-capitalize">
+                    {{ cartRes?.data?.branch.title }}
+                  </p>
                 </div>
 
                 <div
+                  v-if="cartRes?.data?.default_car?.car_type?.title"
                   class="model d-flex justify-content-between align-items-center"
                 >
                   <h4 class="label">car model</h4>
 
-                  <p>BMW</p>
+                  <p>{{ cartRes?.data?.default_car?.car_type?.title }}</p>
                 </div>
 
                 <div
+                  v-if="cartRes?.data?.reservation_date"
                   class="reservation-date d-flex justify-content-between align-items-center"
                 >
                   <h4 class="label">Reservation Date</h4>
 
-                  <p>sun , oct 5 , 2025</p>
+                  <p>
+                    {{
+                      dayjs(cartRes?.data?.reservation_date).format(
+                        "ddd, MMM D, YYYY"
+                      )
+                    }}
+                  </p>
                 </div>
 
                 <div
+                  v-if="cartRes?.data?.reservation_date"
                   class="reservation-time d-flex justify-content-between align-items-center"
                 >
                   <h4 class="label">Reservation time</h4>
-                  <p class="text-capitalize">10:40</p>
+                  <p class="text-capitalize">
+                    {{
+                      dayjs(cartRes?.data?.reservation_date).format("hh:mm A")
+                    }}
+                  </p>
                 </div>
               </div>
             </div>
@@ -289,26 +305,34 @@
                 <div
                   class="total-order d-flex justify-content-between align-items-center"
                 >
-                  <h4 class="label">Total Order</h4>
-                  <p class="text-capitalize">1112151545237</p>
+                  <h4 class="label">sub total</h4>
+                  <p class="text-capitalize">{{ cartRes?.data?.sub_total }}</p>
                 </div>
 
                 <div
                   class="vat d-flex justify-content-between align-items-center"
                 >
                   <h4 class="label">vat</h4>
-                  <p class="text-capitalize">2415151245</p>
+                  <p class="text-capitalize">{{ cartRes?.data?.vat_amount }}</p>
                 </div>
 
                 <div
                   class="final-amount d-flex justify-content-between align-items-center"
                 >
                   <h4 class="label">Final Amount</h4>
-                  <p class="text-capitalize">400</p>
+                  <p class="text-capitalize">
+                    {{ cartRes?.data?.amount_to_pay }}
+                    <span class="p-color-fs span">SAR</span>
+                  </p>
                 </div>
               </div>
 
-              <div class="input-code position-relative">
+              <div
+                v-if="
+                  cartRes?.data?.branch && cartRes?.data?.default_car?.car_type
+                "
+                class="input-code position-relative"
+              >
                 <input
                   type="text"
                   class="w-100 input-with-apply text-capitalize"
@@ -323,12 +347,21 @@
               <div
                 class="total-amount d-flex align-items-center justify-content-between"
               >
-                <h1 class="amount text-capitalize">total</h1>
-                <p>400sar</p>
+                <h1 class="amount text-capitalize">total amonut</h1>
+                <p>{{ cartRes?.data?.total_amount }}</p>
               </div>
 
               <div class="buttion-confirm" @click="toContinue()">
                 <ButtonCard textButton="continue" />
+              </div>
+              <div class="buttion-confirm">
+                <button
+                  @click="navigateTo('/services')"
+                  class="additems text-capitalize label"
+                >
+                  <i class="fa-solid fa-plus"></i>
+                  add another items
+                </button>
               </div>
             </div>
           </div>
@@ -339,6 +372,8 @@
 </template>
 
 <script setup>
+import dayjs from "#build/dayjs.imports.mjs";
+
 const { getMyCart, deleteItemFromCart, updateCartItemQuantity } = useApi();
 const items = ref([]);
 const loadingDelete = ref({});
@@ -349,7 +384,6 @@ let notRegister = ref(false);
 let token = useCookie("token").value;
 let offers = ref([]);
 offers.value = cartRes?.data?.offers || [];
-console.log("offers are ", offers);
 
 if (!token) {
   notRegister.value = true;
@@ -394,14 +428,15 @@ async function updateQty(order, newQty) {
 let router = useRouter();
 
 function toContinue() {
+  
   router.push({
-    path: `/payment`,
+    path: `/order-update-details`,
     query: {
       id: order_id,
     },
   });
-  console.log("test");
 }
+console.log(cartRes);
 </script>
 
 <style scoped>

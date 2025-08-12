@@ -51,8 +51,8 @@
             </div>
           </div>
 
-          <div class="col-8 col-padding margin-bottom-24px">
-            <!-- <div v-if="!user">
+          <div class="col-8 col-padding margin-bottom-24px" v-if="!editDone">
+            <div v-if="!user">
               <div
                 class="msg-error text-center text-capitalize alert alert-warning"
               >
@@ -66,7 +66,7 @@
                   Go To Create Account
                 </button>
               </div>
-            </div> -->
+            </div>
 
             <div v-if="user" class="inputs">
               <div class="row-inputs">
@@ -129,11 +129,76 @@
               </div>
             </div>
           </div>
+
+          <div class="col-8 col-padding margin-bottom-24px" v-if="editDone">
+            <div v-if="user" class="inputs">
+              <div class="row-inputs">
+                <div class="input d-flex flex-column">
+                  <label class="label">first name</label>
+                  <input
+                    v-model="user.first_name"
+                    type="text"
+                    placeholder="your name"
+                  />
+                </div>
+
+                <div class="input d-flex flex-column">
+                  <label class="label">last name</label>
+                  <input
+                    type="text"
+                    placeholder="your name"
+                    v-model="user.last_name"
+                  />
+                </div>
+              </div>
+
+              <div class="row-inputs">
+                <div class="input d-flex flex-column">
+                  <label class="label">phone Number</label>
+                  <input
+                    type="text"
+                    placeholder="your phone"
+                    v-model="user.phone"
+                  />
+                </div>
+                <!-- <div class="input d-flex flex-column">
+                  <label class="label">email addrees</label>
+                  <input v-model="" type="text" placeholder="your email" />
+                </div> -->
+              </div>
+
+              <div class="row-inputs">
+                <div class="input d-flex flex-column">
+                  <label class="label" for="">area</label>
+                  <input
+                    type="text"
+                    placeholder="central region"
+                    v-model="user.area.title"
+                  />
+                </div>
+                <div class="input d-flex flex-column">
+                  <label class="label" for="">city</label>
+                  <input
+                    type="text"
+                    placeholder="central region"
+                    v-model="user.city.title"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div
+              @click="editProfile"
+              class="width-height border-radius-36px Edit"
+            >
+              <button class="text-capitalize">continue</button>
+            </div>
+          </div>
         </div>
 
-        <div v-if="user">
-          <div class="button-save border-radius-36px width-height">
-            <button class="text-capitalize">continue</button>
+        <div v-if="user && !editDone">
+          <div @click="toEdit" class="width-height border-radius-36px Edit">
+            <button class="text-capitalize">edit profile</button>
           </div>
 
           <div @click="logOut" class="log-out width-height border-radius-36px">
@@ -164,10 +229,12 @@ let token = useCookie("token", { maxAge: 365 * 24 * 60 * 60 });
 const cookie = useCookie("user", { maxAge: 365 * 24 * 60 * 60 });
 const user = cookie.value;
 
+let editDone = ref(false);
 let profileImg = ref(false);
 function ChangeProfile() {
   profileImg.value = !profileImg.value;
 }
+
 let logOut = async () => {
   await useApi().logout();
   token.value = null;
@@ -175,15 +242,26 @@ let logOut = async () => {
   router.push("/");
 };
 
+function toEdit() {
+  editDone.value = true;
+  // 201094300234
+}
 
-// const deleteaccount = async (user) => {
-//   try {
-//     let res = await useApi().deleteaccount(user.id);
-//   } catch (err) {
-//     console.log(err);
-//   }
-// };
-// console.log('id user',user.id)
+let editProfile = async () => {
+  try {
+    let res = await useApi().updateUserProfile({
+      first_name: user.first_name,
+      last_name: user.last_name,
+      phone: user.phone,
+    });
+    if (res && res.status === false && res.message === "Unauthenticated") {
+      return navigateTo("/createaccount");
+    }
+    editDone.value = false;
+  } catch (err) {
+    console.error(err);
+  }
+};
 </script>
 
 <style>
@@ -233,5 +311,8 @@ let logOut = async () => {
 }
 .button-delete:hover svg path {
   stroke: white;
+}
+.Edit {
+  background-color: var(--main-color);
 }
 </style>
