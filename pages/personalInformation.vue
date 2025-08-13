@@ -101,10 +101,6 @@
                     disabled
                   />
                 </div>
-                <!-- <div class="input d-flex flex-column">
-                  <label class="label">email addrees</label>
-                  <input v-model="" type="text" placeholder="your email" />
-                </div> -->
               </div>
 
               <div class="row-inputs">
@@ -161,12 +157,9 @@
                     v-model="user.phone"
                   />
                 </div>
-                <!-- <div class="input d-flex flex-column">
-                  <label class="label">email addrees</label>
-                  <input v-model="" type="text" placeholder="your email" />
-                </div> -->
               </div>
 
+              
               <div class="row-inputs">
                 <div class="input d-flex flex-column">
                   <label class="label" for="">area</label>
@@ -254,14 +247,20 @@ let editProfile = async () => {
       last_name: user.last_name,
       phone: user.phone,
     });
+
     if (res && res.status === false && res.message === "Unauthenticated") {
       return navigateTo("/createaccount");
     }
+
+    cookie.value = res?.data?.user;
+
     editDone.value = false;
   } catch (err) {
     console.error(err);
   }
 };
+
+// +201094300234
 </script>
 
 <style>

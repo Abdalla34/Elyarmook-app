@@ -154,8 +154,9 @@ let UpdateOrderDetails = async () => {
       customer_note: note.value,
     });
     if (response && response.data) {
+      await useApi().getMyCart();
       router.push({
-        path: "/cart",
+        path: "/cart-update-details",
         query: {
           id: idCart,
         },

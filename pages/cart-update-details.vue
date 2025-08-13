@@ -9,7 +9,12 @@
 
         <div
           class="empty-cart text-center"
-          v-if="token && items.length === 0 && offers.length === 0"
+          v-if="
+            token &&
+            items.length === 0 &&
+            offers.length === 0 &&
+            !test?.data?.id
+          "
         >
           <div>
             <img src="/Vector.png" alt="" />
@@ -232,13 +237,6 @@
               <span v-if="loadingDelete[order.offer_id]">Loading...</span>
             </div>
           </div>
-
-          <!-- <div
-            class="button-continue width"
-            @click="navigateTo('/orderDetails')"
-          >
-            <ButtonCard textButton="continue" />
-          </div> -->
         </div>
 
         <!-- right section -->
@@ -247,58 +245,21 @@
           v-if="token && (items.length || offers.length)"
         >
           <div class="h-100">
+            <!-- price details -->
             <div class="">
-              
-              <!-- <div class="box-design">
+              <div class="box-design">
                 <div
-                  v-if="cartRes?.data?.branch"
+                  v-for="item in itemsUpdates?.data?.date_branch_attributes"
                   class="branch d-flex justify-content-between align-items-center"
                 >
-                  <h4 class="label">branch</h4>
+                  <h4 class="label">{{ item.label }}</h4>
                   <p class="text-capitalize">
-                    {{ cartRes?.data?.branch.title }}
+                    {{ item.value }}
                   </p>
                 </div>
-
-                <div
-                  v-if="cartRes?.data?.default_car?.car_type?.title"
-                  class="model d-flex justify-content-between align-items-center"
-                >
-                  <h4 class="label">car model</h4>
-
-                  <p>{{ cartRes?.data?.default_car?.car_type?.title }}</p>
-                </div>
-
-                <div
-                  v-if="cartRes?.data?.reservation_date"
-                  class="reservation-date d-flex justify-content-between align-items-center"
-                >
-                  <h4 class="label">Reservation Date</h4>
-
-                  <p>
-                    {{
-                      dayjs(cartRes?.data?.reservation_date).format(
-                        "ddd, MMM D, YYYY"
-                      )
-                    }}
-                  </p>
-                </div>
-
-                <div
-                  v-if="cartRes?.data?.reservation_date"
-                  class="reservation-time d-flex justify-content-between align-items-center"
-                >
-                  <h4 class="label">Reservation time</h4>
-                  <p class="text-capitalize">
-                    {{
-                      dayjs(cartRes?.data?.reservation_date).format("hh:mm A")
-                    }}
-                  </p>
-                </div>
-              </div> -->
+              </div>
             </div>
 
-            <!-- price details -->
             <div class="">
               <h6 class="fw-bold">Cost Details</h6>
               <div class="box-design">
@@ -306,14 +267,18 @@
                   class="total-order d-flex justify-content-between align-items-center"
                 >
                   <h4 class="label">sub total</h4>
-                  <p class="text-capitalize">{{ cartRes?.data?.sub_total }}</p>
+                  <p class="text-capitalize">
+                    {{ itemsUpdates?.data?.sub_total }}
+                  </p>
                 </div>
 
                 <div
                   class="vat d-flex justify-content-between align-items-center"
                 >
                   <h4 class="label">vat</h4>
-                  <p class="text-capitalize">{{ cartRes?.data?.vat_amount }}</p>
+                  <p class="text-capitalize">
+                    {{ itemsUpdates?.data?.vat_amount }}
+                  </p>
                 </div>
 
                 <div
@@ -321,7 +286,7 @@
                 >
                   <h4 class="label">Final Amount</h4>
                   <p class="text-capitalize">
-                    {{ cartRes?.data?.amount_to_pay }}
+                    {{ itemsUpdates?.data?.amount_to_pay }}
                     <span class="p-color-fs span">SAR</span>
                   </p>
                 </div>
@@ -329,7 +294,8 @@
 
               <div
                 v-if="
-                  cartRes?.data?.branch && cartRes?.data?.default_car?.car_type
+                  itemsUpdates?.data?.branch &&
+                  itemsUpdates?.data?.default_car?.car_type
                 "
                 class="input-code position-relative"
               >
@@ -348,7 +314,7 @@
                 class="total-amount d-flex align-items-center justify-content-between"
               >
                 <h1 class="amount text-capitalize">total amonut</h1>
-                <p>{{ cartRes?.data?.total_amount }}</p>
+                <p>{{ itemsUpdates?.data?.total_amount }}</p>
               </div>
 
               <div class="buttion-confirm" @click="toContinue()">
@@ -372,25 +338,30 @@
 </template>
 
 <script setup>
-import dayjs from "#build/dayjs.imports.mjs";
+let dayjs = useDayjs();
 
-const { getMyCart, deleteItemFromCart, updateCartItemQuantity } = useApi();
+const { updateCartDetails, deleteItemFromCart, updateCartItemQuantity } =
+  useApi();
 const items = ref([]);
 const loadingDelete = ref({});
 const loadingQty = ref({});
-const cartRes = await getMyCart();
-const order_id = cartRes?.data?.id;
+let route = useRoute();
+let order_id = route.query.id;
+const itemsUpdates = await updateCartDetails(order_id);
 let notRegister = ref(false);
 let token = useCookie("token").value;
 let offers = ref([]);
-offers.value = cartRes?.data?.offers || [];
+offers.value = itemsUpdates?.data?.offers || [];
 
 if (!token) {
   notRegister.value = true;
 } else {
-  items.value = cartRes?.data?.services || [];
+  items.value = itemsUpdates?.data?.services || [];
 
-  if (cartRes?.status === false && cartRes?.message === "Unauthenticated") {
+  if (
+    itemsUpdates?.status === false &&
+    itemsUpdates?.message === "Unauthenticated"
+  ) {
     notRegister.value = true;
   }
 }
@@ -425,18 +396,16 @@ async function updateQty(order, newQty) {
     loadingQty.value[order.id] = false;
   }
 }
-let router = useRouter();
 
+let router = useRouter();
 function toContinue() {
-  
   router.push({
-    path: `/order-update-details`,
+    path: `/payment`,
     query: {
       id: order_id,
     },
   });
 }
-console.log(cartRes);
 </script>
 
 <style scoped>
