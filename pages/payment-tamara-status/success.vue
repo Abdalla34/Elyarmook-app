@@ -4,14 +4,18 @@
       <div>
         <img src="/donePayment.png" alt="تم الدفع بنجاح" />
         <h1 class="text-green-600 text-3xl font-bold mb-4">
-          ✅ تم الدفع بنجاح
+          An appointment has been set successfully
         </h1>
+        <p class="label">
+          Lorem ipsum dolor sit amet,Lorem Lorem ipsum dolor sit amet,Lorem
+          Lorem ipsum dolor sit amet sit amet,Lorem
+        </p>
       </div>
     </div>
 
     <button-card
-      @click="navigateTo('/cart')"
-      text-button="العودة للصفحة الرئيسية"
+      @click="navigateTo('/myorders')"
+      text-button="view my orders"
     >
     </button-card>
   </div>

@@ -10,9 +10,9 @@
                 help
               </h1>
 
-              <!-- fil name -->
+              <!-- fill name -->
               <div class="help margin-bottom-24px box-pages">
-                <div class="help-box" @click="navigateTo('fillName')">
+                <div class="help-box" @click="navigateTo('fill-form')">
                   <div
                     class="help-detalis d-flex justify-content-between align-items-center"
                   >
@@ -46,13 +46,16 @@
 
               <!-- contact us -->
               <div class="help margin-bottom-24px box-pages">
-                <div class="help-box" @click="navigateTo('contactUs')">
+                <div class="help-box">
                   <div
                     class="help-detalis d-flex justify-content-between align-items-center"
                   >
                     <div class="d-flex align-items-center gap-2">
                       <callUs />
-                      <div class="details">Call Us</div>
+                      <div class="d-flex flex-column">
+                        <h1 class="details">Call Us</h1>
+                        <p class="p-color-fs">0500000</p>
+                      </div>
                     </div>
                     <div class="Arrow">
                       <ArrowRight />
@@ -85,7 +88,6 @@
   </div>
 </template>
 <style scoped>
-
 .margin-280px {
   margin-bottom: 240px;
 }

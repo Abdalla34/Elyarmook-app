@@ -75,11 +75,34 @@
           <!-- زرار الإضافة للكارت -->
           <div class="width-button" v-if="offerId?.data?.offer">
             <ButtonCard
+              v-if="!itemAdded.includes(offerId.data.offer.id)"
               textButton="add to cart"
               :isActive="activeIcon"
               @click="handleAddToCart"
             />
           </div>
+          <div class="width-button" v-if="offerId?.data?.offer">
+            <button
+              v-if="itemAdded.includes(offerId.data.offer.id)"
+              class="additems text-capitalize label"
+              disabled
+            >
+              <svg
+                width="20"
+                height="79"
+                viewBox="0 0 80 79"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M40 78.3318C18.4344 78.3318 0.953125 60.7972 0.953125 39.1659C0.953125 17.5346 18.4344 0 40 0C61.5656 0 79.0469 17.5346 79.0469 39.1659C79.0469 60.7972 61.5656 78.3318 40 78.3318ZM36.107 54.8323L63.7132 27.1381L58.1919 21.6L36.107 43.7562L25.0607 32.6761L19.5394 38.2142L36.107 54.8323Z"
+                  fill="#67A93E"
+                />
+              </svg>
+              added to cart
+            </button>
+          </div>
+
           <div class="no-offer" v-if="pageEmpty">
             <img src="/Car Brake Icon.png" alt="" />
           </div>
@@ -99,19 +122,23 @@ let steps = computed(() => {
   return extract(offerId.value?.data?.offer.description);
 });
 
+let itemAdded = ref([]);
 let activeIcon = ref(true);
 let route = useRoute();
 let idParams = route.params.id;
 const dayjs = useDayjs();
 let offerId = ref(null);
 offerId.value = await useApi().getOfferSingle(idParams);
+console.log(offerId);
 let pageEmpty = ref(false);
+
 onMounted(() => {
   if (offerId?.data?.offer.length === 0) {
     pageEmpty.value = true;
   } else {
     pageEmpty.value = false;
   }
+  itemAdded.value = JSON.parse(localStorage.getItem("offerAdd")) || [];
 });
 
 const { addToCart } = useApi();
@@ -122,6 +149,12 @@ const handleAddToCart = async () => {
   }
   try {
     const res = await addToCart("offer", Number(idParams), 1);
+    if (res && res.status === true) {
+      if (!itemAdded.value.includes(offerId.value.data.offer.id)) {
+        itemAdded.value.push(offerId.value.data.offer.id);
+        localStorage.setItem("offerAdd", JSON.stringify(itemAdded.value));
+      }
+    }
     console.log("Added to cart:", res);
   } catch (err) {
     console.error("Add to cart failed:", err);

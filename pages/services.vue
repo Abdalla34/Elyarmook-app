@@ -1,10 +1,6 @@
 <template>
   <div class="services-parent">
     <div class="container cards-wrapper margin-bottom-section">
-      <div v-if="feedbackMessage" :class="['cart-feedback', feedbackType]">
-        {{ feedbackMessage }}
-      </div>
-      <!-- <div v-if="pending">جاري التحميل...</div> -->
       <div class="row">
         <div
           class="col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center"
@@ -27,20 +23,31 @@
             </div>
             <div class="div-button">
               <ButtonCard
+                v-if="!itemAdded.some((item) => item.id === service.id)"
                 :textButton="
                   loadingAddToCart[service.id] ? 'Loading...' : 'add to cart'
                 "
                 :isActive="activeIcon"
-                :disabled="loadingAddToCart[service.id]"
                 @click="handleAdd(service)"
               />
+              <div v-else="itemAdded.includes(service.id)" class="div-button">
+                <button class="additems text-capitalize label" disabled>
+                  <svg
+                    width="20"
+                    height="79"
+                    viewBox="0 0 80 79"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M40 78.3318C18.4344 78.3318 0.953125 60.7972 0.953125 39.1659C0.953125 17.5346 18.4344 0 40 0C61.5656 0 79.0469 17.5346 79.0469 39.1659C79.0469 60.7972 61.5656 78.3318 40 78.3318ZM36.107 54.8323L63.7132 27.1381L58.1919 21.6L36.107 43.7562L25.0607 32.6761L19.5394 38.2142L36.107 54.8323Z"
+                      fill="#67A93E"
+                    />
+                  </svg>
+                  added to cart
+                </button>
+              </div>
             </div>
-
-            <!-- <div class="div-button">
-              <button class="additems text-capitalize label">
-                added to cart
-              </button>
-            </div>  -->
           </div>
         </div>
         <div class="isEmpty"></div>
@@ -50,11 +57,16 @@
 </template>
 
 <script setup>
+import { add } from "date-fns";
+
 const { getServices, addToCart } = useApi();
 
-const feedbackMessage = ref("");
-const feedbackType = ref("");
-const loadingAddToCart = ref({});
+let itemAdded = ref([]);
+let loadingAddToCart = ref({});
+
+onMounted(() => {
+  itemAdded.value = JSON.parse(localStorage.getItem("add") || "[]");
+});
 
 const { data: servicesData } = await useAsyncData("services", () =>
   getServices()
@@ -67,6 +79,18 @@ async function handleAdd(service) {
   loadingAddToCart.value[service.id] = true;
   try {
     let res = await addToCart("service", service.id, 1);
+    if ((res && res.status === true) || res.status === "true") {
+      let savedItems = JSON.parse(localStorage.getItem("add") || "[]");
+      
+      if (!savedItems.some((item) => item.id === service.id)) {
+        savedItems.push({ id: service.id });
+        localStorage.setItem("add", JSON.stringify(savedItems));
+      }
+
+      itemAdded.value = savedItems;
+    }
+    
+
     if (res && res.status === false && res.message === "Unauthenticated") {
       return navigateTo("/createaccount");
     }
@@ -79,33 +103,6 @@ async function handleAdd(service) {
   }
 }
 
-// async function handleAddToCart(service) {
-//   loadingAddToCart.value[service.id] = true;
-//   try {
-//     const res = await addToCart("service", service.id, 1);
-//     if (res && res.status === false && res.message === "Unauthenticated") {
-//       return navigateTo("/createaccount");
-//     }
-//     feedbackMessage.value = "Item added to cart!";
-//     feedbackType.value = "success";
-//     setTimeout(() => {
-//       feedbackMessage.value = "";
-//     }, 2000);
-//     // Optionally show a toast or update UI
-//     console.log("Added to cart:", res);
-//   } catch (err) {
-//     feedbackMessage.value = "Failed to add item to cart.";
-//     feedbackType.value = "error";
-//     setTimeout(() => {
-//       feedbackMessage.value = "";
-//     }, 2000);
-//     // Handle error (show toast, etc.)
-//     console.error("Add to cart failed:", err);
-//     return navigateTo("/createaccount");
-//   } finally {
-//     loadingAddToCart.value[service.id] = false;
-//   }
-// }
 </script>
 
 <style scoped>

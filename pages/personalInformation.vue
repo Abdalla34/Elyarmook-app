@@ -52,22 +52,6 @@
           </div>
 
           <div class="col-8 col-padding margin-bottom-24px" v-if="!editDone">
-            <div v-if="!user">
-              <div
-                class="msg-error text-center text-capitalize alert alert-warning"
-              >
-                <p class="text-danger">
-                  You must create an account to continue
-                </p>
-                <button
-                  class="goAcc mt-4"
-                  @click="navigateTo('/createaccount')"
-                >
-                  Go To Create Account
-                </button>
-              </div>
-            </div>
-
             <div v-if="user" class="inputs">
               <div class="row-inputs">
                 <div class="input d-flex flex-column">
@@ -75,7 +59,6 @@
                   <input
                     v-model="user.first_name"
                     type="text"
-                    placeholder="your name"
                     disabled
                   />
                 </div>
@@ -84,9 +67,8 @@
                   <label class="label">last name</label>
                   <input
                     type="text"
-                    placeholder="your name"
+                   disabled
                     v-model="user.last_name"
-                    disabled
                   />
                 </div>
               </div>
@@ -96,30 +78,28 @@
                   <label class="label">phone Number</label>
                   <input
                     type="text"
-                    placeholder="your phone"
+                   disabled
                     v-model="user.phone"
-                    disabled
                   />
                 </div>
               </div>
 
               <div class="row-inputs">
                 <div class="input d-flex flex-column">
-                  <label class="label" for="">area</label>
-                  <input
+                  <label class="label" for="area">area</label>
+                    <input
                     type="text"
-                    placeholder="central region"
-                    v-model="user.area.title"
                     disabled
+                    v-model="user.area.title"
                   />
                 </div>
+
                 <div class="input d-flex flex-column">
-                  <label class="label" for="">city</label>
-                  <input
+                  <label class="label" for="city">city</label>
+                 <input
                     type="text"
-                    placeholder="central region"
-                    v-model="user.city.title"
                     disabled
+                    v-model="user.city.title"
                   />
                 </div>
               </div>
@@ -159,23 +139,33 @@
                 </div>
               </div>
 
-              
               <div class="row-inputs">
                 <div class="input d-flex flex-column">
-                  <label class="label" for="">area</label>
-                  <input
-                    type="text"
-                    placeholder="central region"
-                    v-model="user.area.title"
-                  />
+                  <label class="label" for="area">area</label>
+                  <select id="area" class="select" v-model="areaId">
+                    <option value="" disabled>Select area</option>
+                    <option
+                      v-for="areaItem in allAreas"
+                      :key="areaItem.id"
+                      :value="areaItem.id"
+                    >
+                      {{ areaItem.title }}
+                    </option>
+                  </select>
                 </div>
+
                 <div class="input d-flex flex-column">
-                  <label class="label" for="">city</label>
-                  <input
-                    type="text"
-                    placeholder="central region"
-                    v-model="user.city.title"
-                  />
+                  <label class="label" for="city">city</label>
+                  <select id="city" class="select" v-model="cityId">
+                    <option value="" disabled>Select city</option>
+                    <option
+                      v-for="cityItem in allCities"
+                      :key="cityItem.id"
+                      :value="cityItem.id"
+                    >
+                      {{ cityItem.title }}
+                    </option>
+                  </select>
                 </div>
               </div>
             </div>
@@ -220,14 +210,13 @@ let router = useRouter();
 let token = useCookie("token", { maxAge: 365 * 24 * 60 * 60 });
 
 const cookie = useCookie("user", { maxAge: 365 * 24 * 60 * 60 });
-const user = cookie.value;
+const user = computed(() => cookie.value);
 
 let editDone = ref(false);
 let profileImg = ref(false);
 function ChangeProfile() {
   profileImg.value = !profileImg.value;
 }
-
 let logOut = async () => {
   await useApi().logout();
   token.value = null;
@@ -235,10 +224,33 @@ let logOut = async () => {
   router.push("/");
 };
 
-function toEdit() {
+let allAreas = ref([]);
+let allCities = ref([]);
+let countryId = ref(null);
+let areaId = ref(null);
+let cityId = ref(null);
+
+async function toEdit() {
   editDone.value = true;
-  // 201094300234
+  let countries = await useApi().getCountries();
+  console.log(countries);
+  countryId.value = countries?.data?.[0]?.id;
+  console.log("countriesId ", countryId);
+
+  let responseArea = await useApi().getAreasByCountry(countryId.value);
+  allAreas.value = responseArea?.data;
+  areaId.value = allAreas.value?.[0]?.id;
+  console.log("responseArea", allAreas);
 }
+
+watch(areaId, async (newAreaId) => {
+  if (newAreaId) {
+    let responseCity = await useApi().getCitiesByArea(areaId.value);
+    allCities.value = responseCity?.data;
+    cityId.value = allCities.value?.[0]?.id;
+    console.log("responseCity", allCities);
+  }
+});
 
 let editProfile = async () => {
   try {
@@ -246,6 +258,7 @@ let editProfile = async () => {
       first_name: user.first_name,
       last_name: user.last_name,
       phone: user.phone,
+      city_id: cityId.value,
     });
 
     if (res && res.status === false && res.message === "Unauthenticated") {
@@ -254,13 +267,14 @@ let editProfile = async () => {
 
     cookie.value = res?.data?.user;
 
+    areaId.value = res?.data?.user?.area_id;
+    cityId.value = res?.data?.user?.city_id;
+
     editDone.value = false;
   } catch (err) {
     console.error(err);
   }
 };
-
-// +201094300234
 </script>
 
 <style>

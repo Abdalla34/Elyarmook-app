@@ -248,7 +248,6 @@
         >
           <div class="h-100">
             <div class="">
-              
               <!-- <div class="box-design">
                 <div
                   v-if="cartRes?.data?.branch"
@@ -399,6 +398,11 @@ async function deletedOrder(id, type) {
   if (type === "service") {
     items.value = items.value.filter((o) => o.id !== id);
     loadingDelete.value[id] = true;
+
+    let savedItems = JSON.parse(localStorage.getItem("add") || "[]");
+    savedItems = savedItems.filter((item) => item.id !== id);
+    localStorage.setItem("add", JSON.stringify(savedItems));
+    
   } else if (type === "offer") {
     loadingDelete.value[id] = true;
     offers.value = offers.value.filter((o) => o.offer_id !== id);
@@ -417,7 +421,7 @@ async function updateQty(order, newQty) {
   if (newQty < 1) return;
   loadingQty.value[order.id] = true;
   try {
-    await updateCartItemQuantity("service", order_id, order.id, newQty);
+    await updateCartItemQuantity(type , order_id, order.id, newQty);
     order.qty = newQty;
   } catch (err) {
     console.log("test", err);
@@ -428,7 +432,6 @@ async function updateQty(order, newQty) {
 let router = useRouter();
 
 function toContinue() {
-  
   router.push({
     path: `/order-update-details`,
     query: {

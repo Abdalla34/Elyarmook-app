@@ -18,7 +18,7 @@
                 </h1>
               </div>
 
-              <div class="bottom-80px">
+              <!-- <div class="bottom-80px">
                 <div class="inputs">
                   <div class="input d-flex flex-column">
                     <label for="" class="label">full name</label>
@@ -59,7 +59,7 @@
                     />
                   </div>
                 </div>
-              </div>
+              </div> -->
 
               <div
                 class="button-save border-radius-36px width-height width-100"
