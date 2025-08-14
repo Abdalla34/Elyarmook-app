@@ -56,51 +56,31 @@
               <div class="row-inputs">
                 <div class="input d-flex flex-column">
                   <label class="label">first name</label>
-                  <input
-                    v-model="user.first_name"
-                    type="text"
-                    disabled
-                  />
+                  <input v-model="user.first_name" type="text" disabled />
                 </div>
 
                 <div class="input d-flex flex-column">
                   <label class="label">last name</label>
-                  <input
-                    type="text"
-                   disabled
-                    v-model="user.last_name"
-                  />
+                  <input type="text" disabled v-model="user.last_name" />
                 </div>
               </div>
 
               <div class="row-inputs">
                 <div class="input d-flex flex-column">
                   <label class="label">phone Number</label>
-                  <input
-                    type="text"
-                   disabled
-                    v-model="user.phone"
-                  />
+                  <input type="text" disabled v-model="user.phone" />
                 </div>
               </div>
 
               <div class="row-inputs">
                 <div class="input d-flex flex-column">
                   <label class="label" for="area">area</label>
-                    <input
-                    type="text"
-                    disabled
-                    v-model="user.area.title"
-                  />
+                  <input type="text" disabled v-model="user.area.title" />
                 </div>
 
                 <div class="input d-flex flex-column">
                   <label class="label" for="city">city</label>
-                 <input
-                    type="text"
-                    disabled
-                    v-model="user.city.title"
-                  />
+                  <input type="text" disabled v-model="user.city.title" />
                 </div>
               </div>
             </div>
