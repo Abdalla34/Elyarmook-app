@@ -9,7 +9,12 @@
 
         <div
           class="empty-cart text-center"
-          v-if="token && services.length === 0 && offers.length === 0"
+          v-if="
+            token &&
+            services.length === 0 &&
+            offers.length === 0 &&
+            spareParts.length === 0
+          "
         >
           <div>
             <img src="/Vector.png" alt="" />
@@ -47,7 +52,11 @@
         <!-- left section -->
         <div
           class="col-12 col-md-12 col-lg-6 col-md-6"
-          v-if="(token && services.length > 0) || offers.length > 0"
+          v-if="
+            (token && services.length > 0) ||
+            offers.length > 0 ||
+            spareParts.length > 0
+          "
         >
           <h4 class="mb-4 fw-bold">Order Details</h4>
           <div
@@ -89,7 +98,7 @@
                     >Loading...</span
                   >
                   <div v-if="msg[service.id]" class="text-danger label mt-2">
-                   {{ msg [service.id] }}
+                    {{ msg[service.id] }}
                   </div>
                 </div>
               </div>
@@ -148,12 +157,75 @@
               <span v-if="loadingDelete[offer.offer_id]">Loading...</span>
             </div>
           </div>
+
+          <div
+            class="cart d-flex justify-content-between align-items-center border-radius-36px mb-3"
+            v-for="sparepart in spareParts"
+            :key="sparepart.id"
+          >
+            <div class="details-cart d-flex align-items-center gap-3">
+              <div class="img">
+                <img :src="sparepart.image" :alt="sparepart.title" />
+              </div>
+              <div class="name-cart">
+                <h4 class="item-name item-left">{{ sparepart.title }}</h4>
+                <p class="price">
+                  {{ sparepart.price }}
+                  <span class="p-color-fs span">SAR</span>
+                </p>
+                <div class="qty-controls d-flex align-items-center mt-2">
+                  <button
+                    class="qty-btn"
+                    :disabled="loadingQty[sparepart.id] || sparepart.qty <= 1"
+                    @click="
+                      updateQty(
+                        'spare_part',
+                        order_id,
+                        sparepart,
+                        sparepart.qty - 1
+                      )
+                    "
+                  >
+                    -
+                  </button>
+
+                  <span class="mx-2">{{ sparepart.qty }}</span>
+                  <button
+                    class="qty-btn"
+                    :disabled="loadingQty[sparepart.id]"
+                    @click="
+                      updateQty(
+                        'spare_part',
+                        order_id,
+                        sparepart,
+                        sparepart.qty + 1
+                      )
+                    "
+                  >
+                    +
+                  </button>
+                  <span v-if="loadingQty[sparepart.id]" class="ms-2"
+                    >Loading...</span
+                  >
+                </div>
+              </div>
+            </div>
+            <div
+              class="delete-icon"
+              @click="deletedOrder(sparepart.id, 'spare_part')"
+            >
+              <trash />
+              <span v-if="loadingDelete[sparepart.id]">Loading...</span>
+            </div>
+          </div>
         </div>
 
         <!-- right section -->
         <div
           class="col-12 col-md-12 col-lg-4 col-test"
-          v-if="token && (services.length || offers.length)"
+          v-if="
+            token && (services.length || offers.length || spareParts.length)
+          "
         >
           <div class="h-100">
             <div class=""></div>
@@ -193,7 +265,7 @@
                 <p>{{ cartRes?.total_amount }}</p>
               </div>
 
-              <div class="buttion-confirm" @click="toContinue()">
+              <div class="buttion-confirm" @click="toContinue">
                 <ButtonCard textButton="continue" />
               </div>
               <div class="buttion-confirm">
@@ -225,6 +297,7 @@ const order_id = ref(null);
 let notRegister = ref(false);
 let token = useCookie("token").value;
 let offers = ref([]);
+let spareParts = ref(null);
 
 try {
   if (!token) {
@@ -234,6 +307,7 @@ try {
   cartRes.value = res?.data;
   services.value = cartRes.value?.services || [];
   offers.value = cartRes.value?.offers || [];
+  spareParts.value = cartRes.value?.spare_parts || [];
   order_id.value = res?.data?.id;
 } catch (err) {
   if (err?.response.status === 401) {
@@ -248,6 +322,9 @@ async function deletedOrder(id, type) {
   } else if (type === "offer") {
     loadingDelete.value[id] = true;
     offers.value = offers.value.filter((o) => o.offer_id !== id);
+  } else if (type === "spare_part") {
+    loadingDelete.value[id] = true;
+    spareParts.value = spareParts.value.filter((o) => o.id !== id);
   } else {
     return;
   }
@@ -259,11 +336,11 @@ async function deletedOrder(id, type) {
   }
 }
 
-let msg = ref({})
+let msg = ref({});
 
 async function updateQty(type, orderId, cart_item_id, newQty) {
   loadingQty.value[cart_item_id.id] = true;
-  msg.value[cart_item_id.id]  = "";
+  msg.value[cart_item_id.id] = "";
 
   try {
     let res = await updateCartItemQuantity(
@@ -277,16 +354,16 @@ async function updateQty(type, orderId, cart_item_id, newQty) {
       cart_item_id.qty = newQty;
     } else {
       if (res?.errors?.qty?.length) {
-        msg.value[cart_item_id.id]  = res.errors.qty[0];
+        msg.value[cart_item_id.id] = res.errors.qty[0];
       } else {
-        msg.value[cart_item_id.id]  = res?.message || "حدث خطأ غير متوقع";
+        msg.value[cart_item_id.id] = res?.message || "حدث خطأ غير متوقع";
       }
     }
   } catch (err) {
     if (err?.data?.errors?.qty?.length) {
-    msg.value[cart_item_id.id]  = err.data.errors.qty[0];
+      msg.value[cart_item_id.id] = err.data.errors.qty[0];
     } else {
-     msg.value[cart_item_id.id]  = err?.data?.message;
+      msg.value[cart_item_id.id] = err?.data?.message;
     }
   } finally {
     loadingQty.value[cart_item_id.id] = false;
@@ -298,7 +375,7 @@ function toContinue() {
   router.push({
     path: `/order-update-details`,
     query: {
-      id: order_id,
+      id: order_id.value,
     },
   });
 }

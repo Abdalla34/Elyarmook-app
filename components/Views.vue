@@ -53,11 +53,11 @@
 
                 <li class="">
                   <NuxtLink
-                    to="/spareParts"
+                    to="/spare-parts"
                     exact-active-class="active"
                     class="d-flex align-items-center gap-1 border-radius-36px p-color-fs"
                   >
-                    <IconParts :isActive="$route.path === '/spareParts'" />
+                    <IconParts :isActive="$route.path === '/spare-parts'" />
                     <h6 class="text-capitalize link-sm">spare Parts</h6>
                   </NuxtLink>
                 </li>

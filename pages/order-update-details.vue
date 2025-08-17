@@ -28,11 +28,7 @@
                 class="input-barnch position-relative fix d-flex flex-column"
               >
                 <label for="" class="label">branch</label>
-                <select
-                  @click="branshshow"
-                  v-model="selectedBranch"
-                  class="input-style"
-                >
+                <select v-model="selectedBranchId" class="input-style">
                   <option disabled value="">Select Branch</option>
                   <option v-for="br in branches" :key="br.id" :value="br.id">
                     {{ br.title }}
@@ -43,19 +39,27 @@
                 </div>
               </div>
 
-              <div class="input-date position-relative fix d-flex flex-column">
-                <label class="label">Date</label>
-
-                <div class="datepicker-wrapper position-relative w-100">
-                  <datepicker
-                    v-model="selectedDate"
-                    placeholder="select date"
-                    class="input-style w-100"
-                  />
-
-                  <div class="icon-shape position-absolute data-picker-icon">
-                    <icons-order-iconunion />
-                  </div>
+              <div
+                class="input-barnch position-relative fix d-flex flex-column"
+              >
+                <label for="" class="label">date</label>
+                <select v-model="selectedDate" class="input-style">
+                  <option disabled value="">Select Date & Time</option>
+                  <template
+                    v-for="dateObj in availableDates"
+                    :key="dateObj.date"
+                  >
+                    <option
+                      v-for="slot in dateObj.time_slots"
+                      :key="dateObj.date + slot.time"
+                      :value="{ date: dateObj.date, time: slot.time }"
+                    >
+                      {{ dateObj.date }} - {{ slot.time }}
+                    </option>
+                  </template>
+                </select>
+                <div class="icon-shape position-absolute">
+                  <icons-order-iconunion />
                 </div>
               </div>
             </div>
@@ -124,13 +128,11 @@
 </template>
 
 <script setup>
-import Datepicker from "vue3-datepicker";
-import { format } from "date-fns";
-import dayjs from "#build/dayjs.imports.mjs";
-
+let dayjs = useDayjs()
+let user = useCookie("user").value;
 let selectedCar = ref(null);
-let selectedBranch = ref(null);
-let selectedDate = ref(null);
+let selectedBranchId = ref(null);
+let selectedDate = ref(null); // نفس اللي في v-model
 let note = ref("");
 
 let mycars = ref([]);
@@ -140,37 +142,51 @@ mycars.value = res?.data || [];
 let branches = ref([]);
 let resBranshes = await useApi().getBranches();
 branches.value = resBranshes?.data?.items;
-let user = useCookie("user").value;
+
+let availableDates = ref([]);
+
+watch(selectedBranchId, async (newId) => {
+  if (newId) {
+    let resDate = await useApi().getAvailableTimes(newId);
+    availableDates.value = resDate?.available_times;
+  }
+});
 
 let route = useRoute();
 let idCart = route.query.id;
 let router = useRouter();
+
 let UpdateOrderDetails = async () => {
   try {
+    let reservationDateTime = null;
+
+    if (selectedDate.value) {
+      reservationDateTime = dayjs(
+        `${selectedDate.value.date} ${selectedDate.value.time}`,
+        "YYYY-MM-DD hh:mm A"
+      ).format("YYYY-MM-DD HH:mm:ss");
+    }
+
     let response = await useApi().updateCartDetails(idCart, {
-      branch_id: selectedBranch.value,
-      reservation_time: dayjs(selectedDate.value).format("YYYY-MM-DD HH:mm:ss"),
+      branch_id: selectedBranchId.value,
+      reservation_time: reservationDateTime,
       user_car_id: selectedCar.value,
       customer_note: note.value,
     });
+
     if (response && response.data) {
       await useApi().getMyCart();
       router.push({
         path: "/cart-update-details",
-        query: {
-          id: idCart,
-        },
+        query: { id: idCart },
       });
     }
-    console.log(response);
+    console.log(response)
   } catch (err) {
-    if (response?.status === 404) {
-      console.log(err);
-    }
+    console.log(err);
   }
 };
 
-console.log(idCart);
 </script>
 
 <style scoped>

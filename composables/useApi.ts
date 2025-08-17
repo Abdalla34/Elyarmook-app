@@ -63,10 +63,11 @@ export const useApi = () => {
     });
   };
 
-  const getAvailableTimes = async () => {
+  const getAvailableTimes = async (branch_id: any, type: any) => {
     return await $fetch(`${baseURL}/core/branches/available-times`, {
       method: "GET",
       headers,
+      params :{branch_id, type}
     });
   };
   // done
@@ -209,12 +210,15 @@ export const useApi = () => {
     );
   };
 
-  const updateCartDetails = async (cart_id: any, details: {
-    branch_id: any,
-    reservation_time: any,
-    user_car_id: any,
-    customer_note: any
-  }) => {
+  const updateCartDetails = async (
+    cart_id: any,
+    details: {
+      branch_id: any;
+      reservation_time: any;
+      user_car_id: any;
+      customer_note: any;
+    }
+  ) => {
     return await $fetch(`${baseURL}/marketplace/cart/cart-details/${cart_id}`, {
       method: "POST",
       body: details,
@@ -438,7 +442,6 @@ export const useApi = () => {
     });
   };
 
-
   const updateUserProfile = async (userData: {
     first_name: any;
     last_name: any;
@@ -451,6 +454,7 @@ export const useApi = () => {
       headers,
     });
   };
+
   return {
     sendOTP,
     checkOTP,
@@ -503,7 +507,7 @@ export const useApi = () => {
     tabbyStatusSuccess,
     tabbyStatusFailure,
     tabbyStatusCancel,
-    updateUserProfile
+    updateUserProfile,
   };
 
   // 4111111111111111
