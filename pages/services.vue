@@ -57,7 +57,7 @@
 </template>
 
 <script setup>
-import { add } from "date-fns";
+// import { add } from "date-fns";
 
 const { getServices, addToCart } = useApi();
 
@@ -79,18 +79,6 @@ async function handleAdd(service) {
   loadingAddToCart.value[service.id] = true;
   try {
     let res = await addToCart("service", service.id, 1);
-    if ((res && res.status === true) || res.status === "true") {
-      let savedItems = JSON.parse(localStorage.getItem("add") || "[]");
-      
-      if (!savedItems.some((item) => item.id === service.id)) {
-        savedItems.push({ id: service.id });
-        localStorage.setItem("add", JSON.stringify(savedItems));
-      }
-
-      itemAdded.value = savedItems;
-    }
-    
-
     if (res && res.status === false && res.message === "Unauthenticated") {
       return navigateTo("/createaccount");
     }
