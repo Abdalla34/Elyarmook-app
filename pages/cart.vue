@@ -297,7 +297,7 @@ const order_id = ref(null);
 let notRegister = ref(false);
 let token = useCookie("token").value;
 let offers = ref([]);
-let spareParts = ref(null);
+let spareParts = ref([]);
 
 try {
   if (!token) {
