@@ -27,7 +27,7 @@
             @click="navigateTo('/cart')"
           >
             <button class="buttons">
-              <CarIconCard />
+              <PuplicIconCartIcon />
             </button>
             <span v-if="cartLength > 0" class="span-length">{{
               cartLength

@@ -5,14 +5,14 @@
     <div
       class="background-color-cart d-flex align-items-center justify-content-center"
     >
-      <button class="buttons">
-        <CarIconCard />
+      <button class="buttons" @click="navigateTo('/cart')">
+        <PuplicIconCartIcon />
       </button>
     </div>
     <div
       class="background-color-cart d-flex align-items-center justify-content-center"
     >
-      <button class="buttons">
+      <button class="buttons" @click="navigateTo('/mycars')">
         <img class="bmw-img z-index-after" src="/public/BMW.png" alt="" />
       </button>
     </div>

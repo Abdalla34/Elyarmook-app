@@ -96,10 +96,10 @@ const toggleMenu = () => {
 };
 
 // Close menu when route changes
-// const route = useRoute();
-// watch(() => route.path, () => {
-//   isMenuOpen.value = false;
-// });
+const route = useRoute();
+watch(() => route.path, () => {
+  isMenuOpen.value = false;
+});
 </script>
 
 <style scoped>
