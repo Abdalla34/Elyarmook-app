@@ -4,7 +4,7 @@
       <div class="row">
         <div
           class="col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center"
-          v-for="service in allParts"
+          v-for="service in services"
           :key="service.id"
         >
           <div class="service-card text-center margin-bottom-24px">
@@ -23,14 +23,14 @@
             </div>
             <div class="div-button">
               <ButtonCard
-                v-if="!itemAdded.some((item) => item.id === service.id)"
+                v-if="!service.in_cart"
                 :textButton="
                   loadingAddToCart[service.id] ? 'Loading...' : 'add to cart'
                 "
                 :isActive="activeIcon"
                 @click="handleAdd(service)"
               />
-              <div v-else="itemAdded.includes(service.id)" class="div-button">
+              <div v-else class="div-button">
                 <button class="additems text-capitalize label" disabled>
                   <svg
                     width="20"
@@ -61,24 +61,21 @@
 
 const { getServices, addToCart } = useApi();
 
-let itemAdded = ref([]);
 let loadingAddToCart = ref({});
 
-onMounted(() => {
-  itemAdded.value = JSON.parse(localStorage.getItem("add") || "[]");
-});
 
 const { data: servicesData } = await useAsyncData("services", () =>
   getServices()
 );
 
-const allParts = computed(() => servicesData.value?.data?.items || []);
+const services = computed(() => servicesData.value?.data?.items || []);
 let activeIcon = ref(true);
 
 async function handleAdd(service) {
   loadingAddToCart.value[service.id] = true;
   try {
     let res = await addToCart("service", service.id, 1);
+     service.in_cart = true;
     if (res && res.status === false && res.message === "Unauthenticated") {
       return navigateTo("/createaccount");
     }
@@ -90,7 +87,7 @@ async function handleAdd(service) {
     loadingAddToCart.value[service.id] = false;
   }
 }
-
+console.log(services);
 </script>
 
 <style scoped>

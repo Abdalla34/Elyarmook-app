@@ -15,7 +15,7 @@
                   :class="{ 'opacity-input-1': isArabic }"
                 >
                   <div class="d-flex align-items-center gap-2">
-                    <SoudiaIcon />
+                    <PuplicIconSoudiaIcon />
                     <h5 class="arabic">Arabic</h5>
                   </div>
                   <div class="input-check">
@@ -41,7 +41,7 @@
                   :class="{ 'opacity-input-1': isEnglish }"
                 >
                   <div class="d-flex align-items-center gap-2">
-                    <USA />
+                    <PuplicIconUSA />
                     <h5 class="english">English</h5>
                   </div>
                   <div class="input-check">
@@ -63,7 +63,7 @@
               v-if="isArabic"
             >
               <div class="isarabic transition">
-                <SoudiaIcon />
+                <PuplicIconSoudiaIcon />
                 <h6>Change Language to Arabic</h6>
                 <p>Are you Sure to Change Language to Arabic?</p>
                 <div
@@ -88,7 +88,7 @@
               v-if="isEnglish"
             >
               <div class="isenglish transition">
-                <USA />
+                <PuplicIconUSA />
                 <h6>Change Language to English</h6>
                 <p>Are you Sure to Change Language to English?</p>
                 <div

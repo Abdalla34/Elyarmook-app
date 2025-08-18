@@ -75,15 +75,14 @@
           <!-- زرار الإضافة للكارت -->
           <div class="width-button" v-if="offerId?.data?.offer">
             <ButtonCard
-              v-if="!itemAdded.includes(offerId.data.offer.id)"
               textButton="add to cart"
               :isActive="activeIcon"
               @click="handleAddToCart"
             />
           </div>
-          <div class="width-button" v-if="offerId?.data?.offer">
+          <!-- <div class="width-button" v-if="offerId?.data?.offer">
             <button
-              v-if="itemAdded.includes(offerId.data.offer.id)"
+              
               class="additems text-capitalize label"
               disabled
             >
@@ -101,7 +100,7 @@
               </svg>
               added to cart
             </button>
-          </div>
+          </div> -->
 
           <div class="no-offer" v-if="pageEmpty">
             <img src="/Car Brake Icon.png" alt="" />
@@ -122,24 +121,15 @@ let steps = computed(() => {
   return extract(offerId.value?.data?.offer.description);
 });
 
-let itemAdded = ref([]);
+
 let activeIcon = ref(true);
 let route = useRoute();
 let idParams = route.params.id;
 const dayjs = useDayjs();
 let offerId = ref(null);
 offerId.value = await useApi().getOfferSingle(idParams);
-console.log(offerId);
 let pageEmpty = ref(false);
 
-onMounted(() => {
-  if (offerId?.data?.offer.length === 0) {
-    pageEmpty.value = true;
-  } else {
-    pageEmpty.value = false;
-  }
-  itemAdded.value = JSON.parse(localStorage.getItem("offerAdd")) || [];
-});
 
 const { addToCart } = useApi();
 const token = useCookie("token").value;
@@ -149,12 +139,6 @@ const handleAddToCart = async () => {
   }
   try {
     const res = await addToCart("offer", Number(idParams), 1);
-    if (res && res.status === true) {
-      if (!itemAdded.value.includes(offerId.value.data.offer.id)) {
-        itemAdded.value.push(offerId.value.data.offer.id);
-        localStorage.setItem("offerAdd", JSON.stringify(itemAdded.value));
-      }
-    }
     console.log("Added to cart:", res);
   } catch (err) {
     console.error("Add to cart failed:", err);

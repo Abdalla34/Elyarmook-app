@@ -29,7 +29,7 @@
               class="menu-link"
               @click="toggleMenu"
             >
-              <iconHome class="menu-icon-svg" />
+              <PuplicIconHome class="menu-icon-svg" />
               <span class="menu-text">Home</span>
             </NuxtLink>
           </li>
@@ -40,7 +40,7 @@
               class="menu-link"
               @click="toggleMenu"
             >
-              <BagTic class="menu-icon-svg" />
+              <PuplicIconBagTic class="menu-icon-svg" />
               <span class="menu-text">My Orders</span>
             </NuxtLink>
           </li>
@@ -62,7 +62,7 @@
               class="menu-link"
               @click="toggleMenu"
             >
-              <OffersIcon class="menu-icon-svg" />
+              <PuplicIconOfferIcon class="menu-icon-svg" />
               <span class="menu-text">Offers</span>
             </NuxtLink>
           </li>
@@ -73,7 +73,7 @@
               class="menu-link"
               @click="toggleMenu"
             >
-              <IconParts class="menu-icon-svg" />
+              <PuplicIconSparePart class="menu-icon-svg" />
               <span class="menu-text">Spare Parts</span>
             </NuxtLink>
           </li>

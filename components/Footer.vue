@@ -1,3 +1,8 @@
+<script setup lang="ts">
+import { PuplicIconInstagramIcon, PuplicIconWhatsApp } from '#components';
+
+</script>
+
 <template>
   <div class="footer p-5 text-light">
     <div class="container">
@@ -77,13 +82,13 @@
             class="d-flex gap-2 align-items-center justify-content-start gap-4"
           >
             <div class="box-hover-icons">
-              <FaceBookIcon />
+              <PuplicIconFacebook />
             </div>
             <div class="box-hover-icons">
-              <InstgramIcon />
+              <PuplicIconInstagramIcon />
             </div>
             <div class="box-hover-icons">
-              <WhatsapIcon />
+              <PuplicIconWhatsApp />
             </div>
           </div>
 

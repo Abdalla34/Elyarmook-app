@@ -14,7 +14,7 @@
             placeholder="search"
             class="text-capitalize focus-input fw-600 input-search border-radius-36px"
           />
-          <IconSearch class="icon-search position-absolute" />
+          <PuplicIconSearch class="icon-search position-absolute" />
         </div>
       </div>
 

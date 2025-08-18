@@ -64,11 +64,8 @@ const { getSpareParts, addToCart } = useApi();
 let itemAdded = ref([]);
 let loadingAddToCart = ref({});
 
-onMounted(() => {
-  itemAdded.value = JSON.parse(localStorage.getItem("add") || "[]");
-});
 
-const { data: sparePartsData } = await useAsyncData("services", () =>
+const { data: sparePartsData } = await useAsyncData("spare_parts", () =>
   getSpareParts()
 );
 

@@ -81,6 +81,7 @@ onMounted(() => {
     isNotOffers.value = false;
   }
 });
+
 </script>
 
 <style scoped>

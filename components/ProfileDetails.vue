@@ -11,7 +11,7 @@
                   exact-active-class="active"
                   class="d-flex align-items-center gap-1 border-radius-36px p-color-fs"
                 >
-                  <ProfileIcon />
+                  <PuplicIconProfileIcon />
                   <h6 class="text-capitalize link-sm">profile</h6>
                 </NuxtLink>
               </li>
@@ -21,7 +21,7 @@
                   exact-active-class="active"
                   class="d-flex align-items-center gap-1 border-radius-36px p-color-fs"
                 >
-                  <CarIcon />
+                  <PuplicIconCarIcon />
                   <h6 class="text-capitalize link-sm">my cars</h6>
                 </NuxtLink>
               </li>
@@ -31,7 +31,7 @@
                   exact-active-class="active"
                   class="d-flex align-items-center gap-1 border-radius-36px p-color-fs"
                 >
-                  <WalleIcon />
+                  <PuplicIconWalletIcon />
                   <h6 class="text-capitalize link-sm">wallet</h6>
                 </NuxtLink>
               </li>
@@ -41,7 +41,7 @@
                   exact-active-class="active"
                   class="d-flex align-items-center gap-1 border-radius-36px p-color-fs"
                 >
-                  <LangIcon />
+                  <PuplicIconLanguageIcon />
                   <h6 class="text-capitalize link-sm">language</h6>
                 </NuxtLink>
               </li>
@@ -52,7 +52,7 @@
                   exact-active-class="active"
                   class="d-flex align-items-center gap-1 border-radius-36px p-color-fs"
                 >
-                  <pointStar />
+                  <PuplicIconPointIcon />
 
                   <h6 class="text-capitalize link-sm">point</h6>
                 </NuxtLink>
@@ -64,7 +64,7 @@
                   exact-active-class="active"
                   class="d-flex align-items-center gap-1 border-radius-36px p-color-fs"
                 >
-                  <HelpICon />
+                  <PuplicIconHelpIcon />
                   <h6 class="text-capitalize link-sm">help</h6>
                 </NuxtLink>
               </li>

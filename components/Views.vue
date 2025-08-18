@@ -14,7 +14,7 @@
                     exact-active-class="active"
                     class="d-flex align-items-center gap-1 border-radius-36px p-color-fs"
                   >
-                    <iconHome :isActive="$route.path === '/'" />
+                    <PuplicIconHome :isActive="$route.path === '/'" />
                     <h6 class="text-capitalize link-sm">Home</h6>
                   </NuxtLink>
                 </li>
@@ -24,7 +24,7 @@
                     exact-active-class="active"
                     class="d-flex align-items-center gap-1 border-radius-36px p-color-fs"
                   >
-                    <BagTic :isActive="$route.path === 'myOrders'" />
+                    <PuplicIconBagTic :isActive="$route.path === 'myOrders'" />
                     <h6 class="text-capitalize link-sm">my orders</h6>
                   </NuxtLink>
                 </li>
@@ -46,7 +46,7 @@
                     exact-active-class="active"
                     class="d-flex align-items-center gap-1 border-radius-36px p-color-fs"
                   >
-                    <OffersIcon :isActive="$route.path === '/offers'" />
+                    <PuplicIconOfferIcon :isActive="$route.path === '/offers'" />
                     <h6 class="text-capitalize link-sm">offers</h6>
                   </NuxtLink>
                 </li>
@@ -57,7 +57,7 @@
                     exact-active-class="active"
                     class="d-flex align-items-center gap-1 border-radius-36px p-color-fs"
                   >
-                    <IconParts :isActive="$route.path === '/spare-parts'" />
+                    <PuplicIconSparePart :isActive="$route.path === '/spare-parts'" />
                     <h6 class="text-capitalize link-sm">spare Parts</h6>
                   </NuxtLink>
                 </li>
