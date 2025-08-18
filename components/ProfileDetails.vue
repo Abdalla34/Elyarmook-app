@@ -7,7 +7,7 @@
             <ul class="links d-flex justify-content-center align-items-end ul">
               <li class="">
                 <NuxtLink
-                  to="/personalInformation"
+                  to="/profile"
                   exact-active-class="active"
                   class="d-flex align-items-center gap-1 border-radius-36px p-color-fs"
                 >

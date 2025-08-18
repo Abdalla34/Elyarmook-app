@@ -6,7 +6,7 @@
           :IsNotRegitser="notRegister"
           message="cart is Empty you must create account "
         />
-
+        
         <div
           class="empty-cart text-center"
           v-if="

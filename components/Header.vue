@@ -45,14 +45,14 @@
 
           <div class="position-relative">
             <div
+              @click="navigateTo('/profile')"
               class="background-color-cart d-flex align-items-center justify-content-center position-relative"
             >
               <button class="buttons">
                 <img
                   class="profile-img z-index-after"
                   src="/public/img-icon.jpg"
-                  alt=""
-                  @click="navigateTo('/personalInformation')"
+                  alt="imgProfile"
                 />
               </button>
 
