@@ -17,11 +17,11 @@
                     class="help-detalis d-flex justify-content-between align-items-center"
                   >
                     <div class="d-flex align-items-center gap-2">
-                      <FillNameIcon />
+                      <PuplicIconFillName />
                       <div class="details">Fill a Form</div>
                     </div>
                     <div class="Arrow">
-                      <ArrowRight />
+                      <PuplicIconArrowRight />
                     </div>
                   </div>
                 </div>
@@ -34,11 +34,11 @@
                     class="help-detalis d-flex justify-content-between align-items-center"
                   >
                     <div class="d-flex align-items-center gap-2">
-                      <FAQ />
+                      <PuplicIconFAQ />
                       <div class="details">FAQ</div>
                     </div>
                     <div class="Arrow">
-                      <ArrowRight />
+                      <PuplicIconArrowRight />
                     </div>
                   </div>
                 </div>
@@ -51,14 +51,14 @@
                     class="help-detalis d-flex justify-content-between align-items-center"
                   >
                     <div class="d-flex align-items-center gap-2">
-                      <callUs />
+                      <PuplicIconCallUs />
                       <div class="d-flex flex-column">
                         <h1 class="details">Call Us</h1>
                         <p class="p-color-fs">0500000</p>
                       </div>
                     </div>
                     <div class="Arrow">
-                      <ArrowRight />
+                      <PuplicIconArrowRight />
                     </div>
                   </div>
                 </div>
@@ -71,11 +71,11 @@
                     class="help-detalis d-flex justify-content-between align-items-center"
                   >
                     <div class="d-flex align-items-center gap-2">
-                      <Branch />
+                      <PuplicIconBranch />
                       <div class="details">Visit Your Nearest Branch</div>
                     </div>
                     <div class="Arrow">
-                      <ArrowRight />
+                      <PuplicIconArrowRight />
                     </div>
                   </div>
                 </div>
