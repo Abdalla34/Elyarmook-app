@@ -4,33 +4,41 @@
       <div class="row">
         <div
           class="col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center"
-          v-for="sparepart in allParts"
+          v-for="sparepart in spareParts"
           :key="sparepart.id"
         >
           <div class="service-card text-center margin-bottom-24px">
             <div class="service-icon-wrapper">
               <div class="service-icon">
-                <img class="img" :src="sparepart.image" :alt="sparepart.title" />
+                <img
+                  class="img"
+                  :src="sparepart.image"
+                  :alt="sparepart.title"
+                />
               </div>
             </div>
 
             <div class="service-content">
               <TitleServices
                 :title="sparepart.title"
-                :currency="sparepart.price"
+                :currency="sparepart.price_text"
                 :sar="'sar'"
               />
             </div>
+
+            <div class="text-danger price-value mt-5">
+              سوف يتم تحديد السعر قريبا
+            </div>
+
             <div class="div-button">
               <ButtonCard
-                v-if="!itemAdded.some((item) => item.id === sparepart.id)"
                 :textButton="
                   loadingAddToCart[sparepart.id] ? 'Loading...' : 'add to cart'
                 "
                 :isActive="activeIcon"
                 @click="handleAdd(sparepart)"
               />
-              <!-- <div v-else="itemAdded.includes(service.id)" class="div-button">
+              <!-- <div v-else class="div-button">
                 <button class="additems text-capitalize label" disabled>
                   <svg
                     width="20"
@@ -64,12 +72,11 @@ const { getSpareParts, addToCart } = useApi();
 let itemAdded = ref([]);
 let loadingAddToCart = ref({});
 
-
 const { data: sparePartsData } = await useAsyncData("spare_parts", () =>
   getSpareParts()
 );
 
-const allParts = computed(() => sparePartsData.value?.data?.items || []);
+const spareParts = computed(() => sparePartsData.value?.data?.items || []);
 let activeIcon = ref(true);
 
 async function handleAdd(spareParts) {
@@ -88,6 +95,7 @@ async function handleAdd(spareParts) {
   }
 }
 
+console.log("sparPart", spareParts);
 </script>
 
 <style scoped>

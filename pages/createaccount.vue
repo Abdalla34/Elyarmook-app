@@ -16,7 +16,7 @@
         />
       </div>
 
-      <div class="btn-continue w-100">
+      <div class="btn-continue w-100 enter">
         <ButtonCard
           :textButton="loading ? 'Loading...' : 'continue'"
           @click="handleContinue"
@@ -172,4 +172,5 @@ const handleContinue = async () => {
 <style scoped>
 
 @import "@/assets/css/createacc.css";
+
 </style>

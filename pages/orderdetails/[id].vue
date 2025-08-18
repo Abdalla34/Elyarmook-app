@@ -104,7 +104,7 @@
                 class="time text-center box-order border-radius-36px border-radius-36px"
               >
                 <div class="box-icon">
-                  <TimeIcon />
+                  <PuplicIconTimeIcon />
                 </div>
                 <div class="days-time">
                   <h4>{{ orderSelected.reservation_time }}</h4>
@@ -117,7 +117,7 @@
                 v-if="orderSelected?.branch"
               >
                 <div class="box-icon">
-                  <LocationIcon />
+                  <PuplicIconLocation />
                 </div>
                 <div class="days-time">
                   <h4 v-if="orderSelected.branch?.title">
@@ -284,7 +284,7 @@
             >
               <div class="total text-capitalize">total amount</div>
               <div class="price-total">
-                {{ Math.trunc(orderSelected.total_amount) }}
+                {{ orderSelected.total_amount }}
                 <span class="span">SAR</span>
               </div>
             </div>

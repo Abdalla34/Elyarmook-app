@@ -13,7 +13,7 @@
             v-if="!msgError && !loading"
             v-for="order in orders"
             :key="order.id"
-            @click="toOrderStatus(order.id)"
+            @click="toOrderStatus(order)"
           >
             <div class="details-title d-flex align-items-center gap-3">
               <div>
@@ -24,7 +24,7 @@
                   {{ order.vendor_name }}
                 </h4>
                 <p class="price">
-                  {{ Math.round(Number(order.total_amount)) }}
+                  {{ order.total_amount }}
                   <span class="SAR">SAR</span>
                 </p>
               </div>
@@ -84,6 +84,7 @@
 const dayjs = useDayjs();
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 dayjs.extend(customParseFormat);
+
 let msgError = ref(false);
 let loading = ref(true);
 let token = useCookie("token");
@@ -108,8 +109,7 @@ try {
 }
 
 async function toOrderStatus(orderId) {
-  let res = await useApi().getSingleOrder(orderId);
-  navigateTo(`orderdetails/${orderId}`);
+  navigateTo(`orderdetails/${orderId.id}`);
 }
 // let statusorder = ref(null);
 // let responseStatus = await useApi().getStatusorders();

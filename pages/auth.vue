@@ -29,11 +29,11 @@
               :disabled="loading || code.length !== 4"
             />
 
-            <!-- <div class="code-true mt-3" v-if="codeNoteTrue">
-              <p class="text-danger text-center text-uupercase">
-                code not true
+            <div class="code-true mt-3" v-if="codeNoteTrue">
+              <p class="text-danger fs-4 text-center text-uppercase">
+                code not true 
               </p>
-            </div> -->
+            </div>
           </div>
         </div>
       </div>
@@ -60,7 +60,7 @@ const phone = ref(getQueryString(route.query.phone));
 const registered = ref(getQueryBool(route.query.registered));
 const code = ref("");
 const loading = ref(false);
-
+let codeNoteTrue = ref(false);
 // دالة التحقق من OTP
 const handleCheckOTP = async (otpValue) => {
   const otp = otpValue || code.value;
@@ -98,15 +98,15 @@ const handleCheckOTP = async (otpValue) => {
           query: {
             phone: phone.value,
             registered: registered.value,
-            otp_code: otp
+            otp_code: otp,
           },
         });
       }
     } else {
-      alert("Invalid code");
+       codeNoteTrue.value = true;
     }
   } catch (e) {
-    alert("Failed to verify code");
+    codeNoteTrue.value = true;
   } finally {
     loading.value = false;
   }
