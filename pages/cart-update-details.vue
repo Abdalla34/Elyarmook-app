@@ -245,6 +245,7 @@
           v-if="token && (items.length || offers.length)"
         >
           <div class="h-100">
+            <h1 class="text-capitalize fs-6 updated-details">order details updated</h1>
             <!-- price details -->
             <div class="">
               <div class="box-design">
@@ -410,4 +411,12 @@ function toContinue() {
 
 <style scoped>
 @import "@/assets/css/cartorder.css";
+.updated-details{
+  color : var(--color-black) ;
+  padding: 10px;
+  border-radius: 20px;
+  font-family: var(--font-family);
+  font-weight: bold;
+  background-color: var(--main-color);
+}
 </style>
