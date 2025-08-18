@@ -51,7 +51,7 @@
               class="menu-link"
               @click="toggleMenu"
             >
-              <ServicesIcon class="menu-icon-svg" />
+              <PuplicIconServicesIcon class="menu-icon-svg" />
               <span class="menu-text">Services</span>
             </NuxtLink>
           </li>

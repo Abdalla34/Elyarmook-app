@@ -11,11 +11,7 @@
             >
               <div class="offer-card margin-bottom-24px" @click="toBox(item)">
                 <div class="img-offer text-center">
-                  <img
-                    :src="item.image"
-                    alt=""
-                    class="margin-bottom-24px"
-                  />
+                  <img :src="item.image" alt="" class="margin-bottom-24px" />
                 </div>
 
                 <div
@@ -52,7 +48,7 @@
             </div>
 
             <div class="ing-false text-center not-offer" v-if="isNotOffers">
-              <icon-not-offers />
+              <PuplicIconNotOffer />
               <h1>There are no Offer</h1>
               <p>There are no Offer, Stay stand</p>
             </div>
@@ -64,6 +60,8 @@
 </template>
 
 <script setup>
+import { LazyPuplicIconNotOffer, PuplicIconNotOffer } from "#components";
+
 let dayjs = useDayjs();
 
 let offers = await useApi().getOffers();
@@ -81,7 +79,6 @@ onMounted(() => {
     isNotOffers.value = false;
   }
 });
-
 </script>
 
 <style scoped>

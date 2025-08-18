@@ -35,7 +35,7 @@
                     exact-active-class="active"
                     class="d-flex align-items-center gap-1 border-radius-36px p-color-fs"
                   >
-                    <ServicesIcon :isActive="$route.path === '/services'" />
+                    <PuplicIconServcesIcon :isActive="$route.path === '/services'" />
                     <h6 class="text-capitalize link-sm">services</h6>
                   </NuxtLink>
                 </li>
