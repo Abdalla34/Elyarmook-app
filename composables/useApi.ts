@@ -67,7 +67,7 @@ export const useApi = () => {
     return await $fetch(`${baseURL}/core/branches/available-times`, {
       method: "GET",
       headers,
-      params :{branch_id, type}
+      params: { branch_id, type },
     });
   };
   // done
@@ -212,19 +212,17 @@ export const useApi = () => {
 
   const updateCartDetails = async (
     cart_id: any,
-    details: {
-      branch_id: any;
-      reservation_time: any;
-      user_car_id: any;
-      customer_note: any;
-    }
+    formData: any
   ) => {
     return await $fetch(`${baseURL}/marketplace/cart/cart-details/${cart_id}`, {
       method: "POST",
-      body: details,
-      headers,
+      body: formData,
+      headers: {
+        Authorization: `Bearer ${token.value}`,
+      },
     });
   };
+  
   // done
   const getServices = async (params = {}) => {
     return await $fetch(`${baseURL}/car/services`, {

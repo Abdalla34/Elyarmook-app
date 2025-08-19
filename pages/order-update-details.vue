@@ -75,7 +75,48 @@
               ></textarea>
             </div>
 
-            <div class="problem-photo d-flex flex-column position-relative">
+            <div class="problem-photo">
+              <label class="label">problem photo</label>
+              <div
+                class="upload-box d-flex justify-content-center align-items-center"
+              >
+                <input
+                  id="problem-photo"
+                  type="file"
+                  accept="image/*"
+                  @change="handleImageUpload"
+                />
+                <label
+                  for="problem-photo"
+                  class="upload-trigger d-flex justify-content-center"
+                >
+                    <svg
+                      class="svg-position position-absolute"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M19.5188 6.7002C19.2622 5.17522 18.5071 3.78349 17.3523 2.72735C16.0691 1.55276 14.401 0.90625 12.6638 0.90625C11.3214 0.90625 10.0136 1.2912 8.89328 2.01668C7.96052 2.61877 7.18569 3.43308 6.63788 4.39052C6.40099 4.3461 6.15422 4.32143 5.90746 4.32143C3.80999 4.32143 2.10241 6.02901 2.10241 8.12648C2.10241 8.39792 2.13202 8.65949 2.18137 8.91612C0.824183 9.90316 0 11.4923 0 13.1851C0 14.5521 0.508328 15.8797 1.43615 16.9309C2.38865 18.0068 3.64713 18.6434 4.98951 18.7175C5.00432 18.7175 5.01419 18.7175 5.02899 18.7175H9.27329C9.64343 18.7175 9.93954 18.4214 9.93954 18.0512C9.93954 17.6811 9.64343 17.385 9.27329 17.385H5.04874C3.03023 17.2616 1.33251 15.3418 1.33251 13.1802C1.33251 11.7835 2.08266 10.4806 3.29179 9.77485C3.5731 9.61199 3.69155 9.27146 3.58297 8.96547C3.48427 8.69897 3.43492 8.41766 3.43492 8.11661C3.43492 6.75449 4.54534 5.64407 5.90746 5.64407C6.19864 5.64407 6.48489 5.69342 6.75139 5.79212C7.07711 5.91057 7.43738 5.76251 7.58544 5.45159C8.50833 3.49231 10.5022 2.22889 12.6687 2.22889C15.5805 2.22889 17.984 4.41026 18.2603 7.3023C18.2899 7.60335 18.517 7.84518 18.8131 7.89453C21.0093 8.26961 22.6675 10.298 22.6675 12.6126C22.6675 15.0654 20.7378 17.1974 18.359 17.38H14.7218C14.3516 17.38 14.0555 17.6761 14.0555 18.0463C14.0555 18.4164 14.3516 18.7125 14.7218 18.7125H18.3837C18.3985 18.7125 18.4133 18.7125 18.4331 18.7125C19.9383 18.604 21.3448 17.913 22.3911 16.7582C23.4324 15.6132 24 14.1425 24 12.6126C23.9951 9.84394 22.1049 7.38127 19.5188 6.7002Z"
+                        fill="#3D3D3D"
+                      />
+                      <path
+                        d="M15.9998 13.8172C16.2614 13.5556 16.2614 13.1361 15.9998 12.8745L12.4712 9.34585C12.3478 9.22247 12.175 9.14844 12.0023 9.14844C11.8296 9.14844 11.6568 9.21753 11.5335 9.34585L8.00477 12.8745C7.7432 13.1361 7.7432 13.5556 8.00477 13.8172C8.13309 13.9455 8.30582 14.0146 8.47362 14.0146C8.64141 14.0146 8.81415 13.9504 8.94246 13.8172L11.3361 11.4236V22.4242C11.3361 22.7943 11.6322 23.0904 12.0023 23.0904C12.3725 23.0904 12.6686 22.7943 12.6686 22.4242V11.4236L15.0622 13.8172C15.3188 14.0787 15.7383 14.0787 15.9998 13.8172Z"
+                        fill="#3D3D3D"
+                      />
+                    </svg>
+                  <div class="">
+                
+                    Upload from your device
+                  </div>
+                  <div class="file-name">{{ fileName }}</div>
+                </label>
+              </div>
+            </div>
+
+            <!-- <div class="problem-photo d-flex flex-column position-relative">
               <label for="" class="label">problem photo</label>
 
               <div class="position-relative">
@@ -99,11 +140,13 @@
 
                 <input
                   class="text-center w-100"
-                  type=""
+                  type="file"
                   placeholder="upload a file from your device"
+                  accept="image/*"
+                  @change="handleImageUpload"
                 />
               </div>
-            </div>
+            </div> -->
 
             <div class="buttons-order d-flex justify-content-center gap-2">
               <button
@@ -128,11 +171,11 @@
 </template>
 
 <script setup>
-let dayjs = useDayjs()
+let dayjs = useDayjs();
 let user = useCookie("user").value;
 let selectedCar = ref(null);
 let selectedBranchId = ref(null);
-let selectedDate = ref(null); // نفس اللي في v-model
+let selectedDate = ref(null);
 let note = ref("");
 
 let mycars = ref([]);
@@ -156,6 +199,16 @@ let route = useRoute();
 let idCart = route.query.id;
 let router = useRouter();
 
+let fileName = ref("");
+let problemPhoto = ref(null);
+function handleImageUpload(event) {
+  const file = event.target.files[0];
+  if (file) {
+    problemPhoto.value = file;
+    fileName.value = file.name;
+  }
+}
+
 let UpdateOrderDetails = async () => {
   try {
     let reservationDateTime = null;
@@ -167,12 +220,15 @@ let UpdateOrderDetails = async () => {
       ).format("YYYY-MM-DD HH:mm:ss");
     }
 
-    let response = await useApi().updateCartDetails(idCart, {
-      branch_id: selectedBranchId.value,
-      reservation_time: reservationDateTime,
-      user_car_id: selectedCar.value,
-      customer_note: note.value,
-    });
+    let formData = new FormData();
+    formData.append("branch_id", selectedBranchId.value);
+    formData.append("reservation_time", reservationDateTime);
+    formData.append("user_car_id", selectedCar.value);
+    if (problemPhoto.value) {
+      formData.append("images[]", problemPhoto.value);
+    }
+
+    let response = await useApi().updateCartDetails(idCart, formData);
 
     if (response && response.data) {
       await useApi().getMyCart();
@@ -181,12 +237,13 @@ let UpdateOrderDetails = async () => {
         query: { id: idCart },
       });
     }
-    console.log(response)
+    // for (let [key, val] of formData.entries()) {
+    //   console.log(key, val);
+    // }
   } catch (err) {
     console.log(err);
   }
 };
-
 </script>
 
 <style scoped>
@@ -208,5 +265,99 @@ select {
 }
 .input-style {
   cursor: pointer;
+}
+
+.problem-photo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+}
+
+.problem-photo .label {
+  font-weight: 600;
+  font-size: 14px;
+  color: #1f2937; /* gray-800 */
+  margin-bottom: 4px;
+  text-transform: capitalize;
+}
+
+/* صندوق الرفع */
+.upload-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #ffffff;
+  border: 1.5px dashed #cbd5e1; /* slate-300 */
+  border-radius: 14px;
+  padding: 14px 16px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+/* إخفاء الإنبوت الأصلي */
+.upload-box input[type="file"] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+/* زرار الرفع */
+.upload-trigger {
+  pointer-events: none; /* عشان الكليك يروح للإنبوت المخفي */
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #f8fafc; /* slate-50 */
+  border: 1px solid #e2e8f0; /* slate-200 */
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-size: 14px;
+  color: #0f172a; /* slate-900 */
+  user-select: none;
+}
+
+/* الأيقونة */
+.upload-trigger .icon {
+  font-size: 18px;
+  line-height: 1;
+}
+
+/* اسم الملف */
+.file-name {
+  margin-left: auto;
+  font-size: 13px;
+  color: #475569; /* slate-600 */
+  max-width: 50%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: right;
+}
+
+/* حالات الهوفر والفوكس */
+.upload-box:hover {
+  border-color: #94a3b8; /* slate-400 */
+  background: #f8fafc; /* slate-50 */
+}
+
+.upload-box:focus-within {
+  border-color: #3b82f6; /* blue-500 */
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+  background: #ffffff;
+}
+
+/* للموبايل */
+@media (max-width: 480px) {
+  .upload-trigger {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+  .file-name {
+    max-width: 45%;
+  }
 }
 </style>

@@ -81,6 +81,6 @@ html {
 }
 
 .margin-top {
-  margin-top: 25px;
+  margin-top: 100px;
 }
 </style>

@@ -245,7 +245,9 @@
           v-if="token && (items.length || offers.length)"
         >
           <div class="h-100">
-            <h1 class="text-capitalize fs-6 updated-details">order details updated</h1>
+            <h1 class="text-capitalize fs-6 updated-details">
+              order details updated
+            </h1>
             <!-- price details -->
             <div class="">
               <div class="box-design">
@@ -293,22 +295,35 @@
                 </div>
               </div>
 
-              <div
-                v-if="
-                  itemsUpdates?.data?.branch &&
-                  itemsUpdates?.data?.default_car?.car_type
-                "
-                class="input-code position-relative"
-              >
+              <div class="input-code position-relative">
                 <input
+                  v-model="voucherCode"
                   type="text"
                   class="w-100 input-with-apply text-capitalize"
                   placeholder="promocode"
                 />
-                <button class="apply-btn position-absolute">
-                  <span class="text-capitalize me-2 spanbutton">apply</span>
-                  <iconsOrder-applyCode />
-                </button>
+
+                <div v-if="hasVoucher">
+                  <button
+                    class="apply-btn apply position-absolute"
+                    @click="voucherDeleted"
+                  >
+                    <span class="text-capitalize me-2 spanbutton">delete</span>
+                    <iconsOrder-applyCode />
+                  </button>
+                  <p class="text-success">{{ msg }}</p>
+                </div>
+
+                <div v-else>
+                  <button
+                    class="apply-btn apply position-absolute"
+                    @click="voucherApply"
+                  >
+                    <span class="text-capitalize me-2 spanbutton">apply</span>
+                    <iconsOrder-applyCode />
+                  </button>
+                  <p class="error">{{ msg }}</p>
+                </div>
               </div>
 
               <div
@@ -397,6 +412,40 @@ async function updateQty(order, newQty) {
     loadingQty.value[order.id] = false;
   }
 }
+let msg = ref("");
+let voucherCode = ref(null);
+let hasVoucher = ref(false); // الحالة اللي هتتحكم في الزرار
+
+let voucherApply = async () => {
+  try {
+    let resVoucher = await useApi().applyVoucherToCart(
+      order_id,
+      voucherCode.value
+    );
+
+    if (resVoucher?.status === false) {
+      msg.value = resVoucher?.message;
+    } else {
+      msg.value = resVoucher?.message;
+      itemsUpdates.value = resVoucher;
+      hasVoucher.value = true; // خليها تبين delete
+    }
+  } catch (error) {
+    console.error("Error applying voucher code:", error);
+  }
+};
+
+let voucherDeleted = async () => {
+  try {
+    let res = await useApi().deleteVoucherFromCart(order_id);
+    itemsUpdates.value = res;
+    msg.value = res?.message || "Voucher deleted successfully";
+    hasVoucher.value = false;
+    voucherCode.value = "";
+  } catch (error) {
+    console.error("Error deleting voucher code:", error);
+  }
+};
 
 let router = useRouter();
 function toContinue() {
@@ -407,16 +456,25 @@ function toContinue() {
     },
   });
 }
+console.log(itemsUpdates?.data?.voucher);
 </script>
 
 <style scoped>
 @import "@/assets/css/cartorder.css";
-.updated-details{
-  color : var(--color-black) ;
+.updated-details {
+  color: var(--color-black);
   padding: 10px;
   border-radius: 20px;
   font-family: var(--font-family);
   font-weight: bold;
   background-color: var(--main-color);
+}
+.error {
+  color: red;
+  font-family: var(--font-family);
+  font-size: 15px;
+}
+.border {
+  border: 2px solid green;
 }
 </style>
