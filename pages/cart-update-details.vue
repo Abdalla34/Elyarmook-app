@@ -93,54 +93,7 @@
               </div>
             </div>
             <div class="delete-icon" @click="deletedOrder(order.id, 'service')">
-              <svg
-                width="28"
-                height="24"
-                viewBox="0 0 28 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                :style="
-                  loadingDelete[order.id]
-                    ? 'opacity:0.5;pointer-events:none;'
-                    : ''
-                "
-              >
-                <path
-                  d="M24.5 5.98047C20.615 5.65047 16.7067 5.48047 12.81 5.48047C10.5 5.48047 8.19 5.58047 5.88 5.78047L3.5 5.98047"
-                  stroke="#3D3D3D"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-                <path
-                  d="M9.91602 4.97L10.1727 3.66C10.3593 2.71 10.4993 2 12.471 2H15.5277C17.4994 2 17.651 2.75 17.826 3.67L18.0827 4.97"
-                  stroke="#3D3D3D"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-                <path
-                  d="M21.9911 9.14062L21.2328 19.2106C21.1045 20.7806 20.9995 22.0006 17.7445 22.0006H10.2545C6.99948 22.0006 6.89448 20.7806 6.76615 19.2106L6.00781 9.14062"
-                  stroke="#3D3D3D"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-                <path
-                  d="M12.0508 16.5H15.9358"
-                  stroke="#3D3D3D"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-                <path
-                  d="M11.084 12.5H16.9173"
-                  stroke="#3D3D3D"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
+              <Trash />
               <span v-if="loadingDelete[order.id]">Loading...</span>
             </div>
           </div>
@@ -186,55 +139,69 @@
               class="delete-icon"
               @click="deletedOrder(order.offer_id, 'offer')"
             >
-              <svg
-                width="28"
-                height="24"
-                viewBox="0 0 28 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                :style="
-                  loadingDelete[order.offer_idfer_id]
-                    ? 'opacity:0.5;pointer-events:none;'
-                    : ''
-                "
-              >
-                <path
-                  d="M24.5 5.98047C20.615 5.65047 16.7067 5.48047 12.81 5.48047C10.5 5.48047 8.19 5.58047 5.88 5.78047L3.5 5.98047"
-                  stroke="#3D3D3D"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-                <path
-                  d="M9.91602 4.97L10.1727 3.66C10.3593 2.71 10.4993 2 12.471 2H15.5277C17.4994 2 17.651 2.75 17.826 3.67L18.0827 4.97"
-                  stroke="#3D3D3D"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-                <path
-                  d="M21.9911 9.14062L21.2328 19.2106C21.1045 20.7806 20.9995 22.0006 17.7445 22.0006H10.2545C6.99948 22.0006 6.89448 20.7806 6.76615 19.2106L6.00781 9.14062"
-                  stroke="#3D3D3D"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-                <path
-                  d="M12.0508 16.5H15.9358"
-                  stroke="#3D3D3D"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-                <path
-                  d="M11.084 12.5H16.9173"
-                  stroke="#3D3D3D"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
+              <Trash />
               <span v-if="loadingDelete[order.offer_id]">Loading...</span>
+            </div>
+          </div>
+
+          <div
+            class="cart d-flex justify-content-between align-items-center border-radius-36px mb-3"
+            v-for="sparepart in spareParts"
+            :key="sparepart.id"
+          >
+            <div class="details-cart d-flex align-items-center gap-3">
+              <div class="img">
+                <img :src="sparepart.image" :alt="sparepart.title" />
+              </div>
+              <div class="name-cart">
+                <h4 class="item-name item-left">{{ sparepart.title }}</h4>
+                <p class="price">
+                  {{ sparepart.price }}
+                  <span class="p-color-fs span">SAR</span>
+                </p>
+                <div class="qty-controls d-flex align-items-center mt-2">
+                  <button
+                    class="qty-btn"
+                    :disabled="loadingQty[sparepart.id] || sparepart.qty <= 1"
+                    @click="
+                      updateQty(
+                        'spare_part',
+                        order_id,
+                        sparepart,
+                        sparepart.qty - 1
+                      )
+                    "
+                  >
+                    -
+                  </button>
+
+                  <span class="mx-2">{{ sparepart.qty }}</span>
+                  <button
+                    class="qty-btn"
+                    :disabled="loadingQty[sparepart.id]"
+                    @click="
+                      updateQty(
+                        'spare_part',
+                        order_id,
+                        sparepart,
+                        sparepart.qty + 1
+                      )
+                    "
+                  >
+                    +
+                  </button>
+                  <span v-if="loadingQty[sparepart.id]" class="ms-2"
+                    >Loading...</span
+                  >
+                </div>
+              </div>
+            </div>
+            <div
+              class="delete-icon"
+              @click="deletedOrder(sparepart.id, 'spare_part')"
+            >
+              <trash />
+              <span v-if="loadingDelete[sparepart.id]">Loading...</span>
             </div>
           </div>
         </div>
@@ -295,6 +262,23 @@
                 </div>
               </div>
 
+              <!-- <div
+                class="wallet-box d-flex align-items-center justify-content-between bg-light p-3 rounded-3 shadow-sm mb-3"
+              >
+                <label for="warranty" class="form-label mb-0 fw-semibold">test 
+                 
+                </label>
+
+                <div class="form-check form-switch m-0">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    role="switch"
+                    id="warranty"
+                  />
+                </div>
+              </div> -->
+
               <div class="input-code position-relative">
                 <input
                   v-model="voucherCode"
@@ -336,14 +320,29 @@
               <div class="buttion-confirm" @click="toContinue()">
                 <ButtonCard textButton="continue" />
               </div>
-              <div class="buttion-confirm">
-                <button
-                  @click="navigateTo('/services')"
-                  class="additems text-capitalize label"
+
+              <div
+                v-if="wallets?.balance > 0"
+                class="wallet-box d-flex align-items-center justify-content-between bg-light p-3 rounded-3 shadow-sm"
+              >
+                <label for="wallet" class="form-label mb-0 fw-semibold"
+                  >Use Wallet Balance
+                  <p class="p-color-fs">
+                    you have {{ wallets?.balance }}
+                    <span class="sar">SAR</span> in wallet
+                  </p></label
                 >
-                  <i class="fa-solid fa-plus"></i>
-                  add another items
-                </button>
+
+                <div class="form-check form-switch m-0">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    role="switch"
+                    id="wallet"
+                    @change="toggleUseWallet"
+                    v-model="useWalletActive"
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -358,21 +357,23 @@ let dayjs = useDayjs();
 
 const { updateCartDetails, deleteItemFromCart, updateCartItemQuantity } =
   useApi();
-const items = ref([]);
 const loadingDelete = ref({});
 const loadingQty = ref({});
 let route = useRoute();
 let order_id = route.query.id;
 const itemsUpdates = await updateCartDetails(order_id);
-let notRegister = ref(false);
+const items = ref([]);
 let token = useCookie("token").value;
 let offers = ref([]);
-offers.value = itemsUpdates?.data?.offers || [];
+let spareParts = ref([]);
+let notRegister = ref(false);
 
 if (!token) {
   notRegister.value = true;
 } else {
   items.value = itemsUpdates?.data?.services || [];
+  offers.value = itemsUpdates?.data?.offers || [];
+  spareParts.value = itemsUpdates?.data?.spare_parts || [];
 
   if (
     itemsUpdates?.status === false &&
@@ -399,7 +400,6 @@ async function deletedOrder(id, type) {
     console.log("test", err);
   }
 }
-
 async function updateQty(order, newQty) {
   if (newQty < 1) return;
   loadingQty.value[order.id] = true;
@@ -412,10 +412,10 @@ async function updateQty(order, newQty) {
     loadingQty.value[order.id] = false;
   }
 }
+
 let msg = ref("");
 let voucherCode = ref(null);
-let hasVoucher = ref(false); // الحالة اللي هتتحكم في الزرار
-
+let hasVoucher = ref(false);
 let voucherApply = async () => {
   try {
     let resVoucher = await useApi().applyVoucherToCart(
@@ -428,13 +428,12 @@ let voucherApply = async () => {
     } else {
       msg.value = resVoucher?.message;
       itemsUpdates.value = resVoucher;
-      hasVoucher.value = true; // خليها تبين delete
+      hasVoucher.value = true;
     }
   } catch (error) {
     console.error("Error applying voucher code:", error);
   }
 };
-
 let voucherDeleted = async () => {
   try {
     let res = await useApi().deleteVoucherFromCart(order_id);
@@ -447,6 +446,39 @@ let voucherDeleted = async () => {
   }
 };
 
+let wallets = ref(null);
+let resWallets = await useApi().getWallet();
+wallets.value = resWallets?.data;
+
+onMounted(() => {
+  if (itemsUpdates?.data?.use_wallet) {
+    useWalletActive.value = itemsUpdates?.data?.use_wallet;
+  }
+});
+let useWalletActive = ref(null);
+let toggleUseWallet = async () => {
+  try {
+    let resWallet = await useApi().toggleUseWallet(order_id, "cart_type");
+
+    if (resWallet?.status === true) {
+      useWalletActive.value = resWallet?.data?.use_wallet;
+
+      // console.log(resWallet?.message);
+    } else {
+      useWalletActive.value = resWallet?.data?.use_wallet;
+
+      // console.log(resWallet?.message);
+    }
+  } catch (error) {
+    console.log(error?.message || "Error happened");
+  }
+};
+
+// let Warranty = ref(null)
+// try {
+//   let responseWarranty = await useApi().get
+// }
+
 let router = useRouter();
 function toContinue() {
   router.push({
@@ -456,7 +488,6 @@ function toContinue() {
     },
   });
 }
-console.log(itemsUpdates?.data?.voucher);
 </script>
 
 <style scoped>
@@ -476,5 +507,11 @@ console.log(itemsUpdates?.data?.voucher);
 }
 .border {
   border: 2px solid green;
+}
+
+.sar {
+  color: black;
+  font-size: 12px;
+  font-weight: 600;
 }
 </style>

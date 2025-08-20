@@ -98,7 +98,7 @@ let dayjs = useDayjs();
 let wallets = ref(null);
 let res = await useApi().getWallet();
 wallets.value = res?.data;
-console.log(res?.data?.transactions?.items);
+console.log(res?.data);
 </script>
 
 <style scoped>

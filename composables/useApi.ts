@@ -187,7 +187,7 @@ export const useApi = () => {
       headers,
     });
   };
-
+  // done
   const applyVoucherToCart = async (cart_id: any, promo_code_id: any) => {
     return await $fetch(
       `${baseURL}/marketplace/cart/apply-voucher/${cart_id}`,
@@ -198,7 +198,7 @@ export const useApi = () => {
       }
     );
   };
-
+  // done
   const deleteVoucherFromCart = async (cart_id: any) => {
     return await $fetch(
       `${baseURL}/marketplace/cart/delete-voucher/${cart_id}`,
@@ -209,11 +209,8 @@ export const useApi = () => {
       }
     );
   };
-
-  const updateCartDetails = async (
-    cart_id: any,
-    formData: any
-  ) => {
+  // done
+  const updateCartDetails = async (cart_id: any, formData: any) => {
     return await $fetch(`${baseURL}/marketplace/cart/cart-details/${cart_id}`, {
       method: "POST",
       body: formData,
@@ -222,7 +219,7 @@ export const useApi = () => {
       },
     });
   };
-  
+
   // done
   const getServices = async (params = {}) => {
     return await $fetch(`${baseURL}/car/services`, {
@@ -234,7 +231,7 @@ export const useApi = () => {
       params,
     });
   };
-
+  // done
   const getSpareParts = async (params = {}) => {
     return await $fetch(`${baseURL}/car/spare-parts`, {
       headers,
@@ -345,6 +342,25 @@ export const useApi = () => {
       headers,
     });
   };
+  // done
+  const toggleUseWallet = async (order_id: any, response_type: any) => {
+    return await $fetch(`${baseURL}/marketplace/order/use_wallet/${order_id}`, {
+      method: "POST",
+      headers,
+      body: { response_type },
+    });
+  };
+
+  // const ToggleWarranty = async (order_id: any, response_type: any) => {
+  //   return await $fetch(
+  //     `${baseURL}/marketplace/order/pro_warranty/${order_id}`,
+  //     {
+  //       method: "POST",
+  //       headers,
+  //       body: { response_type },
+  //     }
+  //   );
+  // };
 
   const getStatusorders = async () => {
     return await $fetch(`${baseURL}/core/all-available-order-statuses`, {
@@ -391,7 +407,7 @@ export const useApi = () => {
       headers,
     });
   };
-
+  // done
   const tamaraPayment = async (payload: {
     order_id: any;
     success_url: any;
@@ -404,7 +420,7 @@ export const useApi = () => {
       body: payload,
     });
   };
-
+  // done
   const tabyPayment = async (payload: {
     order_id: any;
     success_url: any;
@@ -417,7 +433,7 @@ export const useApi = () => {
       body: payload,
     });
   };
-
+  // done
   const tabbyStatusSuccess = async (id: any) => {
     return await $fetch(`${baseURL}/payment/tabby/success`, {
       method: "GET",
@@ -425,6 +441,7 @@ export const useApi = () => {
       headers,
     });
   };
+  // done
   const tabbyStatusFailure = async (id: any) => {
     return await $fetch(`${baseURL}/payment/tabby/failure`, {
       method: "GET",
@@ -432,6 +449,7 @@ export const useApi = () => {
       headers,
     });
   };
+  // done
   const tabbyStatusCancel = async (id: any) => {
     return await $fetch(`${baseURL}/payment/tabby/cancel`, {
       method: "GET",
@@ -439,7 +457,7 @@ export const useApi = () => {
       headers,
     });
   };
-
+  // done
   const updateUserProfile = async (userData: {
     first_name: any;
     last_name: any;
@@ -506,7 +524,6 @@ export const useApi = () => {
     tabbyStatusFailure,
     tabbyStatusCancel,
     updateUserProfile,
+    toggleUseWallet,
   };
-
-  // 4111111111111111
 };

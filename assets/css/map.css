@@ -3,7 +3,7 @@
 }
 
 .details-map {
-  margin-bottom: 94px;
+  margin-bottom: 24px;
   padding: 0.5px 20px;
   background-color: #ffffff;
 }
@@ -44,24 +44,20 @@ h6 {
   padding: 12px 20px;
 }
 
-.scroll-box {
+.scroll-map {
   max-height: 400px;
   overflow-y: auto;
   padding-right: 10px;
   scroll-behavior: smooth;
 }
 
-.scroll-box::-webkit-scrollbar {
+.scroll-map::-webkit-scrollbar {
   width: 6px;
 }
 
-.scroll-box::-webkit-scrollbar-thumb {
+.scroll-map::-webkit-scrollbar-thumb {
   background-color: #ccc;
   border-radius: 10px;
-}
-
-.scroll-box::-webkit-scrollbar-track {
-  background: #f1f1f1;
 }
 
 .gap {

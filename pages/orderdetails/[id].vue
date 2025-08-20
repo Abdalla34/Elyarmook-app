@@ -113,6 +113,7 @@
               </div>
 
               <div
+              @click="navigateTo('/map')"
                 class="order-location text-center box-order border-radius-36px border-radius-36px"
                 v-if="orderSelected?.branch"
               >
@@ -327,4 +328,7 @@ console.log(orderSelected);
 
 <style scoped>
 @import "./assets/css/ordersteps.css";
+.box-order { 
+  cursor: pointer;
+}
 </style>

@@ -66,7 +66,7 @@
 
               <!-- visit branch -->
               <div class="help margin-bottom-24px box-pages">
-                <div class="help-box" @click="navigateTo('our-branches')">
+                <div class="help-box" @click="navigateTo('map')">
                   <div
                     class="help-detalis d-flex justify-content-between align-items-center"
                   >
@@ -87,6 +87,11 @@
     </div>
   </div>
 </template>
+
+<script setup>
+</script>
+
+
 <style scoped>
 .margin-280px {
   margin-bottom: 240px;
