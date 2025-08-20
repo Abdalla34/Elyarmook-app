@@ -145,6 +145,14 @@ export const useApi = () => {
       headers,
     });
   };
+
+  const changeOrderStatus = async (order_id: any, status: any) => {
+    return await $fetch(`${baseURL}/order/orders/change-status/${order_id}`, {
+      method: "POST",
+      body: { status },
+      headers,
+    });
+  };
   // done
   const addToCart = async (type: any, item_id: any, qty: any) => {
     return await $fetch(`${baseURL}/marketplace/cart/add-to-cart`, {
@@ -351,16 +359,16 @@ export const useApi = () => {
     });
   };
 
-  // const ToggleWarranty = async (order_id: any, response_type: any) => {
-  //   return await $fetch(
-  //     `${baseURL}/marketplace/order/pro_warranty/${order_id}`,
-  //     {
-  //       method: "POST",
-  //       headers,
-  //       body: { response_type },
-  //     }
-  //   );
-  // };
+  const ToggleWarranty = async (order_id: any, response_type: any) => {
+    return await $fetch(
+      `${baseURL}/marketplace/order/pro_warranty/${order_id}`,
+      {
+        method: "POST",
+        headers,
+        body: { response_type },
+      }
+    );
+  };
 
   const getStatusorders = async () => {
     return await $fetch(`${baseURL}/core/all-available-order-statuses`, {
@@ -525,5 +533,7 @@ export const useApi = () => {
     tabbyStatusCancel,
     updateUserProfile,
     toggleUseWallet,
+    ToggleWarranty,
+    changeOrderStatus,
   };
 };

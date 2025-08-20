@@ -1,6 +1,12 @@
 <template>
   <div class="order-steps">
-    <div class="container">
+    <div class="container position-relative">
+
+       <div class="reasons">
+    
+    </div>
+
+
       <div class="row justify-content-center mt-3">
         <div class="col-7 pb-4 mt-2 mb-4 background">
           <div v-if="orderSelected">
@@ -113,7 +119,7 @@
               </div>
 
               <div
-              @click="navigateTo('/map')"
+                @click="navigateTo('/map')"
                 class="order-location text-center box-order border-radius-36px border-radius-36px"
                 v-if="orderSelected?.branch"
               >
@@ -239,7 +245,6 @@
                   </div>
                   <p class="step-name">completed</p>
                 </li>
-
               </ul>
             </div>
 
@@ -324,11 +329,31 @@ let orderSelected = ref(null);
 let res = await useApi().getSingleOrder(id);
 orderSelected.value = res?.data ?? {};
 console.log(orderSelected);
+
+let getReasons = ref([]);
+let resReasons = await useApi().getCancelReasons();
+getReasons.value = resReasons?.data ?? [];
+console.log(getReasons.value);
+// let changeOrderStatus = async (status) => {
+//   await useApi().changeOrderStatus(id, status);
+// };
 </script>
 
 <style scoped>
 @import "./assets/css/ordersteps.css";
-.box-order { 
+.box-order {
   cursor: pointer;
+}
+.reasons {
+  position: absolute;
+  z-index: 1;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px;
+  width: 40%;
+  right: 50%;
+  top: 50%;
+  transform: translateX(50%, -50%);
 }
 </style>
