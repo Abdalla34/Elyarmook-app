@@ -71,7 +71,7 @@
                 </div>
               </div>
 
-              <div
+              <div class="status text-capitalize"
                 :class="{
                   'bg-requested': orderSelected.status === 'request_done',
                   'bg-report': orderSelected.status === 'on_our_date',
@@ -113,7 +113,7 @@
                     />
                   </svg>
                 </div>
-                <div class="name">
+                <div class="name" v-if="orderSelected.car_type">
                   <p class="text-capitalize parag">car model</p>
                   <p class="name-order">{{ orderSelected.car_type.title }}</p>
                 </div>
@@ -157,14 +157,14 @@
                 <div class="box-icon">
                   <PuplicIconTimeIcon />
                 </div>
-                <div class="days-time">
+                <div v-if="orderSelected?.can_reschedule" class="days-time">
                   <h4>{{ orderSelected.reservation_time }}</h4>
                   <p class="color-Eb">Reschedule Order</p>
                   <p class="text-msg-change">{{ messageTimeChange }}</p>
                 </div>
               </div>
 
-              <div
+              <div 
                 @click="navigateTo('/map')"
                 class="order-location text-center box-order border-radius-36px border-radius-36px"
                 v-if="orderSelected?.branch"
@@ -339,7 +339,7 @@
               </div>
             </div>
 
-            <div
+            <div v-if="orderSelected?.can_cancel"
               @click="sureCancel = true"
               :class="{ 'd-none': orderSelected?.status === 'canceled' }"
               class="cancel-order mt-4 position-relative d-flex align-items-center"
@@ -347,15 +347,6 @@
               <button>cancel order</button>
             </div>
 
-            <!-- <div
-              class="cancel-order mt-4 position-relative d-flex align-items-center"
-            >
-              <button-card
-                class="w-100"
-                textButton="Reschedule Order"
-                :isActive="activeFalse"
-              />
-            </div> -->
           </div>
         </div>
       </div>
@@ -436,6 +427,7 @@ let rescheduleTime = async ({ date, time }) => {
   );
   if (res?.status && res?.message) {
     messageTimeChange.value = res?.message;
+    console.log(messageTimeChange);
   } else {
     messageTimeChange.value = res?.message;
   }

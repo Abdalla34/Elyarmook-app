@@ -74,12 +74,8 @@
           </div>
         </div>
       </div>
-      <!-- <div class="position-absolute test">
-        <PoupPremium />
-      </div> -->
     </div>
   </div>
-  <!-- <div class="position-absolute over"></div> -->
 </template>
 
 <script setup>

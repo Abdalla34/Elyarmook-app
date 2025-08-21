@@ -279,7 +279,7 @@
                 </div>
               </div> -->
 
-              <div class="input-code position-relative">
+              <div class="input-code position-relative" v-if="itemsUpdates?.can_show_promo_code">
                 <input
                   v-model="voucherCode"
                   type="text"
