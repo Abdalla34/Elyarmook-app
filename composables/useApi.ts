@@ -146,10 +146,14 @@ export const useApi = () => {
     });
   };
 
-  const changeOrderStatus = async (order_id: any, status: any) => {
+  const changeOrderStatus = async (
+    order_id: any,
+    status: any,
+    cancel_Reason_id: any
+  ) => {
     return await $fetch(`${baseURL}/order/orders/change-status/${order_id}`, {
       method: "POST",
-      body: { status },
+      body: { status, cancel_Reason_id },
       headers,
     });
   };
@@ -479,6 +483,14 @@ export const useApi = () => {
     });
   };
 
+  const reversationTime = async (orderId: any, newTime: any) => {
+    return await $fetch(`${baseURL}/order/orders/change-reservation-time/${orderId}`, {
+      method: "POST",
+      headers,
+      body: { reservation_time: newTime },
+    });
+  };
+
   return {
     sendOTP,
     checkOTP,
@@ -535,5 +547,6 @@ export const useApi = () => {
     toggleUseWallet,
     ToggleWarranty,
     changeOrderStatus,
+    reversationTime
   };
 };

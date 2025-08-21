@@ -61,7 +61,9 @@
               :class="{
                 'bg-requested': order.status === 'request_done',
                 'bg-report': order.status === 'on_our_date',
-                'bg-inspection': order.status === 'booking_done',
+                'bg-inspection':
+                  order.status === 'booking_done' ||
+                  order.status === 'car_under_inspection',
                 'bg-canceled': order.status === 'canceled',
                 'bg-ready': order.status === 'car is ready',
                 'bg-finished': order.status === 'order_finished',
@@ -82,7 +84,7 @@
 
 <script setup>
 const dayjs = useDayjs();
-import customParseFormat from 'dayjs/plugin/customParseFormat';
+import customParseFormat from "dayjs/plugin/customParseFormat";
 dayjs.extend(customParseFormat);
 
 let msgError = ref(false);

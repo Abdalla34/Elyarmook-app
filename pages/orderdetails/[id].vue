@@ -1,12 +1,54 @@
 <template>
+  <div
+    v-if="cancelOrder || times || sureCancel"
+    class="position-absolute over-lay"
+  ></div>
+  <div v-if="sureCancel">
+    <div class="popup-sure-cancel">
+      <div class="d-flex justify-content-end">
+        <i
+          class="fa-solid fa-xmark cursor-pointer"
+          style="cursor: pointer"
+          @click="sureCancel = false"
+        ></i>
+      </div>
+      <h1 class="mt-3">cancel order</h1>
+      <p class="p-color-fs">Are you sure you want to cancel this order?</p>
+      <div class="button-cancel cancel-order mt-3">
+        <button @click="cancelOrder = true">Yes, Cancel Order</button>
+      </div>
+    </div>
+  </div>
+  <div v-if="cancelOrder">
+    <div class="popup">
+      <div class="reasons">
+        <div class="d-flex justify-content-between">
+          <div class="Mention-reason reason-title mb-5 mt-2">
+            Mention reason
+          </div>
+
+          <div
+            class="icon-to-page d-flex justify-content-center align-items-center"
+            @click="cancelOrder = false"
+          >
+            <i class="fa-solid fa-xmark"></i>
+          </div>
+        </div>
+
+        <div class="reason-box" v-for="reason in getReasons" :key="reason.id">
+          <div
+            @click="changeStatusOrder('canceled', reason.id)"
+            class="d-flex align-items-center"
+          >
+            <p class="reason-title text-capitalize">{{ reason.title }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="order-steps">
     <div class="container position-relative">
-
-       <div class="reasons">
-    
-    </div>
-
-
       <div class="row justify-content-center mt-3">
         <div class="col-7 pb-4 mt-2 mb-4 background">
           <div v-if="orderSelected">
@@ -33,7 +75,9 @@
                 :class="{
                   'bg-requested': orderSelected.status === 'request_done',
                   'bg-report': orderSelected.status === 'on_our_date',
-                  'bg-inspection': orderSelected.status === 'booking_done',
+                  'bg-inspection':
+                    orderSelected.status === 'car_under_inspection' ||
+                    orderSelected.status === 'booking_done',
                   'bg-canceled': orderSelected.status === 'canceled',
                   'bg-ready': orderSelected.status === 'car is ready',
                   'bg-finished': orderSelected.status === 'order_finished',
@@ -107,6 +151,7 @@
               class="time-order margin-20px d-flex justify-content-between gap-3"
             >
               <div
+                @click="rescheduleOrder(orderSelected?.branch.id)"
                 class="time text-center box-order border-radius-36px border-radius-36px"
               >
                 <div class="box-icon">
@@ -115,6 +160,7 @@
                 <div class="days-time">
                   <h4>{{ orderSelected.reservation_time }}</h4>
                   <p class="color-Eb">Reschedule Order</p>
+                  <p class="text-msg-change">{{ messageTimeChange }}</p>
                 </div>
               </div>
 
@@ -135,23 +181,14 @@
               </div>
             </div>
 
-            <div class="like text-center margin-top">
-              <svg
-                width="48"
-                height="49"
-                viewBox="0 0 48 49"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M16.7793 37.7236V17.4036C16.7793 16.6036 17.0193 15.8236 17.4593 15.1636L22.9193 7.0436C23.7793 5.7436 25.9193 4.8236 27.7393 5.5036C29.6993 6.1636 30.9993 8.3636 30.5793 10.3236L29.5393 16.8636C29.4593 17.4636 29.6193 18.0036 29.9593 18.4236C30.2993 18.8036 30.7993 19.0436 31.3393 19.0436H39.5593C41.1393 19.0436 42.4993 19.6836 43.2993 20.8036C44.0593 21.8836 44.1993 23.2836 43.6993 24.7036L38.7793 39.6836C38.1593 42.1636 35.4593 44.1836 32.7793 44.1836H24.9793C23.6393 44.1836 21.7593 43.7236 20.8993 42.8636L18.3393 40.8836C17.3593 40.1436 16.7793 38.9636 16.7793 37.7236Z"
-                  fill="#BEBEBE"
-                />
-                <path
-                  d="M10.42 13.5039H8.36C5.26 13.5039 4 14.7039 4 17.6639V37.7839C4 40.7439 5.26 41.9439 8.36 41.9439H10.42C13.52 41.9439 14.78 40.7439 14.78 37.7839V17.6639C14.78 14.7039 13.52 13.5039 10.42 13.5039Z"
-                  fill="#BEBEBE"
-                />
-              </svg>
+            <div class="like text-center margin-30px">
+              <div v-if="orderSelected?.status === 'canceled'">
+                <PuplicIconCancelOrderIcon />
+                <h1 class="title-step">Canceled</h1>
+                <p class="width-p">
+                  We're sorry, but your order has been canceled.
+                </p>
+              </div>
 
               <h1 class="title-step"></h1>
               <p class="width-p"></p>
@@ -278,13 +315,6 @@
               </div>
             </div>
 
-            <!-- <div
-              class="order-amount d-flex align-items-center justify-content-between margin-20px"
-            >
-              <div class="amount">VAT</div>
-              <div class="num-order-amount">{{ orderSelected.vat_amount }}</div>
-            </div> -->
-
             <div
               class="totla-amount margin-20px d-flex align-items-center justify-content-between"
             >
@@ -310,33 +340,107 @@
             </div>
 
             <div
+              @click="sureCancel = true"
+              :class="{ 'd-none': orderSelected?.status === 'canceled' }"
               class="cancel-order mt-4 position-relative d-flex align-items-center"
             >
               <button>cancel order</button>
             </div>
+
+            <!-- <div
+              class="cancel-order mt-4 position-relative d-flex align-items-center"
+            >
+              <button-card
+                class="w-100"
+                textButton="Reschedule Order"
+                :isActive="activeFalse"
+              />
+            </div> -->
           </div>
         </div>
+      </div>
+    </div>
+
+    <div v-if="times" class="popup-reschedule">
+      <div class="d-flex justify-content-between">
+        <div class="Mention-reason reason-title mb-3 mt-2">
+          choose from the date available
+        </div>
+
+        <div
+          class="icon-to-page d-flex justify-content-center align-items-center"
+          @click="times = false"
+        >
+          <i class="fa-solid fa-xmark"></i>
+        </div>
+      </div>
+      <div class="time-box">
+        <template v-for="dateObj in availableDates" :key="dateObj.date">
+          <div class="date-title">{{ dateObj.date }}</div>
+          <div
+            class="slots"
+            v-for="slot in dateObj.time_slots"
+            :key="slot.time"
+            @click="rescheduleTime({ date: dateObj.date, time: slot.time })"
+          >
+            <div class="slot">{{ slot.time }}</div>
+          </div>
+        </template>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
+import dayjs from "#build/dayjs.imports.mjs";
+import { id } from "date-fns/locale";
+
 let activeFalse = ref(false);
 let route = useRoute();
-let id = route.params.id;
+let order_id = route.params.id;
 let orderSelected = ref(null);
-let res = await useApi().getSingleOrder(id);
+let res = await useApi().getSingleOrder(order_id);
 orderSelected.value = res?.data ?? {};
-console.log(orderSelected);
 
-let getReasons = ref([]);
-let resReasons = await useApi().getCancelReasons();
-getReasons.value = resReasons?.data ?? [];
-console.log(getReasons.value);
-// let changeOrderStatus = async (status) => {
-//   await useApi().changeOrderStatus(id, status);
-// };
+const getReasons = ref([]);
+let cancelOrder = ref(false);
+try {
+  let resReasons = await useApi().getCancelReasons();
+  getReasons.value = resReasons?.data || [];
+  console.log(getReasons.value);
+} catch (error) {
+  console.error(error);
+}
+
+let sureCancel = ref(false);
+let changeStatusOrder = async (order_status, cancel_Reason_id) => {
+  await useApi().changeOrderStatus(order_id, order_status, cancel_Reason_id);
+  cancelOrder.value = false;
+  sureCancel.value = false;
+};
+
+let availableDates = ref([]);
+let times = ref(false);
+let rescheduleOrder = async (branch_id) => {
+  let resTimeAvailable = await useApi().getAvailableTimes(branch_id);
+  availableDates.value = resTimeAvailable?.available_times;
+  console.log(availableDates.value);
+  times.value = true;
+};
+let messageTimeChange = ref("");
+let rescheduleTime = async ({ date, time }) => {
+  let dateTime = dayjs(`${date} ${time}`, "YYYY-MM-DD HH:mm");
+  let res = await useApi().reversationTime(
+    order_id,
+    dateTime.format("YYYY-MM-DD HH:mm:ss")
+  );
+  if (res?.status && res?.message) {
+    messageTimeChange.value = res?.message;
+  } else {
+    messageTimeChange.value = res?.message;
+  }
+  times.value = false;
+};
 </script>
 
 <style scoped>
@@ -344,16 +448,97 @@ console.log(getReasons.value);
 .box-order {
   cursor: pointer;
 }
-.reasons {
+.margin-30px {
+  margin-top: 30px;
+}
+.popup,
+.popup-reschedule,
+.popup-sure-cancel {
   position: absolute;
-  z-index: 1;
+  z-index: 10;
   background: white;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 8px;
-  width: 40%;
-  right: 50%;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 12px;
+  width: 30%;
+  height: 28%;
+  left: 50%;
   top: 50%;
-  transform: translateX(50%, -50%);
+  transform: translate(-50%, -50%);
+}
+.reason-title {
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 28px;
+  letter-spacing: 0%;
+}
+.reason-box {
+  border: 1px solid #c0bebe77;
+  padding: 5px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.popup-reschedule {
+  height: 40%;
+  top: 10%;
+  transform: translate(-50%);
+}
+
+.popup-sure-cancel {
+  height: 10%;
+  text-align: center;
+}
+
+.popup-sure-cancel h1 {
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-style: Bold;
+  font-size: 24px;
+  text-transform: capitalize;
+}
+
+.time-box {
+  max-height: 90%;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+}
+.time-box::-webkit-scrollbar {
+  width: 6px;
+}
+
+.time-box::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 10px;
+}
+
+.date-title {
+  font-weight: bold;
+  margin: 10px 0 5px;
+}
+
+.slots {
+  margin-bottom: 5px;
+}
+
+.slot {
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.slot:hover {
+  background: #007bff;
+  color: white;
+}
+.text-msg-change {
+  color: green;
 }
 </style>
