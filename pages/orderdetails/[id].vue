@@ -71,7 +71,8 @@
                 </div>
               </div>
 
-              <div class="status text-capitalize"
+              <div
+                class="status text-capitalize"
                 :class="{
                   'bg-requested': orderSelected.status === 'request_done',
                   'bg-report': orderSelected.status === 'on_our_date',
@@ -157,14 +158,16 @@
                 <div class="box-icon">
                   <PuplicIconTimeIcon />
                 </div>
-                <div v-if="orderSelected?.can_reschedule" class="days-time">
+                <div class="days-time">
                   <h4>{{ orderSelected.reservation_time }}</h4>
-                  <p class="color-Eb">Reschedule Order</p>
+                  <p class="color-Eb" v-if="orderSelected?.can_reschedule">
+                    Reschedule Order
+                  </p>
                   <p class="text-msg-change">{{ messageTimeChange }}</p>
                 </div>
               </div>
 
-              <div 
+              <div
                 @click="navigateTo('/map')"
                 class="order-location text-center box-order border-radius-36px border-radius-36px"
                 v-if="orderSelected?.branch"
@@ -339,14 +342,14 @@
               </div>
             </div>
 
-            <div v-if="orderSelected?.can_cancel"
+            <div
+              v-if="orderSelected?.can_cancel"
               @click="sureCancel = true"
               :class="{ 'd-none': orderSelected?.status === 'canceled' }"
               class="cancel-order mt-4 position-relative d-flex align-items-center"
             >
               <button>cancel order</button>
             </div>
-
           </div>
         </div>
       </div>
