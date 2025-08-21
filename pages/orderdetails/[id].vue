@@ -29,7 +29,7 @@
 
           <div
             class="icon-to-page d-flex justify-content-center align-items-center"
-            @click="cancelOrder = false"
+            @click="toFalse"
           >
             <i class="fa-solid fa-xmark"></i>
           </div>
@@ -441,6 +441,11 @@ let rescheduleTime = async ({ date, time }) => {
   }
   times.value = false;
 };
+
+function toFalse() {
+  cancelOrder.value = false;
+  sureCancel.value = false;
+}
 </script>
 
 <style scoped>
