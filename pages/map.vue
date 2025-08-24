@@ -12,7 +12,7 @@
             />
 
             <div class="map">
-              <div class="img-map img-offer-card img margin-40px">
+              <!-- <div class="img-map img-offer-card img margin-40px">
                 <iframe
                   width="100%"
                   height="400"
@@ -22,7 +22,7 @@
                   src="https://www.google.com/maps?q=24.79986631091,46.697413512036&hl=ar&z=14&output=embed"
                 >
                 </iframe>
-              </div>
+              </div> -->
               <div class="scroll-map">
                 <div class="details-map" v-for="branch in branches">
                   <div class="raiydah">

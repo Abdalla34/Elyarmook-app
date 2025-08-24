@@ -190,7 +190,7 @@ let router = useRouter();
 let token = useCookie("token", { maxAge: 365 * 24 * 60 * 60 });
 
 const cookie = useCookie("user", { maxAge: 365 * 24 * 60 * 60 });
-const user = computed(() => cookie.value);
+let user = ref(cookie.value);
 
 let editDone = ref(false);
 let profileImg = ref(false);
@@ -232,29 +232,37 @@ watch(areaId, async (newAreaId) => {
   }
 });
 
+
 let editProfile = async () => {
   try {
     let res = await useApi().updateUserProfile({
-      first_name: user.first_name,
-      last_name: user.last_name,
-      phone: user.phone,
+      first_name: user.value.first_name,
+      last_name: user.value.last_name,
+      phone: user.value.phone,
       city_id: cityId.value,
+      area_id: areaId.value,
     });
+
+    console.log("edit profile", res);
 
     if (res && res.status === false && res.message === "Unauthenticated") {
       return navigateTo("/createaccount");
     }
 
-    cookie.value = res?.data?.user;
+   
+    cookie.value = res.data.user;
+    user.value = res.data.user;
 
-    areaId.value = res?.data?.user?.area_id;
-    cityId.value = res?.data?.user?.city_id;
+    areaId.value = res.data.user.area_id;
+    cityId.value = res.data.user.city_id;
 
     editDone.value = false;
   } catch (err) {
     console.error(err);
   }
 };
+
+
 </script>
 
 <style>

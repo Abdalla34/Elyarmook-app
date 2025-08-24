@@ -21,7 +21,7 @@
               </div>
               <div class="name price">
                 <h4 class="text-capitalize">
-                  {{ order.vendor_name }}
+                  {{ order.type_for_customer }}
                 </h4>
                 <p class="price">
                   {{ order.total_amount }}
@@ -60,7 +60,7 @@
               class="status text-capitalize"
               :class="{
                 'bg-requested': order.status === 'request_done',
-                'bg-report': order.status === 'on_our_date',
+                'bg-report': order.status === 'report_ready',
                 'bg-inspection':
                   order.status === 'booking_done' ||
                   order.status === 'car_under_inspection',

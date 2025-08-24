@@ -76,3 +76,118 @@
     left: 24%;
   }
 }
+
+
+
+.icon-shape {
+  right: 10px;
+  top: 50%;
+  pointer-events: none;
+}
+select {
+  appearance: none;
+}
+.data-picker-icon {
+  top: 50%;
+  transform: translateY(-80%);
+}
+.selected {
+  color: #7e7e7e;
+}
+.input-style {
+  cursor: pointer;
+}
+
+.problem-photo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+}
+
+.problem-photo .label {
+  font-weight: 600;
+  font-size: 14px;
+  color: #1f2937; /* gray-800 */
+  margin-bottom: 4px;
+  text-transform: capitalize;
+}
+
+/* صندوق الرفع */
+.upload-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #ffffff;
+  border: 1.5px dashed #cbd5e1; /* slate-300 */
+  border-radius: 14px;
+  padding: 14px 16px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+/* إخفاء الإنبوت الأصلي */
+.upload-box input[type="file"] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+/* زرار الرفع */
+.upload-trigger {
+  pointer-events: none; /* عشان الكليك يروح للإنبوت المخفي */
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #f8fafc; /* slate-50 */
+  border: 1px solid #e2e8f0; /* slate-200 */
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-size: 14px;
+  color: #0f172a; /* slate-900 */
+  user-select: none;
+}
+
+/* الأيقونة */
+.upload-trigger .icon {
+  font-size: 18px;
+  line-height: 1;
+}
+
+/* اسم الملف */
+.file-name {
+  margin-left: auto;
+  font-size: 13px;
+  color: #475569; /* slate-600 */
+  max-width: 50%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: right;
+}
+
+/* حالات الهوفر والفوكس */
+.upload-box:hover {
+  border-color: #94a3b8; /* slate-400 */
+  background: #f8fafc; /* slate-50 */
+}
+
+.upload-box:focus-within {
+  border-color: #3b82f6; /* blue-500 */
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+  background: #ffffff;
+}
+
+/* للموبايل */
+@media (max-width: 480px) {
+  .upload-trigger {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+  .file-name {
+    max-width: 45%;
+  }
+}

@@ -19,6 +19,7 @@
       </div>
     </div>
   </div>
+
   <div v-if="cancelOrder">
     <div class="popup">
       <div class="reasons">
@@ -75,7 +76,7 @@
                 class="status text-capitalize"
                 :class="{
                   'bg-requested': orderSelected.status === 'request_done',
-                  'bg-report': orderSelected.status === 'on_our_date',
+                  'bg-report': orderSelected.status === 'report_ready',
                   'bg-inspection':
                     orderSelected.status === 'car_under_inspection' ||
                     orderSelected.status === 'booking_done',
@@ -328,7 +329,7 @@
               </div>
             </div>
 
-            <div
+            <!-- <div
               v-if="
                 orderSelected.status === 'request_done'
                 // orderSelected.status === 'report'
@@ -340,7 +341,7 @@
                   :isActive="activeFalse"
                 />
               </div>
-            </div>
+            </div> -->
 
             <div
               v-if="orderSelected?.can_cancel"
@@ -445,100 +446,4 @@ function toFalse() {
 
 <style scoped>
 @import "./assets/css/ordersteps.css";
-.box-order {
-  cursor: pointer;
-}
-.margin-30px {
-  margin-top: 30px;
-}
-.popup,
-.popup-reschedule,
-.popup-sure-cancel {
-  position: absolute;
-  z-index: 10;
-  background: white;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  padding: 12px;
-  width: 30%;
-  height: 28%;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
-.reason-title {
-  font-family: var(--font-family);
-  font-weight: 600;
-  font-size: 18px;
-  line-height: 28px;
-  letter-spacing: 0%;
-}
-.reason-box {
-  border: 1px solid #c0bebe77;
-  padding: 5px;
-  border-radius: 10px;
-  cursor: pointer;
-  margin-bottom: 20px;
-}
-
-.popup-reschedule {
-  height: 40%;
-  top: 10%;
-  transform: translate(-50%);
-}
-
-.popup-sure-cancel {
-  height: 10%;
-  text-align: center;
-}
-
-.popup-sure-cancel h1 {
-  font-family: var(--font-family);
-  font-weight: 700;
-  font-style: Bold;
-  font-size: 24px;
-  text-transform: capitalize;
-}
-
-.time-box {
-  max-height: 90%;
-  overflow-y: auto;
-  scroll-behavior: smooth;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 10px;
-}
-.time-box::-webkit-scrollbar {
-  width: 6px;
-}
-
-.time-box::-webkit-scrollbar-thumb {
-  background-color: #ccc;
-  border-radius: 10px;
-}
-
-.date-title {
-  font-weight: bold;
-  margin: 10px 0 5px;
-}
-
-.slots {
-  margin-bottom: 5px;
-}
-
-.slot {
-  padding: 6px 12px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.slot:hover {
-  background: #007bff;
-  color: white;
-}
-.text-msg-change {
-  color: green;
-}
 </style>

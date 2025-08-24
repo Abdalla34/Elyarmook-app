@@ -13,7 +13,8 @@
             token &&
             items.length === 0 &&
             offers.length === 0 &&
-            !test?.data?.id
+            spareParts.length === 0 &&
+            order_id
           "
         >
           <div>
@@ -256,7 +257,7 @@
                 >
                   <h4 class="label">Final Amount</h4>
                   <p class="text-capitalize">
-                    {{ itemsUpdates?.data?.amount_to_pay }}
+                    {{ amountToPay }}
                     <span class="p-color-fs span">SAR</span>
                   </p>
                 </div>
@@ -279,7 +280,10 @@
                 </div>
               </div> -->
 
-              <div class="input-code position-relative" v-if="itemsUpdates?.can_show_promo_code">
+              <div
+                class="input-code position-relative"
+                v-if="itemsUpdates?.can_show_promo_code"
+              >
                 <input
                   v-model="voucherCode"
                   type="text"
@@ -313,23 +317,21 @@
               <div
                 class="total-amount d-flex align-items-center justify-content-between"
               >
-                <h1 class="amount text-capitalize">total amonut</h1>
-                <p>{{ itemsUpdates?.data?.total_amount }}</p>
-              </div>
-
-              <div class="buttion-confirm" @click="toContinue()">
-                <ButtonCard textButton="continue" />
+                <h1 class="amount text-capitalize">total amount</h1>
+                <p>
+                  {{ amountToPay }} <span class="p-color-fs span">SAR</span>
+                </p>
               </div>
 
               <div
-                v-if="wallets?.balance > 0"
-                class="wallet-box d-flex align-items-center justify-content-between bg-light p-3 rounded-3 shadow-sm"
+                v-if="itemsUpdates?.data?.user_balance > 0"
+                class="wallet-box mt-3 d-flex align-items-center justify-content-between bg-light p-3 rounded-3 shadow-sm"
               >
                 <label for="wallet" class="form-label mb-0 fw-semibold"
                   >Use Wallet Balance
                   <p class="p-color-fs">
-                    you have {{ wallets?.balance }}
-                    <span class="sar">SAR</span> in wallet
+                    you have {{ balance }} <span class="sar">SAR</span> in
+                    wallet
                   </p></label
                 >
 
@@ -344,10 +346,31 @@
                   />
                 </div>
               </div>
+
+              <div class="buttion-confirm" @click="toContinue()">
+                <ButtonCard textButton="continue" />
+              </div>
             </div>
           </div>
         </div>
       </div>
+
+      <div class="msg-done-use-wallet" v-if="msgDoneUseWallet">
+        <i
+          class="fa-solid fa-xmark cursor-pointer"
+          style="cursor: pointer"
+          @click="msgDoneUseWallet = false"
+        ></i>
+        <p class="text-success">order successfully!</p>
+        <button-card
+          class="width-btn w-50 m-auto mt-2"
+          @click="navigateTo(`/orderdetails/${order_id}`)"
+          text-button="view my orders"
+        >
+        </button-card>
+      </div>
+
+      <div v-if="msgDoneUseWallet" class="over-lay"></div>
     </div>
   </div>
 </template>
@@ -368,13 +391,12 @@ let offers = ref([]);
 let spareParts = ref([]);
 let notRegister = ref(false);
 
-if (!token) {
+if (!order_id) {
   notRegister.value = true;
 } else {
   items.value = itemsUpdates?.data?.services || [];
   offers.value = itemsUpdates?.data?.offers || [];
   spareParts.value = itemsUpdates?.data?.spare_parts || [];
-
   if (
     itemsUpdates?.status === false &&
     itemsUpdates?.message === "Unauthenticated"
@@ -446,47 +468,64 @@ let voucherDeleted = async () => {
   }
 };
 
-let wallets = ref(null);
-let resWallets = await useApi().getWallet();
-wallets.value = resWallets?.data;
+let useWalletActive = ref(null);
 
 onMounted(() => {
-  if (itemsUpdates?.data?.use_wallet) {
+  if (itemsUpdates?.data?.use_wallet !== undefined) {
     useWalletActive.value = itemsUpdates?.data?.use_wallet;
   }
+  if (itemsUpdates?.data?.user_balance !== undefined) {
+    balance.value = itemsUpdates?.data?.user_balance;
+  }
+  if (itemsUpdates?.data?.amount_to_pay !== undefined) {
+    amountToPay.value = itemsUpdates?.data?.amount_to_pay;
+  }
 });
-let useWalletActive = ref(null);
+
+let balance = ref(null);
+let amountToPay = ref(null);
+
 let toggleUseWallet = async () => {
   try {
     let resWallet = await useApi().toggleUseWallet(order_id, "cart_type");
 
     if (resWallet?.status === true) {
       useWalletActive.value = resWallet?.data?.use_wallet;
+      balance.value = resWallet?.data?.user_balance;
+      amountToPay.value = resWallet?.data?.amount_to_pay;
 
-      // console.log(resWallet?.message);
+      if (Number(resWallet?.data?.amount_to_pay) === 0) {
+        let resChange = await useApi().changeCartToOrder(order_id);
+        console.log("changeCartToOrder response:", resChange);
+
+        // if (resChange?.status === true) {
+        //   console.log("show", resChange?.message);
+        //   console.log("amount_to_pay 2:", Number(resWallet?.data?.amount_to_pay));
+        // }
+      }
     } else {
       useWalletActive.value = resWallet?.data?.use_wallet;
-
-      // console.log(resWallet?.message);
     }
   } catch (error) {
-    console.log(error?.message || "Error happened");
+    console.log("Error happened:", error);
+    console.log("Error response:", error?.response);
   }
 };
 
-// let Warranty = ref(null)
-// try {
-//   let responseWarranty = await useApi().get
-// }
 
+let msgDoneUseWallet = ref(false);
 let router = useRouter();
 function toContinue() {
-  router.push({
-    path: `/payment`,
-    query: {
-      id: order_id,
-    },
-  });
+  if (amountToPay.value > 0) {
+    router.push({
+      path: `/payment`,
+      query: {
+        id: order_id,
+      },
+    });
+  } else {
+    msgDoneUseWallet.value = true;
+  }
 }
 </script>
 
@@ -513,5 +552,26 @@ function toContinue() {
   color: black;
   font-size: 12px;
   font-weight: 600;
+}
+.msg-done-use-wallet {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30%;
+  height: 200px;
+  padding-top: 40px;
+  text-align: center;
+  background-color: white;
+  z-index: 20;
+  border-radius: 14px;
+}
+.text-success {
+  font-size: 20px;
+}
+.cursor-pointer {
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
 </style>

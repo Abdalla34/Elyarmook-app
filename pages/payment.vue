@@ -165,7 +165,7 @@ let paymentWihtTbby = async () => {
       window.location.href = res?.data?.checkout_url;
     }
   } catch (err) {
-    console.log(err);
+    console.log('err',err);
   }
 };
 </script>

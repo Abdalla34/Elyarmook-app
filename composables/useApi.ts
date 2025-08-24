@@ -404,10 +404,10 @@ export const useApi = () => {
     });
   };
   // done
-  const usePayment = async (orderId: any, brand: any) => {
+  const usePayment = async (orderId: any, brand: any, wallet_amount: any) => {
     return await $fetch(`${baseURL}/payment/hyper-pay/prepare-checkout`, {
       method: "POST",
-      body: { order_id: orderId, brand: brand },
+      body: { order_id: orderId, brand: brand, wallet_amount: wallet_amount },
       headers,
     });
   };
@@ -482,12 +482,21 @@ export const useApi = () => {
       headers,
     });
   };
-
+  // done
   const reversationTime = async (orderId: any, newTime: any) => {
-    return await $fetch(`${baseURL}/order/orders/change-reservation-time/${orderId}`, {
+    return await $fetch(
+      `${baseURL}/order/orders/change-reservation-time/${orderId}`,
+      {
+        method: "POST",
+        headers,
+        body: { reservation_time: newTime },
+      }
+    );
+  };
+  const changeCartToOrder = async (order_id: any) => {
+    return $fetch(`${baseURL}/order/orders/change-cart-to-order/${order_id}`, {
       method: "POST",
       headers,
-      body: { reservation_time: newTime },
     });
   };
 
@@ -547,6 +556,7 @@ export const useApi = () => {
     toggleUseWallet,
     ToggleWarranty,
     changeOrderStatus,
-    reversationTime
+    reversationTime,
+    changeCartToOrder,
   };
 };
