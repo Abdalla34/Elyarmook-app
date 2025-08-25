@@ -19,30 +19,47 @@
           <div class="bottom-80px">
             <div class="inputs">
               <div class="input d-flex flex-column">
-                <input class="input-style" type="text" v-model="user.name" />
+                <input
+                  class="input-style"
+                  type="text"
+                  v-bind:placeholder="user.name"
+                  v-model="name"
+                />
               </div>
             </div>
             <div class="inputs">
               <div class="input d-flex flex-column">
-                <input class="input-style" type="text" v-model="user.phone" />
+                <input
+                  class="input-style"
+                  type="text"
+                  v-bind:placeholder="user.phone"
+                  v-model="phone"
+                />
               </div>
             </div>
             <div class="inputs">
               <div class="input d-flex flex-column">
                 <label for="" class="label">address</label>
-                <input class="input-style" type="text" v-model="user.city.title" />
+                <input class="input-style" type="text" v-model="Address" />
               </div>
             </div>
             <div class="inputs">
               <div class="input d-flex flex-column">
                 <label for="" class="label">Message</label>
-                <textarea class=" " type="text" placeholder="write your message" 
+                <textarea
+                  class=" "
+                  type="text"
+                  placeholder="write your message"
+                  v-model="message"
                 />
               </div>
             </div>
           </div>
 
-          <div class="button-save border-radius-36px width-height width-100">
+          <div
+            @click="SendData"
+            class="button-save border-radius-36px width-height width-100"
+          >
             <button class="text-capitalize fw-bold">send</button>
           </div>
         </div>
@@ -51,6 +68,23 @@
   </div>
 </template>
 <script setup>
+let message = ref("");
+let Address = ref("");
+let name = ref("");
+let phone = ref(null);
+const SendData = async () => {
+  const form = {
+    title: Address.value,
+    message: message.value,
+    name: name.value,
+    phone: phone.value,
+  };
+  await useApi().contactUs(form);
+  Address.value = "";
+  message.value = "";
+  name.value = user.name;
+  phone.value = user.phone;
+};
 // let token = useCookie('token').value;
 let user = useCookie("user").value;
 </script>

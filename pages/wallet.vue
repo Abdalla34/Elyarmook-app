@@ -17,7 +17,7 @@
                 <div
                   class="d-flex align-items-center gap-2 justify-conent-center"
                 >
-                  <p class="price">{{ wallets?.balance }}</p>
+                  <p class="price">{{ allData?.balance }}</p>
                   <span class="text-uppercase span">sar</span>
                 </div>
               </div>
@@ -25,7 +25,7 @@
 
             <div
               class="box-pages margin-bottom-24px col-padding"
-              v-for="item in wallets?.transactions?.items"
+              v-for="item in visibleWallets"
               :key="item.id"
             >
               <div
@@ -73,7 +73,7 @@
                   <div class="name-wallet">
                     <h5>{{ item.type }}</h5>
                     <p class="p-color-fs">
-                      {{ dayjs(item.created_at).format("dddd, MMM D, YYYY") }} 
+                      {{ dayjs(item.created_at).format("dddd, MMM D, YYYY") }}
                       <span>{{
                         dayjs(item.created_at).format("hh:mm A")
                       }}</span>
@@ -86,6 +86,15 @@
                 </div>
               </div>
             </div>
+            <div class="d-flex justify-content-center mt-4">
+              <button
+                v-if="itemsToShow < wallets.length"
+                @click="loadMore"
+                class="btn btn-primary"
+              >
+                Learn More
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -95,10 +104,26 @@
 
 <script setup>
 let dayjs = useDayjs();
-let wallets = ref(null);
-let res = await useApi().getWallet();
-wallets.value = res?.data;
-console.log(res?.data);
+let wallets = ref([]);
+let itemsToShow = ref(4);
+let allData = ref(null);
+
+let getDataWallet = async (page = 1) => {
+  let resWallet = await useApi().getWallet(page);
+  allData.value = resWallet?.data || null;
+  wallets.value = resWallet?.data?.transactions?.items;
+};
+
+let visibleWallets = computed(() => {
+  return wallets.value.slice(0, itemsToShow.value);
+});
+function loadMore() {
+  itemsToShow.value += 4;
+}
+onMounted(() => {
+  getDataWallet();
+});
+
 </script>
 
 <style scoped>

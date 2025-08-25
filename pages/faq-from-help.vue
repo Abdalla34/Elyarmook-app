@@ -9,7 +9,7 @@
 
             <div
               class="box-main padding-left-25px d-flex align-items-center justify-content-between box-hover-bg"
-              v-for="item in faqs"
+              v-for="item in visibleItems"
               :key="item.id"
               @click="toggleIcon(item.id)"
               :class="{ active: activeIndexes[item.id] }"
@@ -53,6 +53,7 @@
                     />
                   </svg>
                 </div>
+
                 <div class="arrow-top" v-if="activeIndexes[item.id]">
                   <svg
                     class="font-icon"
@@ -73,6 +74,15 @@
                 </div>
               </div>
             </div>
+            <div class="d-flex justify-content-center align-items-center">
+              <button
+                class="btn btn-primary"
+                @click="loadMore"
+                v-if="itemShow < faqs.length"
+              >
+                Learn more
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -82,12 +92,27 @@
 
 <script setup>
 let faqs = ref([]);
-let res = await useApi().getFaqs();
-faqs.value = res?.data?.items;
+let itemShow = ref(4);
+const fetchFaq = async (page = 1) => {
+  let res = await useApi().getFaqs(page);
+  faqs.value = res?.data?.items;
+};
+
+let visibleItems = computed(() => {
+  return faqs.value.slice(0, itemShow.value);
+});
+
+function loadMore() {
+  itemShow.value += 4;
+}
+onMounted(() => {
+  fetchFaq();
+});
+
 const activeIndexes = ref(faqs.value.map(() => false));
 
-function toggleIcon(index) {
-  activeIndexes.value[index] = !activeIndexes.value[index];
+function toggleIcon(id) {
+  activeIndexes.value[id] = !activeIndexes.value[id];
 }
 </script>
 

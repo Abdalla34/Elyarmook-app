@@ -195,6 +195,9 @@
             <img src="/notPoints.png" alt="no points" />
             <p>not points yet</p>
           </div>
+          <!-- <div class="load-more d-flex justify-content-center">
+            <button class="btn btn-primary">Load More</button>
+          </div> -->
         </div>
       </div>
     </div>

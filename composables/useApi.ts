@@ -305,8 +305,8 @@ export const useApi = () => {
     });
   };
   // done
-  const getFaqs = async () => {
-    return await $fetch(`${baseURL}/core/faqs`, {
+  const getFaqs = async (page: any) => {
+    return await $fetch(`${baseURL}/core/faqs?per_page=${page}`, {
       method: "GET",
       headers,
       params: {
@@ -338,7 +338,7 @@ export const useApi = () => {
     });
   };
   // done
-  const toDefault = async (id_default: any) => {
+  const changeCarToDefault = async (id_default: any) => {
     return await $fetch(
       `${baseURL}/customer/change-car-to-default/${id_default}`,
       {
@@ -348,8 +348,8 @@ export const useApi = () => {
     );
   };
   // done
-  const getWallet = async () => {
-    return await $fetch(`${baseURL}/customer/wallet`, {
+  const getWallet = async (page:any) => {
+    return await $fetch(`${baseURL}/customer/wallet?page=${page}`, {
       method: "GET",
       headers,
     });
@@ -500,6 +500,14 @@ export const useApi = () => {
     });
   };
 
+  const contactUs = async (form : any) => {
+    return await $fetch(`${baseURL}/core/contact-us`, {
+      method: "POST",
+      headers,
+      body: form,
+    });
+  }
+
   return {
     sendOTP,
     checkOTP,
@@ -539,7 +547,7 @@ export const useApi = () => {
     cartypes,
     createCar,
     deleteCar,
-    toDefault,
+    changeCarToDefault,
     getWallet,
     getStatusorders,
     getPoints,
@@ -558,5 +566,6 @@ export const useApi = () => {
     changeOrderStatus,
     reversationTime,
     changeCartToOrder,
+    contactUs
   };
 };

@@ -20,8 +20,8 @@
                 class="car-box d-flex justify-content-between box-main"
                 v-for="car in myCars"
                 :key="car.id"
+                @click="toggleEdit(car.id)"
               >
-                <div class="position-absolute bg-hover"></div>
                 <div class="car-detalis d-flex gap-2">
                   <div class="car-img z-index position-relative">
                     <img :src="car.car_type.image" :alt="car.car_type.title" />
@@ -30,10 +30,7 @@
                     <p>{{ car.car_type.title }}</p>
                   </div>
                 </div>
-                <div
-                  class="position-relative z-index"
-                  @click="toggleEdit(car.id)"
-                >
+                <div class="position-relative z-index">
                   <svg
                     width="14"
                     height="4"
@@ -59,20 +56,22 @@
                   <div
                     class="default box-main-color box-btn d-flex align-items-center gap-2 justify-content-center mb-3"
                     :class="{ isDefault: car.is_default }"
+                    @click.stop="setDefault(car.id)"
                   >
                     <input
                       class="set-default"
                       type="checkbox"
-                      :id="setDefault"
+                      :id="`car-${car.id}`"
                       :checked="car.is_default"
                       :disabled="car.is_default"
-                      @change="setDefault(car.id)"
+                      @click.stop
                     />
                     <label
-                      :for="setDefault"
+                      :for="`car-${car.id}`"
                       class="text-capitalize label-cursor"
-                      >set as default</label
                     >
+                      set as default
+                    </label>
                   </div>
 
                   <div
@@ -118,16 +117,15 @@ let token = useCookie("token").value;
 let myCars = ref([]);
 let IsNotRegitser = ref(false);
 
-
-  if (!token) {
+if (!token) {
+  IsNotRegitser.value = true;
+} else {
+  let res = await useApi().getMycars();
+  myCars.value = res?.data;
+  if (res && res.status === false && res.message === "unauthenticated") {
     IsNotRegitser.value = true;
-  } else {
-    let res = await useApi().getMycars();
-    myCars.value = res?.data;
-    if (res && res.status === false && res.message === "unauthenticated") {
-      IsNotRegitser.value = true;
-    }
   }
+}
 
 let activeCarId = ref(null);
 
@@ -137,20 +135,29 @@ function toggleEdit(carId) {
 
 async function deleted(id) {
   try {
-    const res = await useApi().deleteCar(id);
-    if (res?.status) {
-      myCars.value = myCars.value.filter((car) => car.id !== id);
-    } else {
-      console.error("فشل في الحذف", res?.message);
+    let carIsDefault = myCars.value.find((car) => car.id === id);
+
+    let resDeleted = await useApi().deleteCar(id);
+    if (resDeleted?.status) {
+      myCars.value = myCars.value.filter((carid) => carid.id !== id);
+      console.log("car is Deleted");
+      if (carIsDefault?.is_default && myCars.value.length > 0) {
+        let newDefaultCar = myCars.value[0];
+        let resDefault = await useApi().changeCarToDefault(newDefaultCar.id);
+        if (resDefault?.status) {
+          let updatedCars = await useApi().getMycars();
+          myCars.value = updatedCars?.data || [];
+        }
+      }
     }
   } catch (err) {
-    console.error("حصل خطأ أثناء الحذف", err);
+    console.log(err);
   }
 }
 
 async function setDefault(carId) {
   try {
-    let res = await useApi().toDefault(carId);
+    let res = await useApi().changeCarToDefault(carId);
     if (res?.status) {
       let updatedCars = await useApi().getMycars();
       myCars.value = updatedCars?.data || [];
@@ -159,6 +166,7 @@ async function setDefault(carId) {
     console.error("فشل تعيين السيارة كافتراضية", err);
   }
 }
+
 console.log(myCars);
 </script>
 
