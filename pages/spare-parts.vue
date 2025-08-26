@@ -21,12 +21,11 @@
             <div class="service-content">
               <TitleServices
                 :title="sparepart.title"
-                :currency="sparepart.price_text"
-                :sar="'sar'"
+                :currency="sparepart.has_price ? sparepart.price_text + ' sar' : ''"
               />
             </div>
 
-            <div class="text-danger price-value mt-5">
+            <div v-if="!sparepart.has_price" class="text-danger price-value mt-5">
               سوف يتم تحديد السعر قريبا
             </div>
 
@@ -38,23 +37,6 @@
                 :isActive="activeIcon"
                 @click="handleAdd(sparepart)"
               />
-              <!-- <div v-else class="div-button">
-                <button class="additems text-capitalize label" disabled>
-                  <svg
-                    width="20"
-                    height="79"
-                    viewBox="0 0 80 79"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M40 78.3318C18.4344 78.3318 0.953125 60.7972 0.953125 39.1659C0.953125 17.5346 18.4344 0 40 0C61.5656 0 79.0469 17.5346 79.0469 39.1659C79.0469 60.7972 61.5656 78.3318 40 78.3318ZM36.107 54.8323L63.7132 27.1381L58.1919 21.6L36.107 43.7562L25.0607 32.6761L19.5394 38.2142L36.107 54.8323Z"
-                      fill="#67A93E"
-                    />
-                  </svg>
-                  added to cart
-                </button>
-              </div> -->
             </div>
           </div>
         </div>

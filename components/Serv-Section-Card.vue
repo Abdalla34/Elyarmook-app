@@ -46,7 +46,7 @@
         <div class="col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center">
           <div
             class="service-card text-center mb-4"
-            @click="navigateTo('/spareparts')"
+            @click="navigateTo('/spare-parts')"
           >
             <div class="service-icon-wrapper">
               <div class="service-icon">

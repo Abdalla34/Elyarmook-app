@@ -163,6 +163,8 @@ function handleImageUpload(event) {
     problemPhoto.value = file;
     fileName.value = file.name;
   }
+  console.log(problemPhoto.value);
+  console.log(fileName.value);
 }
 let UpdateOrderDetails = async () => {
   try {
@@ -191,9 +193,6 @@ let UpdateOrderDetails = async () => {
         path: "/cart-update-details",
         query: { id: idCart },
       });
-    }
-    for (let [key, val] of formData.entries()) {
-      console.log(key, val);
     }
   } catch (err) {
     console.log(err);

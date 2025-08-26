@@ -95,34 +95,12 @@ let amount = ref(null);
 
 const formAction = ref("");
 
-onMounted(() => {
-  // هنا بتحدد لينك صفحة الـ status بعد الدفع
-  formAction.value = `${window.location.origin}/payment-tamara-status`;
-});
-
 let paymentWithHyperPay = async () => {
   try {
     let res = await useApi().usePayment(id, brand.value);
     if (res) {
       checkoutId.value = res?.data?.checkoutId;
       amount.value = res?.data?.amount_to_pay;
-
-      window.wpwlOptions = {
-        style: "card",
-        locale: "en",
-        applePay: {
-          displayName: "Your Store Name",
-          total: {
-            label: "Total",
-            amount: amount.value,
-          },
-        },
-      };
-
-      const script = document.createElement("script");
-      script.src = `https://test.oppwa.com/v1/paymentWidgets.js?checkoutId=${checkoutId.value}`;
-      script.async = true;
-      document.body.appendChild(script);
     }
   } catch (err) {
     console.log(err);
@@ -133,7 +111,13 @@ function selecteBrand(brandPay) {
   brand.value = brandPay;
   paymentWithHyperPay();
 }
-const domain = window.location.origin;
+
+let domain = "";
+
+onMounted(() => {
+  domain = window.location.origin;
+  formAction.value = `${window.location.origin}/payment-tamara-status`;
+});
 
 let paywithTamara = async () => {
   try {
@@ -165,7 +149,7 @@ let paymentWihtTbby = async () => {
       window.location.href = res?.data?.checkout_url;
     }
   } catch (err) {
-    console.log('err',err);
+    console.log("err", err);
   }
 };
 </script>

@@ -1,9 +1,12 @@
-<template>
+   
+   <template>
+    <div> tes</div>
+   </template>
+   
+   <!-- <template>
   <div class="margin-top">
     <div class="container">
-      <!-- <div v-if="test">
-        <Veiws />
-      </div> -->
+
       <div class="row justify-content-center">
        
         <div class="col-lg-5 col-md-7">
@@ -81,7 +84,7 @@
               </div>
             </div>
 
-            <!-- تفاصيل السعر -->
+        
             <div class="">
               <h6 class="fw-bold">Cost Details</h6>
               <div class="box-design">
@@ -148,4 +151,4 @@ order.value = await useApi().getSingleOrder(id);
 
 <style scoped>
 @import "@/assets/css/confirmorder.css";
-</style>
+</style> -->

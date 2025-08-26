@@ -35,25 +35,27 @@
                 </span>
               </div>
               <p class="text-line color-gray">
-                {{ Math.trunc(offerId.data.offer.price_before_discount) }} SAR
+                {{ offerId.data.offer.price_before_discount }} SAR
               </p>
             </div>
 
             <div
-              class="learn-more-box margin-bottom-24px d-flex justify-content-between align-item-center"
+              class="learn-more-box margin-bottom-24px d-flex flex-column flex-md-row justify-content-between align-items-center gap-2"
             >
-              <div class="img-taby d-flex align-items-center gap-2 flex-wrap">
+              <div
+                class="img-taby d-flex align-items-center gap-2 flex-wrap w-100"
+              >
                 <img
                   src="/tabby-new 1.png"
                   alt="Tabby Logo"
                   class="tabby-img"
                 />
-                <p class="tabby-text mb-0">
+                <p class="tabby-text mb-0 text-break flex-grow-1">
                   4 Interest-free payments of
                   <span class="sar-currency fw-bold">22.41 SAR</span> With Tabby
                 </p>
               </div>
-              <div class="button-more p-color-fs text-capitalize">
+              <div class="button-more p-color-fs text-capitalize text-nowrap">
                 learn more
               </div>
             </div>
@@ -73,35 +75,13 @@
           </div>
 
           <!-- زرار الإضافة للكارت -->
-          <div class="width-button" v-if="offerId?.data?.offer">
+          <div class="width-button w-100" v-if="offerId?.data?.offer">
             <ButtonCard
               textButton="add to cart"
               :isActive="activeIcon"
               @click="handleAddToCart"
             />
           </div>
-          <!-- <div class="width-button" v-if="offerId?.data?.offer">
-            <button
-              
-              class="additems text-capitalize label"
-              disabled
-            >
-              <svg
-                width="20"
-                height="79"
-                viewBox="0 0 80 79"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M40 78.3318C18.4344 78.3318 0.953125 60.7972 0.953125 39.1659C0.953125 17.5346 18.4344 0 40 0C61.5656 0 79.0469 17.5346 79.0469 39.1659C79.0469 60.7972 61.5656 78.3318 40 78.3318ZM36.107 54.8323L63.7132 27.1381L58.1919 21.6L36.107 43.7562L25.0607 32.6761L19.5394 38.2142L36.107 54.8323Z"
-                  fill="#67A93E"
-                />
-              </svg>
-              added to cart
-            </button>
-          </div> -->
-
           <div class="no-offer" v-if="pageEmpty">
             <img src="/Car Brake Icon.png" alt="" />
           </div>
@@ -121,7 +101,6 @@ let steps = computed(() => {
   return extract(offerId.value?.data?.offer.description);
 });
 
-
 let activeIcon = ref(true);
 let route = useRoute();
 let idParams = route.params.id;
@@ -129,7 +108,6 @@ const dayjs = useDayjs();
 let offerId = ref(null);
 offerId.value = await useApi().getOfferSingle(idParams);
 let pageEmpty = ref(false);
-
 
 const { addToCart } = useApi();
 const token = useCookie("token").value;
@@ -148,4 +126,9 @@ const handleAddToCart = async () => {
 
 <style scoped>
 @import "/assets/css/singleoffer.css";
+.tabby-text {
+  width: 100%;
+  word-wrap: break-word; 
+  white-space: normal;   
+}
 </style>

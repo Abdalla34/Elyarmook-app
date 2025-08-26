@@ -2,6 +2,7 @@
   <div>
     <svg
       width="32"
+      class="hover"
       height="32"
       viewBox="0 0 32 32"
       fill="none"
@@ -26,4 +27,14 @@
 
 
 
-<style></style>
+<style>
+
+.hover {
+  transition: all 0.4s;
+  cursor: pointer;
+}
+.hover:hover {
+  stroke: white;
+  transform: scaleX(1.1);
+}
+</style>

@@ -92,28 +92,13 @@
             </div>
 
             <div
-              class="model-car margin-60px d-flex justify-content-between alig-items-center gap-3"
+              class="model-car margin-60px d-flex flex-wrap justify-content-between align-items-center gap-3"
             >
               <div
-                class="car-name d-flex align-items-center justify-content-center gap-4 box-car"
+                class="car-name d-flex align-items-center justify-content-center gap-4 box-car "
               >
                 <div class="icons-car">
-                  <svg
-                    width="24"
-                    height="25"
-                    viewBox="0 0 24 25"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M21.75 8.74031C21.75 9.15031 21.41 9.49031 21 9.49031H3C2.59 9.49031 2.25 9.15031 2.25 8.74031C2.25 8.33031 2.59 7.99031 3 7.99031H4.02L4.4 6.18031C4.76 4.43031 5.51 2.82031 8.49 2.82031H15.51C18.49 2.82031 19.24 4.43031 19.6 6.18031L19.98 7.99031H21C21.41 7.99031 21.75 8.33031 21.75 8.74031Z"
-                      fill="#7E7E7E"
-                    />
-                    <path
-                      d="M22.1796 14.4022C22.0296 12.7522 21.5896 10.9922 18.3796 10.9922H5.6196C2.4096 10.9922 1.9796 12.7522 1.8196 14.4022L1.2596 20.4922C1.1896 21.2522 1.4396 22.0122 1.9596 22.5822C2.4896 23.1622 3.2396 23.4922 4.0396 23.4922H5.9196C7.5396 23.4922 7.8496 22.5622 8.0496 21.9522L8.2496 21.3522C8.4796 20.6622 8.5396 20.4922 9.4396 20.4922H14.5596C15.4596 20.4922 15.4896 20.5922 15.7496 21.3522L15.9496 21.9522C16.1496 22.5622 16.4596 23.4922 18.0796 23.4922H19.9596C20.7496 23.4922 21.5096 23.1622 22.0396 22.5822C22.5596 22.0122 22.8096 21.2522 22.7396 20.4922L22.1796 14.4022ZM8.9996 16.4922H5.9996C5.5896 16.4922 5.2496 16.1522 5.2496 15.7422C5.2496 15.3322 5.5896 14.9922 5.9996 14.9922H8.9996C9.4096 14.9922 9.7496 15.3322 9.7496 15.7422C9.7496 16.1522 9.4096 16.4922 8.9996 16.4922ZM17.9996 16.4922H14.9996C14.5896 16.4922 14.2496 16.1522 14.2496 15.7422C14.2496 15.3322 14.5896 14.9922 14.9996 14.9922H17.9996C18.4096 14.9922 18.7496 15.3322 18.7496 15.7422C18.7496 16.1522 18.4096 16.4922 17.9996 16.4922Z"
-                      fill="#7E7E7E"
-                    />
-                  </svg>
+                  <PuplicIconCarIconOrder />
                 </div>
                 <div class="name" v-if="orderSelected.car_type">
                   <p class="text-capitalize parag">car model</p>
@@ -122,28 +107,13 @@
               </div>
 
               <div
-                class="order-number d-flex align-items-center justify-content-center gap-4 box-car"
+                class="order-number d-flex align-items-center justify-content-center gap-4 box-car "
               >
                 <div class="icons-car">
-                  <svg
-                    width="25"
-                    height="25"
-                    viewBox="0 0 25 25"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M10.9199 14.1603H13.7599L14.0799 11.3203H11.2399L10.9199 14.1603Z"
-                      fill="#7E7E7E"
-                    />
-                    <path
-                      d="M16.69 2.74219H8.31C4.67 2.74219 2.5 4.91219 2.5 8.55219V16.9222C2.5 20.5722 4.67 22.7422 8.31 22.7422H16.68C20.32 22.7422 22.49 20.5722 22.49 16.9322V8.55219C22.5 4.91219 20.33 2.74219 16.69 2.74219ZM19.32 11.3222H15.55L15.23 14.1722H18.6C19 14.1722 19.33 14.5022 19.33 14.9022C19.33 15.3022 19 15.6322 18.6 15.6322H15.07L14.66 19.2922C14.62 19.6622 14.3 19.9422 13.93 19.9422C13.9 19.9422 13.88 19.9422 13.85 19.9422C13.45 19.9022 13.16 19.5322 13.2 19.1322L13.59 15.6322H10.75L10.34 19.2922C10.3 19.6622 9.98 19.9422 9.61 19.9422C9.58 19.9422 9.56 19.9422 9.53 19.9422C9.13 19.9022 8.84 19.5322 8.88 19.1322L9.27 15.6322H5.68C5.28 15.6322 4.95 15.3022 4.95 14.9022C4.95 14.5022 5.28 14.1722 5.68 14.1722H9.45L9.77 11.3222H6.4C6 11.3222 5.67 10.9922 5.67 10.5922C5.67 10.1922 6 9.86219 6.4 9.86219H9.93L10.34 6.20219C10.38 5.80219 10.75 5.51219 11.15 5.55219C11.55 5.59219 11.84 5.96219 11.8 6.36219L11.41 9.86219H14.25L14.66 6.20219C14.71 5.80219 15.07 5.51219 15.47 5.55219C15.87 5.59219 16.16 5.96219 16.12 6.36219L15.73 9.86219H19.34C19.74 9.86219 20.07 10.1922 20.07 10.5922C20.07 10.9922 19.72 11.3222 19.32 11.3222Z"
-                      fill="#7E7E7E"
-                    />
-                  </svg>
+                  <PuplicIconHashtag />
                 </div>
                 <div class="number">
-                  <p class="text-capitalize parag">order nunmber</p>
+                  <p class="text-capitalize parag">order number</p>
                   <p class="name-order">{{ orderSelected.order_num }}</p>
                 </div>
               </div>
@@ -200,7 +170,7 @@
 
             <div class="steps">
               <ul
-                class="d-flex justify-content-center align-items-center gap-4"
+                class="d-flex justify-content-center align-items-center gap-4 flex-nowrap overflow-auto"
               >
                 <li>
                   <div class="bg-icons bg-active text-center">

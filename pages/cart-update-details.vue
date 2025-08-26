@@ -327,7 +327,7 @@
                 v-if="itemsUpdates?.data?.user_balance > 0"
                 class="wallet-box mt-3 d-flex align-items-center justify-content-between bg-light p-3 rounded-3 shadow-sm"
               >
-                <label for="wallet" class="form-label mb-0 fw-semibold"
+                <label for="usewallet" class="form-label mb-0 fw-semibold"
                   >Use Wallet Balance
                   <p class="p-color-fs">
                     you have {{ balance }} <span class="sar">SAR</span> in
@@ -340,7 +340,7 @@
                     class="form-check-input"
                     type="checkbox"
                     role="switch"
-                    id="wallet"
+                    id="usewallet"
                     @change="toggleUseWallet"
                     v-model="useWalletActive"
                   />
@@ -497,11 +497,6 @@ let toggleUseWallet = async () => {
       if (Number(resWallet?.data?.amount_to_pay) === 0) {
         let resChange = await useApi().changeCartToOrder(order_id);
         console.log("changeCartToOrder response:", resChange);
-
-        // if (resChange?.status === true) {
-        //   console.log("show", resChange?.message);
-        //   console.log("amount_to_pay 2:", Number(resWallet?.data?.amount_to_pay));
-        // }
       }
     } else {
       useWalletActive.value = resWallet?.data?.use_wallet;

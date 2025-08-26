@@ -446,3 +446,65 @@ img {
     padding: 6px 10px;
   }
 }
+.model-car .box-car {
+  flex: 1 1 45%; 
+  min-width: 200px;
+}
+
+@media (max-width: 768px) {
+  .model-car {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .model-car .box-car {
+    width: 100%; 
+    justify-content: flex-start;
+  }
+    .time-order {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .box-order {
+    width: 100%;
+  }
+}
+.steps {
+  overflow-x: auto;   
+  -webkit-overflow-scrolling: touch; 
+}
+
+.steps ul {
+  min-width: max-content; 
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.steps li {
+  flex: 0 0 auto;
+  text-align: center;
+}
+.time-order {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap; 
+}
+
+.box-order {
+  flex: 1 1 45%; 
+  min-width: 200px;
+  cursor: pointer;
+}
+@media (max-width: 480px) { 
+  .time-order {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .box-order {
+    width: 100%;
+  }
+}

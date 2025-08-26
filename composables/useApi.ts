@@ -9,6 +9,7 @@ export const useApi = () => {
     Authorization: `Bearer ${token.value}`,
     "Content-Type": "application/json",
     Accept: "application/json",
+    "Access-Control-Allow-Origin": "*",
   };
   // done
   const sendOTP = async (phone: any) => {
@@ -348,7 +349,7 @@ export const useApi = () => {
     );
   };
   // done
-  const getWallet = async (page:any) => {
+  const getWallet = async (page: any) => {
     return await $fetch(`${baseURL}/customer/wallet?page=${page}`, {
       method: "GET",
       headers,
@@ -500,13 +501,13 @@ export const useApi = () => {
     });
   };
 
-  const contactUs = async (form : any) => {
+  const contactUs = async (form: any) => {
     return await $fetch(`${baseURL}/core/contact-us`, {
       method: "POST",
       headers,
       body: form,
     });
-  }
+  };
 
   return {
     sendOTP,
@@ -566,6 +567,6 @@ export const useApi = () => {
     changeOrderStatus,
     reversationTime,
     changeCartToOrder,
-    contactUs
+    contactUs,
   };
 };

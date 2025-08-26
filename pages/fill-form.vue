@@ -62,12 +62,30 @@
           >
             <button class="text-capitalize fw-bold">send</button>
           </div>
+          <div
+            v-if="messageRes"
+            class="popup-msg position-absolute w-50 text-center top-50 start-50 translate-middle bg-light text-success fs-5"
+          >
+            <button
+              type="button"
+              class="btn-close position-absolute top-0 end-0"
+              aria-label="Close"
+              @click="messageRes = ''"
+            ></button>
+            <p class="mt-4">
+              {{ messageRes }}
+              <span><i class="fa-solid fa-check text-success"></i></span>
+             
+            </p>
+          </div>
+          <div class="over-lay" v-if="messageRes"></div>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script setup>
+let messageRes = ref("");
 let message = ref("");
 let Address = ref("");
 let name = ref("");
@@ -79,7 +97,10 @@ const SendData = async () => {
     name: name.value,
     phone: phone.value,
   };
-  await useApi().contactUs(form);
+  let res = await useApi().contactUs(form);
+  if (res?.status) {
+    messageRes.value = res?.message;
+  }
   Address.value = "";
   message.value = "";
   name.value = user.name;
@@ -106,5 +127,12 @@ let user = useCookie("user").value;
   .contact-us {
     padding: 100px 0px;
   }
+}
+
+.popup-msg {
+  padding: 20px 20px;
+  border-radius: 16px;
+  z-index: 10;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 </style>
