@@ -18,7 +18,7 @@
                   class="details-map"
                   v-for="(branch, index) in branches"
                   :key="branch.id"
-                  @click="focusBranch(index)"
+                  @click="focusBranch(branch.id)"
                 >
                   <div class="raiydah">
                     <h6 class="text-capitalize fw-bold">{{ branch.title }}</h6>
@@ -82,7 +82,6 @@ let map = null;
 let markers = [];
 let infoWindows = [];
 
-// جلب الفروع
 try {
   const res = await useApi().getBranches();
   branches.value = res.data?.items || [];
@@ -90,7 +89,7 @@ try {
   console.error(err);
 }
 
-// تحميل Google Maps
+
 onMounted(() => {
   if (!window.google) {
     const script = document.createElement("script");
@@ -145,11 +144,11 @@ function initMap() {
   });
 }
 
-// دالة تركز على فرع عند الضغط على الـ Scroll list
-function focusBranch(index) {
-  const branch = branches.value[index];
-  const marker = markers[index];
-  const infoWindow = infoWindows[index];
+
+function focusBranch(branchId) {
+  const branch = branches.value.find(b => b.id === branchId);
+  const marker = markers[branches.value.indexOf(branch)];
+  const infoWindow = infoWindows[branches.value.indexOf(branch)];
 
   map.panTo({ lat: branch.lat, lng: branch.lng });
   map.setZoom(14);
