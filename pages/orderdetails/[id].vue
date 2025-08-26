@@ -95,7 +95,7 @@
               class="model-car margin-60px d-flex flex-wrap justify-content-between align-items-center gap-3"
             >
               <div
-                class="car-name d-flex align-items-center justify-content-center gap-4 box-car "
+                class="car-name d-flex align-items-center justify-content-center gap-4 box-car"
               >
                 <div class="icons-car">
                   <PuplicIconCarIconOrder />
@@ -107,7 +107,7 @@
               </div>
 
               <div
-                class="order-number d-flex align-items-center justify-content-center gap-4 box-car "
+                class="order-number d-flex align-items-center justify-content-center gap-4 box-car"
               >
                 <div class="icons-car">
                   <PuplicIconHashtag />
@@ -139,7 +139,7 @@
               </div>
 
               <div
-                @click="navigateTo('/map')"
+                @click="openInMaps(orderSelected?.branch)"
                 class="order-location text-center box-order border-radius-36px border-radius-36px"
                 v-if="orderSelected?.branch"
               >
@@ -360,6 +360,13 @@
 import dayjs from "#build/dayjs.imports.mjs";
 import { id } from "date-fns/locale";
 
+
+const openInMaps = (branch) => {
+  if (!branch?.lat || !branch?.lng) return;
+  const url = `https://www.google.com/maps/search/?api=1&query=${branch.lat},${branch.lng}`;
+  window.open(url, "_blank");
+};
+
 let activeFalse = ref(false);
 let route = useRoute();
 let order_id = route.params.id;
@@ -412,6 +419,14 @@ function toFalse() {
   cancelOrder.value = false;
   sureCancel.value = false;
 }
+
+const router = useRouter();
+
+onMounted(() => {
+  if (route.query?.from === 'cart-update-details') {
+    router.push("/cart");
+  }
+});
 </script>
 
 <style scoped>

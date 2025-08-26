@@ -38,6 +38,13 @@ try {
 } catch (err) {
   console.log(err);
 }
+const router = useRouter();
+onMounted(() => {
+  if (route.query?.from === 'cart-update-details') {
+    router.push("/cart");
+  }
+});
+
 </script>
 
 <style scoped>

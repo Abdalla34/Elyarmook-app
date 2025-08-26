@@ -12,19 +12,14 @@
             />
 
             <div class="map">
-              <!-- <div class="img-map img-offer-card img margin-40px">
-                <iframe
-                  width="100%"
-                  height="400"
-                  style="border: 0"
-                  loading="lazy"
-                  allowfullscreen
-                  src="https://www.google.com/maps?q=24.79986631091,46.697413512036&hl=ar&z=14&output=embed"
-                >
-                </iframe>
-              </div> -->
+              <div id="google-map" style="width: 100%; height: 400px"></div>
               <div class="scroll-map">
-                <div class="details-map" v-for="branch in branches">
+                <div style="cursor: pointer"
+                  class="details-map"
+                  v-for="(branch, index) in branches"
+                  :key="branch.id"
+                  @click="focusBranch(index)"
+                >
                   <div class="raiydah">
                     <h6 class="text-capitalize fw-bold">{{ branch.title }}</h6>
                   </div>
@@ -60,9 +55,7 @@
                         <PuplicIconLocation />
                       </div>
                       <div class="text width-text">
-                        <p class="font-p color">
-                          {{ branch.map_desc }}
-                        </p>
+                        <p class="font-p color">{{ branch.map_desc }}</p>
                       </div>
                       <div class="arrow">
                         <PuplicIconArrowLocation />
@@ -80,17 +73,88 @@
 </template>
 
 <script setup>
-let dayjs = useDayjs();
+import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 dayjs.extend(customParseFormat);
 
 let branches = ref([]);
+let map = null;
+let markers = [];
+let infoWindows = [];
+
+// جلب الفروع
 try {
-  let res = await useApi().getBranches();
-  branches.value = res.data?.items;
-  console.log(branches);
+  const res = await useApi().getBranches();
+  branches.value = res.data?.items || [];
 } catch (err) {
-  console.log(err);
+  console.error(err);
+}
+
+// تحميل Google Maps
+onMounted(() => {
+  if (!window.google) {
+    const script = document.createElement("script");
+    script.src =
+      "https://maps.googleapis.com/maps/api/js?key=AIzaSyBJfohIso1D_UllVzMFdpckDQVC5SkuEjk&libraries=places";
+    script.async = true;
+    script.defer = true;
+    script.onload = initMap;
+    document.head.appendChild(script);
+  } else {
+    initMap();
+  }
+});
+
+function initMap() {
+  if (!branches.value.length) return;
+
+  map = new google.maps.Map(document.getElementById("google-map"), {
+    center: {
+      lat: branches.value[0].lat,
+      lng: branches.value[0].lng,
+    },
+    zoom: 12,
+  });
+
+  branches.value.forEach((branch) => {
+    const marker = new google.maps.Marker({
+      position: { lat: branch.lat, lng: branch.lng },
+      map,
+      title: branch.title,
+    });
+    markers.push(marker);
+
+    const infoWindow = new google.maps.InfoWindow({
+      content: `
+        <div>
+          <h6>${branch.title}</h6>
+          <p>${branch.map_desc}</p>
+          <p>${dayjs(branch.start_time, "h:mm A").format("h:mm A")} - ${dayjs(
+        branch.end_time,
+        "h:mm A"
+      ).format("h:mm A")}</p>
+        </div>
+      `,
+    });
+    infoWindows.push(infoWindow);
+
+    marker.addListener("click", () => {
+      infoWindows.forEach((iw) => iw.close());
+      infoWindow.open(map, marker);
+    });
+  });
+}
+
+// دالة تركز على فرع عند الضغط على الـ Scroll list
+function focusBranch(index) {
+  const branch = branches.value[index];
+  const marker = markers[index];
+  const infoWindow = infoWindows[index];
+
+  map.panTo({ lat: branch.lat, lng: branch.lng });
+  map.setZoom(14);
+  infoWindows.forEach((iw) => iw.close());
+  infoWindow.open(map, marker);
 }
 </script>
 

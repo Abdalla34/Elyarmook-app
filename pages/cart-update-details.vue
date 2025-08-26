@@ -364,7 +364,7 @@
         <p class="text-success">order successfully!</p>
         <button-card
           class="width-btn w-50 m-auto mt-2"
-          @click="navigateTo(`/orderdetails/${order_id}`)"
+          @click="navigateTo(`/orderdetails/${order_id}?from=cart-update-details`)"
           text-button="view my orders"
         >
         </button-card>
