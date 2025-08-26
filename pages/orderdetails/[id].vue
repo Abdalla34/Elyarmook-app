@@ -259,7 +259,21 @@
               </ul>
             </div>
 
-            <div
+            <!-- <div class="items-list">
+              <div v-if="orderSelected?.services">
+                <div
+                  v-for="service in orderSelected.services"
+                  :key="service.id"
+                  class="item-services d-flex"
+                >
+                  <div class="item-name">{{ service.title }}</div>
+                  <div class="item-price">{{ service.price }} SAR</div>
+                  <img :src="service.image" :alt="service.title" class="img-service">
+                </div>
+              </div>
+            </div> -->
+
+            <!-- <div
               v-if="orderSelected.status === 'request_done'"
               class="input-code position-relative margin-60px"
             >
@@ -274,7 +288,7 @@
                 <span class="text-capitalize apply">apply</span>
                 <iconsOrder-applyCode />
               </button>
-            </div>
+            </div> -->
 
             <div
               v-for="order in orderSelected?.order_attributes"
