@@ -9,12 +9,18 @@
 
       <div class="phone-number d-flex flex-column">
         <label class="label" for="phone-number">Phone Number</label>
-        <input
+        <VueTelInput
           v-model="phone"
+          mode="international"
+          autoDefaultCountry
+          validCharactersOnly
+          :inputOptions="{
+            showDialCode: true,
+            showDialCodeInSelection: true,
+          }"
           class="input-phone"
-          placeholder="+966 XX XXX XXXX"
         />
-        <span class="text-danger">{{ errors.phone }}</span>
+        <span v-if="errors.phone" class="text-danger">{{ errors.phone }}</span>
       </div>
 
       <div class="btn-continue w-100 enter">
@@ -66,6 +72,8 @@
 </template>
 
 <script setup>
+import { VueTelInput } from "vue-tel-input";
+import "vue-tel-input/vue-tel-input.css";
 import { useForm, useField } from "vee-validate";
 import * as yup from "yup";
 
@@ -86,10 +94,13 @@ const { handleSubmit, errors } = useForm({
   validationSchema: schema,
 });
 const { value: phone } = useField("phone");
-
+watch(phone, (newVal) => {
+  phone.value = newVal.replace(/\s+/g, ""); 
+});
 const onSubmit = handleSubmit(async (values) => {
   loading.value = true;
   try {
+   
     const res = await sendOTP(values.phone);
     if (res && res.data && typeof res.data.registered !== "undefined") {
       router.push({
