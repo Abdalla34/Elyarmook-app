@@ -3,7 +3,7 @@
     <div class="container">
       <SwiperSlideHome />
       <Serv-Section-Card />
-      <swiper-card-slider />
+      <!-- <swiper-card-slider /> -->
       <qr-code-slider />
     </div>
   </div>

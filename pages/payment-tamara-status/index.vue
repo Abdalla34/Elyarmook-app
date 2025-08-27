@@ -1,3 +1,9 @@
+<template>
+  <div class="text-green-600 text-3xl font-bold mb-4 text-center fs-3">
+    جاري التحقق من حالة الدفع...
+  </div>
+</template>
+
 <script setup>
 let isChecking = false;
 let route = useRoute();
@@ -26,9 +32,3 @@ onMounted(async () => {
   }
 });
 </script>
-
-<template>
-  <div class="text-green-600 text-3xl font-bold mb-4 text-center fs-3">
-    جاري التحقق من حالة الدفع...
-  </div>
-</template>

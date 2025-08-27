@@ -13,10 +13,10 @@
 
             <div class="map">
               <div id="google-map" style="width: 100%; height: 400px"></div>
-              <div class="scroll-map">
+              <div class="scroll-map mt-3">
                 <div style="cursor: pointer"
                   class="details-map"
-                  v-for="(branch, index) in branches"
+                  v-for="branch in branches"
                   :key="branch.id"
                   @click="focusBranch(branch.id)"
                 >

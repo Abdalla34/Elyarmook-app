@@ -35,7 +35,8 @@ import "swiper/css/navigation";
 let images = ref([]);
 let res = await useApi().gethome();
 images.value = res?.data?.sliders;
-console.log(res)
+// console.log(res)
+
 </script>
 
 <style scoped>

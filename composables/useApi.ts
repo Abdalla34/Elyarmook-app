@@ -108,10 +108,11 @@ export const useApi = () => {
   };
 
   // done
-  const getSliders = async () => {
+  const getSliders = async (type: any) => {
     return await $fetch(`${baseURL}/core/sliders`, {
       method: "GET",
       headers,
+      params: { type },
     });
   };
 

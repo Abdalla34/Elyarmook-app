@@ -58,16 +58,11 @@
 
 <script setup>
 // import { add } from "date-fns";
-
 const { getServices, addToCart } = useApi();
-
 let loadingAddToCart = ref({});
-
-
 const { data: servicesData } = await useAsyncData("services", () =>
   getServices()
 );
-
 const services = computed(() => servicesData.value?.data?.items || []);
 let activeIcon = ref(true);
 
@@ -75,7 +70,8 @@ async function handleAdd(service) {
   loadingAddToCart.value[service.id] = true;
   try {
     let res = await addToCart("service", service.id, 1);
-     service.in_cart = true;
+    service.in_cart = true;
+
     if (res && res.status === false && res.message === "Unauthenticated") {
       return navigateTo("/createaccount");
     }
@@ -87,7 +83,20 @@ async function handleAdd(service) {
     loadingAddToCart.value[service.id] = false;
   }
 }
-console.log(services);
+
+let route = useRoute();
+onMounted(async (servicesId) => {
+  try {
+    if (route?.query?.from === "createaccount") {
+      let res = await useApi().addToCart("service", servicesId.id, 1);
+      if (res && res?.status === false && res?.message === 'Unauthorized') {
+        console.log('error', res?.message);
+      }
+    }
+  } catch (e) {
+    console.log('error', e?.res?.data?.message);
+  }
+});
 </script>
 
 <style scoped>
