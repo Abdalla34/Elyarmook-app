@@ -13,12 +13,13 @@
           v-model="phone"
           mode="international"
           autoDefaultCountry
+          defaultCountry="EG"
           validCharactersOnly
           :inputOptions="{
             showDialCode: true,
+            showFlags: true, 
             showDialCodeInSelection: true,
           }"
-          class="input-phone"
         />
         <span v-if="errors.phone" class="text-danger">{{ errors.phone }}</span>
       </div>
@@ -95,12 +96,11 @@ const { handleSubmit, errors } = useForm({
 });
 const { value: phone } = useField("phone");
 watch(phone, (newVal) => {
-  phone.value = newVal.replace(/\s+/g, ""); 
+  phone.value = newVal.replace(/\s+/g, "");
 });
 const onSubmit = handleSubmit(async (values) => {
   loading.value = true;
   try {
-   
     const res = await sendOTP(values.phone);
     if (res && res.data && typeof res.data.registered !== "undefined") {
       router.push({
