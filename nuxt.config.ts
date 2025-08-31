@@ -13,5 +13,5 @@ export default defineNuxtConfig({
     "@fortawesome/fontawesome-free/css/all.min.css",
     "@/assets/style.css",
   ],
-  modules: ["@pinia/nuxt", "@vee-validate/nuxt", "dayjs-nuxt"],
+  modules: [ "@vee-validate/nuxt", "dayjs-nuxt"],
 });

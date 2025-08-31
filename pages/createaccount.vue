@@ -84,20 +84,24 @@ const router = useRouter();
 const schema = yup.object({
   phone: yup
     .string()
-    .required("Phone number is required")
+    .required("")
     .min(7, "Phone number must be at least 7 digits")
     .matches(
       /^\+\d{10,15}$/,
       "Phone number must be in the format +XXXXXXXXXXX"
     ),
 });
+
 const { handleSubmit, errors } = useForm({
   validationSchema: schema,
 });
+
 const { value: phone } = useField("phone");
+
 watch(phone, (newVal) => {
   phone.value = newVal.replace(/\s+/g, "");
 });
+
 const onSubmit = handleSubmit(async (values) => {
   loading.value = true;
   try {
@@ -111,7 +115,8 @@ const onSubmit = handleSubmit(async (values) => {
         },
       });
     } else {
-      alert("Unexpected response from server");
+      // alert("Unexpected response from server");
+      console.log("Unexpected response from server");
     }
   } catch (e) {
     alert("Failed to send OTP");

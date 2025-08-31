@@ -377,7 +377,6 @@
 
 <script setup>
 let dayjs = useDayjs();
-
 const { updateCartDetails, deleteItemFromCart, updateCartItemQuantity } =
   useApi();
 const loadingDelete = ref({});
