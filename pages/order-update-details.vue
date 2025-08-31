@@ -8,7 +8,12 @@
           </h1>
 
           <div class="order">
-            <div class="input-user position-relative d-flex flex-column">
+            <ButtonCard
+              @click="navigateTo('/car-brand')"
+              v-if="mycars.length >= 0"
+              text-button="added your car"
+            />
+            <!-- <div v-if="mycars.length > 0" class="input-user position-relative d-flex flex-column">
               <label for="" class="label">my car</label>
               <select v-model="selectedCar" class="input-style">
                 <option disabled selected>Ex : {{ user.name }}</option>
@@ -19,7 +24,7 @@
               <div class="icon-shape position-absolute">
                 <icons-order-iconunion />
               </div>
-            </div>
+            </div> -->
 
             <div
               class="branch-date d-flex align-items-center justify-content-between gap-3"
@@ -198,6 +203,7 @@ let UpdateOrderDetails = async () => {
     console.log(err);
   }
 };
+console.log("mycars", mycars.value);
 </script>
 
 <style scoped>

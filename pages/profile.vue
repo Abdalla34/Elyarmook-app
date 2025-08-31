@@ -72,7 +72,7 @@
                 </div>
               </div>
 
-              <div class="row-inputs">
+              <div class="row-inputs" v-if="user.area && user.city">
                 <div class="input d-flex flex-column">
                   <label class="label" for="area">area</label>
                   <input type="text" disabled v-model="user.area.title" />
@@ -164,7 +164,11 @@
             <button class="text-capitalize">edit profile</button>
           </div>
 
-          <div @click="logOut" class="log-out width-height border-radius-36px">
+          <div
+            v-if="user.area && user.city"
+            @click="logOut"
+            class="log-out width-height border-radius-36px"
+          >
             <button class="text-capitalize">log out</button>
           </div>
 
@@ -172,7 +176,7 @@
             class="button-delete border-radius-36px width-height d-flex justify-content-center margin-bottom-90px"
           >
             <button
-              @click="deleteaccount(user)"
+              @click="deleteAccount(user)"
               class="text-capitalize color-but d-flex align-items-center gap-3"
             >
               <Trash />
@@ -232,7 +236,6 @@ watch(areaId, async (newAreaId) => {
   }
 });
 
-
 let editProfile = async () => {
   try {
     let res = await useApi().updateUserProfile({
@@ -249,7 +252,6 @@ let editProfile = async () => {
       return navigateTo("/createaccount");
     }
 
-   
     cookie.value = res.data.user;
     user.value = res.data.user;
 
@@ -261,8 +263,6 @@ let editProfile = async () => {
     console.error(err);
   }
 };
-
-
 </script>
 
 <style>

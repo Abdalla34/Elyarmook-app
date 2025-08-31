@@ -151,11 +151,13 @@ const token = useCookie("token", { maxAge: 365 * 24 * 60 * 60 });
 const guest = useCookie("guest", { maxAge: 365 * 24 * 60 * 60 });
 const user = useCookie("user", { maxAge: 365 * 24 * 60 * 60 });
 let addedCart = ref(false);
+
 const { getServices, addToCart } = useApi();
 let loadingAddToCart = ref<Record<number, boolean>>({});
 const { data: servicesData }: any = await useAsyncData("services", () =>
   getServices()
 );
+
 const services = computed(() => servicesData.value?.data?.items || []);
 let activeIcon = ref(true);
 let allCartGuest = ref<CartItem[]>([]);
@@ -280,9 +282,9 @@ const handleCheckOTP = async (otpValue: string) => {
       localStorage.removeItem("serviceToAdd"); // Clear local cart after transfer
     }
 
-    // Step 5: Redirect to car-brand page to complete registration
+    // Step 5: Redirect to order-update-details page to complete registration
     router.push({
-      path: "/car-brand",
+      path: "/order-update-details",
       query: {
         phone: phoneNum.value,
       },
