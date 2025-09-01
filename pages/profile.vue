@@ -185,6 +185,45 @@
           </div>
         </div>
       </div>
+      <div v-if="showDeactivateModal" class="modal-overlay">
+        <div class="modal-content">
+          <h3 class="mb-4">Why are you leaving us?</h3>
+          <form @submit.prevent="confirmDelete">
+            <div class="deactivate-reasons">
+              <div
+                v-for="reason in resDeactivated?.data"
+                :key="reason.id"
+                class="reason-item"
+              >
+                <input
+                  type="radio"
+                  :id="reason.id"
+                  :value="reason.id"
+                  v-model="selectedReason"
+                  name="deactivateReason"
+                />
+                <label :for="reason.id">{{ reason.title }}</label>
+              </div>
+            </div>
+            <div class="modal-actions">
+              <button
+                type="button"
+                class="btn-cancel"
+                @click="showDeactivateModal = false"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                class="btn-confirm"
+                :disabled="!selectedReason"
+              >
+                Confirm Delete
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -263,6 +302,38 @@ let editProfile = async () => {
     console.error(err);
   }
 };
+
+let resDeactivated = await useApi().getDeactivatedReasons();
+
+const showDeactivateModal = ref(false);
+const selectedReason = ref(null);
+
+const deleteAccount = async () => {
+  showDeactivateModal.value = true;
+};
+
+const confirmDelete = async () => {
+  try {
+    if (!selectedReason.value) return;
+    const res = await useApi().deleteaccount(selectedReason.value, "web");
+    if (res?.status === false) {
+      if (res.message === "Unauthenticated") {
+        token.value = null;
+        cookie.value = null;
+        return navigateTo("/createaccount");
+      }
+      console.error("Delete account failed:", res.message);
+      return;
+    }
+    token.value = null;
+    cookie.value = null;
+    user.value = null;
+    showDeactivateModal.value = false;
+    router.push("/");
+  } catch (err) {
+    console.error("Error deleting account:", err);
+  }
+};
 </script>
 
 <style>
@@ -315,5 +386,72 @@ let editProfile = async () => {
 }
 .Edit {
   background-color: var(--main-color);
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 500px;
+}
+
+.deactivate-reasons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.reason-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.reason-item label {
+  margin-bottom: 0;
+  cursor: pointer;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.btn-cancel,
+.btn-confirm {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-cancel {
+  background: #f5f5f5;
+}
+
+.btn-confirm {
+  background: #eb5757;
+  color: white;
+}
+
+.btn-confirm:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 </style>

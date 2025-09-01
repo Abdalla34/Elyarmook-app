@@ -21,41 +21,36 @@
                 :sar="'sar'"
               />
             </div>
+            <div  v-if="inCart[service.id]"  class="text-danger" @click="removeFromlocal(service)">
+              delete this item
+            </div>
             <div class="div-button">
               <ButtonCard
-                v-if="!isServiceInLocalCart(service.id) && !service.in_cart"
+                v-if="!inCart[service.id]"
                 :textButton="
-                  loadingAddToCart[service.id] ? 'Loading...' : 'add to cart'
+                  loadingAddToCart[service.id] ? 'loading...' : 'add to cart'
                 "
-                :isActive="activeIcon"
                 @click="handleAdd(service)"
               />
-              <div class="div-button">
-                <button
-                  v-if="isServiceInLocalCart(service.id) || service.in_cart"
-                  class="additems text-capitalize label"
-                  disabled
-                >
-                  <PuplicIconBtnCartAdded />
-                  added to cart
-                </button>
-              </div>
+              <button
+                v-if="inCart[service.id]"
+                class="additems text-capitalize label"
+                disabled
+              >
+                <PuplicIconBtnCartAdded />
+                added to cart
+              </button>
             </div>
           </div>
         </div>
-        <div
-          @click="inputRigsGuest = true"
-          class="isadded-continue position-fixed left-0 bottom-0"
-        >
-          <ButtonCard textButton="continue shopping" />
-        </div>
+
         <!-- Phone Number Modal -->
-        <div v-if="inputRigsGuest" class="modal-overlay">
+        <div v-if="showDialCode" class="modal-overlay">
           <div class="modal-content">
             <h3 class="mb-4">Enter your phone number</h3>
             <div class="phone-input-container mb-4">
               <VueTelInput
-                v-model="phoneNum"
+                v-model="phone"
                 mode="international"
                 autoDefaultCountry
                 defaultCountry="EG"
@@ -68,15 +63,12 @@
                 class="phone-input"
               />
             </div>
-            <button
-              class="btn btn-primary w-100"
-              @click="handleContinueShopping"
-            >
+            <button class="btn btn-primary w-100" @click="handleSendOtp">
               Continue
             </button>
             <button
               class="btn btn-secondary mt-2 w-100"
-              @click="inputRigsGuest = false"
+              @click="showDialCode = false"
             >
               Cancel
             </button>
@@ -87,18 +79,21 @@
         <div v-if="showOtpModal" class="modal-overlay">
           <div class="modal-content">
             <h3 class="mb-4">Enter OTP Code</h3>
-            <div class="d-flex justify-content-center gap-4 mb-4">
+            <div class="otp-wrapper">
               <v-otp-input
                 ref="otpInput"
-                v-model:value="code"
-                :input-classes="'input-style-otp'"
+                v-model:value="codeOtp"
                 :num-inputs="4"
-                separator=""
-                :should-auto-focus="true"
-                :placeholder="['*', '*', '*', '*']"
                 input-type="number"
-                @on-complete="handleCheckOTP"
+                :should-auto-focus="true"
+                :input-classes="'otp-input'"
+                :placeholder="['*', '*', '*', '*']"
+                separator=""
+                @on-complete="handleCheckOtp"
               />
+            </div>
+            <div :class="codecorrect ? 'text-danger' : 'text-success'">
+              {{ msgRes }}
             </div>
             <button
               class="btn btn-secondary mt-2 w-100"
@@ -109,92 +104,74 @@
           </div>
         </div>
         <div class="isEmpty"></div>
+        <div
+          v-if="btnShooping"
+          class="btn-shooping position-fixed left-0 bottom-0 width"
+        >
+          <ButtonCard @click="BtnShooping" textButton="continue shooping" />
+        </div>
       </div>
     </div>
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
+import { tr } from "date-fns/locale";
 import { VueTelInput } from "vue-tel-input";
 import "vue-tel-input/vue-tel-input.css";
 import VOtpInput from "vue3-otp-input";
 
-interface Service {
-  id: number;
-  title: string;
-  image: string;
-  price: number;
-  in_cart: boolean;
-}
-
-interface CartItem extends Service {}
-
-interface LoginResponse {
-  status: boolean;
-  data?: {
-    token: string;
-    user?: any;
-    registered?: boolean;
-  };
-  message?: string;
-}
-
-interface OTPResponse {
-  status?: boolean;
-  message?: string;
-  data?: {
-    registered?: boolean;
-  };
-}
-
-const token = useCookie("token", { maxAge: 365 * 24 * 60 * 60 });
-const guest = useCookie("guest", { maxAge: 365 * 24 * 60 * 60 });
+let services = ref([]);
+let token = useCookie("token", { maxAge: 365 * 24 * 60 * 60 });
 const user = useCookie("user", { maxAge: 365 * 24 * 60 * 60 });
-let addedCart = ref(false);
+const guest = useCookie("guest", { maxAge: 365 * 24 * 60 * 60 });
+let loadingAddToCart = ref({});
 
-const { getServices, addToCart } = useApi();
-let loadingAddToCart = ref<Record<number, boolean>>({});
-const { data: servicesData }: any = await useAsyncData("services", () =>
-  getServices()
-);
+try {
+  let res = await useApi().getServices();
+  services.value = res.data?.items || [];
+} catch (error) {
+  console.error("Error fetching services:", error);
+}
+const inCart = ref({});
+let allCartGuest = ref([]);
+let btnShooping = ref(false);
 
-const services = computed(() => servicesData.value?.data?.items || []);
-let activeIcon = ref(true);
-let allCartGuest = ref<CartItem[]>([]);
-let inputRigsGuest = ref(false);
-let phoneNum = ref("");
-let code = ref("");
-let showOtpModal = ref(false);
-let router = useRouter();
-const otpInput = ref<InstanceType<typeof VOtpInput> | null>(null);
+onMounted(async () => {
+  const storedCart = JSON.parse(localStorage.getItem("cartGuest")) || [];
+  allCartGuest.value = storedCart;
+  storedCart.forEach((item) => {
+    inCart.value[item.id] = true;
+    btnShooping.value = true;
+  });
+});
 
-async function handleAdd(service: Service) {
+async function handleAdd(service) {
   if (!token.value) {
-    // Get current cart from localStorage
-    let currentCart: CartItem[] = [];
+    let currentCart = [];
     try {
-      const storedCart = localStorage.getItem("serviceToAdd");
+      const storedCart = localStorage.getItem("cartGuest");
       currentCart = storedCart ? JSON.parse(storedCart) : [];
     } catch {
       currentCart = [];
     }
-    // Prevent duplicates
-    if (!currentCart.some((item: CartItem) => item.id === service.id)) {
+    if (!currentCart.some((item) => item.id === service.id)) {
       currentCart.push(service);
+      inCart.value[service.id] = true;
+      btnShooping.value = true;
     }
-    localStorage.setItem("serviceToAdd", JSON.stringify(currentCart));
+    localStorage.setItem("cartGuest", JSON.stringify(currentCart));
     allCartGuest.value = currentCart;
-    addedCart.value = true;
   }
 
   if (token.value) {
     loadingAddToCart.value[service.id] = true;
     try {
-      const res: any = await addToCart("service", service.id, 1);
-      if (res.success) {
-        service.in_cart = true;
+      const res = await useApi().addToCart("service", service.id, 1);
+      if (res.status) {
+        inCart.value[service.id] = true;
       }
-    } catch (err: any) {
+    } catch (err) {
       if (err?.response?.status === 401) {
         console.log("User is not authenticated");
       }
@@ -204,95 +181,232 @@ async function handleAdd(service: Service) {
   }
 }
 
-async function handleContinueShopping() {
-  const phone = phoneNum.value;
-  if (!phone) return;
-
-  try {
-    const res = (await useApi().sendOTP(phone)) as OTPResponse;
-    if (res?.status) {
-      // Hide phone input modal and show OTP modal
-      inputRigsGuest.value = false;
-      showOtpModal.value = true;
-    } else {
-      console.error("Failed to send OTP");
-    }
-  } catch (err) {
-    console.error("Failed to send OTP:", err);
+let showOtpModal = ref(false);
+let showDialCode = ref(false);
+let phone = ref(null);
+function BtnShooping() {
+  showDialCode.value = true;
+}
+async function handleSendOtp() {
+  let res = await useApi().sendOTP(phone.value);
+  if (res?.status) {
+    showOtpModal.value = true;
+    showDialCode.value = false;
   }
 }
 
-function isServiceInLocalCart(serviceId: number) {
-  try {
-    const storedCart = localStorage.getItem("serviceToAdd");
-    const items: CartItem[] = storedCart ? JSON.parse(storedCart) : [];
-    return items.some((item: CartItem) => item.id === serviceId);
-  } catch {
-    return false;
-  }
-}
-
-const handleCheckOTP = async (otpValue: string) => {
-  const otp = otpValue || code.value;
-  if (!phoneNum.value || !otp) return;
-
-  try {
-    // Step 1: Verify OTP code
-    const otpRes = (await useApi().checkOTP(
-      phoneNum.value,
-      otp
-    )) as OTPResponse;
-
-    if (!otpRes?.message?.includes("Code Is Correct")) {
-      console.error("Invalid OTP code");
-      return;
-    }
-
-    // Step 2: Login or register the user
-    const loginRes = (await useApi().loginOrRegister({
-      phone: phoneNum.value,
+let codeOtp = ref("");
+let codecorrect = ref(null);
+let msgRes = ref("");
+async function handleCheckOtp(otpValue) {
+  let otp = otpValue.value || codeOtp.value;
+  let res = await useApi().checkOTP(phone.value, otp);
+  if (res?.status) {
+    console.log("check code is correct now you can reigster");
+    msgRes.value = res?.message;
+    codecorrect.value = false;
+    let responseRigsetr = await useApi().loginOrRegister({
+      phone: phone.value,
       otp_code: otp,
-      registered: false,
-    })) as LoginResponse;
-
-    if (!loginRes?.status || !loginRes?.data?.token) {
-      console.error("Login/Register failed");
-      return;
-    }
-
-    // Step 3: Set tokens and user data
-
-    token.value = loginRes.data.token;
-    guest.value = "true"; // Mark as guest user
-
-    if (loginRes.data.user) {
-      user.value = JSON.stringify(loginRes.data.user);
-    }
-
-    // Close the OTP modal
-    showOtpModal.value = false;
-
-    // Step 4: Transfer cart items from localStorage to server
-    const storedCart = localStorage.getItem("serviceToAdd");
-    if (storedCart) {
-      const cartItems: CartItem[] = JSON.parse(storedCart);
-      for (const item of cartItems) {
-        await addToCart("service", item.id, 1);
-      }
-      localStorage.removeItem("serviceToAdd"); // Clear local cart after transfer
-    }
-
-    // Step 5: Redirect to order-update-details page to complete registration
-    router.push({
-      path: "/order-update-details",
-      query: {
-        phone: phoneNum.value,
-      },
     });
-  } catch (error) {
-    console.error("Error during authentication:", error);
+    if (responseRigsetr?.status) {
+      guest.value = true;
+      token.value = responseRigsetr?.data?.token;
+      user.value = JSON.stringify(responseRigsetr?.data?.user);
+      navigateTo("/order-update-details");
+    }
+    console.log(responseRigsetr);
+  } else {
+    codecorrect.value = true;
+    msgRes.value = res?.message;
+    console.log(res?.message);
   }
-};
+}
+
+function removeFromlocal(service) {
+  let getLocal = localStorage.getItem("cartGuest");
+  let cart = getLocal ? JSON.parse(getLocal) : [];
+  cart = cart.filter((item) => item.id !== service.id);
+  localStorage.setItem("cartGuest", JSON.stringify(cart));
+  allCartGuest.value = cart;
+  inCart.value[service.id] = false;
+  return cart;
+}
+
+// interface Service {
+//   id: number;
+//   title: string;
+//   image: string;
+//   price: number;
+//   in_cart: boolean;
+// }
+
+// interface CartItem extends Service {}
+
+// interface LoginResponse {
+//   status: boolean;
+//   data?: {
+//     token: string;
+//     user?: any;
+//     registered?: boolean;
+//   };
+//   message?: string;
+// }
+
+// interface OTPResponse {
+//   status?: boolean;
+//   message?: string;
+//   data?: {
+//     registered?: boolean;
+//   };
+// }
+
+// const token = useCookie("token", { maxAge: 365 * 24 * 60 * 60 });
+// const guest = useCookie("guest", { maxAge: 365 * 24 * 60 * 60 });
+// const user = useCookie("user", { maxAge: 365 * 24 * 60 * 60 });
+// let addedCart = ref(false);
+
+// const { getServices, addToCart } = useApi();
+// let loadingAddToCart = ref<Record<number, boolean>>({});
+// const { data: servicesData }: any = await useAsyncData("services", () =>
+//   getServices()
+// );
+
+// const services = computed(() => servicesData.value?.data?.items || []);
+// let activeIcon = ref(true);
+// let allCartGuest = ref<CartItem[]>([]);
+// let inputRigsGuest = ref(false);
+// let phoneNum = ref("");
+// let code = ref("");
+// let showOtpModal = ref(false);
+// let router = useRouter();
+// const otpInput = ref<InstanceType<typeof VOtpInput> | null>(null);
+
+// async function handleAdd(service: Service) {
+//   if (!token.value) {
+//     // Get current cart from localStorage
+//     let currentCart: CartItem[] = [];
+//     try {
+//       const storedCart = localStorage.getItem("serviceToAdd");
+//       currentCart = storedCart ? JSON.parse(storedCart) : [];
+//     } catch {
+//       currentCart = [];
+//     }
+//     // Prevent duplicates
+//     if (!currentCart.some((item: CartItem) => item.id === service.id)) {
+//       currentCart.push(service);
+//     }
+//     localStorage.setItem("serviceToAdd", JSON.stringify(currentCart));
+//     allCartGuest.value = currentCart;
+//     addedCart.value = true;
+//   }
+
+//   if (token.value) {
+//     loadingAddToCart.value[service.id] = true;
+//     try {
+//       const res: any = await addToCart("service", service.id, 1);
+//       if (res.success) {
+//         service.in_cart = true;
+//       }
+//     } catch (err: any) {
+//       if (err?.response?.status === 401) {
+//         console.log("User is not authenticated");
+//       }
+//     } finally {
+//       loadingAddToCart.value[service.id] = false;
+//     }
+//   }
+// }
+
+// async function handleContinueShopping() {
+//   const phone = phoneNum.value;
+//   if (!phone) return;
+
+//   try {
+//     const res = (await useApi().sendOTP(phone)) as OTPResponse;
+//     if (res?.status) {
+//       // Hide phone input modal and show OTP modal
+//       inputRigsGuest.value = false;
+//       showOtpModal.value = true;
+//     } else {
+//       console.error("Failed to send OTP");
+//     }
+//   } catch (err) {
+//     console.error("Failed to send OTP:", err);
+//   }
+// }
+
+// function isServiceInLocalCart(serviceId: number) {
+//   try {
+//     const storedCart = localStorage.getItem("serviceToAdd");
+//     const items: CartItem[] = storedCart ? JSON.parse(storedCart) : [];
+//     return items.some((item: CartItem) => item.id === serviceId);
+//   } catch {
+//     return false;
+//   }
+// }
+
+// const handleCheckOTP = async (otpValue: string) => {
+//   const otp = otpValue || code.value;
+//   if (!phoneNum.value || !otp) return;
+
+//   try {
+//     // Step 1: Verify OTP code
+//     const otpRes = (await useApi().checkOTP(
+//       phoneNum.value,
+//       otp
+//     )) as OTPResponse;
+
+//     if (!otpRes?.message?.includes("Code Is Correct")) {
+//       console.error("Invalid OTP code");
+//       return;
+//     }
+
+//     // Step 2: Login or register the user
+//     const loginRes = (await useApi().loginOrRegister({
+//       phone: phoneNum.value,
+//       otp_code: otp,
+//       registered: false,
+//     })) as LoginResponse;
+
+//     if (!loginRes?.status || !loginRes?.data?.token) {
+//       console.error("Login/Register failed");
+//       return;
+//     }
+
+//     // Step 3: Set tokens and user data
+
+//     token.value = loginRes.data.token;
+//     guest.value = "true"; // Mark as guest user
+
+//     if (loginRes.data.user) {
+//       user.value = JSON.stringify(loginRes.data.user);
+//     }
+
+//     // Close the OTP modal
+//     showOtpModal.value = false;
+
+//     // Step 4: Transfer cart items from localStorage to server
+//     const storedCart = localStorage.getItem("serviceToAdd");
+//     if (storedCart) {
+//       const cartItems: CartItem[] = JSON.parse(storedCart);
+//       for (const item of cartItems) {
+//         await addToCart("service", item.id, 1);
+//       }
+//       localStorage.removeItem("serviceToAdd"); // Clear local cart after transfer
+//     }
+
+//     // Step 5: Redirect to order-update-details page to complete registration
+//     router.push({
+//       path: "/order-update-details",
+//       query: {
+//         phone: phoneNum.value,
+//       },
+//     });
+//   } catch (error) {
+//     console.error("Error during authentication:", error);
+//   }
+// };
 </script>
 
 <style scoped>
@@ -322,7 +436,9 @@ const handleCheckOTP = async (otpValue: string) => {
   border: none;
   border-radius: 20px;
 }
-
+.width {
+  width: fit-content;
+}
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -359,16 +475,6 @@ const handleCheckOTP = async (otpValue: string) => {
 .phone-input {
   width: 100% !important;
 }
-
-.input-style-otp {
-  width: 40px !important;
-  height: 40px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  text-align: center;
-  font-size: 1.2rem;
-}
-
 /* Phone input styling */
 :deep(.vue-tel-input) {
   width: 100%;
@@ -403,5 +509,38 @@ const handleCheckOTP = async (otpValue: string) => {
   border: 1px solid #ddd;
   border-radius: 4px;
   margin-top: 4px;
+}
+
+.otp-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+:deep(.otp-input) {
+  width: 50px !important;
+  height: 50px !important;
+  padding: 8px;
+  font-size: 1.2rem;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  margin: 0 8px;
+  text-align: center;
+  background: white;
+}
+
+:deep(.otp-input:focus) {
+  outline: none;
+  border-color: #80bdff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+@media (max-width: 480px) {
+  :deep(.otp-input) {
+    width: 40px !important;
+    height: 40px !important;
+    font-size: 1rem;
+    margin: 0 4px;
+  }
 }
 </style>

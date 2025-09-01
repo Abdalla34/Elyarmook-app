@@ -399,10 +399,11 @@ export const useApi = () => {
     });
   };
   // done
-  const deleteaccount = async (idAcc: any) => {
+  const deleteaccount = async (deactivated_reason_id: any, fcm_type: any) => {
     return await $fetch(`${baseURL}/customer/delete-account`, {
       method: "POST",
-      body: idAcc,
+      body: { deactivated_reason_id, fcm_type },
+      headers,
     });
   };
   // done
