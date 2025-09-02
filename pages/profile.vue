@@ -208,7 +208,7 @@
             <div class="modal-actions">
               <button
                 type="button"
-                class="btn-cancel"
+                class="btn-cancel me-2"
                 @click="showDeactivateModal = false"
               >
                 Cancel

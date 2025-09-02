@@ -28,6 +28,7 @@
               <div
                 v-if="inCart[service.id]"
                 class="mt-2 mb-3"
+                :class="{ 'd-none': guest && guest === true }"
                 @click="removeFromlocal(service)"
               >
                 <button
