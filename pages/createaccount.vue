@@ -17,7 +17,7 @@
           validCharactersOnly
           :inputOptions="{
             showDialCode: true,
-            showFlags: true, 
+            showFlags: true,
             showDialCodeInSelection: true,
           }"
         />
@@ -101,7 +101,6 @@ const { value: phone } = useField("phone");
 watch(phone, (newVal) => {
   phone.value = newVal.replace(/\s+/g, "");
 });
-
 const onSubmit = handleSubmit(async (values) => {
   loading.value = true;
   try {

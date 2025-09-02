@@ -150,7 +150,7 @@ branches.value = resBranshes?.data?.items;
 let availableDates = ref([]);
 watch(selectedBranchId, async (newId) => {
   if (newId) {
-    selectedDate.value = null;
+    // selectedDate.value = null;
     let resDate = await useApi().getAvailableTimes(newId);
     availableDates.value = resDate?.available_times;
   }
@@ -192,7 +192,6 @@ let UpdateOrderDetails = async () => {
     }
 
     let response = await useApi().updateCartDetails(idCart, formData);
-
     if (response && response.data) {
       router.push({
         path: "/cart-update-details",

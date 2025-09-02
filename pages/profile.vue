@@ -322,8 +322,7 @@ const confirmDelete = async () => {
         cookie.value = null;
         return navigateTo("/createaccount");
       }
-      console.error("Delete account failed:", res.message);
-      return;
+
     }
     token.value = null;
     cookie.value = null;
@@ -338,40 +337,9 @@ const confirmDelete = async () => {
 
 <style>
 @import "@/assets/css/personalInformation.css";
-
-.msg-error {
-  background-color: white;
-  box-shadow: 0px 0px 20px 0px #0000000a;
-  border-radius: 30px;
-  padding: 20px;
-  text-align: center;
-  width: 100%;
-  margin: auto;
-  margin-bottom: 300px;
-  margin-top: 100px;
-}
-.goAcc {
-  border: none;
-  background-color: var(--main-color);
-  padding: 10px 20px;
-  margin-top: 20px;
-  border-radius: 20px;
-  cursor: pointer;
-  font-family: var(--font-main);
-  font-weight: 500;
-  font-size: 16px;
-  color: #040505;
-}
-.goAcc:hover {
-  border: none;
-  background-color: var(--main-color);
-  box-shadow: 0px 0px 20px 0px var(--main-color);
-}
-
 .log-out {
   background-color: aliceblue;
 }
-
 .button-delete {
   transition: all 0.3s ease-in-out;
 }
@@ -387,7 +355,6 @@ const confirmDelete = async () => {
 .Edit {
   background-color: var(--main-color);
 }
-
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -400,7 +367,6 @@ const confirmDelete = async () => {
   align-items: center;
   z-index: 1000;
 }
-
 .modal-content {
   background: white;
   padding: 2rem;
@@ -408,31 +374,21 @@ const confirmDelete = async () => {
   width: 90%;
   max-width: 500px;
 }
-
 .deactivate-reasons {
   display: flex;
   flex-direction: column;
   gap: 1rem;
   margin-bottom: 1.5rem;
 }
-
 .reason-item {
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
-
 .reason-item label {
   margin-bottom: 0;
   cursor: pointer;
 }
-
-.modal-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 1rem;
-}
-
 .btn-cancel,
 .btn-confirm {
   padding: 0.5rem 1rem;
@@ -440,16 +396,13 @@ const confirmDelete = async () => {
   border: none;
   cursor: pointer;
 }
-
 .btn-cancel {
   background: #f5f5f5;
 }
-
 .btn-confirm {
   background: #eb5757;
   color: white;
 }
-
 .btn-confirm:disabled {
   opacity: 0.5;
   cursor: not-allowed;
