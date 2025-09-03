@@ -494,6 +494,12 @@ export const useApi = () => {
       headers,
     });
   };
+  const chachOnDelivery = async (order_id: any) => {
+    return await $fetch(`${baseURL}/payment/cash-on-delivery/${order_id}`, {
+      method: "GET",
+      headers
+    });
+  };
   // done
   const updateUserProfile = async (userData: {
     first_name: any;
@@ -524,7 +530,7 @@ export const useApi = () => {
       headers,
     });
   };
-
+  // done
   const contactUs = async (form: any) => {
     return await $fetch(`${baseURL}/core/contact-us`, {
       method: "POST",
@@ -585,6 +591,7 @@ export const useApi = () => {
     tabbyStatusSuccess,
     tabbyStatusFailure,
     tabbyStatusCancel,
+    chachOnDelivery,
     updateUserProfile,
     toggleUseWallet,
     ToggleWarranty,

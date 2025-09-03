@@ -66,18 +66,18 @@
               <div class="position-absolute bg-hover"></div>
               <div class="name text-capitalize fw-bold">tabby</div>
             </div>
+
+            <div
+              @click="chachOnDelivery"
+              class="box-method d-flex gap-4 justify-content-center border-radius-36px p-color-fs align-items-center mb-4 position-relative box-hover-bg"
+            >
+              <div class="position-absolute bg-hover"></div>
+              <div class="name text-capitalize fw-bold">cach on delivery</div>
+            </div>
           </div>
 
           <div v-if="checkoutId" class="text-center">
-            <h4 class="name fw-bold text-capitalize mb-3">
-              amount to pay {{ amount }}
-            </h4>
-            <form
-              method="POST"
-              :action="formAction"
-              class="paymentWidgets"
-              :data-brands="brand.toUpperCase()"
-            />
+            <h4 class="name fw-bold text-capitalize mb-3"></h4>
           </div>
         </div>
       </div>
@@ -86,6 +86,8 @@
 </template>
 
 <script setup>
+import { useApi } from "#imports";
+
 let route = useRoute();
 let id = route.query.id;
 
@@ -151,6 +153,11 @@ let paymentWihtTbby = async () => {
   } catch (err) {
     console.log("err", err);
   }
+};
+
+let chachOnDelivery = async () => {
+  let res = await useApi().chachOnDelivery(id);
+  console.log(res);
 };
 </script>
 
