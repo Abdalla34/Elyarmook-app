@@ -255,10 +255,7 @@ function startCountdown() {
 async function handleSendOtp() {
   let phoneToSend = phone.value || lastPhone.value;
   let res = await useApi().sendOTP(phoneToSend);
-  if (
-    (res?.status && res?.data?.registered === false) ||
-    res?.data?.registered === "false"
-  ) {
+  if (res?.status) {
     lastPhone.value = phoneToSend;
     showOtpModal.value = true;
     showDialCode.value = false;
