@@ -150,7 +150,6 @@ branches.value = resBranshes?.data?.items;
 let availableDates = ref([]);
 watch(selectedBranchId, async (newId) => {
   if (newId) {
-    // selectedDate.value = null;
     let resDate = await useApi().getAvailableTimes(newId);
     availableDates.value = resDate?.available_times;
   }
@@ -191,19 +190,20 @@ let UpdateOrderDetails = async () => {
       formData.append("images[]", problemPhoto.value);
     }
 
-    let response = await useApi().updateCartDetails(idCart, formData);
+    let response = await useApi().updateCartDetails(myCart.value.id, formData);
     if (response && response.data) {
-      // router.push({
-      //   path: "/cart-update-details",
-      //   query: { id: idCart },
-      // });
+      router.push({
+        path: "/cart-update-details",
+        query: { id: myCart.value.id },
+      });
       console.log(response)
     }
   } catch (err) {
     console.log(err);
   }
 };
-console.log("mycars", mycars.value);
+console.log(myCart.value.id)
+// console.log("mycars", mycars.value);
 </script>
 
 <style scoped>
