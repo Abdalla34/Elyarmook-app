@@ -1,6 +1,8 @@
 <template>
   <div class="parent-button">
-    <button :type="type"
+    <button
+      :type="type"
+      :disabled="disabled"
       class="d-flex padding-button align-items-center justify-content-center gap-2 mb-3 button background-main border-radius-20px w-100 text-capitalize"
     >
       <puplic-icon-cart-icon v-if="isActive" />
@@ -13,10 +15,11 @@
 defineProps({
   textButton: String,
   isActive: Boolean,
+  disabled: Boolean,
   type: {
     type: String,
-    default: "button"
-  }
+    default: "button",
+  },
 });
 </script>
 

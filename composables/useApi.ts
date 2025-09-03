@@ -3,7 +3,7 @@ import appConfig from "~/app.config";
 export const useApi = () => {
   const appConfig = useAppConfig();
   const baseURL = appConfig.baseURL;
-  const token = useCookie("token", { maxAge: 365 * 24 * 60 * 60 });
+  let token = useCookie("token", { maxAge: 365 * 24 * 60 * 60 });
 
   const headers = {
     Authorization: `Bearer ${token.value}`,
@@ -168,11 +168,33 @@ export const useApi = () => {
     });
   };
 
-  const addToCartMulti = async (items: any) => {
+  // const addToCartMulti = async (items: {
+  //   type: any;
+  //   item_id: any;
+  //   qty: any;
+  // }) => {
+  //   let token = useCookie("token").value;
+  //   return await $fetch(`${baseURL}/marketplace/cart/add-to-cart-multi`, {
+  //     method: "POST",
+  //     body: { items },
+  //     headers: {
+  //       Authorization: `Bearer ${token}`,
+  //     },
+  //   });
+  // };
+  const addToCartMulti = async (
+    items: { type: any; item_id: any; qty: any },
+    token: any
+  ) => {
     return await $fetch(`${baseURL}/marketplace/cart/add-to-cart-multi`, {
       method: "POST",
       body: { items },
-      headers,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
     });
   };
 

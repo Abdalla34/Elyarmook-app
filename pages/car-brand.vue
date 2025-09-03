@@ -1,7 +1,6 @@
 <template>
   <div class="add-car">
     <div class="container mt-5">
-      
       <div v-if="step == 0">
         <div class="text-center search d-block mb-4">
           <input
@@ -70,21 +69,29 @@
       </div>
 
       <div class="chassis" v-if="step == 3">
-        <form @submit.prevent="SendData" class="chassis-form">
+        <form @submit.prevent="validateAndSend" class="chassis-form">
           <label class="chassis-label text-capitalize" for="chassisNumber">
-            chassis number</label
-          >
+            chassis number
+          </label>
           <input
             id="chassisNumber"
             type="text"
             placeholder="write chassis Number"
             class="chassis-input"
             v-model="carForm.chassis_number"
+            @input="chassisError = ''"
           />
-          <button-card text-button="add car" class="mt-4" type="submit" />
+          <span v-if="chassisError" class="error-message">{{
+            chassisError
+          }}</span>
+          <button-card
+            :disabled="!carForm.chassis_number"
+            text-button="add car"
+            class="mt-4"
+            type="submit"
+          />
         </form>
       </div>
-
     </div>
   </div>
 </template>
@@ -164,11 +171,20 @@ async function SendData() {
   } catch (err) {
     if (err?.response?.status === 401) {
       return navigateTo("/createaccount");
-    }else{
-      console.log('send data',err)
+    } else {
+      console.log("send data", err);
     }
   }
 }
+let chassisError = ref("");
+
+const validateAndSend = async () => {
+  if (!carForm.chassis_number || carForm.chassis_number.trim() === "") {
+    chassisError.value = "Please enter chassis number";
+    return;
+  }
+  await SendData();
+};
 </script>
 
 <style scoped>
@@ -177,5 +193,15 @@ async function SendData() {
   color: #7e7e7e;
   font-size: 14px;
   font-family: var(--font-main);
+}
+.error-message {
+  color: #eb5757;
+  font-size: 14px;
+  margin-top: 8px;
+  display: block;
+}
+
+.chassis-input.error {
+  border-color: #eb5757;
 }
 </style>

@@ -180,7 +180,7 @@ let route = useRoute();
 let phone = route.query.phone;
 let registered = route.query.registered === "true";
 let otp = route.query.otp_code;
-let guest = useCookie("guest");
+// let guest = useCookie("guest");
 let onSubmit = handleSubmit(async (values) => {
   let res = await useApi().loginOrRegister({
     first_name: values.firstName,
@@ -197,7 +197,7 @@ let onSubmit = handleSubmit(async (values) => {
     const user = useCookie("user", { maxAge: 365 * 24 * 60 * 60 });
     token.value = res.data.token;
     user.value = JSON.stringify(res.data.user);
-    guest.value = false;
+    // guest.value = false;
   }
   router.push("/car-brand");
 });

@@ -28,7 +28,6 @@
               <div
                 v-if="inCart[service.id]"
                 class="mt-2 mb-3"
-                :class="{ 'd-none': guest && guest === true }"
                 @click="removeFromlocal(service)"
               >
                 <button
@@ -42,7 +41,7 @@
             <!-- btn add to cart -->
             <div class="div-button mt-3">
               <ButtonCard
-                v-if="!inCart[service.id]"
+                v-if="!service.in_cart && !inCart[service.id]"
                 :textButton="
                   loadingAddToCart[service.id] ? 'loading...' : 'add to cart'
                 "
@@ -50,7 +49,7 @@
               />
               <!-- if includes cart -->
               <button
-                v-if="inCart[service.id]"
+                v-if="service.in_cart || inCart[service.id]"
                 class="additems text-capitalize label"
                 disabled
               >
@@ -145,7 +144,7 @@
         <div class="isEmpty"></div>
         <div
           v-if="btnShooping"
-          class="btn-shooping position-fixed left-0 bottom-0 width"
+          class="btn-shooping position-fixed left-50 bottom-0 width"
         >
           <ButtonCard @click="BtnShooping" textButton="continue shooping" />
         </div>
@@ -163,7 +162,7 @@ import VOtpInput from "vue3-otp-input";
 let services = ref([]);
 let token = useCookie("token", { maxAge: 365 * 24 * 60 * 60 });
 const user = useCookie("user", { maxAge: 365 * 24 * 60 * 60 });
-const guest = useCookie("guest", { maxAge: 365 * 24 * 60 * 60 });
+// const guest = useCookie("guest", { maxAge: 365 * 24 * 60 * 60 });
 let loadingAddToCart = ref({});
 
 try {
@@ -218,7 +217,7 @@ async function handleAdd(service) {
     try {
       const res = await useApi().addToCart("service", service.id, 1);
       if (res.status) {
-        inCart.value[service.id] = true;
+        service.in_cart = true;
       }
     } catch (err) {
       if (err?.response?.status === 401) {
@@ -269,6 +268,10 @@ async function handleSendOtp() {
   }
 }
 
+watch(phone, (newVal) => {
+  phone.value = newVal.replace(/\s+/g, "");
+});
+
 async function handleCheckOtp(otpValue) {
   let otp = otpValue.value || codeOtp.value;
   let res = await useApi().checkOTP(phone.value, otp);
@@ -279,12 +282,27 @@ async function handleCheckOtp(otpValue) {
       phone: phone.value,
       otp_code: otp,
     });
-    if (responseRigsetr?.status) {
-      guest.value = true;
+    if (responseRigsetr?.status && responseRigsetr?.data?.token) {
       token.value = responseRigsetr?.data?.token;
       user.value = JSON.stringify(responseRigsetr?.data?.user);
+
+      if (allCartGuest.value?.length) {
+        const items = allCartGuest.value.map((item) => ({
+          type: "service",
+          item_id: item.id,
+          qty: 1,
+        }));
+
+        let resMultiCart = await useApi().addToCartMulti(items, token.value);
+
+        if (resMultiCart?.status) {
+          localStorage.removeItem("cartGuest");
+          allCartGuest.value = [];
+        }
+      }
       navigateTo("/order-update-details");
     }
+
     console.log(responseRigsetr);
   } else {
     codecorrect.value = true;

@@ -23,6 +23,21 @@
                 :placeholder="['-', '-', '-', '-']"
               />
             </div>
+            <div class="text-center mt-3">
+              <p v-if="!showResendOtp" class="p-color-fs text-capitalize">
+                resend code after<span class="text-danger ps-2">
+                  {{ counter }} second
+                </span>
+              </p>
+              <p
+                v-else
+                class="text-primary text-capitalize mb-2"
+                style="cursor: pointer"
+                @click="sendOtpFn"
+              >
+                resend code
+              </p>
+            </div>
             <ButtonCard
               :textButton="loading ? 'Verifying...' : 'Verify'"
               @click="handleCheckOTP"
@@ -31,7 +46,7 @@
 
             <div class="code-true mt-3" v-if="codeNoteTrue">
               <p class="text-danger fs-4 text-center text-uppercase">
-                code not true 
+                code not true
               </p>
             </div>
           </div>
@@ -48,20 +63,44 @@ const route = useRoute();
 const router = useRouter();
 const { checkOTP, loginOrRegister } = useApi();
 
-// دوال المساعدة للتعامل مع الكويري سترينج
+onMounted(() => {
+  startCountdown();
+});
+
 const getQueryString = (val) => (Array.isArray(val) ? val[0] : val || "");
 const getQueryBool = (val) => {
   if (Array.isArray(val)) val = val[0];
   return val === "true" || val === true;
 };
 
-// تعريف الريأكتف متغيرات
 const phone = ref(getQueryString(route.query.phone));
 const registered = ref(getQueryBool(route.query.registered));
 const code = ref("");
 const loading = ref(false);
 let codeNoteTrue = ref(false);
-// دالة التحقق من OTP
+
+let counter = ref(null);
+let showResendOtp = ref(false);
+let timer = ref(null);
+function startCountdown() {
+  counter.value = 30;
+  timer = setInterval(() => {
+    if (counter.value > 0) {
+      counter.value -= 1;
+    } else {
+      clearInterval(timer);
+      showResendOtp.value = true;
+    }
+  }, 1000);
+}
+async function sendOtpFn() {
+  await useApi().sendOTP(phone.value);
+  if (phone.value) {
+    showResendOtp.value = false;
+    startCountdown();
+  }
+}
+
 const handleCheckOTP = async (otpValue) => {
   const otp = otpValue || code.value;
   if (!phone.value || !otp) return;
@@ -103,7 +142,7 @@ const handleCheckOTP = async (otpValue) => {
         });
       }
     } else {
-       codeNoteTrue.value = true;
+      codeNoteTrue.value = true;
     }
   } catch (e) {
     codeNoteTrue.value = true;

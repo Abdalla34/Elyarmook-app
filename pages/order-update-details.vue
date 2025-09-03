@@ -193,10 +193,11 @@ let UpdateOrderDetails = async () => {
 
     let response = await useApi().updateCartDetails(idCart, formData);
     if (response && response.data) {
-      router.push({
-        path: "/cart-update-details",
-        query: { id: idCart },
-      });
+      // router.push({
+      //   path: "/cart-update-details",
+      //   query: { id: idCart },
+      // });
+      console.log(response)
     }
   } catch (err) {
     console.log(err);

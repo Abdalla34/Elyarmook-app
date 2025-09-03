@@ -164,11 +164,7 @@
             <button class="text-capitalize">edit profile</button>
           </div>
 
-          <div
-            v-if="user.area && user.city"
-            @click="logOut"
-            class="log-out width-height border-radius-36px"
-          >
+          <div @click="logOut" class="log-out width-height border-radius-36px">
             <button class="text-capitalize">log out</button>
           </div>
 
@@ -322,7 +318,6 @@ const confirmDelete = async () => {
         cookie.value = null;
         return navigateTo("/createaccount");
       }
-
     }
     token.value = null;
     cookie.value = null;
