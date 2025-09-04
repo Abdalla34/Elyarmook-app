@@ -151,7 +151,7 @@ offerId.value = await useApi().getOfferSingle(idParams);
 let pageEmpty = ref(false);
 const token = useCookie("token");
 let guest = ref([]);
-let inCart = ref(false);
+let inCart = ref({})
 
 const handleAddToCart = async () => {
   const offer = offerId.value?.data?.offer;
