@@ -6,6 +6,7 @@
           :IsNotRegitser="msgError"
           message="your orders is Empty you must create account"
         />
+
         <div class="col-8 col-padding">
           <h1 data-v-8bcd5751 class="text-capitalize text title-pages">
             order Details
@@ -123,7 +124,7 @@
               </button>
               <button
                 type="button"
-                @click.prevent="UpdateOrderDetails"
+                @click="UpdateOrderDetails"
                 class="continue text-capitalize label button"
               >
                 continue
@@ -147,16 +148,10 @@ let selectedBranchId = useState("selectedBranchId", () => null);
 let selectedDate = useState("selectedDate", () => null);
 let note = useState("note", () => "");
 let myCart = ref([]);
+let resCart = await useApi().getMyCart();
+myCart.value = resCart?.data || [];
 
 let msgError = ref(false);
-try {
-  let resCart = await useApi().getMyCart();
-  myCart.value = resCart?.data || [];
-} catch (err) {
-  if (err?.response?.message === "Unauthentecated") {
-    msgError.value = true;
-  }
-}
 
 let mycars = ref([]);
 let res = await useApi().getMycars();
