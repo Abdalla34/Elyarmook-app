@@ -6,7 +6,7 @@
           :IsNotRegitser="notRegister"
           message="cart is Empty you must create account "
         />
-        
+
         <div
           class="empty-cart text-center"
           v-if="
@@ -219,7 +219,8 @@
             </div>
           </div>
         </div>
-
+        <!-- load component -->
+        <LoadingSpinner :is-loading-otp="isLoadingOtp" />
         <!-- right section -->
         <div
           class="col-12 col-md-12 col-lg-4 col-test"
@@ -369,9 +370,10 @@ async function updateQty(type, orderId, cart_item_id, newQty) {
     loadingQty.value[cart_item_id.id] = false;
   }
 }
-
+let isLoadingOtp = ref(false);
 let router = useRouter();
 function toContinue() {
+  isLoadingOtp.value = true;
   router.push({
     path: `/order-update-details`,
     query: {

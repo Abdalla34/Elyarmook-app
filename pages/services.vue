@@ -37,7 +37,6 @@
                 </button>
               </div>
             </div>
-
             <!-- btn add to cart -->
             <div class="div-button mt-3">
               <ButtonCard
@@ -141,11 +140,14 @@
             </button>
           </div>
         </div>
+        <!-- load component -->
+        <LoadingSpinner :is-loading-otp="isLoadingOtp" />
+        <!-- <div v-if="isLoadingOtp" class="spinner-overlay">
+          <div class="spinner"></div>
+          <p class="mt-2">Loading...</p>
+        </div> -->
         <div class="isEmpty"></div>
-        <div
-          v-if="btnShooping"
-          class="btn-shooping position-fixed left-50 bottom-0 width"
-        >
+        <div v-if="btnShooping" class="btn-shooping position-fixed bottom-0">
           <ButtonCard @click="BtnShooping" textButton="continue shooping" />
         </div>
       </div>
@@ -162,7 +164,6 @@ import VOtpInput from "vue3-otp-input";
 let services = ref([]);
 let token = useCookie("token", { maxAge: 365 * 24 * 60 * 60 });
 const user = useCookie("user", { maxAge: 365 * 24 * 60 * 60 });
-// const guest = useCookie("guest", { maxAge: 365 * 24 * 60 * 60 });
 let loadingAddToCart = ref({});
 
 try {
@@ -189,9 +190,6 @@ onMounted(async () => {
     inCart.value[item.id] = true;
     btnShooping.value = true;
   });
-  if (!token.value && !user.value) {
-    localStorage.removeItem("cartGuest");
-  }
 });
 
 async function handleAdd(service) {
@@ -236,6 +234,7 @@ function removeFromlocal(service) {
   localStorage.setItem("cartGuest", JSON.stringify(cart));
   allCartGuest.value = cart;
   inCart.value[service.id] = false;
+  btnShooping.value = false;
 }
 
 let counter = ref(null);
@@ -269,12 +268,14 @@ watch(phone, (newVal) => {
   phone.value = newVal.replace(/\s+/g, "");
 });
 
+let isLoadingOtp = ref(false);
 async function handleCheckOtp(otpValue) {
   let otp = otpValue.value || codeOtp.value;
   let res = await useApi().checkOTP(phone.value, otp);
   if (res?.status) {
-    msgRes.value = res?.message;
+    showOtpModal.value = false;
     codecorrect.value = false;
+    isLoadingOtp.value = true;
     let responseRigsetr = await useApi().loginOrRegister({
       phone: phone.value,
       otp_code: otp,
@@ -314,4 +315,9 @@ function BtnShooping() {
 
 <style scoped>
 @import "@/assets/css/services.css";
+.btn-shooping {
+  left: 50%;
+  width: fit-content;
+  transform: translateX(-50%);
+}
 </style>

@@ -25,7 +25,7 @@
 
             <div
               class="box-pages margin-bottom-24px col-padding"
-              v-for="item in visibleWallets"
+              v-for="item in wallets"
               :key="item.id"
             >
               <div
@@ -86,14 +86,31 @@
                 </div>
               </div>
             </div>
-            <div class="d-flex justify-content-center mt-4">
+            <div class="d-flex justify-content-center gap-3 mt-4">
               <button
-                v-if="itemsToShow < wallets.length"
-                @click="loadMore"
+                @click="handlePrev"
                 class="btn btn-primary"
+                :disabled="currentPage <= 1"
               >
-                Learn More
+                Prev
               </button>
+              <span class="align-self-center">Page {{ currentPage }}</span>
+
+              <button
+                @click="handleNext"
+                class="btn btn-primary"
+                :disabled="
+                  currentPage >=
+                  (allData?.transactions?.paginate?.total_pages || 1)
+                "
+              >
+                Next
+              </button>
+            </div>
+            <div v-if="isLoading" class="text-center my-4">
+              <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
             </div>
           </div>
         </div>
@@ -105,25 +122,40 @@
 <script setup>
 let dayjs = useDayjs();
 let wallets = ref([]);
-let itemsToShow = ref(4);
 let allData = ref(null);
+let currentPage = ref(1);
+
+const isLoading = ref(true);
 
 let getDataWallet = async (page = 1) => {
-  let resWallet = await useApi().getWallet(page);
-  allData.value = resWallet?.data || null;
-  wallets.value = resWallet?.data?.transactions?.items;
+  isLoading.value = true;
+  try {
+    let resWallet = await useApi().getWallet(page);
+    allData.value = resWallet?.data || null;
+    wallets.value = resWallet?.data?.transactions?.items || [];
+  } finally {
+    isLoading.value = false;
+  }
 };
 
-let visibleWallets = computed(() => {
-  return wallets.value.slice(0, itemsToShow.value);
-});
-function loadMore() {
-  itemsToShow.value += 4;
-}
+const handleNext = async () => {
+  if (currentPage.value >= allData?.transactions?.paginate?.total_pages) return;
+  currentPage.value++;
+  await getDataWallet(currentPage.value);
+  window.scrollTo({ top: 0, behavior: "smooth" });
+};
+
+const handlePrev = async () => {
+  if (currentPage.value > 1) {
+    currentPage.value--;
+    await getDataWallet(currentPage.value);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+};
+
 onMounted(() => {
   getDataWallet();
 });
-
 </script>
 
 <style scoped>

@@ -20,7 +20,7 @@
                 @click="selecteBrand('visa')"
                 class="name text-capitalize fw-bold"
               >
-                Pay with debit or credit card
+                Pay with visa
               </div>
             </div>
 
@@ -78,6 +78,11 @@
 
           <div v-if="checkoutId" class="text-center">
             <h4 class="name fw-bold text-capitalize mb-3"></h4>
+            <form
+              :action="formAction"
+              class="paymentWidgets"
+              data-brands="VISA MASTER MADA"
+            ></form>
           </div>
         </div>
       </div>
@@ -103,6 +108,18 @@ let paymentWithHyperPay = async () => {
     if (res) {
       checkoutId.value = res?.data?.checkoutId;
       amount.value = res?.data?.amount_to_pay;
+
+      let oldScript = document.querySelector(
+        'script[src*="oppwa.com/v1/paymentWidgets.js"]'
+      );
+      if (oldScript) {
+        oldScript.remove();
+      }
+
+      let script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src = `https://test.oppwa.com/v1/paymentWidgets.js?checkoutId=${checkoutId.value}`;
+      document.body.appendChild(script);
     }
   } catch (err) {
     console.log(err);

@@ -2,6 +2,10 @@
   <div class="order-details">
     <div class="container">
       <div class="row">
+        <NotRegister
+          :IsNotRegitser="msgError"
+          message="your orders is Empty you must create account"
+        />
         <div class="col-8 col-padding">
           <h1 data-v-8bcd5751 class="text-capitalize text title-pages">
             order Details
@@ -13,7 +17,10 @@
               v-if="mycars.length <= 0"
               text-button="added your car"
             />
-            <div v-if="mycars.length > 0" class="input-user position-relative d-flex flex-column">
+            <div
+              v-if="mycars.length > 0"
+              class="input-user position-relative d-flex flex-column"
+            >
               <label for="" class="label">my car</label>
               <select v-model="selectedCar" class="input-style">
                 <option disabled selected>Ex : {{ user.name }}</option>
@@ -115,7 +122,8 @@
                 add another items
               </button>
               <button
-                @click="UpdateOrderDetails"
+                type="button"
+                @click.prevent="UpdateOrderDetails"
                 class="continue text-capitalize label button"
               >
                 continue
@@ -124,7 +132,10 @@
           </div>
         </div>
       </div>
+      <!-- load component -->
+      <LoadingSpinner :is-loading-otp="isLoadingOtp" />
     </div>
+    <div class=""></div>
   </div>
 </template>
 
@@ -136,8 +147,16 @@ let selectedBranchId = useState("selectedBranchId", () => null);
 let selectedDate = useState("selectedDate", () => null);
 let note = useState("note", () => "");
 let myCart = ref([]);
-let resCart = await useApi().getMyCart();
-myCart.value = resCart?.data || [];
+
+let msgError = ref(false);
+try {
+  let resCart = await useApi().getMyCart();
+  myCart.value = resCart?.data || [];
+} catch (err) {
+  if (err?.response?.message === "Unauthentecated") {
+    msgError.value = true;
+  }
+}
 
 let mycars = ref([]);
 let res = await useApi().getMycars();
@@ -155,8 +174,7 @@ watch(selectedBranchId, async (newId) => {
   }
 });
 
-let route = useRoute();
-let idCart = route.query.id;
+let isLoadingOtp = ref(false);
 let router = useRouter();
 
 let fileName = useState("fileName", () => "");
@@ -171,6 +189,7 @@ function handleImageUpload(event) {
   console.log(fileName.value);
 }
 let UpdateOrderDetails = async () => {
+  isLoadingOtp.value = true;
   try {
     let reservationDateTime = null;
 
@@ -196,14 +215,12 @@ let UpdateOrderDetails = async () => {
         path: "/cart-update-details",
         query: { id: myCart.value.id },
       });
-      console.log(response)
+      console.log(response);
     }
   } catch (err) {
     console.log(err);
   }
 };
-console.log(myCart.value.id)
-// console.log("mycars", mycars.value);
 </script>
 
 <style scoped>
