@@ -73,14 +73,39 @@
               </div>
             </div>
           </div>
+          <OtpModal
+            :showDialCode="showDialCode"
+            :showOtpModal="showOtpModal"
+            :phone="phone"
+            :codeOtp="codeOtp"
+            :counter="counter"
+            :showResendOtp="showResendOtp"
+            :codecorrect="codecorrect"
+            :msgRes="msgRes"
+            @update:phone="phone = $event"
+            @update:codeOtp="codeOtp = $event"
+            @closeDialCode="showDialCode = false"
+            @closeOtpModal="showOtpModal = false"
+            @sendOtp="handleSendOtp"
+            @checkOtp="handleCheckOtp"
+            @resendOtp="handleSendOtp"
+          />
 
-          <!-- زرار الإضافة للكارت -->
-          <div class="width-button w-100" v-if="offerId?.data?.offer">
+          <div class="div-button mt-3">
             <ButtonCard
+              v-if="!inCart"
               textButton="add to cart"
-              :isActive="activeIcon"
               @click="handleAddToCart"
             />
+            <!-- if includes cart -->
+            <button
+              v-if="inCart"
+              class="additems text-capitalize label"
+              disabled
+            >
+              <PuplicIconBtnCartAdded />
+              added to cart
+            </button>
           </div>
           <div class="no-offer" v-if="pageEmpty">
             <img src="/Car Brake Icon.png" alt="" />
@@ -92,6 +117,22 @@
 </template>
 
 <script setup>
+onMounted(async () => {
+  const storedCart = JSON.parse(localStorage.getItem("cartGuest")) || [];
+  guest.value = storedCart;
+  storedCart.forEach((item) => {
+    inCart.value[item.id] = true;
+    btnShooping.value = true;
+  });
+});
+let showOtpModal = ref(false);
+let showDialCode = ref(false);
+let phone = ref(null);
+// let lastPhone = ref(null);
+let codeOtp = ref("");
+let codecorrect = ref(null);
+let msgRes = ref("");
+
 let extract = (textstep) => {
   if (!textstep) return [];
   return textstep.match(/(\d+\.\s?.+?)(?=\d+\.\s?|$)/gs) || [];
@@ -101,34 +142,65 @@ let steps = computed(() => {
   return extract(offerId.value?.data?.offer.description);
 });
 
-let activeIcon = ref(true);
+
 let route = useRoute();
 let idParams = route.params.id;
 const dayjs = useDayjs();
 let offerId = ref(null);
 offerId.value = await useApi().getOfferSingle(idParams);
 let pageEmpty = ref(false);
+const token = useCookie("token");
+let guest = ref([]);
+let inCart = ref(false);
 
-const { addToCart } = useApi();
-const token = useCookie("token").value;
 const handleAddToCart = async () => {
-  if (!token) {
-    return navigateTo("/createaccount");
+  const offer = offerId.value?.data?.offer;
+  if (!offer) return;
+
+  if (!token?.value) {
+    try {
+      let storage = localStorage.getItem("cartGuest");
+      let currentCart = storage ? JSON.parse(storage) : [];
+      if (!currentCart.some((item) => item.id === offer.id)) {
+        currentCart.push(offer);
+        console.log("Added to guest cart:", currentCart);
+      }
+      guest.value = currentCart;
+      localStorage.setItem("cartGuest", JSON.stringify(currentCart));
+      inCart.value = true;
+    } catch (err) {
+      console.error("Error parsing localStorage:", err);
+    }
+    return;
   }
+
   try {
-    const res = await addToCart("offer", Number(idParams), 1);
-    console.log("Added to cart:", res);
+    const res = await useApi().addToCart("offer", Number(idParams), 1);
+    console.log("Added to user cart:", res);
+    inCart.value = true;
   } catch (err) {
-    console.error("Add to cart failed:", err);
+    if (err?.response?.status === 401) {
+      console.log("User is not authenticated");
+    }
   }
 };
+
+// function removeFromlocal(id) {
+//   let getLocal = localStorage.getItem("cartGuest");
+//   let cart = JSON.parse(getLocal) || [];
+//   cart = cart.filter((item) => item.id !== id);
+//   localStorage.setItem("cartGuest", JSON.stringify(cart));
+//   allCartGuest.value = cart;
+//   inCart.value = false;
+//   btnShooping.value = false;
+// }
 </script>
 
 <style scoped>
 @import "/assets/css/singleoffer.css";
 .tabby-text {
   width: 100%;
-  word-wrap: break-word; 
-  white-space: normal;   
+  word-wrap: break-word;
+  white-space: normal;
 }
 </style>

@@ -59,93 +59,24 @@
           </div>
         </div>
 
-        <!-- Phone Number Modal -->
-        <div v-if="showDialCode" class="modal-overlay">
-          <div class="modal-content">
-            <h3 class="mb-4">Enter your phone number</h3>
-            <div class="phone-input-container mb-4">
-              <VueTelInput
-                v-model="phone"
-                mode="international"
-                autoDefaultCountry
-                defaultCountry="EG"
-                validCharactersOnly
-                :inputOptions="{
-                  showDialCode: true,
-                  showFlags: true,
-                  showDialCodeInSelection: true,
-                }"
-                class="phone-input"
-              />
-            </div>
-            <button
-              :disabled="!phone || phone.length < 8"
-              class="btn btn btn-outline-warning w-100"
-              @click="handleSendOtp"
-            >
-              Continue
-            </button>
-            <button
-              class="btn btn-outline-danger mt-2 w-100"
-              @click="showDialCode = false"
-            >
-              Cancel
-            </button>
-          </div>
-        </div>
-
-        <!-- OTP Modal -->
-        <div v-if="showOtpModal" class="modal-overlay">
-          <div class="modal-content text-center">
-            <h3 class="mb-2">Enter OTP Code</h3>
-            <p class="p-color-fs mb-2">
-              Please check your phone to see the verification code 📨
-            </p>
-            <div class="otp-wrapper">
-              <v-otp-input
-                ref="otpInput"
-                v-model:value="codeOtp"
-                :num-inputs="4"
-                input-type="number"
-                :should-auto-focus="true"
-                :input-classes="'otp-input'"
-                :placeholder="['*', '*', '*', '*']"
-                separator=""
-                @on-complete="handleCheckOtp"
-              />
-            </div>
-            <div :class="codecorrect ? 'text-danger' : 'text-success'">
-              {{ msgRes }}
-            </div>
-            <div class="text-center mt-3">
-              <p v-if="!showResendOtp" class="p-color-fs text-capitalize">
-                resend code after<span class="text-danger ps-2">
-                  {{ counter }} second
-                </span>
-              </p>
-              <p
-                v-else
-                class="text-primary text-capitalize"
-                style="cursor: pointer"
-                @click="handleSendOtp"
-              >
-                resend code
-              </p>
-            </div>
-            <button
-              class="btn btn btn-outline-danger mt-2 w-100"
-              @click="showOtpModal = false"
-            >
-              Cancel
-            </button>
-          </div>
-        </div>
-        <!-- load component -->
+        <OtpModal
+          :showDialCode="showDialCode"
+          :showOtpModal="showOtpModal"
+          :phone="phone"
+          :codeOtp="codeOtp"
+          :counter="counter"
+          :showResendOtp="showResendOtp"
+          :codecorrect="codecorrect"
+          :msgRes="msgRes"
+          @update:phone="phone = $event"
+          @update:codeOtp="codeOtp = $event"
+          @closeDialCode="showDialCode = false"
+          @closeOtpModal="showOtpModal = false"
+          @sendOtp="handleSendOtp"
+          @checkOtp="handleCheckOtp"
+          @resendOtp="handleSendOtp"
+        />
         <LoadingSpinner :is-loading-otp="isLoadingOtp" />
-        <!-- <div v-if="isLoadingOtp" class="spinner-overlay">
-          <div class="spinner"></div>
-          <p class="mt-2">Loading...</p>
-        </div> -->
         <div class="isEmpty"></div>
         <div v-if="btnShooping" class="btn-shooping position-fixed bottom-0">
           <ButtonCard @click="BtnShooping" textButton="continue shooping" />
@@ -315,9 +246,4 @@ function BtnShooping() {
 
 <style scoped>
 @import "@/assets/css/services.css";
-.btn-shooping {
-  left: 50%;
-  width: fit-content;
-  transform: translateX(-50%);
-}
 </style>

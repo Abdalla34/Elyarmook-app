@@ -14,7 +14,7 @@
   --font-main: "Poppins", sans-serif;
   --font-alt: "Manrope", sans-serif;
   --color-black: #040505;
-  --color-secound-main: #F7F7FC
+  --color-secound-main: #f7f7fc;
 }
 
 body {
@@ -377,7 +377,6 @@ button:hover {
   border-radius: 36px;
 }
 
-
 /* style Page single inputs  */
 .input-style,
 textarea {
@@ -491,7 +490,7 @@ textarea {
 }
 
 .active {
-  background-color: #EBEBEB;
+  background-color: #ebebeb;
   color: var(--color-black);
 }
 
@@ -580,4 +579,11 @@ textarea {
   to {
     transform: rotate(360deg);
   }
+}
+
+.btn-shooping {
+  left: 50%;
+  width: fit-content;
+  transform: translateX(-50%);
+  z-index: 100;
 }
