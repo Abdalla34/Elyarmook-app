@@ -112,6 +112,9 @@
           </div>
         </div>
       </div>
+      <div v-if="btnShooping" class="btn-shooping position-fixed bottom-0">
+        <ButtonCard @click="BtnShooping" textButton="continue shooping" />
+      </div>
     </div>
   </div>
 </template>
@@ -141,8 +144,7 @@ let extract = (textstep) => {
 let steps = computed(() => {
   return extract(offerId.value?.data?.offer.description);
 });
-
-
+let btnShooping = ref(false);
 let route = useRoute();
 let idParams = route.params.id;
 const dayjs = useDayjs();
@@ -151,7 +153,7 @@ offerId.value = await useApi().getOfferSingle(idParams);
 let pageEmpty = ref(false);
 const token = useCookie("token");
 let guest = ref([]);
-let inCart = ref({})
+let inCart = ref({});
 
 const handleAddToCart = async () => {
   const offer = offerId.value?.data?.offer;
@@ -168,6 +170,7 @@ const handleAddToCart = async () => {
       guest.value = currentCart;
       localStorage.setItem("cartGuest", JSON.stringify(currentCart));
       inCart.value = true;
+      btnShooping.value = true;
     } catch (err) {
       console.error("Error parsing localStorage:", err);
     }
