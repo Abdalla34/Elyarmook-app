@@ -58,25 +58,13 @@
             </div>
           </div>
         </div>
-
         <OtpModal
           :showDialCode="showDialCode"
           :showOtpModal="showOtpModal"
-          :phone="phone"
-          :codeOtp="codeOtp"
-          :counter="counter"
-          :showResendOtp="showResendOtp"
-          :codecorrect="codecorrect"
-          :msgRes="msgRes"
-          @update:phone="phone = $event"
-          @update:codeOtp="codeOtp = $event"
-          @closeDialCode="showDialCode = false"
-          @closeOtpModal="showOtpModal = false"
-          @sendOtp="handleSendOtp"
-          @checkOtp="handleCheckOtp"
-          @resendOtp="handleSendOtp"
+          @close-dial-code="showDialCode = false"
+          @close-otp-modal="showOtpModal = false"
+          @open-otp-modal="showOtpModal = true"
         />
-        <LoadingSpinner :is-loading-otp="isLoadingOtp" />
         <div class="isEmpty"></div>
         <div v-if="btnShooping" class="btn-shooping position-fixed bottom-0">
           <ButtonCard @click="BtnShooping" textButton="continue shooping" />
@@ -87,14 +75,8 @@
 </template>
 
 <script setup>
-import { tr } from "date-fns/locale";
-import { VueTelInput } from "vue-tel-input";
-import "vue-tel-input/vue-tel-input.css";
-import VOtpInput from "vue3-otp-input";
-
 let services = ref([]);
 let token = useCookie("token", { maxAge: 365 * 24 * 60 * 60 });
-const user = useCookie("user", { maxAge: 365 * 24 * 60 * 60 });
 let loadingAddToCart = ref({});
 
 try {
@@ -108,11 +90,6 @@ let allCartGuest = ref([]);
 let btnShooping = ref(false);
 let showOtpModal = ref(false);
 let showDialCode = ref(false);
-let phone = ref(null);
-let lastPhone = ref(null);
-let codeOtp = ref("");
-let codecorrect = ref(null);
-let msgRes = ref("");
 
 onMounted(async () => {
   const storedCart = JSON.parse(localStorage.getItem("cartGuest")) || [];
@@ -166,77 +143,6 @@ function removeFromlocal(service) {
   allCartGuest.value = cart;
   inCart.value[service.id] = false;
   btnShooping.value = false;
-}
-
-let counter = ref(null);
-let showResendOtp = ref(false);
-let timer = ref(null);
-function startCountdown() {
-  timer = setInterval(() => {
-    if (counter.value > 0) {
-      counter.value -= 1;
-    } else {
-      clearInterval(timer);
-      showResendOtp.value = true;
-    }
-  }, 1000);
-}
-
-async function handleSendOtp() {
-  let phoneToSend = phone.value || lastPhone.value;
-  let res = await useApi().sendOTP(phoneToSend);
-  if (res?.status) {
-    lastPhone.value = phoneToSend;
-    showOtpModal.value = true;
-    showDialCode.value = false;
-    showResendOtp.value = false;
-    counter.value = 30;
-    startCountdown();
-  }
-}
-
-watch(phone, (newVal) => {
-  phone.value = newVal.replace(/\s+/g, "");
-});
-
-let isLoadingOtp = ref(false);
-async function handleCheckOtp(otpValue) {
-  let otp = otpValue.value || codeOtp.value;
-  let res = await useApi().checkOTP(phone.value, otp);
-  if (res?.status) {
-    showOtpModal.value = false;
-    codecorrect.value = false;
-    isLoadingOtp.value = true;
-    let responseRigsetr = await useApi().loginOrRegister({
-      phone: phone.value,
-      otp_code: otp,
-    });
-    if (responseRigsetr?.status && responseRigsetr?.data?.token) {
-      token.value = responseRigsetr?.data?.token;
-      user.value = JSON.stringify(responseRigsetr?.data?.user);
-
-      if (allCartGuest.value?.length) {
-        const items = allCartGuest.value.map((item) => ({
-          type: "service",
-          item_id: item.id,
-          qty: 1,
-        }));
-
-        let resMultiCart = await useApi().addToCartMulti(items, token.value);
-
-        if (resMultiCart?.status) {
-          localStorage.removeItem("cartGuest");
-          allCartGuest.value = [];
-        }
-      }
-      navigateTo("/order-update-details");
-    }
-
-    console.log(responseRigsetr);
-  } else {
-    codecorrect.value = true;
-    msgRes.value = res?.message;
-  }
 }
 
 function BtnShooping() {
