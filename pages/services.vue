@@ -24,7 +24,6 @@
                 :sar="'sar'"
               />
 
-              <!-- delete button under price -->
               <div
                 v-if="inCart[service.id]"
                 class="mt-2 mb-3"
@@ -44,7 +43,7 @@
                 :textButton="
                   loadingAddToCart[service.id] ? 'loading...' : 'add to cart'
                 "
-                @click="handleAdd(service)"
+                @click="handleAdd(service, 'service')"
               />
               <!-- if includes cart -->
               <button
@@ -76,8 +75,18 @@
 
 <script setup>
 let services = ref([]);
-let token = useCookie("token", { maxAge: 365 * 24 * 60 * 60 });
-let loadingAddToCart = ref({});
+let showOtpModal = ref(false);
+let showDialCode = ref(false);
+
+const {
+  loadingAddToCart,
+  inCart,
+  allCartGuest,
+  btnShooping,
+  handleAdd,
+  removeFromlocal,
+  initCartFromLocalStorage,
+} = useAddToCart();
 
 try {
   let res = await useApi().getServices();
@@ -85,65 +94,10 @@ try {
 } catch (error) {
   console.error("Error fetching services:", error);
 }
-const inCart = ref({});
-let allCartGuest = ref([]);
-let btnShooping = ref(false);
-let showOtpModal = ref(false);
-let showDialCode = ref(false);
 
-onMounted(async () => {
-  const storedCart = JSON.parse(localStorage.getItem("cartGuest")) || [];
-  allCartGuest.value = storedCart;
-  storedCart.forEach((item) => {
-    inCart.value[item.id] = true;
-    btnShooping.value = true;
-  });
+onMounted(() => {
+  initCartFromLocalStorage();
 });
-
-async function handleAdd(service) {
-  if (!token.value) {
-    let currentCart = [];
-    try {
-      const storedCart = localStorage.getItem("cartGuest");
-      currentCart = storedCart ? JSON.parse(storedCart) : [];
-    } catch {
-      currentCart = [];
-    }
-    if (!currentCart.some((item) => item.id === service.id)) {
-      currentCart.push(service);
-      inCart.value[service.id] = true;
-      btnShooping.value = true;
-    }
-    localStorage.setItem("cartGuest", JSON.stringify(currentCart));
-    allCartGuest.value = currentCart;
-  }
-
-  if (token.value) {
-    loadingAddToCart.value[service.id] = true;
-    try {
-      const res = await useApi().addToCart("service", service.id, 1);
-      if (res.status) {
-        service.in_cart = true;
-      }
-    } catch (err) {
-      if (err?.response?.status === 401) {
-        console.log("User is not authenticated");
-      }
-    } finally {
-      loadingAddToCart.value[service.id] = false;
-    }
-  }
-}
-
-function removeFromlocal(service) {
-  let getLocal = localStorage.getItem("cartGuest");
-  let cart = JSON.parse(getLocal) || [];
-  cart = cart.filter((item) => item.id !== service.id);
-  localStorage.setItem("cartGuest", JSON.stringify(cart));
-  allCartGuest.value = cart;
-  inCart.value[service.id] = false;
-  btnShooping.value = false;
-}
 
 function BtnShooping() {
   showDialCode.value = true;
