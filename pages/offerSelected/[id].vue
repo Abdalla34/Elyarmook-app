@@ -76,39 +76,43 @@
           <OtpModal
             :showDialCode="showDialCode"
             :showOtpModal="showOtpModal"
-            :phone="phone"
-            :codeOtp="codeOtp"
-            :counter="counter"
-            :showResendOtp="showResendOtp"
-            :codecorrect="codecorrect"
-            :msgRes="msgRes"
-            @update:phone="phone = $event"
-            @update:codeOtp="codeOtp = $event"
-            @closeDialCode="showDialCode = false"
-            @closeOtpModal="showOtpModal = false"
-            @sendOtp="handleSendOtp"
-            @checkOtp="handleCheckOtp"
-            @resendOtp="handleSendOtp"
+            @close-dial-code="showDialCode = false"
+            @close-otp-modal="showOtpModal = false"
+            @open-otp-modal="showOtpModal = true"
           />
 
-          <div class="div-button mt-3">
-            <ButtonCard
-              v-if="!inCart"
-              textButton="add to cart"
-              @click="handleAddToCart"
-            />
-            <!-- if includes cart -->
-            <button
-              v-if="inCart"
-              class="additems text-capitalize label"
-              disabled
+          <!-- Cart functionality section -->
+          <div class="cart-section margin-bottom-24px">
+            <div
+              v-if="isOfferInCart"
+              class="mb-3"
+              @click="handleRemoveFromCart"
             >
-              <PuplicIconBtnCartAdded />
-              added to cart
-            </button>
-          </div>
-          <div class="no-offer" v-if="pageEmpty">
-            <img src="/Car Brake Icon.png" alt="" />
+              <button
+                class="btn btn-outline-danger btn-sm d-flex gap-2 align-items-center w-100 justify-content-center"
+              >
+                delete <Trash />
+              </button>
+            </div>
+
+            <div class="div-button">
+              <ButtonCard
+                v-if="!isOfferInCart"
+                :textButton="
+                  loadingAddToCart[offerId?.data?.offer?.id] ? 'loading...' : 'add to cart'
+                "
+                @click="handleAddToCart"
+              />
+              <!-- if includes cart -->
+              <button
+                v-if="isOfferInCart"
+                class="additems text-capitalize label w-100"
+                disabled
+              >
+                <PuplicIconBtnCartAdded />
+                added to cart
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -120,21 +124,32 @@
 </template>
 
 <script setup>
-onMounted(async () => {
-  const storedCart = JSON.parse(localStorage.getItem("cartGuest")) || [];
-  guest.value = storedCart;
-  storedCart.forEach((item) => {
-    inCart.value[item.id] = true;
-    btnShooping.value = true;
-  });
-});
+import { useAddToCart } from "@/composables/AddToCart";
+import Trash from "@/components/trash.vue";
+import PuplicIconBtnCartAdded from "@/components/Puplic-Icon/BtnCartAdded.vue";
+
+// Cart composable
+const {
+  loadingAddToCart,
+  inCart,
+  btnShooping,
+  handleAdd,
+  removeFromlocal,
+  initCartFromLocalStorage,
+} = useAddToCart();
+
+// Modal state
 let showOtpModal = ref(false);
 let showDialCode = ref(false);
-let phone = ref(null);
-// let lastPhone = ref(null);
-let codeOtp = ref("");
-let codecorrect = ref(null);
-let msgRes = ref("");
+
+// Route and data
+let route = useRoute();
+let idParams = route.params.id;
+const dayjs = useDayjs();
+let offerId = ref(null);
+
+// Get offer data
+offerId.value = await useApi().getOfferSingle(idParams);
 
 let extract = (textstep) => {
   if (!textstep) return [];
@@ -144,66 +159,37 @@ let extract = (textstep) => {
 let steps = computed(() => {
   return extract(offerId.value?.data?.offer.description);
 });
-let btnShooping = ref(false);
-let route = useRoute();
-let idParams = route.params.id;
-const dayjs = useDayjs();
-let offerId = ref(null);
-offerId.value = await useApi().getOfferSingle(idParams);
-let pageEmpty = ref(false);
-const token = useCookie("token");
-let guest = ref([]);
-let inCart = ref({});
+
+// Check if current offer is in cart
+const isOfferInCart = computed(() => {
+  const offer = offerId.value?.data?.offer;
+  return offer && (offer.in_cart || inCart.value[offer.id]);
+});
 
 const handleAddToCart = async () => {
   const offer = offerId.value?.data?.offer;
   if (!offer) return;
-
-  if (!token?.value) {
-    try {
-      let storage = localStorage.getItem("cartGuest");
-      let currentCart = storage ? JSON.parse(storage) : [];
-      if (!currentCart.some((item) => item.id === offer.id)) {
-        currentCart.push(offer);
-        console.log("Added to guest cart:", currentCart);
-      }
-      guest.value = currentCart;
-      localStorage.setItem("cartGuest", JSON.stringify(currentCart));
-      inCart.value = true;
-      btnShooping.value = true;
-    } catch (err) {
-      console.error("Error parsing localStorage:", err);
-    }
-    return;
-  }
-
-  try {
-    const res = await useApi().addToCart("offer", Number(idParams), 1);
-    console.log("Added to user cart:", res);
-    inCart.value = true;
-  } catch (err) {
-    if (err?.response?.status === 401) {
-      console.log("User is not authenticated");
-    }
-  }
+  
+  await handleAdd(offer, 'offer');
 };
 
-// function removeFromlocal(id) {
-//   let getLocal = localStorage.getItem("cartGuest");
-//   let cart = JSON.parse(getLocal) || [];
-//   cart = cart.filter((item) => item.id !== id);
-//   localStorage.setItem("cartGuest", JSON.stringify(cart));
-//   allCartGuest.value = cart;
-//   inCart.value = false;
-//   btnShooping.value = false;
-// }
+const handleRemoveFromCart = () => {
+  const offer = offerId.value?.data?.offer;
+  if (!offer) return;
+  
+  removeFromlocal(offer);
+};
+
+function BtnShooping() {
+  showDialCode.value = true;
+}
+
+onMounted(() => {
+  initCartFromLocalStorage();
+});
 </script>
 
 <style scoped>
-@import "/assets/css/singleoffer.css";
-.tabby-text {
-  width: 100%;
-  word-wrap: break-word;
-  white-space: normal;
-}
+@import "@/assets/css/services.css";
+@import "@/assets/css/singleoffer.css";
 </style>

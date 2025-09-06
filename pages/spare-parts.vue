@@ -7,7 +7,7 @@
           v-for="sparepart in spareParts"
           :key="sparepart.id"
         >
-          <div class="service-card text-center margin-bottom-24px">
+          <div class="service-card text-center margin-bottom-24px position-relative">
             <div class="service-icon-wrapper">
               <div class="service-icon">
                 <img
@@ -18,29 +18,62 @@
               </div>
             </div>
 
-            <div class="service-content">
+            <div class="service-content d-flex flex-column align-items-center">
               <TitleServices
                 :title="sparepart.title"
                 :currency="sparepart.has_price ? sparepart.price_text + ' sar' : ''"
               />
+
+              <div
+                v-if="inCart[sparepart.id]"
+                class="mt-2 mb-3"
+                @click="removeFromlocal(sparepart)"
+              >
+                <button
+                  class="btn btn-outline-danger btn-sm d-flex gap-2 align-items-center"
+                >
+                  delete <Trash />
+                </button>
+              </div>
             </div>
 
             <div v-if="!sparepart.has_price" class="text-danger price-value mt-5">
               سوف يتم تحديد السعر قريبا
             </div>
 
-            <div class="div-button">
+            <!-- btn add to cart -->
+            <div class="div-button mt-3">
               <ButtonCard
+                v-if="!sparepart.in_cart && !inCart[sparepart.id]"
                 :textButton="
-                  loadingAddToCart[sparepart.id] ? 'Loading...' : 'add to cart'
+                  loadingAddToCart[sparepart.id] ? 'loading...' : 'add to cart'
                 "
-                :isActive="activeIcon"
-                @click="handleAdd(sparepart)"
+                @click="handleAdd(sparepart, 'spare_part')"
               />
+              <!-- if includes cart -->
+              <button
+                v-if="sparepart.in_cart || inCart[sparepart.id]"
+                class="additems text-capitalize label"
+                disabled
+              >
+                <PuplicIconBtnCartAdded />
+                added to cart
+              </button>
             </div>
           </div>
         </div>
+        
+        <OtpModal
+          :showDialCode="showDialCode"
+          :showOtpModal="showOtpModal"
+          @close-dial-code="showDialCode = false"
+          @close-otp-modal="showOtpModal = false"
+          @open-otp-modal="showOtpModal = true"
+        />
         <div class="isEmpty"></div>
+        <div v-if="btnShooping" class="btn-shooping position-fixed bottom-0">
+          <ButtonCard @click="BtnShooping" textButton="continue shopping" />
+        </div>
       </div>
     </div>
   </div>
@@ -49,37 +82,59 @@
 <script setup>
 // import { add } from "date-fns";
 
-const { getSpareParts, addToCart } = useApi();
+const { getSpareParts } = useApi();
 
-let itemAdded = ref([]);
-let loadingAddToCart = ref({});
+// Cart composable
+const {
+  loadingAddToCart,
+  inCart,
+  allCartGuest,
+  btnShooping,
+  handleAdd,
+  removeFromlocal,
+  initCartFromLocalStorage,
+} = useAddToCart();
+
+// Modal state
+let showOtpModal = ref(false);
+let showDialCode = ref(false);
 
 const { data: sparePartsData } = await useAsyncData("spare_parts", () =>
   getSpareParts()
 );
 
 const spareParts = computed(() => sparePartsData.value?.data?.items || []);
-let activeIcon = ref(true);
 
-async function handleAdd(spareParts) {
-  loadingAddToCart.value[spareParts.id] = true;
-  try {
-    let res = await addToCart("spare_part", spareParts.id, 1);
-    if (res && res.status === false && res.message === "Unauthenticated") {
-      return navigateTo("/createaccount");
-    }
-  } catch (err) {
-    if (err?.response?.status === 401) {
-      return navigateTo("/createaccount");
-    }
-  } finally {
-    loadingAddToCart.value[spareParts.id] = false;
-  }
+function BtnShooping() {
+  showDialCode.value = true;
 }
 
-console.log("sparPart", spareParts);
+onMounted(() => {
+  initCartFromLocalStorage();
+});
 </script>
 
 <style scoped>
 @import "@/assets/css/services.css";
+
+.additems {
+  background-color: #e8f5e8;
+  border: 1px solid #4caf50;
+  color: #4caf50;
+  padding: 8px 16px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 500;
+}
+
+.btn-shooping {
+  width: 100%;
+  padding: 16px;
+  background: white;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
 </style>

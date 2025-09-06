@@ -165,7 +165,7 @@ async function handleCheckOtp(otpValue) {
 
         if (allCartGuest.value?.length) {
           const items = allCartGuest.value.map((item) => ({
-            type: "service",
+            type: item.itemType,
             item_id: item.id,
             qty: 1,
           }));
