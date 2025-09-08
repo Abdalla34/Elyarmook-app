@@ -25,7 +25,7 @@ export function useAddToCart() {
         currentCart = [];
       }
       if (!currentCart.some((item) => item.id === service.id)) {
-        currentCart.push(service);
+        currentCart.push({ id: service.id, qty: 1, type });
         inCart.value[service.id] = true;
         btnShooping.value = true;
       }
@@ -36,7 +36,7 @@ export function useAddToCart() {
     if (token.value) {
       loadingAddToCart.value[service.id] = true;
       try {
-        const res = await useApi().addToCart(type, service.id, 1);
+        const res: any = await useApi().addToCart(type, service.id, 1);
         if (res.status) {
           service.in_cart = true;
         }

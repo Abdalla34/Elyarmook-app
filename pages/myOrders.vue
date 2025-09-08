@@ -94,7 +94,7 @@ try {
     msgError.value = true;
   } else if (token.value) {
     orders.value = res?.data?.items ?? [];
-    console.log("orders ", res?.data?.items?.[0].created_at);
+    // console.log("orders ", res?.data?.items?.[0].created_at);
   }
 } catch (err) {
   if (err?.response?.status === 401) {

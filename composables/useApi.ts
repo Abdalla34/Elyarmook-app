@@ -188,7 +188,7 @@ export const useApi = () => {
   ) => {
     return await $fetch(`${baseURL}/marketplace/cart/add-to-cart-multi`, {
       method: "POST",
-      body: { items },
+      body: items,
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
@@ -497,7 +497,7 @@ export const useApi = () => {
   const chachOnDelivery = async (order_id: any) => {
     return await $fetch(`${baseURL}/payment/cash-on-delivery/${order_id}`, {
       method: "GET",
-      headers
+      headers,
     });
   };
   // done

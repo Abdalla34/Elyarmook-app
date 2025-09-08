@@ -21,29 +21,7 @@
             <h3 class="text-capitalize create">your cart is empty</h3>
             <div class="btn-items">
               <button @click="navigateTo('/services')">
-                <svg
-                  width="25"
-                  height="25"
-                  viewBox="0 0 25 25"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M6.5 12.5H18.5"
-                    stroke="#040505"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                  <path
-                    d="M12.5 18.5V6.5"
-                    stroke="#040505"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-                Add Items
+                <PuplicIconPlusIcon /> Add Items
               </button>
             </div>
           </div>
@@ -220,7 +198,7 @@
           </div>
         </div>
         <!-- load component -->
-        <LoadingSpinner :is-loading-otp="isLoadingOtp" />
+
         <!-- right section -->
         <div
           class="col-12 col-md-12 col-lg-4 col-test"
@@ -283,6 +261,7 @@
         </div>
       </div>
     </div>
+    <LoadingSpinner :is-loading-otp="isLoadingOtp" />
   </div>
 </template>
 

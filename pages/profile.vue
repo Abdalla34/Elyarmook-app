@@ -10,43 +10,14 @@
         <div class="row">
           <div class="col-8 col-padding">
             <div
-              v-if="user"
+              v-if="user && !editDone"
               class="profiel-img d-flex justify-content-between align-items-center margin-bottom-24px"
             >
               <h1 class="margin-bottom-24px text-capitalize personal mb-0">
                 personal information
               </h1>
               <div class="box-img position-relative text-center">
-                <img
-                  @click="ChangeProfile"
-                  src="/Ellipse 2.png"
-                  alt=""
-                  class="img-profile"
-                />
-                <div
-                  class="change-profile position-absolute"
-                  :class="{ 'd-block': profileImg }"
-                >
-                  <h6 class="h6 text-capitalize">profile picture</h6>
-                  <div
-                    class="change box-design d-flex gap-2 justify-content-center align-items-center"
-                  >
-                    <PresonalIconsChange />
-
-                    <p class="mb-0 text-capitalize paragraph-change font-p">
-                      change
-                    </p>
-                  </div>
-                  <div
-                    class="delete box-design d-flex gap-2 justify-content-center align-items-center"
-                  >
-                    <PresonalIconsIconDeleted />
-
-                    <p class="mb-0 text-capitalize font-p color-delete">
-                      delete
-                    </p>
-                  </div>
-                </div>
+                <img disabled src="/Ellipse 2.png" alt="" class="img-profile" />
               </div>
             </div>
           </div>
@@ -81,6 +52,49 @@
                 <div class="input d-flex flex-column">
                   <label class="label" for="city">city</label>
                   <input type="text" disabled v-model="user.city.title" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- edit image profile -->
+          <div class="col-8 col-padding">
+            <div
+              v-if="user && editDone"
+              class="profiel-img d-flex justify-content-between align-items-center margin-bottom-24px"
+            >
+              <h1 class="margin-bottom-24px text-capitalize personal mb-0">
+                personal information
+              </h1>
+              <div class="box-img position-relative text-center">
+                <img
+                  @click="ChangeProfile"
+                  src="/Ellipse 2.png"
+                  alt="profile"
+                  class="img-profile"
+                />
+                <div
+                  class="change-profile position-absolute"
+                  :class="{ 'd-block': profileImg }"
+                >
+                  <h6 class="h6 text-capitalize">profile picture</h6>
+                  <div
+                    class="change box-design d-flex gap-2 justify-content-center align-items-center"
+                  >
+                    <PresonalIconsChange />
+
+                    <p class="mb-0 text-capitalize paragraph-change font-p">
+                      change
+                    </p>
+                  </div>
+                  <div
+                    class="delete box-design d-flex gap-2 justify-content-center align-items-center"
+                  >
+                    <PresonalIconsIconDeleted />
+
+                    <p class="mb-0 text-capitalize font-p color-delete">
+                      delete
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -252,14 +266,11 @@ let cityId = ref(null);
 async function toEdit() {
   editDone.value = true;
   let countries = await useApi().getCountries();
-  console.log(countries);
   countryId.value = countries?.data?.[0]?.id;
-  console.log("countriesId ", countryId);
 
   let responseArea = await useApi().getAreasByCountry(countryId.value);
   allAreas.value = responseArea?.data;
   areaId.value = allAreas.value?.[0]?.id;
-  console.log("responseArea", allAreas);
 }
 
 watch(areaId, async (newAreaId) => {
@@ -267,7 +278,6 @@ watch(areaId, async (newAreaId) => {
     let responseCity = await useApi().getCitiesByArea(areaId.value);
     allCities.value = responseCity?.data;
     cityId.value = allCities.value?.[0]?.id;
-    console.log("responseCity", allCities);
   }
 });
 
@@ -279,9 +289,8 @@ let editProfile = async () => {
       phone: user.value.phone,
       city_id: cityId.value,
       area_id: areaId.value,
+      avatar: user.avatar,
     });
-
-    console.log("edit profile", res);
 
     if (res && res.status === false && res.message === "Unauthenticated") {
       return navigateTo("/createaccount");

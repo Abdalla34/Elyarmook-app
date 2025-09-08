@@ -8,7 +8,7 @@
       aria-labelledby="phoneModalLabel"
       aria-modal="true"
       role="dialog"
-      style="display: block;"
+      style="display: block"
       data-bs-backdrop="static"
       data-bs-keyboard="false"
       @mousedown.self="$emit('close-dial-code')"
@@ -17,7 +17,12 @@
         <div class="modal-content">
           <div class="modal-header">
             <h3 class="mb-0" id="phoneModalLabel">Enter your phone number</h3>
-            <button type="button" class="btn-close" aria-label="Close" @click="$emit('close-dial-code')"></button>
+            <button
+              type="button"
+              class="btn-close"
+              aria-label="Close"
+              @click="$emit('close-dial-code')"
+            ></button>
           </div>
           <div class="modal-body">
             <div class="phone-input-container mb-4">
@@ -63,7 +68,7 @@
       aria-labelledby="otpModalLabel"
       aria-modal="true"
       role="dialog"
-      style="display: block;"
+      style="display: block"
       data-bs-backdrop="static"
       data-bs-keyboard="false"
       @mousedown.self="$emit('close-otp-modal')"
@@ -72,7 +77,12 @@
         <div class="modal-content text-center">
           <div class="modal-header">
             <h3 class="mb-0" id="otpModalLabel">Enter OTP Code</h3>
-            <button type="button" class="btn-close" aria-label="Close" @click="$emit('close-otp-modal')"></button>
+            <button
+              type="button"
+              class="btn-close"
+              aria-label="Close"
+              @click="$emit('close-otp-modal')"
+            ></button>
           </div>
           <div class="modal-body">
             <p class="p-color-fs mb-2">
@@ -123,7 +133,6 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
 import { VueTelInput } from "vue-tel-input";
 import "vue-tel-input/vue-tel-input.css";
 import VOtpInput from "vue3-otp-input";
@@ -151,7 +160,7 @@ async function handleCheckOtp(otpValue) {
     let res = await useApi().checkOTP(phone.value, otp);
     if (res?.status) {
       // props.showOtpModal = false;
-      emit('close-otp-modal');
+      emit("close-otp-modal");
       codecorrect.value = false;
       let responseRigsetr = await useApi().loginOrRegister({
         phone: phone.value,
@@ -165,12 +174,15 @@ async function handleCheckOtp(otpValue) {
 
         if (allCartGuest.value?.length) {
           const items = allCartGuest.value.map((item) => ({
-            type: item.itemType,
+            type: item.type,
             item_id: item.id,
             qty: 1,
           }));
 
-          let resMultiCart = await useApi().addToCartMulti(items, token.value);
+          let resMultiCart = await useApi().addToCartMulti(
+            { items },
+            token.value
+          );
 
           if (resMultiCart?.status) {
             localStorage.removeItem("cartGuest");
@@ -193,7 +205,6 @@ async function handleCheckOtp(otpValue) {
   }
 }
 
-
 let lastPhone = ref(null);
 
 let timer = ref(null);
@@ -208,20 +219,18 @@ function startCountdown() {
   }, 1000);
 }
 
-
 async function handleSendOtp() {
   let phoneToSend = phone.value || lastPhone.value;
   let res = await useApi().sendOTP(phoneToSend);
   if (res?.status) {
     lastPhone.value = phoneToSend;
-    emit('open-otp-modal');
-    emit('close-dial-code');
+    emit("open-otp-modal");
+    emit("close-dial-code");
     showResendOtp.value = false;
     counter.value = 30;
     startCountdown();
   }
 }
-
 
 watch(phone, (newVal) => {
   phone.value = newVal.replace(/\s+/g, "");
@@ -229,8 +238,8 @@ watch(phone, (newVal) => {
 
 // emit
 const emit = defineEmits([
-  'close-dial-code',
-  'close-otp-modal',
-  'open-otp-modal'
+  "close-dial-code",
+  "close-otp-modal",
+  "open-otp-modal",
 ]);
 </script>
