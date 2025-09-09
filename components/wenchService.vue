@@ -23,7 +23,7 @@
       <div class="modal-header">
         <h3>Service Details</h3>
         <i
-          class="fa-solid fa-xmark cursor-pointer"
+          class="fa-solid fa-xmark cursor-pointer" style="cursor: pointer;"
           @click="showServiceModal = false"
         ></i>
       </div>
