@@ -23,7 +23,8 @@
       <div class="modal-header">
         <h3>Service Details</h3>
         <i
-          class="fa-solid fa-xmark cursor-pointer" style="cursor: pointer;"
+          class="fa-solid fa-xmark cursor-pointer"
+          style="cursor: pointer"
           @click="showServiceModal = false"
         ></i>
       </div>
@@ -93,6 +94,32 @@ const handleOrder = () => {
   border-radius: 36px;
   padding: 3rem;
   cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.wench-service * {
+  position: relative;
+  z-index: 2;
+}
+
+.wench-service::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 36px;
+  background-color: #ebebeb;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  z-index: 1;
+}
+
+.wench-service:hover::after {
+  opacity: 1;
 }
 
 .img-wench {
@@ -141,7 +168,6 @@ const handleOrder = () => {
 .modal-container::-webkit-scrollbar {
   width: 8px;
 }
-
 
 .modal-header {
   padding: 1rem;
@@ -213,7 +239,7 @@ const handleOrder = () => {
     width: 95%;
     margin: 1rem;
   }
-  .img-modal{
+  .img-modal {
     height: 130px;
   }
 }
