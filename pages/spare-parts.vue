@@ -80,10 +80,7 @@
 </template>
 
 <script setup>
-// import { add } from "date-fns";
-
 const { getSpareParts } = useApi();
-
 // Cart composable
 const {
   loadingAddToCart,
@@ -116,25 +113,4 @@ onMounted(() => {
 
 <style scoped>
 @import "@/assets/css/services.css";
-
-.additems {
-  background-color: #e8f5e8;
-  border: 1px solid #4caf50;
-  color: #4caf50;
-  padding: 8px 16px;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  font-weight: 500;
-}
-
-.btn-shooping {
-  width: 100%;
-  padding: 16px;
-  background: white;
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-}
 </style>

@@ -66,8 +66,11 @@
         />
         <div class="isEmpty"></div>
         <div v-if="btnShooping" class="btn-shooping position-fixed bottom-0">
-          <ButtonCard @click="BtnShooping" textButton="continue shooping" />
+          <ButtonCard @click="BtnShooping" textButton="continue shopping" />
         </div>
+        <!-- <div v-if="btnShooping" class="btn-shooping position-fixed bottom-0">
+          <ButtonCard @click="BtnShooping" textButton="continue shooping" />
+        </div> -->
       </div>
     </div>
   </div>

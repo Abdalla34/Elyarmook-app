@@ -23,8 +23,8 @@
               class="input-user position-relative d-flex flex-column"
             >
               <label for="" class="label">my car</label>
-              <select v-model="selectedCar" class="input-style">
-                <option disabled selected>Ex : {{ user.name }}</option>
+              <select v-model="carValue" class="input-style" :class="{ 'is-invalid': carError }">
+                <option disabled value="">Ex : {{ user.name }}</option>
                 <option v-for="car in mycars" :key="car.id" :value="car.id">
                   {{ car.car_type.title }}
                 </option>
@@ -32,6 +32,7 @@
               <div class="icon-shape position-absolute">
                 <icons-order-iconunion />
               </div>
+              <span v-if="carError" class="error-message text-danger">{{ carError }}</span>
             </div>
 
             <div
@@ -41,7 +42,7 @@
                 class="input-barnch position-relative fix d-flex flex-column"
               >
                 <label for="" class="label">branch</label>
-                <select v-model="selectedBranchId" class="input-style">
+                <select v-model="branchValue" class="input-style" :class="{ 'is-invalid': branchError }">
                   <option disabled value="">Select Branch</option>
                   <option v-for="br in branches" :key="br.id" :value="br.id">
                     {{ br.title }}
@@ -50,13 +51,14 @@
                 <div class="icon-shape position-absolute">
                   <icons-order-iconunion />
                 </div>
+                <span v-if="branchError" class="error-message text-danger">{{ branchError }}</span>
               </div>
 
               <div
                 class="input-barnch position-relative fix d-flex flex-column"
               >
                 <label for="" class="label">date</label>
-                <select v-model="selectedDate" class="input-style">
+                <select v-model="dateValue" class="input-style" :class="{ 'is-invalid': dateError }">
                   <option disabled value="">Select Date & Time</option>
                   <template
                     v-for="dateObj in availableDates"
@@ -74,6 +76,7 @@
                 <div class="icon-shape position-absolute">
                   <icons-order-iconunion />
                 </div>
+                <span v-if="dateError" class="error-message text-danger">{{ dateError }}</span>
               </div>
             </div>
 
@@ -114,7 +117,7 @@
               </div>
             </div>
 
-            <div class="buttons-order d-flex justify-content-center gap-2">
+            <form @submit.prevent="onSubmit" class="buttons-order d-flex justify-content-center gap-2">
               <button
                 @click="navigateTo('/services')"
                 class="additems text-capitalize label"
@@ -123,13 +126,12 @@
                 add another items
               </button>
               <button
-                type="button"
-                @click="UpdateOrderDetails"
+                type="submit"
                 class="continue text-capitalize label button"
               >
                 continue
               </button>
-            </div>
+            </form>
           </div>
         </div>
       </div>
@@ -141,64 +143,79 @@
 </template>
 
 <script setup>
-let dayjs = useDayjs();
-let user = useCookie("user").value;
-let selectedCar = useState("selectedCar", () => null);
-let selectedBranchId = useState("selectedBranchId", () => null);
-let selectedDate = useState("selectedDate", () => null);
-let note = useState("note", () => "");
-let myCart = ref([]);
-let resCart = await useApi().getMyCart();
+import { useField, useForm } from 'vee-validate';
+import * as yup from 'yup';
+
+const schema = yup.object({
+  car: yup.string().required('Please select your car'),
+  branch: yup.string().required('Please select a branch'),
+  date: yup.mixed().required('Please select date and time'),
+  note: yup.string().nullable()
+});
+
+const { handleSubmit } = useForm({
+  validationSchema: schema
+});
+
+const { value: carValue, errorMessage: carError } = useField('car');
+const { value: branchValue, errorMessage: branchError } = useField('branch');
+const { value: dateValue, errorMessage: dateError } = useField('date');
+
+const dayjs = useDayjs();
+const user = useCookie("user").value;
+const note = useState("note", () => "");
+const myCart = ref([]);
+const resCart = await useApi().getMyCart();
 myCart.value = resCart?.data || [];
 
-let msgError = ref(false);
+const msgError = ref(false);
 
-let mycars = ref([]);
-let res = await useApi().getMycars();
+const mycars = ref([]);
+const res = await useApi().getMycars();
 mycars.value = res?.data || [];
 
-let branches = ref([]);
-let resBranshes = await useApi().getBranches();
+const branches = ref([]);
+const resBranshes = await useApi().getBranches();
 branches.value = resBranshes?.data?.items;
 
-let availableDates = ref([]);
-watch(selectedBranchId, async (newId) => {
+const availableDates = ref([]);
+watch(branchValue, async (newId) => {
   if (newId) {
     let resDate = await useApi().getAvailableTimes(newId);
     availableDates.value = resDate?.available_times;
   }
 });
 
-let isLoadingOtp = ref(false);
-let router = useRouter();
+const isLoadingOtp = ref(false);
+const router = useRouter();
 
-let fileName = useState("fileName", () => "");
-let problemPhoto = useState("problemPhoto", () => null);
+const fileName = useState("fileName", () => "");
+const problemPhoto = useState("problemPhoto", () => null);
+
 function handleImageUpload(event) {
   const file = event.target.files[0];
   if (file) {
     problemPhoto.value = file;
     fileName.value = file.name;
   }
-  console.log(problemPhoto.value);
-  console.log(fileName.value);
 }
-let UpdateOrderDetails = async () => {
+
+const onSubmit = handleSubmit(async (values) => {
   isLoadingOtp.value = true;
   try {
     let reservationDateTime = null;
 
-    if (selectedDate.value) {
+    if (dateValue.value) {
       reservationDateTime = dayjs(
-        `${selectedDate.value.date} ${selectedDate.value.time}`,
+        `${dateValue.value.date} ${dateValue.value.time}`,
         "YYYY-MM-DD hh:mm A"
       ).format("YYYY-MM-DD HH:mm:ss");
     }
 
     let formData = new FormData();
-    formData.append("branch_id", selectedBranchId.value);
+    formData.append("branch_id", branchValue.value);
     formData.append("reservation_time", reservationDateTime);
-    formData.append("user_car_id", selectedCar.value);
+    formData.append("user_car_id", carValue.value);
     formData.append("customer_note", note.value);
     if (problemPhoto.value) {
       formData.append("images[]", problemPhoto.value);
@@ -210,12 +227,13 @@ let UpdateOrderDetails = async () => {
         path: "/cart-update-details",
         query: { id: myCart.value.id },
       });
-      console.log(response);
     }
   } catch (err) {
     console.log(err);
+  } finally {
+    isLoadingOtp.value = false;
   }
-};
+});
 </script>
 
 <style scoped>

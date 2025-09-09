@@ -2,8 +2,8 @@
   <div class="parent">
     <div class="container">
       <SwiperSlideHome />
+      <WenchService />
       <Serv-Section-Card />
-      <!-- <swiper-card-slider /> -->
       <qr-code-slider />
     </div>
   </div>
@@ -19,4 +19,3 @@
   position: relative;
 }
 </style>
-

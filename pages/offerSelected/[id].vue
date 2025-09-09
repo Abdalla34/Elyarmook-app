@@ -99,7 +99,9 @@
               <ButtonCard
                 v-if="!isOfferInCart"
                 :textButton="
-                  loadingAddToCart[offerId?.data?.offer?.id] ? 'loading...' : 'add to cart'
+                  loadingAddToCart[offerId?.data?.offer?.id]
+                    ? 'loading...'
+                    : 'add to cart'
                 "
                 @click="handleAddToCart"
               />
@@ -117,8 +119,11 @@
         </div>
       </div>
       <div v-if="btnShooping" class="btn-shooping position-fixed bottom-0">
-        <ButtonCard @click="BtnShooping" textButton="continue shooping" />
+        <ButtonCard @click="BtnShooping" textButton="continue shopping" />
       </div>
+      <!-- <div v-if="btnShooping" class="btn-shooping position-fixed bottom-0">
+        <ButtonCard @click="BtnShooping" textButton="continue shooping" />
+      </div> -->
     </div>
   </div>
 </template>
@@ -169,14 +174,14 @@ const isOfferInCart = computed(() => {
 const handleAddToCart = async () => {
   const offer = offerId.value?.data?.offer;
   if (!offer) return;
-  
-  await handleAdd(offer, 'offer');
+
+  await handleAdd(offer, "offer");
 };
 
 const handleRemoveFromCart = () => {
   const offer = offerId.value?.data?.offer;
   if (!offer) return;
-  
+
   removeFromlocal(offer);
 };
 

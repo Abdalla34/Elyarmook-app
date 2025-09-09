@@ -308,10 +308,6 @@ img {
   transform: translate(-50%);
 }
 
-.popup-sure-cancel {
-  height: 10%;
-  text-align: center;
-}
 
 .popup-sure-cancel h1 {
   font-family: var(--font-family);

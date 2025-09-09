@@ -16,12 +16,17 @@
             spareParts.length === 0
           "
         >
+          <
           <div>
             <img src="/Vector.png" alt="" />
             <h3 class="text-capitalize create">your cart is empty</h3>
             <div class="btn-items">
-              <button @click="navigateTo('/services')">
-                <PuplicIconPlusIcon /> Add Items
+              <button
+                @click="navigateTo('/services')"
+                class="d-flex align-items-center gap-2"
+              >
+                <PuplicIconPlusIcon />
+                <span>Add Items</span>
               </button>
             </div>
           </div>

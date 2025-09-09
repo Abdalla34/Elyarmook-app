@@ -17,7 +17,7 @@
           </div>
 
           <div class="bottom-80px">
-            <div class="inputs">
+            <div class="input">
               <div class="input d-flex flex-column">
                 <input
                   class="input-style"
@@ -27,7 +27,7 @@
                 />
               </div>
             </div>
-            <div class="inputs">
+            <div class="input">
               <div class="input d-flex flex-column">
                 <input
                   class="input-style"
@@ -37,78 +37,138 @@
                 />
               </div>
             </div>
-            <div class="inputs">
+            <div class="input">
               <div class="input d-flex flex-column">
                 <label for="" class="label">address</label>
-                <input class="input-style" type="text" v-model="Address" />
+                <input
+                  class="input-style"
+                  type="text"
+                  v-model="address"
+                  :class="{ 'is-invalid': addressError }"
+                />
+                <span v-if="addressError" class="text-danger">{{
+                  addressError
+                }}</span>
               </div>
             </div>
-            <div class="inputs">
+            <div class="input">
               <div class="input d-flex flex-column">
                 <label for="" class="label">Message</label>
                 <textarea
-                  class=" "
+                  class=""
                   type="text"
                   placeholder="write your message"
                   v-model="message"
+                  :class="{ 'is-invalid': messageError }"
                 />
+                <span v-if="messageError" class="text-danger">{{
+                  messageError
+                }}</span>
               </div>
             </div>
           </div>
 
           <div
-            @click="SendData"
+            @click="onSubmit"
             class="button-save border-radius-36px width-height width-100"
           >
             <button class="text-capitalize fw-bold">send</button>
           </div>
-          <div
-            v-if="messageRes"
-            class="popup-msg position-absolute w-50 text-center top-50 start-50 translate-middle bg-light text-success fs-5"
-          >
-            <button
-              type="button"
-              class="btn-close position-absolute top-0 end-0"
-              aria-label="Close"
-              @click="messageRes = ''"
-            ></button>
-            <p class="mt-4">
-              {{ messageRes }}
-              <span><i class="fa-solid fa-check text-success"></i></span>
-             
-            </p>
+          <div v-if="showModal" class="modal-overlay">
+            <div class="modal-box">
+              <p class="fs-5 mb-3">{{ modalMessage }}</p>
+              <button class="btn btn-primary" @click="showModal = false">
+                Close
+              </button>
+            </div>
           </div>
-          <div class="over-lay" v-if="messageRes"></div>
+          <!-- <Modal v-if="showModal" @close="showModal = false">
+            <template #header>
+              <div class="d-flex justify-content-between align-items-center">
+                <h5 class="modal-title mb-0">{{ modalTitle }}</h5>
+                <i
+                  class="fa-solid fa-xmark cursor-pointer"
+                  @click="showModal = false"
+                ></i>
+              </div>
+            </template>
+            <template #body>
+              <div class="text-center py-4">
+                <i
+                  :class="[
+                    'fa-solid',
+                    'fs-1',
+                    'mb-3',
+                    isSuccess
+                      ? 'fa-circle-check text-success'
+                      : 'fa-circle-xmark text-danger',
+                  ]"
+                ></i>
+                <p class="fs-5 mb-0">{{ modalMessage }}</p>
+              </div>
+            </template>
+          </Modal> -->
+          <div v-if="showModal" class="modal-backdrop fade show"></div>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script setup>
-let messageRes = ref("");
-let message = ref("");
-let Address = ref("");
-let name = ref("");
-let phone = ref(null);
-const SendData = async () => {
+import { useField, useForm } from "vee-validate";
+import * as yup from "yup";
+
+const schema = yup.object({
+  address: yup.string().required("Address is required"),
+  message: yup.string().required("Message is required"),
+});
+
+const { handleSubmit } = useForm({
+  validationSchema: schema,
+});
+
+const { value: address, errorMessage: addressError } = useField("address");
+const { value: message, errorMessage: messageError } = useField("message");
+const { value: name } = useField("name");
+const { value: phone } = useField("phone");
+const showModal = ref(false);
+const modalMessage = ref("");
+const modalTitle = ref("");
+const isSuccess = ref(false);
+const user = useCookie("user").value;
+
+const onSubmit = handleSubmit(async (values) => {
   const form = {
-    title: Address.value,
-    message: message.value,
-    name: name.value,
-    phone: phone.value,
+    title: values.address,
+    message: values.message,
+    name: values.name || user.name,
+    phone: values.phone || user.phone,
   };
-  let res = await useApi().contactUs(form);
-  if (res?.status) {
-    messageRes.value = res?.message;
+  try {
+    let res = await useApi().contactUs(form);
+    if (res?.status) {
+      modalMessage.value = res?.message;
+      modalTitle.value = "Success";
+      isSuccess.value = true;
+      showModal.value = true;
+      // Reset form after successful submission
+      values.address = "";
+      values.message = "";
+      values.name = user.name;
+      values.phone = user.phone;
+    } else {
+      modalMessage.value = res?.message || "An error occurred";
+      modalTitle.value = "Error";
+      isSuccess.value = false;
+      showModal.value = true;
+    }
+  } catch (error) {
+    modalMessage.value = error?.message || "An unexpected error occurred";
+    showModal.value = true;
   }
-  Address.value = "";
-  message.value = "";
-  name.value = user.name;
-  phone.value = user.phone;
-};
-// let token = useCookie('token').value;
-let user = useCookie("user").value;
+});
 </script>
+
 <style scoped>
 .contact-us {
   margin-top: 70px;
@@ -123,16 +183,32 @@ let user = useCookie("user").value;
   margin-top: 60px;
 }
 
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* خلفية شفافة */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modal-box {
+  background: #fff;
+  padding: 20px 30px;
+  border-radius: 12px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+}
+
 @media (max-width: 768px) {
   .contact-us {
     padding: 100px 0px;
   }
-}
-
-.popup-msg {
-  padding: 20px 20px;
-  border-radius: 16px;
-  z-index: 10;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 </style>

@@ -134,7 +134,7 @@
                   <p class="color-Eb" v-if="orderSelected?.can_reschedule">
                     Reschedule Order
                   </p>
-                  <p class="text-msg-change">{{ messageTimeChange }}</p>
+                  <p :class="[messageClass, 'text-msg-change']">{{ messageTimeChange }}</p>
                 </div>
               </div>
 
@@ -259,37 +259,6 @@
               </ul>
             </div>
 
-            <!-- <div class="items-list">
-              <div v-if="orderSelected?.services">
-                <div
-                  v-for="service in orderSelected.services"
-                  :key="service.id"
-                  class="item-services d-flex"
-                >
-                  <div class="item-name">{{ service.title }}</div>
-                  <div class="item-price">{{ service.price }} SAR</div>
-                  <img :src="service.image" :alt="service.title" class="img-service">
-                </div>
-              </div>
-            </div> -->
-
-            <!-- <div
-              v-if="orderSelected.status === 'request_done'"
-              class="input-code position-relative margin-60px"
-            >
-              <input
-                type="text"
-                class="w-100 input-with-apply text-capitalize"
-                placeholder="promocode"
-              />
-              <button
-                class="apply-btn position-absolute d-flex align-items-center gap-2"
-              >
-                <span class="text-capitalize apply">apply</span>
-                <iconsOrder-applyCode />
-              </button>
-            </div> -->
-
             <div
               v-for="order in orderSelected?.order_attributes"
               :key="order.id"
@@ -312,21 +281,6 @@
                 <span class="span">SAR</span>
               </div>
             </div>
-
-            <!-- <div
-              v-if="
-                orderSelected.status === 'request_done'
-                // orderSelected.status === 'report'
-              "
-            >
-              <div class="button-order margin-20px">
-                <button-card
-                  textButton="accept and pay"
-                  :isActive="activeFalse"
-                />
-              </div>
-            </div> -->
-
             <div
               v-if="orderSelected?.can_cancel"
               @click="sureCancel = true"
@@ -374,14 +328,12 @@
 import dayjs from "#build/dayjs.imports.mjs";
 import { id } from "date-fns/locale";
 
-
 const openInMaps = (branch) => {
   if (!branch?.lat || !branch?.lng) return;
   const url = `https://www.google.com/maps/search/?api=1&query=${branch.lat},${branch.lng}`;
   window.open(url, "_blank");
 };
 
-let activeFalse = ref(false);
 let route = useRoute();
 let order_id = route.params.id;
 let orderSelected = ref(null);
@@ -400,9 +352,21 @@ try {
 
 let sureCancel = ref(false);
 let changeStatusOrder = async (order_status, cancel_Reason_id) => {
-  await useApi().changeOrderStatus(order_id, order_status, cancel_Reason_id);
-  cancelOrder.value = false;
-  sureCancel.value = false;
+  try {
+    const response = await useApi().changeOrderStatus(order_id, order_status, cancel_Reason_id);
+    if (response?.status) {
+      orderSelected.value = {
+        ...orderSelected.value,
+        status: order_status,
+        status_value: 'Canceled',
+        can_cancel: false
+      };
+    }
+    cancelOrder.value = false;
+    sureCancel.value = false;
+  } catch (error) {
+    console.error('Error changing order status:', error);
+  }
 };
 
 let availableDates = ref([]);
@@ -414,6 +378,7 @@ let rescheduleOrder = async (branch_id) => {
   times.value = true;
 };
 let messageTimeChange = ref("");
+let messageClass = ref("");
 let rescheduleTime = async ({ date, time }) => {
   let dateTime = dayjs(`${date} ${time}`, "YYYY-MM-DD HH:mm");
   let res = await useApi().reversationTime(
@@ -422,9 +387,10 @@ let rescheduleTime = async ({ date, time }) => {
   );
   if (res?.status && res?.message) {
     messageTimeChange.value = res?.message;
-    console.log(messageTimeChange);
+    messageClass.value = "text-success";
   } else {
     messageTimeChange.value = res?.message;
+    messageClass.value = "text-danger";
   }
   times.value = false;
 };
@@ -437,7 +403,7 @@ function toFalse() {
 const router = useRouter();
 
 onMounted(() => {
-  if (route.query?.from === 'cart-update-details') {
+  if (route.query?.from === "cart-update-details") {
     router.push("/cart");
   }
 });
@@ -445,4 +411,8 @@ onMounted(() => {
 
 <style scoped>
 @import "./assets/css/ordersteps.css";
+.popup-sure-cancel {
+  height: 12% !important;
+  text-align: center;
+}
 </style>
