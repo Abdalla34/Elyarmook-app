@@ -163,7 +163,7 @@ const branchValue = ref("");
 const typeDelivery = ref("");
 const problem = ref("");
 const mycars = ref([]);
-
+const reservationTime = ref(null);
 const defaultCar = computed(
   () => mycars.value.find((car) => car.is_default) || null
 );
@@ -171,8 +171,7 @@ const payload = computed(() => ({
   branch_id: branchValue.value || null,
   delivery_direction: typeDelivery.value || null,
   problem_id: problem.value || null,
-  brand_id: defaultCar.value ? defaultCar.value.id : null,
-  reservation_time: null,
+  reservation_time: reservationTime.value,
   address: null,
   lat: null,
   lng: null,
