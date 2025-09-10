@@ -168,20 +168,6 @@ export const useApi = () => {
     });
   };
 
-  // const addToCartMulti = async (items: {
-  //   type: any;
-  //   item_id: any;
-  //   qty: any;
-  // }) => {
-  //   let token = useCookie("token").value;
-  //   return await $fetch(`${baseURL}/marketplace/cart/add-to-cart-multi`, {
-  //     method: "POST",
-  //     body: { items },
-  //     headers: {
-  //       Authorization: `Bearer ${token}`,
-  //     },
-  //   });
-  // };
   const addToCartMulti = async (
     items: { type: any; item_id: any; qty: any },
     token: any

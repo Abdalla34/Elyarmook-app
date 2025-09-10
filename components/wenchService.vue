@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="wench-service cursor-pointer" @click="showServiceModal = true">
+    <div class="wench-service cursor-pointer" @click="conditionToken">
       <div class="wench-service-content">
         <div
           class="wench-content d-flex flex-column flex-md-row justify-content-between align-items-center gap-4"
@@ -21,7 +21,7 @@
   <div v-if="showServiceModal" class="modal-overlay">
     <div class="modal-container">
       <div class="modal-header">
-        <h3>Service Details</h3>
+        <h3 class="text-capitalize title">About Service</h3>
         <i
           class="fa-solid fa-xmark cursor-pointer"
           style="cursor: pointer"
@@ -70,20 +70,38 @@
             Don't show next time
           </button>
         </label>
-        <button @click="handleOrder" class="btn-order w-100">Order Now</button>
+        <button @click="navigateTo('/orderwench')" class="btn-order w-100">Order Now</button>
       </div>
     </div>
+  </div>
+
+  <div class="otp-modal" v-if="showComponentOtp">
+    <OtpModal
+      :showDialCode="showDialCode"
+      :showOtpModal="showOtpModal"
+      @close-dial-code="showDialCode = false"
+      @close-otp-modal="showOtpModal = false"
+      @open-otp-modal="showOtpModal = true"
+    />
   </div>
 </template>
 
 <script setup>
-const showServiceModal = ref(false);
-const dontShowAgain = ref(false);
+const token = useCookie("token");
+const showComponentOtp = ref(false);
 
-const handleOrder = () => {
-  showServiceModal.value = false;
-  navigateTo("/services");
-};
+const showServiceModal = ref(false);
+const showOtpModal = ref(false);
+const showDialCode = ref(false);
+
+function conditionToken() {
+  if (!token.value) {
+    showComponentOtp.value = true;
+    showDialCode.value = true;
+  } else {
+    showServiceModal.value = true;
+  }
+}
 </script>
 
 <style scoped>

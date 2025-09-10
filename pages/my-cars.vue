@@ -152,7 +152,6 @@ async function deleted(id) {
     let resDeleted = await useApi().deleteCar(id);
     if (resDeleted?.status) {
       myCars.value = myCars.value.filter((carid) => carid.id !== id);
-      console.log("car is Deleted");
       if (carIsDefault?.is_default && myCars.value.length > 0) {
         let newDefaultCar = myCars.value[0];
         let resDefault = await useApi().changeCarToDefault(newDefaultCar.id);

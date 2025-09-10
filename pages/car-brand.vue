@@ -166,7 +166,7 @@ async function SendData() {
       chassis_number: carForm.chassis_number,
       is_default: isFirst ? true : false,
     });
-    navigateTo("/mycars");
+    navigateTo("/my-cars");
     console.log(res);
   } catch (err) {
     if (err?.response?.status === 401) {
