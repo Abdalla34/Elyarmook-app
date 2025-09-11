@@ -31,6 +31,7 @@
           <div
             class="location-receive-car mt-5 mb-5 d-flex align-items-center justify-content-center text-capitalize"
             style="cursor: pointer"
+            @click="openGoogleMap"
           >
             location to receive car
           </div>
@@ -178,14 +179,11 @@ const payload = computed(() => ({
   user_car_id: defaultCar.value ? defaultCar.value.id : null,
 }));
 
-console.log(defaultCar.value);
-
 function createOrderWench(type) {
   // return useWenchServices().createWenchOrder(payload, type);
   console.log(payload.value);
 }
 const getProblems = ref([]);
-
 onMounted(async () => {
   try {
     const rescar = await useApi().getMycars();
@@ -198,6 +196,29 @@ onMounted(async () => {
     console.error("Error fetching my cars:", e);
   }
 });
+const showMap = ref(false);
+const mapRef = ref(null);
+let map = null;
+
+function openGoogleMap() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const lat = pos.coords.latitude;
+        const lng = pos.coords.longitude;
+
+        // افتح Google Maps في تبويب جديد على اللوكيشن
+        window.open(`https://www.google.com/maps?q=${lat},${lng}`, "_blank");
+      },
+      (err) => {
+        console.error("Geo Error:", err);
+        alert("تعذر الحصول على موقعك");
+      }
+    );
+  } else {
+    alert("المتصفح لا يدعم تحديد الموقع");
+  }
+}
 </script>
 
 <style scoped>
@@ -238,5 +259,41 @@ onMounted(async () => {
   background-color: #f9cbcb;
   width: fit-content;
   border-radius: 15px;
+}
+.map-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #00000080;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.map-box {
+  background: #fff;
+  padding: 10px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 600px;
+  height: 400px;
+  position: relative;
+}
+.map {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+}
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: red;
+  color: #fff;
+  border: none;
+  padding: 5px 12px;
+  cursor: pointer;
+  border-radius: 6px;
 }
 </style>

@@ -22,6 +22,13 @@ useHead({
     },
     { name: "viewport", content: "width=device-width, initial-scale=1" },
   ],
+  script: [
+    {
+      src: "https://maps.googleapis.com/maps/api/js?key=AIzaSyBJfohIso1D_UllVzMFdpckDQVC5SkuEjk&libraries=places",
+      async: true,
+      defer: true,
+    },
+  ],
 });
 
 import { useRoute } from "vue-router";
