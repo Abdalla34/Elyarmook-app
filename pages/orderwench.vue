@@ -2,17 +2,18 @@
   <div class="order-details">
     <div class="container">
       <div class="row">
-        <!-- <NotRegister
-          :IsNotRegitser="msgError"
-          message="your orders is Empty you must create account"
-        /> -->
-
         <div class="col-8 col-padding">
           <h1 data-v-8bcd5751 class="text-capitalize text title-pages">
             services comfortable
           </h1>
 
+          <ButtonCard
+            @click="navigateTo('/car-brand')"
+            v-if="mycars.length <= 0"
+            text-button="added your car"
+          />
           <div
+            v-if="mycars.length >= 1"
             class="box-car d-flex align-items-center justify-content-between mb-3 pt-1 pb-1 pe-3 ps-3"
           >
             <div
@@ -28,14 +29,35 @@
             </div>
           </div>
 
-          <div
-            class="location-receive-car mt-5 mb-5 d-flex align-items-center justify-content-center text-capitalize"
-            style="cursor: pointer"
-            @click="openGoogleMap"
-          >
-            location to receive car
+          <!-- location receive car -->
+          <div>
+            <div
+              class="location-receive-car mt-5 mb-5 d-flex align-items-center justify-content-center text-capitalize"
+              style="cursor: pointer"
+              @click="openMap(false)"
+            >
+              location to receive car
+            </div>
+
+            <!-- container map -->
+            <div
+              v-if="showMap"
+              style="position: relative; height: 400px; width: 100%"
+            >
+              <div id="map" style="height: 100%; width: 100%"></div>
+
+              <!-- btn-confirm location -->
+              <button
+                @click="confirmLocation"
+                class="btn-confirm-location text-capitalize button position-absolute bottom-0 start-50 translate-middle-x mb-3 ps-3 pe-3 pt-1 pb-1"
+                style="cursor: pointer"
+              >
+                Confirm Location
+              </button>
+            </div>
           </div>
 
+          <!-- select details time -->
           <!-- <div class="select-details-time box-car pt-1 pb-1 pe-3 ps-3">
             <p class="label">select details time</p>
             <div class="box-input p-2">
@@ -45,6 +67,7 @@
               </div>
             </div>
           </div> -->
+
           <!-- select branch -->
           <div
             class="branch-date d-flex align-items-center justify-content-between gap-3"
@@ -62,6 +85,7 @@
               </div>
             </div>
           </div>
+
           <!-- type delivery -->
           <div
             class="branch-date type-delivery d-flex align-items-center justify-content-between gap-3"
@@ -83,9 +107,11 @@
             v-if="typeDelivery === 'twoWay'"
             class="location-receive-car mt-2 mb-2 d-flex align-items-center justify-content-center text-capitalize"
             style="cursor: pointer"
+            @click="openMap(true)"
           >
             location to return car
           </div>
+
           <!-- type problem -->
           <div
             class="branch-date d-flex align-items-center justify-content-between gap-3"
@@ -107,6 +133,7 @@
               </div>
             </div>
           </div>
+
           <!-- text area  -->
           <div
             class="branch-date d-flex align-items-center justify-content-between gap-3"
@@ -121,6 +148,7 @@
             </div>
           </div>
 
+          <!-- input upload file -->
           <div class="problem-photo">
             <label class="label">problem photo</label>
             <div
@@ -142,6 +170,7 @@
             </div>
           </div>
 
+          <!-- submit button -->
           <form
             class="buttons-order d-flex justify-content-center gap-2"
             @submit.prevent="createOrderWench('wench')"
@@ -159,35 +188,23 @@
 </template>
 
 <script setup>
+// const isLoadingOtp = ref(false);
 const branches = ref([]);
 const branchValue = ref("");
 const typeDelivery = ref("");
 const problem = ref("");
 const mycars = ref([]);
 const reservationTime = ref(null);
+const rescar = await useApi().getMycars();
+mycars.value = rescar?.data || [];
+const getProblems = ref([]);
+
 const defaultCar = computed(
   () => mycars.value.find((car) => car.is_default) || null
 );
-const payload = computed(() => ({
-  branch_id: branchValue.value || null,
-  delivery_direction: typeDelivery.value || null,
-  problem_id: problem.value || null,
-  reservation_time: reservationTime.value,
-  address: null,
-  lat: null,
-  lng: null,
-  user_car_id: defaultCar.value ? defaultCar.value.id : null,
-}));
 
-function createOrderWench(type) {
-  // return useWenchServices().createWenchOrder(payload, type);
-  console.log(payload.value);
-}
-const getProblems = ref([]);
 onMounted(async () => {
   try {
-    const rescar = await useApi().getMycars();
-    mycars.value = rescar?.data || [];
     const resbranch = await useApi().getBranches();
     branches.value = resbranch.data?.items || [];
     const resProblems = await useApi().getProblems();
@@ -196,28 +213,88 @@ onMounted(async () => {
     console.error("Error fetching my cars:", e);
   }
 });
-const showMap = ref(false);
-const mapRef = ref(null);
-let map = null;
 
-function openGoogleMap() {
+const showMap = ref(false);
+const map = ref(null);
+const marker = ref(null);
+const currentLatLng = ref({ lat: null, lng: null });
+const address = ref("");
+const isReturn = ref(false);
+const returnLatLng = ref({ lat: null, lng: null });
+const addressReturn = ref("");
+
+const openMap = (returnMode = false) => {
+  showMap.value = true;
+  isReturn.value = returnMode;
+
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
       (pos) => {
-        const lat = pos.coords.latitude;
-        const lng = pos.coords.longitude;
+        const startPosition = {
+          lat: pos.coords.latitude,
+          lng: pos.coords.longitude,
+        };
 
-        // افتح Google Maps في تبويب جديد على اللوكيشن
-        window.open(`https://www.google.com/maps?q=${lat},${lng}`, "_blank");
+        map.value = new google.maps.Map(document.getElementById("map"), {
+          center: startPosition,
+          zoom: 15,
+        });
+
+        marker.value = new google.maps.Marker({
+          position: startPosition,
+          map: map.value,
+          draggable: true,
+        });
       },
       (err) => {
-        console.error("Geo Error:", err);
-        alert("تعذر الحصول على موقعك");
+        alert("Error: " + err.message);
       }
     );
-  } else {
-    alert("المتصفح لا يدعم تحديد الموقع");
   }
+};
+
+const confirmLocation = () => {
+  const position = marker.value.getPosition();
+  const lat = position.lat();
+  const lng = position.lng();
+
+  const geocoder = new google.maps.Geocoder();
+  geocoder.geocode({ location: { lat, lng } }, (results, status) => {
+    if (status === "OK" && results[0]) {
+      if (isReturn.value) {
+        // حفظ مكان الإرجاع
+        returnLatLng.value = { lat, lng };
+        addressReturn.value = results[0].formatted_address;
+        alert(`تم اختيار مكان الإرجاع: ${addressReturn.value}`);
+      } else {
+        // حفظ مكان الاستلام
+        currentLatLng.value = { lat, lng };
+        address.value = results[0].formatted_address;
+        alert(`تم اختيار مكان الاستلام: ${address.value}`);
+      }
+    } else {
+      alert("لم أستطع جلب العنوان");
+    }
+  });
+};
+
+const payload = computed(() => ({
+  branch_id: branchValue.value || null,
+  delivery_direction: typeDelivery.value || null,
+  problem_id: problem.value || null,
+  reservation_time: reservationTime.value,
+  address: address.value || null,
+  lat: currentLatLng.value.lat,
+  lng: currentLatLng.value.lng,
+  user_car_id: defaultCar.value ? defaultCar.value.id : null,
+  address_return: addressReturn.value || null,
+  lat_return: returnLatLng.value.lat || null,
+  lng_return: returnLatLng.value.lng || null,
+}));
+
+function createOrderWench(type) {
+  // return useWenchServices().createWenchOrder(payload, type);
+  console.log(payload.value);
 }
 </script>
 
@@ -260,40 +337,7 @@ function openGoogleMap() {
   width: fit-content;
   border-radius: 15px;
 }
-.map-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: #00000080;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.map-box {
-  background: #fff;
-  padding: 10px;
-  border-radius: 12px;
-  width: 90%;
-  max-width: 600px;
-  height: 400px;
-  position: relative;
-}
-.map {
-  width: 100%;
-  height: 100%;
-  border-radius: 12px;
-}
-.close-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: red;
-  color: #fff;
-  border: none;
-  padding: 5px 12px;
-  cursor: pointer;
-  border-radius: 6px;
-}
+/* .btn-confirm-location {
+  background-color: var(--main-color);
+} */
 </style>
