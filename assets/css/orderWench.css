@@ -1,0 +1,106 @@
+.box-input {
+  background-color: #f9cbcb;
+  border: 1px solid #e58484;
+  border-radius: 20px;
+}
+
+.box-car {
+  border-radius: 20px;
+  background-color: var(--color-secound-main);
+}
+.branch-date select,
+.branch-date textarea {
+  background-color: var(--color-secound-main);
+}
+.btn-secondary {
+  transition: box-shadow 0.3s ease;
+}
+.btn-secondary:hover {
+  box-shadow: 0px 4px 12px #222020;
+}
+.car-details img {
+  width: 60px;
+}
+.location-receive-car {
+  height: 50px;
+  background-color: #f9cbcb;
+  border-radius: 20px;
+  transition: box-shadow 0.3s ease;
+}
+.location-receive-car:hover {
+  box-shadow: 0px 4px 12px #dba4a4;
+}
+.prag {
+  background-color: #f9cbcb;
+  width: fit-content;
+  border-radius: 15px;
+}
+
+.urgent-tag {
+  background-color: #dc3545;
+  color: white;
+  font-weight: 500;
+}
+
+.time-option {
+  cursor: pointer;
+  border: 1px solid #dee2e6;
+  transition: all 0.3s ease;
+  background-color: white;
+  direction: rtl;
+}
+
+.time-option:hover {
+  background-color: #dc354510;
+}
+
+.time-option.active {
+  background-color: #dc3545;
+  color: white;
+  border-color: #dc3545;
+}
+
+.custom-radio {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid #dc3545;
+  appearance: none;
+  cursor: pointer;
+}
+
+.custom-radio:checked {
+  background-color: white;
+  border: 6px solid #dc3545;
+}
+/* .btn-confirm-location {
+  background-color: var(--main-color);
+} */
+.time-option {
+  cursor: pointer;
+  border: 1px solid #dee2e6;
+  transition: all 0.3s ease;
+}
+
+/* لما يبقى Active */
+.time-option.active {
+  background-color: #dc3545; /* لون أحمر زي Bootstrap danger */
+  color: #fff;
+  border-color: #dc3545;
+}
+
+/* شكل الـ input نفسه */
+.custom-check {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%; /* يخليه دايرة */
+  border: 2px solid #dc3545; /* لون البوردر زي لون الديف */
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* لما يتعمل Check */
+.custom-check:checked {
+  background-color: #fff; /* الخلفية جوا تبقى بيضاء */
+  border: 6px solid #dc3545; /* يبان كداير ملونة */
+}

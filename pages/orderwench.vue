@@ -58,15 +58,56 @@
           </div>
 
           <!-- select details time -->
-          <!-- <div class="select-details-time box-car pt-1 pb-1 pe-3 ps-3">
-            <p class="label">select details time</p>
-            <div class="box-input p-2">
-              <div class="input d-flex align-items-center gap-3">
-                <input type="checkbox" name="car" class="rounded-circle" />
-                <p class="p-colo-fs prag p-2 bg-danger text-light">1 o'clock</p>
+          <div class="select-details-time box-car p-3">
+            <h5 class="label mb-3">اختر تفاصيل الوقت</h5>
+
+            <div class="time-options mt-3">
+              <div class="time-option-group">
+                <!-- urgent -->
+                <label
+                  class="time-option d-flex gap-2 align-items-center p-2 rounded mb-2"
+                  :class="{ active: selectedTime === 'urgent' }"
+                >
+                  <div class="d-flex align-items-center gap-2">
+                    <input
+                      type="radio"
+                      name="timeOption"
+                      value="urgent"
+                      v-model="selectedTime"
+                      class="custom-radio"
+                    />
+                    <span class="option-text">urgent</span>
+                  </div>
+                  <!-- ساعة 1 تبقى Tag -->
+                  <div class="urgent-tag px-3 py-1 rounded-pill">
+                    <i class="fa-solid fa-clock me-1"></i>
+                    o'clock 1
+                  </div>
+                </label>
+
+                <div class="urgent-note text-warning mb-2 text-end">
+                  <i class="fa-solid fa-circle-info me-1"></i>
+                  ملاحظة: عند اختيار مستعجل سوف يرتفع سعر النقل 20%
+                </div>
+
+                <!-- normal -->
+                <label
+                  class="time-option d-flex align-items-center gap-3 p-2 rounded"
+                  :class="{ active: selectedTime === 'normal' }"
+                >
+                  <input
+                    type="radio"
+                    name="timeOption"
+                    value="normal"
+                    v-model="selectedTime"
+                    class="custom-radio"
+                    :disabled="branchValue === ''"
+                  />
+                  <span class="option-text">normal</span>
+                </label>
               </div>
             </div>
-          </div> -->
+          </div>
 
           <!-- select branch -->
           <div
@@ -198,6 +239,7 @@ const reservationTime = ref(null);
 const rescar = await useApi().getMycars();
 mycars.value = rescar?.data || [];
 const getProblems = ref([]);
+const selectedTime = ref("");
 
 const defaultCar = computed(
   () => mycars.value.find((car) => car.is_default) || null
@@ -300,44 +342,5 @@ function createOrderWench(type) {
 
 <style scoped>
 @import "@/assets/css/orderDetails.css";
-.box-input {
-  background-color: #f9cbcb;
-  border: 1px solid #e58484;
-  border-radius: 20px;
-}
-
-.box-car {
-  border-radius: 20px;
-  background-color: var(--color-secound-main);
-}
-.branch-date select,
-.branch-date textarea {
-  background-color: var(--color-secound-main);
-}
-.btn-secondary {
-  transition: box-shadow 0.3s ease;
-}
-.btn-secondary:hover {
-  box-shadow: 0px 4px 12px #222020;
-}
-.car-details img {
-  width: 60px;
-}
-.location-receive-car {
-  height: 50px;
-  background-color: #f9cbcb;
-  border-radius: 20px;
-  transition: box-shadow 0.3s ease;
-}
-.location-receive-car:hover {
-  box-shadow: 0px 4px 12px #dba4a4;
-}
-.prag {
-  background-color: #f9cbcb;
-  width: fit-content;
-  border-radius: 15px;
-}
-/* .btn-confirm-location {
-  background-color: var(--main-color);
-} */
+@import "@/assets/css/orderWench.css";
 </style>
