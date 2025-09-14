@@ -18,7 +18,7 @@ export function useWenchServices() {
     return await $fetch(`${baseURL}/order/orders`, {
       method: "POST",
       body: {
-        payload,
+        ...payload,
         type,
       },
       headers,
