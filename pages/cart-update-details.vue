@@ -306,6 +306,7 @@
                   <button
                     class="apply-btn apply position-absolute"
                     @click="voucherApply"
+                    :disabled="!voucherCode"
                   >
                     <span class="text-capitalize me-2 spanbutton">apply</span>
                     <iconsOrder-applyCode />

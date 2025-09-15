@@ -25,8 +25,16 @@ export function useWenchServices() {
     });
   };
 
+  const getLastOrder = async () => {
+    return $fetch(`${baseURL}/order/last-order`, {
+      method: "GET",
+      headers,
+    });
+  };
+
   return {
     problems,
     createWenchOrder,
+    getLastOrder,
   };
 }

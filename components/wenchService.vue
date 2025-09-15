@@ -70,7 +70,7 @@
             Don't show next time
           </button>
         </label>
-        <button @click="navigateTo('/orderwench')" class="btn-order w-100">Order Now</button>
+        <button @click="navigateTo('/comfortable-service')" class="btn-order w-100">Order Now</button>
       </div>
     </div>
   </div>

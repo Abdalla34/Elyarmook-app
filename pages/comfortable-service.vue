@@ -29,8 +29,27 @@
             </div>
           </div>
 
-          <!-- location receive car -->
-          <div>
+          <!-- location to receive  -->
+          <div
+            v-if="address"
+            class="box-car mt-3 d-flex align-items-center justify-content-between mb-3 pt-1 pb-1 pe-3 ps-3"
+          >
+            <div
+              class="car-details d-flex align-items-center text-capitalize label"
+            >
+              {{ address }}
+            </div>
+            <!--  btn change -->
+            <div
+              class="btn btn-warning"
+              style="cursor: pointer"
+              @click="openMap(false)"
+            >
+              change
+            </div>
+          </div>
+
+          <div v-else>
             <div
               class="location-receive-car mt-5 mb-5 d-flex align-items-center justify-content-center text-capitalize"
               style="cursor: pointer"
@@ -39,16 +58,15 @@
               location to receive car
             </div>
 
-            <!-- container map -->
             <div
-              v-if="showMap"
+              v-if="showMapPickup"
               style="position: relative; height: 400px; width: 100%"
             >
-              <div id="map" style="height: 100%; width: 100%"></div>
+              <div id="mapPickup" style="height: 100%; width: 100%"></div>
 
-              <!-- btn-confirm location -->
+              <!--  btn sure -->
               <button
-                @click="confirmLocation"
+                @click="confirmLocation(false)"
                 class="btn-confirm-location text-capitalize button position-absolute bottom-0 start-50 translate-middle-x mb-3 ps-3 pe-3 pt-1 pb-1"
                 style="cursor: pointer"
               >
@@ -141,7 +159,7 @@
               <div class="time-available gap-3 mt-3 d-flex">
                 <div class="d-flex gap-3 mt-3">
                   <div
-                    class="time-slot"
+                    class="time-date lay-out-box"
                     v-for="valuetime in availableDates"
                     :key="valuetime.date"
                     :class="{ active: selectedDate === valuetime.date }"
@@ -155,7 +173,7 @@
                 class="overflow-x-auto overflow-hidden d-flex justify-content-center align-items-center mt-3 gap-2"
               >
                 <div
-                  class="time-slot"
+                  class="time-slot lay-out-box"
                   v-for="slot in availableDates.find(
                     (d) => d.date === selectedDate
                   )?.time_slots"
@@ -190,14 +208,51 @@
               </div>
             </div>
           </div>
-          <!-- location to return car -->
+
+          <!-- location to return   -->
           <div
-            v-if="typeDelivery === 'twoWay'"
-            class="location-receive-car mt-2 mb-2 d-flex align-items-center justify-content-center text-capitalize"
-            style="cursor: pointer"
-            @click="openMap(true)"
+            v-if="addressReturn"
+            class="box-car mt-3 d-flex align-items-center justify-content-between mb-3 pt-1 pb-1 pe-3 ps-3"
           >
-            location to return car
+            <div
+              class="car-details d-flex align-items-center text-capitalize label"
+            >
+              {{ addressReturn }}
+            </div>
+            <!--  btn change -->
+            <div
+              class="btn btn-warning"
+              style="cursor: pointer"
+              @click="openMap(true)"
+            >
+              change
+            </div>
+          </div>
+
+          <div v-else-if="typeDelivery === 'twoWay'">
+            <div
+              class="location-receive-car mt-2 mb-2 d-flex align-items-center justify-content-center text-capitalize"
+              style="cursor: pointer"
+              @click="openMap(true)"
+            >
+              location to return car
+            </div>
+
+            <div
+              v-if="showMapReturn"
+              style="position: relative; height: 400px; width: 100%"
+            >
+              <div id="mapReturn" style="height: 100%; width: 100%"></div>
+
+              <!--  btn sure -->
+              <button
+                @click="confirmLocation(true)"
+                class="btn-confirm-location text-capitalize button position-absolute bottom-0 start-50 translate-middle-x mb-3 ps-3 pe-3 pt-1 pb-1"
+                style="cursor: pointer"
+              >
+                Confirm Location
+              </button>
+            </div>
           </div>
 
           <!-- type problem -->
@@ -277,18 +332,20 @@
 </template>
 
 <script setup>
-// import dayjs from "#build/dayjs.imports.mjs";
-const dayjs = useDayjs();
 
+const dayjs = useDayjs();
 const branches = ref([]);
 const branchValue = ref("");
+
 const typeDelivery = ref("");
 const problem = ref("");
 const mycars = ref([]);
+
 const reservationTime = ref(null);
 const rescar = await useApi().getMycars();
 mycars.value = rescar?.data || [];
 const getProblems = ref([]);
+
 const typeService = ref("urgent");
 const selectedDate = ref(null);
 const selectedTimeSlot = ref(null);
@@ -318,6 +375,14 @@ watch([selectedDate, selectedTimeSlot], ([newDate, newSlot]) => {
     }
   }
 });
+watch(typeService, (newVal) => {
+  if (newVal === "urgent") {
+    reservationTime.value = "";
+    isBookingNow.value = true;
+  } else {
+    isBookingNow.value = false;
+  }
+});
 
 onMounted(async () => {
   try {
@@ -330,18 +395,30 @@ onMounted(async () => {
   }
 });
 
-const showMap = ref(false);
-const map = ref(null);
-const marker = ref(null);
+const showMapPickup = ref(false);
+const showMapReturn = ref(false);
+
+const maps = {
+  pickup: ref(null),
+  return: ref(null),
+};
+const markers = {
+  pickup: ref(null),
+  return: ref(null),
+};
+
 const currentLatLng = ref({ lat: null, lng: null });
 const address = ref("");
-const isReturn = ref(false);
+
 const returnLatLng = ref({ lat: null, lng: null });
 const addressReturn = ref("");
 
 const openMap = (returnMode = false) => {
-  showMap.value = true;
-  isReturn.value = returnMode;
+  if (returnMode) {
+    showMapReturn.value = true;
+  } else {
+    showMapPickup.value = true;
+  }
 
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
@@ -351,16 +428,22 @@ const openMap = (returnMode = false) => {
           lng: pos.coords.longitude,
         };
 
-        map.value = new google.maps.Map(document.getElementById("map"), {
-          center: startPosition,
-          zoom: 15,
-        });
+        const mapId = returnMode ? "mapReturn" : "mapPickup";
 
-        marker.value = new google.maps.Marker({
-          position: startPosition,
-          map: map.value,
-          draggable: true,
-        });
+        maps[returnMode ? "return" : "pickup"].value = new google.maps.Map(
+          document.getElementById(mapId),
+          {
+            center: startPosition,
+            zoom: 15,
+          }
+        );
+
+        markers[returnMode ? "return" : "pickup"].value =
+          new google.maps.Marker({
+            position: startPosition,
+            map: maps[returnMode ? "return" : "pickup"].value,
+            draggable: true,
+          });
       },
       (err) => {
         alert("Error: " + err.message);
@@ -368,25 +451,23 @@ const openMap = (returnMode = false) => {
     );
   }
 };
-
-const confirmLocation = () => {
-  const position = marker.value.getPosition();
+const confirmLocation = (returnMode = false) => {
+  const marker = markers[returnMode ? "return" : "pickup"].value;
+  const position = marker.getPosition();
   const lat = position.lat();
   const lng = position.lng();
 
   const geocoder = new google.maps.Geocoder();
   geocoder.geocode({ location: { lat, lng } }, (results, status) => {
     if (status === "OK" && results[0]) {
-      if (isReturn.value) {
-        // حفظ مكان الإرجاع
+      if (returnMode) {
         returnLatLng.value = { lat, lng };
         addressReturn.value = results[0].formatted_address;
-        alert(`تم اختيار مكان الإرجاع: ${addressReturn.value}`);
+        showMapReturn.value = false;
       } else {
-        // حفظ مكان الاستلام
         currentLatLng.value = { lat, lng };
         address.value = results[0].formatted_address;
-        alert(`تم اختيار مكان الاستلام: ${address.value}`);
+        showMapPickup.value = false;
       }
     } else {
       alert("لم أستطع جلب العنوان");
@@ -394,6 +475,7 @@ const confirmLocation = () => {
   });
 };
 
+const isBookingNow = ref(null);
 const payload = computed(() => ({
   branch_id: branchValue.value || null,
   delivery_direction: typeDelivery.value || null,
@@ -406,27 +488,36 @@ const payload = computed(() => ({
   address_return: addressReturn.value ? String(addressReturn.value) : null,
   lat_return: returnLatLng.value.lat ? String(returnLatLng.value.lat) : null,
   lng_return: returnLatLng.value.lng ? String(returnLatLng.value.lng) : null,
+  is_booking_now: isBookingNow.value,
 }));
 
-function createOrderWench() {
+async function createOrderWench() {
   const rawPayload = payload.value;
- if (!rawPayload.reservation_time) {
-  rawPayload.reservation_time = dayjs()
-    .add(2, "hour")
-    .format("YYYY-MM-DD HH:mm:ss");
-}
+
+  if (!rawPayload.reservation_time) {
+    isBookingNow.value = true;
+    reservationTime.value = dayjs()
+      .add(2, "hour")
+      .format("YYYY-MM-DD HH:mm:ss");
+  } else {
+    isBookingNow.value = false;
+  }
 
   const cleanedPayload = Object.fromEntries(
-    Object.entries(rawPayload).filter(([_, v]) => v !== null && v !== "")
+    Object.entries(payload.value).filter(([_, v]) => v !== null && v !== "")
   );
 
-  const res = useWenchServices().createWenchOrder(cleanedPayload, "wench");
+  const res = await useWenchServices().createWenchOrder(
+    cleanedPayload,
+    "wench"
+  );
   if (res && res.status) {
-    alert("Order created successfully!");
-    // Optionally, redirect or reset form here
+    console.log('done')
   } else {
     console.log("Failed to create order: " + (res?.message || "Unknown error"));
   }
+
+  console.log("🚀 Payload:", cleanedPayload);
 }
 </script>
 
@@ -449,7 +540,7 @@ function createOrderWench() {
   scroll-behavior: smooth;
 }
 
-.time-slot {
+.lay-out-box {
   border: 1px solid #ccc;
   padding: 0.5rem 1rem;
   border-radius: 10px;
@@ -457,12 +548,12 @@ function createOrderWench() {
   width: 100px;
 }
 
-.time-slot:hover {
+.lay-out-box:hover {
   background-color: var(--main-color);
   cursor: pointer;
   border: 1px solid var(--main-color);
 }
-.time-slot.active {
+.lay-out-box.active {
   background-color: var(--main-color);
   border-color: var(--main-color);
 }
