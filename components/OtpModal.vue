@@ -144,7 +144,6 @@ const props = defineProps({
 
 let phone = ref(null);
 let codeOtp = ref("");
-let counter = ref(null);
 let showResendOtp = ref(false);
 let codecorrect = ref(null);
 let msgRes = ref("");
@@ -190,7 +189,7 @@ async function handleCheckOtp(otpValue) {
           }
         }
         isLoadingOtp.value = false;
-         emit("otp-success");
+        emit("otp-success");
       }
 
       console.log(responseRigsetr);
@@ -207,6 +206,7 @@ async function handleCheckOtp(otpValue) {
 
 let lastPhone = ref(null);
 
+let counter = ref(null);
 let timer = ref(null);
 function startCountdown() {
   timer = setInterval(() => {
@@ -243,3 +243,14 @@ const emit = defineEmits([
   "open-otp-modal",
 ]);
 </script>
+<style scoped>
+.otp-input {
+  width: 70px !important;
+  height: 70px; 
+  text-align: center;
+  font-size: 24px; 
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin: 0 5px; 
+}
+</style>
