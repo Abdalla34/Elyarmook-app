@@ -7,7 +7,9 @@
           v-for="sparepart in spareParts"
           :key="sparepart.id"
         >
-          <div class="service-card text-center margin-bottom-24px position-relative">
+          <div
+            class="service-card text-center margin-bottom-24px position-relative"
+          >
             <div class="service-icon-wrapper">
               <div class="service-icon">
                 <img
@@ -21,7 +23,9 @@
             <div class="service-content d-flex flex-column align-items-center">
               <TitleServices
                 :title="sparepart.title"
-                :currency="sparepart.has_price ? sparepart.price_text + ' sar' : ''"
+                :currency="
+                  sparepart.has_price ? sparepart.price_text + ' sar' : ''
+                "
               />
 
               <div
@@ -37,7 +41,10 @@
               </div>
             </div>
 
-            <div v-if="!sparepart.has_price" class="text-danger price-value mt-5">
+            <div
+              v-if="!sparepart.has_price"
+              class="text-danger price-value mt-5"
+            >
               سوف يتم تحديد السعر قريبا
             </div>
 
@@ -62,13 +69,14 @@
             </div>
           </div>
         </div>
-        
+
         <OtpModal
           :showDialCode="showDialCode"
           :showOtpModal="showOtpModal"
           @close-dial-code="showDialCode = false"
           @close-otp-modal="showOtpModal = false"
           @open-otp-modal="showOtpModal = true"
+          @otp-success="handleOtpSuccess"
         />
         <div class="isEmpty"></div>
         <div v-if="btnShooping" class="btn-shooping position-fixed bottom-0">
@@ -109,6 +117,9 @@ function BtnShooping() {
 onMounted(() => {
   initCartFromLocalStorage();
 });
+function handleOtpSuccess() {
+  navigateTo("/order-update-details");
+}
 </script>
 
 <style scoped>

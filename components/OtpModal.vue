@@ -190,7 +190,7 @@ async function handleCheckOtp(otpValue) {
           }
         }
         isLoadingOtp.value = false;
-        navigateTo("/order-update-details");
+         emit("otp-success");
       }
 
       console.log(responseRigsetr);

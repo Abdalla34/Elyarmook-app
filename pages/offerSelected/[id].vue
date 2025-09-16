@@ -79,6 +79,7 @@
             @close-dial-code="showDialCode = false"
             @close-otp-modal="showOtpModal = false"
             @open-otp-modal="showOtpModal = true"
+            @otp-success="handleOtpSuccess"
           />
 
           <!-- Cart functionality section -->
@@ -192,6 +193,9 @@ function BtnShooping() {
 onMounted(() => {
   initCartFromLocalStorage();
 });
+function handleOtpSuccess() {
+  navigateTo("/order-update-details");
+}
 </script>
 
 <style scoped>

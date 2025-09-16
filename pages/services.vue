@@ -63,14 +63,12 @@
           @close-dial-code="showDialCode = false"
           @close-otp-modal="showOtpModal = false"
           @open-otp-modal="showOtpModal = true"
+          @otp-success="handleOtpSuccess"
         />
         <div class="isEmpty"></div>
         <div v-if="btnShooping" class="btn-shooping position-fixed bottom-0">
           <ButtonCard @click="BtnShooping" textButton="continue shopping" />
         </div>
-        <!-- <div v-if="btnShooping" class="btn-shooping position-fixed bottom-0">
-          <ButtonCard @click="BtnShooping" textButton="continue shooping" />
-        </div> -->
       </div>
     </div>
   </div>
@@ -104,6 +102,9 @@ onMounted(() => {
 
 function BtnShooping() {
   showDialCode.value = true;
+}
+function handleOtpSuccess() {
+  navigateTo("/order-update-details");
 }
 </script>
 
