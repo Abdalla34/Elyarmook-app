@@ -8,14 +8,14 @@
           <img class="width-image" src="/Yarmook Logo.png" alt="Logo" />
         </div>
 
-        <div class="search position-relative">
+        <!-- <div class="search position-relative">
           <input
             type="text"
             placeholder="search"
             class="text-capitalize focus-input fw-600 input-search border-radius-36px"
           />
           <PuplicIconSearch class="icon-search position-absolute" />
-        </div>
+        </div> -->
       </div>
 
       <div class="profile-ds">

@@ -51,12 +51,13 @@
 
           <div v-else>
             <div
-              class="location-receive-car mt-5 mb-5 d-flex align-items-center justify-content-center text-capitalize"
+              class="location-receive-car mt-5 mb-2 d-flex align-items-center justify-content-center text-capitalize"
               style="cursor: pointer"
               @click="openMap(false)"
             >
               location to receive car
             </div>
+            <span class="text-danger">{{ addressError }}</span>
 
             <div
               v-if="showMapPickup"
@@ -77,7 +78,7 @@
 
           <!-- select branch -->
           <div
-            class="branch-date d-flex align-items-center justify-content-between gap-3"
+            class="branch-date mt-3 d-flex align-items-center justify-content-between gap-3"
           >
             <div class="input-barnch position-relative fix d-flex flex-column">
               <label for="" class="label">branch</label>
@@ -92,9 +93,10 @@
               </div>
             </div>
           </div>
+          <span class="text-danger">{{ branchError }}</span>
 
           <!-- select details time -->
-          <div class="select-details-time box-car p-3">
+          <div class="select-details-time mt-3 box-car p-3">
             <h5 class="label mb-3">اختر تفاصيل الوقت</h5>
 
             <div class="time-options mt-3">
@@ -276,6 +278,7 @@
               </div>
             </div>
           </div>
+          <span class="text-danger">{{ problemError }}</span>
 
           <!-- text area  -->
           <div
@@ -316,29 +319,48 @@
           <!-- submit button -->
           <form
             class="buttons-order d-flex justify-content-center gap-2"
-            @submit.prevent="createOrderWench"
+            @submit.prevent="onSubmit"
           >
-            <button type="submit" class="continue text-capitalize label button">
+            <button
+              :disabled="branchValue && address && problem"
+              type="submit"
+              class="continue text-capitalize label button"
+            >
               continue
             </button>
           </form>
         </div>
       </div>
     </div>
-
     <!-- load component -->
     <!-- <LoadingSpinner :is-loading-otp="isLoadingOtp" /> -->
   </div>
 </template>
 
 <script setup>
+import { useForm, useField } from "vee-validate";
+import * as yup from "yup";
+const schema = yup.object({
+  branchValue: yup.string().required("you should selected branch"),
+  problem: yup.string().required("you should selected type porblem "),
+  address: yup.string().required(" address required"),
+});
+
+const { handleSubmit } = useForm({
+  validationSchema: schema,
+});
+
+const { value: branchValue, errorMessage: branchError } =
+  useField("branchValue");
+const { value: problem, errorMessage: problemError } = useField("problem");
+const { value: address, errorMessage: addressError } = useField("address");
 
 const dayjs = useDayjs();
 const branches = ref([]);
-const branchValue = ref("");
+// const branchValue = ref("");
 
 const typeDelivery = ref("");
-const problem = ref("");
+// const problem = ref("");
 const mycars = ref([]);
 
 const reservationTime = ref(null);
@@ -408,7 +430,7 @@ const markers = {
 };
 
 const currentLatLng = ref({ lat: null, lng: null });
-const address = ref("");
+// const address = ref("");
 
 const returnLatLng = ref({ lat: null, lng: null });
 const addressReturn = ref("");
@@ -512,13 +534,16 @@ async function createOrderWench() {
     "wench"
   );
   if (res && res.status) {
-   navigateTo('/order-comfortable-service')
+    navigateTo("/order-comfortable-service");
   } else {
     console.log("Failed to create order: " + (res?.message || "Unknown error"));
   }
 
   console.log("🚀 Payload:", cleanedPayload);
 }
+const onSubmit = handleSubmit(async () => {
+  await createOrderWench();
+});
 </script>
 
 <style scoped>

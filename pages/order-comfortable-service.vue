@@ -133,9 +133,8 @@ let voucherDeleted = async () => {
     console.error("Error deleting voucher code:", error);
   }
 };
-
-// console.log("order", getMyorder?.wench_requests?.created_at);
 </script>
+
 <style scoped>
 @import "@/assets/css/cartorder.css";
 .box-car {

@@ -17,7 +17,7 @@
               </li>
               <li class="border-radius-36px">
                 <NuxtLink
-                  to="/myCars"
+                  to="/my-cars"
                   exact-active-class="active"
                   class="d-flex align-items-center gap-1 border-radius-36px p-color-fs"
                 >
