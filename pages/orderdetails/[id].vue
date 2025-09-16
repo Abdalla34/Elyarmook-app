@@ -71,24 +71,8 @@
                   </p>
                 </div>
               </div>
-
-              <div
-                class="status text-capitalize"
-                :class="{
-                  'bg-requested': orderSelected.status === 'request_done',
-                  'bg-report': orderSelected.status === 'report_ready',
-                  'bg-inspection':
-                    orderSelected.status === 'car_under_inspection' ||
-                    orderSelected.status === 'booking_done',
-                  'bg-canceled': orderSelected.status === 'canceled',
-                  'bg-ready': orderSelected.status === 'car is ready',
-                  'bg-finished': orderSelected.status === 'order_finished',
-                }"
-              >
-                <p class="status text-capitalize">
-                  {{ orderSelected.status_value }}
-                </p>
-              </div>
+              <!-- status orders -->
+              <OrderStatus :order="orderSelected"/>
             </div>
 
             <div
@@ -134,7 +118,9 @@
                   <p class="color-Eb" v-if="orderSelected?.can_reschedule">
                     Reschedule Order
                   </p>
-                  <p :class="[messageClass, 'text-msg-change']">{{ messageTimeChange }}</p>
+                  <p :class="[messageClass, 'text-msg-change']">
+                    {{ messageTimeChange }}
+                  </p>
                 </div>
               </div>
 
@@ -353,19 +339,23 @@ try {
 let sureCancel = ref(false);
 let changeStatusOrder = async (order_status, cancel_Reason_id) => {
   try {
-    const response = await useApi().changeOrderStatus(order_id, order_status, cancel_Reason_id);
+    const response = await useApi().changeOrderStatus(
+      order_id,
+      order_status,
+      cancel_Reason_id
+    );
     if (response?.status) {
       orderSelected.value = {
         ...orderSelected.value,
         status: order_status,
-        status_value: 'Canceled',
-        can_cancel: false
+        status_value: "Canceled",
+        can_cancel: false,
       };
     }
     cancelOrder.value = false;
     sureCancel.value = false;
   } catch (error) {
-    console.error('Error changing order status:', error);
+    console.error("Error changing order status:", error);
   }
 };
 
@@ -399,14 +389,6 @@ function toFalse() {
   cancelOrder.value = false;
   sureCancel.value = false;
 }
-
-const router = useRouter();
-
-onMounted(() => {
-  if (route.query?.from === "cart-update-details") {
-    router.push("/cart");
-  }
-});
 </script>
 
 <style scoped>

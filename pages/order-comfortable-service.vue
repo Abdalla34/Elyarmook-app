@@ -15,7 +15,7 @@
               </div>
             </div>
           </div>
-          <div class="col-12 col-lg-10 col-md-10 col-sm-12">
+          <div class="col-12 col-lg-12 col-md-10 col-sm-12">
             <div class="details rounded p-3">
               <div
                 class="branch d-flex justify-content-between align-items-center mb-3"
@@ -46,37 +46,34 @@
               class="input-code position-relative mt-4"
               v-if="getMyorder?.can_show_promo_code"
             >
-              <input
-                v-model="voucherCode"
-                type="text"
-                class="w-100 input-with-apply text-capitalize"
-                placeholder="promocode"
-              />
-              <!-- delete code  -->
-              <div>
+              <label for="" class="label">Do you have a promo code?</label>
+
+              <div class="position-relative">
+                <input
+                  v-model="voucherCode"
+                  type="text"
+                  class="w-100 input-with-apply text-capitalize pe-5"
+                  placeholder="promocode"
+                />
+
+                <!-- apply / delete -->
                 <button
-                  class="apply-btn apply position-absolute"
-                  :disabled="!voucherCode"
-                  @click="voucherDeleted"
-                >
-                  <span class="text-capitalize me-2 spanbutton">delete</span>
-                  <iconsOrder-applyCode />
-                </button>
-                <!-- <p class="text-success">{{ msg }}</p>
-                  -->
-              </div>
-              <!-- apply code  -->
-              <div>
-                <button
+                  v-if="!voucherApplied"
                   @click="voucherApply"
-                  class="apply-btn apply position-absolute"
+                  class="apply-btn-inside"
                   :disabled="!voucherCode"
                 >
-                  <span class="text-capitalize me-2 spanbutton">apply</span>
+                  <span class="text-capitalize me-1">apply</span>
                   <iconsOrder-applyCode />
                 </button>
-                <p class="error">{{ msg }}</p>
+
+                <button v-else @click="voucherDeleted" class="apply-btn-inside">
+                  <span class="text-capitalize me-1">delete</span>
+                  <iconsOrder-applyCode />
+                </button>
               </div>
+
+              <p class="error m-0 mt-1">{{ msg }}</p>
             </div>
 
             <!-- total amount -->
@@ -88,6 +85,13 @@
                 {{ getMyorder?.amount_to_pay }}
                 <span class="p-color-fs span">SAR</span>
               </p>
+            </div>
+
+            <div class="mt-4">
+              <ButtonCard
+                text-button="Continue"
+                @Click="navigateTo('/payment')"
+              />
             </div>
           </div>
         </div>
@@ -144,9 +148,38 @@ let voucherDeleted = async () => {
 .details {
   background-color: #f7f9f9;
 }
+
+.input-with-apply {
+  height: 42px;
+  padding-right: 90px; /* مساحة للزرار من جوة */
+}
+
+.apply-btn-inside {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  transform: translateY(-50%);
+  height: 28px;
+  padding: 0 12px;
+  background: #007bff;
+  border: none;
+  color: #fff;
+  border-radius: 6px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+}
+
+.apply-btn-inside:disabled {
+  background: #aaa;
+  cursor: not-allowed;
+}
+
 .error {
-  color: red;
-  font-family: var(--font-family);
-  font-size: 15px;
+  font-size: 13px;
+  color: #e74c3c;
+  margin-top: 4px;
 }
 </style>

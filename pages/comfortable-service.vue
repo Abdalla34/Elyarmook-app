@@ -512,7 +512,7 @@ async function createOrderWench() {
     "wench"
   );
   if (res && res.status) {
-    console.log('done')
+   navigateTo('/order-comfortable-service')
   } else {
     console.log("Failed to create order: " + (res?.message || "Unknown error"));
   }

@@ -55,22 +55,8 @@
                 </div>
               </div>
             </div>
-
-            <div
-              class="status text-capitalize"
-              :class="{
-                'bg-requested': order.status === 'request_done',
-                'bg-report': order.status === 'report_ready',
-                'bg-inspection':
-                  order.status === 'booking_done' ||
-                  order.status === 'car_under_inspection',
-                'bg-canceled': order.status === 'canceled',
-                'bg-ready': order.status === 'car is ready',
-                'bg-finished': order.status === 'order_finished',
-              }"
-            >
-              {{ order.status_value }}
-            </div>
+            <!-- status orders -->
+            <OrderStatus :order="order" :statusorder="statusorder" />
           </div>
         </div>
       </div>
@@ -94,7 +80,6 @@ try {
     msgError.value = true;
   } else if (token.value) {
     orders.value = res?.data?.items ?? [];
-    // console.log("orders ", res?.data?.items?.[0].created_at);
   }
 } catch (err) {
   if (err?.response?.status === 401) {
@@ -109,67 +94,11 @@ try {
 async function toOrderStatus(orderId) {
   navigateTo(`orderdetails/${orderId.id}`);
 }
-// let statusorder = ref(null);
-// let responseStatus = await useApi().getStatusorders();
-
-// statusorder.value = responseStatus?.data;
-// console.log("this is available", statusorder.value?.["wench-order"]);
+let statusorder = ref(null);
+let responseStatus = await useApi().getStatusorders();
+statusorder.value = responseStatus?.data;
 </script>
 
 <style scoped>
 @import "@/assets/css/myorders.css";
-.test {
-  left: 50%;
-  top: 30%;
-  transform: translate(-50%, -50%);
-  z-index: 16;
-}
-.over {
-  width: 100%;
-  height: 100%;
-  left: 0;
-  top: 0;
-  background-color: rgba(0, 0, 0, 0.4);
-  z-index: 11;
-}
-.msg-error {
-  background-color: white;
-  box-shadow: 0px 0px 20px 0px #0000000a;
-  border-radius: 30px;
-  padding: 20px;
-  text-align: center;
-  width: 50%;
-  margin: auto;
-  margin-bottom: 300px;
-  margin-top: 100px;
-}
-.goAcc {
-  border: none;
-  background-color: var(--main-color);
-  padding: 10px 20px;
-  margin-top: 20px;
-  border-radius: 20px;
-  cursor: pointer;
-  font-family: var(--font-main);
-  font-weight: 500;
-  font-size: 16px;
-  color: #040505;
-}
-.goAcc:hover {
-  border: none;
-  background-color: var(--main-color);
-  box-shadow: 0px 0px 20px 0px var(--main-color);
-}
-.bg-finished {
-  background-color: green;
-  color: white;
-}
-.SAR {
-  font-family: var(--font-main);
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 32px;
-  letter-spacing: 0%;
-  color: #7e7e7e;
-}
 </style>

@@ -72,7 +72,7 @@ import { PuplicIconInstagramIcon, PuplicIconWhatsApp } from '#components';
         <div class="col-lg-2 col-md-3 col-sm-12">
           <h6 class="text-capitalize mb-3 font-size-title">Help</h6>
           <p @click="navigateTo('/faq-from-help')" class="pt-1 font-size-16px">FAQ</p>
-          <p @click="navigateTo('/contact-us')" class="pt-1 font-size-16px">Contact Us</p>
+          <p @click="navigateTo('/fill-form')" class="pt-1 font-size-16px">Contact Us</p>
           <p class="pt-1 font-size-16px">WhatsApp</p>
         </div>
 

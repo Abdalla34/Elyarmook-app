@@ -68,6 +68,7 @@
             </div>
 
             <div
+              v-if="orderDetails?.status"
               @click="chachOnDelivery"
               class="box-method d-flex gap-4 justify-content-center border-radius-36px p-color-fs align-items-center mb-4 position-relative box-hover-bg"
             >
@@ -90,7 +91,7 @@
               <div>
                 <img src="/donePayment.png" alt="تم الدفع بنجاح" />
                 <h1 class="text-green-600 text-3xl font-bold mb-4">
-                 {{ orderDetails?.status_value }}
+                  {{ orderDetails?.status_value }}
                 </h1>
               </div>
               <div class="box-design">
@@ -172,7 +173,9 @@
 </template>
 
 <script setup>
-import { useApi } from "#imports";
+// const lastOrder = ref([]);
+// const resLastOrder = await useWenchServices().getLastOrder();
+// lastOrder.value = resLastOrder?.data;
 let orderDetails = ref(null);
 onMounted(async () => {
   try {
@@ -260,16 +263,14 @@ let paymentWihtTbby = async () => {
     console.log("err", err);
   }
 };
+
 const cachLayout = ref(false);
 let chachOnDelivery = async () => {
   let res = await useApi().chachOnDelivery(id);
   if (res?.status) {
     cachLayout.value = true;
-    console.log("orderDetails", orderDetails?.has_earned_points);
   }
 };
-
-
 </script>
 
 <style scoped>

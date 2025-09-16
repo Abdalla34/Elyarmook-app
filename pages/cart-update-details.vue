@@ -263,23 +263,6 @@
                 </div>
               </div>
 
-              <!-- <div
-                class="wallet-box d-flex align-items-center justify-content-between bg-light p-3 rounded-3 shadow-sm mb-3"
-              >
-                <label for="warranty" class="form-label mb-0 fw-semibold">test 
-                 
-                </label>
-
-                <div class="form-check form-switch m-0">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    role="switch"
-                    id="warranty"
-                  />
-                </div>
-              </div> -->
-
               <div
                 class="input-code position-relative"
                 v-if="itemsUpdates?.can_show_promo_code"
