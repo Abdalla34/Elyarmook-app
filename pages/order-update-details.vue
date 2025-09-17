@@ -243,13 +243,11 @@ const onSubmit = handleSubmit(async (values) => {
       formData.append("images[]", problemPhoto.value);
     }
 
-    let response = await useApi().updateCartDetails(idRoute, formData);
-    if (response && response.data) {
-      router.push({
-        path: "/cart-update-details",
-        query: { id:idRoute },
-      });
-    }
+    await useApi().updateCartDetails(idRoute, formData);
+    router.push({
+      path: "/cart-update-details",
+      query: { id: idRoute },
+    });
   } catch (err) {
     console.log(err);
   } finally {

@@ -7,15 +7,7 @@
           message="cart is Empty you must create account "
         />
 
-        <div
-          class="empty-cart text-center"
-          v-if="
-            token &&
-            services.length === 0 &&
-            offers.length === 0 &&
-            spareParts.length === 0
-          "
-        >
+        <div class="empty-cart text-center" v-if="token && !cartRes?.id">
           <
           <div>
             <img src="/Vector.png" alt="" />
@@ -35,13 +27,29 @@
         <!-- left section -->
         <div
           class="col-12 col-md-12 col-lg-6 col-md-6"
-          v-if="
-            (token && services.length > 0) ||
-            offers.length > 0 ||
-            spareParts.length > 0
-          "
+          v-if="token && cartRes?.id"
         >
           <h4 class="mb-4 fw-bold">Order Details</h4>
+
+          <div
+            class="cart d-flex justify-content-between align-items-center border-radius-36px mb-3"
+          >
+            <div class="details-cart d-flex align-items-center gap-3">
+              <div class="img">
+                <img
+                  :src="cartRes?.default_car.brand.image"
+                  :alt="cartRes?.default_car.brand.title.title"
+                />
+              </div>
+              <div class="name-cart">
+                <p class="price">
+                  {{ cartRes?.default_car.brand.title }} -
+                  {{ cartRes?.default_car.car_type.title }}
+                </p>
+              </div>
+            </div>
+          </div>
+
           <div
             class="cart d-flex justify-content-between align-items-center border-radius-36px mb-3"
             v-for="service in services"
@@ -207,9 +215,7 @@
         <!-- right section -->
         <div
           class="col-12 col-md-12 col-lg-4 col-test"
-          v-if="
-            token && (services.length || offers.length || spareParts.length)
-          "
+          v-if="token && cartRes?.id"
         >
           <div class="h-100">
             <div class=""></div>
@@ -254,6 +260,11 @@
               </div>
               <div class="buttion-confirm">
                 <button
+                  v-if="
+                    services.length >= 1 ||
+                    offers.length >= 1 ||
+                    spareParts.length >= 1
+                  "
                   @click="navigateTo('/services')"
                   class="additems text-capitalize label"
                 >
@@ -265,8 +276,8 @@
           </div>
         </div>
       </div>
+      <LoadingSpinner :is-loading-otp="isLoadingOtp" />
     </div>
-    <LoadingSpinner :is-loading-otp="isLoadingOtp" />
   </div>
 </template>
 
@@ -322,7 +333,6 @@ async function deletedOrder(id, type) {
 }
 
 let msg = ref({});
-
 async function updateQty(type, orderId, cart_item_id, newQty) {
   loadingQty.value[cart_item_id.id] = true;
   msg.value[cart_item_id.id] = "";
@@ -358,15 +368,26 @@ let isLoadingOtp = ref(false);
 let router = useRouter();
 function toContinue() {
   isLoadingOtp.value = true;
-  router.push({
-    path: `/order-update-details`,
-    query: {
-      id: order_id.value,
-    },
-  });
+  if (
+    spareParts.value.length === 0 &&
+    offers.value.length === 0 &&
+    services.value.length === 0
+  ) {
+    router.push({
+      path: `/payment`,
+      query: {
+        id: order_id.value,
+      },
+    });
+  } else {
+    router.push({
+      path: `/order-update-details`,
+      query: {
+        id: order_id.value,
+      },
+    });
+  }
 }
-// const lastOrder = await useWenchServices().getLastOrder();
-// console.log(lastOrder);
 </script>
 
 <style scoped>

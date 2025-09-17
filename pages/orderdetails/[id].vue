@@ -72,7 +72,7 @@
                 </div>
               </div>
               <!-- status orders -->
-              <OrderStatus :order="orderSelected"/>
+              <OrderStatus :order="orderSelected" />
             </div>
 
             <div
@@ -193,21 +193,37 @@
                 </li>
 
                 <li>
-                  <div class="bg-icons text-center">
+                  <div
+                    class="bg-icons text-center"
+                    :class="{
+                      'bg-active':
+                        orderSelected.status === 'Car Under Inspection',
+                    }"
+                  >
                     <icons-status-step-inspection />
                   </div>
                   <p class="step-name">inspection</p>
                 </li>
 
                 <li>
-                  <div class="bg-icons text-center">
+                  <div
+                    class="bg-icons text-center"
+                    :class="{
+                      'bg-active': orderSelected.status === 'Report Ready',
+                    }"
+                  >
                     <icons-status-step-report />
                   </div>
                   <p class="step-name">report</p>
                 </li>
 
                 <li>
-                  <div class="bg-icons text-center">
+                  <div
+                    class="bg-icons text-center"
+                    :class="{
+                      'bg-active': orderSelected.status === 'Car is Fine',
+                    }"
+                  >
                     <icons-status-step-car-fine
                       :status="orderSelected.status"
                     />
@@ -216,14 +232,25 @@
                 </li>
 
                 <li>
-                  <div class="bg-icons text-center">
+                  <div
+                    class="bg-icons text-center"
+                    :class="{
+                      'bg-active':
+                        orderSelected.status === 'Car Under Maintenance',
+                    }"
+                  >
                     <icons-status-step-maintenance />
                   </div>
                   <p class="step-name">maintenance</p>
                 </li>
 
                 <li>
-                  <div class="bg-icons text-center">
+                  <div
+                    class="bg-icons text-center"
+                    :class="{
+                      'bg-active': orderSelected.status === 'Car Ready',
+                    }"
+                  >
                     <icons-status-step-ready />
                   </div>
                   <p class="step-name">ready</p>
@@ -233,7 +260,7 @@
                   <div
                     class="bg-icons text-center"
                     :class="{
-                      'bg-active': orderSelected.status === 'order_finished',
+                      'bg-active': orderSelected.status === 'Finished',
                     }"
                   >
                     <icons-status-step-completed
@@ -331,7 +358,6 @@ let cancelOrder = ref(false);
 try {
   let resReasons = await useApi().getCancelReasons();
   getReasons.value = resReasons?.data || [];
-  console.log(getReasons.value);
 } catch (error) {
   console.error(error);
 }
@@ -364,7 +390,6 @@ let times = ref(false);
 let rescheduleOrder = async (branch_id) => {
   let resTimeAvailable = await useApi().getAvailableTimes(branch_id);
   availableDates.value = resTimeAvailable?.available_times;
-  console.log(availableDates.value);
   times.value = true;
 };
 let messageTimeChange = ref("");

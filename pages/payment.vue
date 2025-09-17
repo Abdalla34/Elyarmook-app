@@ -68,7 +68,6 @@
             </div>
 
             <div
-              v-if="orderDetails?.status"
               @click="chachOnDelivery"
               class="box-method d-flex gap-4 justify-content-center border-radius-36px p-color-fs align-items-center mb-4 position-relative box-hover-bg"
             >
@@ -173,18 +172,15 @@
 </template>
 
 <script setup>
-// const lastOrder = ref([]);
-// const resLastOrder = await useWenchServices().getLastOrder();
-// lastOrder.value = resLastOrder?.data;
 let orderDetails = ref(null);
-onMounted(async () => {
-  try {
-    let response = await useApi().getMyCart(route.query.id);
-    orderDetails.value = response?.data;
-  } catch (e) {
-    console.error(e);
-  }
-});
+// onMounted(async () => {
+//   try {
+//     let response = await useApi().getMyCart(route.query.id);
+//     orderDetails.value = response?.data;
+//   } catch (e) {
+//     console.error(e);
+//   }
+// });
 let route = useRoute();
 let id = route.query.id;
 

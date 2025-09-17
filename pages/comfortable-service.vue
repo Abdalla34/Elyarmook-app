@@ -491,7 +491,6 @@ const confirmLocation = (returnMode = false) => {
 
 const isBookingNow = ref(null);
 
-
 const payload = computed(() => ({
   branch_id: branchValue.value || null,
   delivery_direction: typeDelivery.value || null,
@@ -507,9 +506,10 @@ const payload = computed(() => ({
   is_booking_now: isBookingNow.value,
   in_cart: true,
   service_id: [{ service_id: 41 }],
-  spare_part_id: [{ spare_part_id: 22}],
+  spare_part_id: [{ spare_part_id: 22 }],
 }));
 
+const router = useRouter();
 async function createOrderWench() {
   const rawPayload = payload.value;
 
@@ -531,11 +531,11 @@ async function createOrderWench() {
     "wench"
   );
   if (res && res.status) {
-    navigateTo("/order-comfortable-service");
+    navigateTo(`/cart`);
+    console.log(res?.data?.id);
   } else {
     console.log("Failed to create order: " + (res?.message || "Unknown error"));
   }
-  console.log("🚀 Payload:", cleanedPayload);
 }
 
 const onSubmit = handleSubmit(async () => {

@@ -348,7 +348,9 @@
         <p class="text-success">order successfully!</p>
         <button-card
           class="width-btn w-50 m-auto mt-2"
-          @click="navigateTo(`/orderdetails/${order_id}?from=cart-update-details`)"
+          @click="
+            navigateTo(`/orderdetails/${order_id}?from=cart-update-details`)
+          "
           text-button="view my orders"
         >
         </button-card>
@@ -479,7 +481,6 @@ let toggleUseWallet = async () => {
 
       if (Number(resWallet?.data?.amount_to_pay) === 0) {
         let resChange = await useApi().changeCartToOrder(order_id);
-        console.log("changeCartToOrder response:", resChange);
       }
     } else {
       useWalletActive.value = resWallet?.data?.use_wallet;
@@ -489,7 +490,6 @@ let toggleUseWallet = async () => {
     console.log("Error response:", error?.response);
   }
 };
-
 
 let msgDoneUseWallet = ref(false);
 let router = useRouter();

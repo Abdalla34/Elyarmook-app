@@ -88,10 +88,7 @@
             </div>
 
             <div class="mt-4">
-              <ButtonCard
-                text-button="Continue"
-                @Click="navigateTo('/payment')"
-              />
+              <!-- <ButtonCard text-button="Continue" @Click="toContinue" /> -->
             </div>
           </div>
         </div>
@@ -106,6 +103,7 @@ const resOrders = await useWenchServices().getLastOrder();
 getMyorder.value = resOrders?.data;
 const voucherCode = ref("");
 const msg = ref("");
+
 let voucherApply = async () => {
   try {
     let resVoucher = await useApi().applyVoucherToCart(
@@ -132,6 +130,20 @@ let voucherDeleted = async () => {
     console.error("Error deleting voucher code:", error);
   }
 };
+
+// let router = useRouter();
+// function toContinue() {
+//   if (amountToPay.value > 0) {
+//     router.push({
+//       path: `/payment`,
+//       query: {
+//         id: id,
+//       },
+//     });
+//   } else {
+//     msgDoneUseWallet.value = true;
+//   }
+// }
 </script>
 
 <style scoped>
