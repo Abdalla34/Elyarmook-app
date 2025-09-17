@@ -321,11 +321,7 @@
             class="buttons-order d-flex justify-content-center gap-2"
             @submit.prevent="onSubmit"
           >
-            <button
-              :disabled="branchValue && address && problem"
-              type="submit"
-              class="continue text-capitalize label button"
-            >
+            <button type="submit" class="continue text-capitalize label button">
               continue
             </button>
           </form>
@@ -357,10 +353,8 @@ const { value: address, errorMessage: addressError } = useField("address");
 
 const dayjs = useDayjs();
 const branches = ref([]);
-// const branchValue = ref("");
 
 const typeDelivery = ref("");
-// const problem = ref("");
 const mycars = ref([]);
 
 const reservationTime = ref(null);
@@ -430,8 +424,6 @@ const markers = {
 };
 
 const currentLatLng = ref({ lat: null, lng: null });
-// const address = ref("");
-
 const returnLatLng = ref({ lat: null, lng: null });
 const addressReturn = ref("");
 
@@ -498,6 +490,8 @@ const confirmLocation = (returnMode = false) => {
 };
 
 const isBookingNow = ref(null);
+
+
 const payload = computed(() => ({
   branch_id: branchValue.value || null,
   delivery_direction: typeDelivery.value || null,
@@ -511,6 +505,9 @@ const payload = computed(() => ({
   lat_return: returnLatLng.value.lat ? String(returnLatLng.value.lat) : null,
   lng_return: returnLatLng.value.lng ? String(returnLatLng.value.lng) : null,
   is_booking_now: isBookingNow.value,
+  in_cart: true,
+  service_id: [{ service_id: 41 }],
+  spare_part_id: [{ spare_part_id: 22}],
 }));
 
 async function createOrderWench() {
@@ -538,9 +535,9 @@ async function createOrderWench() {
   } else {
     console.log("Failed to create order: " + (res?.message || "Unknown error"));
   }
-
   console.log("🚀 Payload:", cleanedPayload);
 }
+
 const onSubmit = handleSubmit(async () => {
   await createOrderWench();
 });

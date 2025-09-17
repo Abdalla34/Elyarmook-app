@@ -365,6 +365,8 @@ function toContinue() {
     },
   });
 }
+// const lastOrder = await useWenchServices().getLastOrder();
+// console.log(lastOrder);
 </script>
 
 <style scoped>

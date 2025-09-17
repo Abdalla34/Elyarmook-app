@@ -104,7 +104,6 @@
 const getMyorder = ref([]);
 const resOrders = await useWenchServices().getLastOrder();
 getMyorder.value = resOrders?.data;
-// const orderId = getMyorder.value?.id;
 const voucherCode = ref("");
 const msg = ref("");
 let voucherApply = async () => {
