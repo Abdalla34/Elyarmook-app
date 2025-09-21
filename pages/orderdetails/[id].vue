@@ -320,6 +320,7 @@
           <i class="fa-solid fa-xmark"></i>
         </div>
       </div>
+
       <div class="time-box">
         <template v-for="dateObj in availableDates" :key="dateObj.date">
           <div class="date-title">{{ dateObj.date }}</div>
@@ -334,6 +335,7 @@
         </template>
       </div>
     </div>
+    <LoadingSpinner :is-loading-otp="isLoadingOtp" />
   </div>
 </template>
 
@@ -347,11 +349,16 @@ const openInMaps = (branch) => {
   window.open(url, "_blank");
 };
 
+// onMounted(() => {
+//   if(orderSelected?.)
+// })
+
 let route = useRoute();
 let order_id = route.params.id;
 let orderSelected = ref(null);
 let res = await useApi().getSingleOrder(order_id);
 orderSelected.value = res?.data ?? {};
+
 
 const getReasons = ref([]);
 let cancelOrder = ref(false);
@@ -392,22 +399,31 @@ let rescheduleOrder = async (branch_id) => {
   availableDates.value = resTimeAvailable?.available_times;
   times.value = true;
 };
+
 let messageTimeChange = ref("");
 let messageClass = ref("");
+let isLoadingOtp = ref(false);
 let rescheduleTime = async ({ date, time }) => {
-  let dateTime = dayjs(`${date} ${time}`, "YYYY-MM-DD HH:mm");
-  let res = await useApi().reversationTime(
-    order_id,
-    dateTime.format("YYYY-MM-DD HH:mm:ss")
-  );
-  if (res?.status && res?.message) {
-    messageTimeChange.value = res?.message;
-    messageClass.value = "text-success";
-  } else {
-    messageTimeChange.value = res?.message;
-    messageClass.value = "text-danger";
+  isLoadingOtp.value = true;
+  try {
+    let dateTime = dayjs(`${date} ${time}`, "YYYY-MM-DD HH:mm");
+    let res = await useApi().reversationTime(
+      order_id,
+      dateTime.format("YYYY-MM-DD HH:mm:ss")
+    );
+    if (res?.status && res?.message) {
+      messageTimeChange.value = res?.message;
+      messageClass.value = "text-success";
+    } else {
+      messageTimeChange.value = res?.message;
+      messageClass.value = "text-danger";
+    }
+    times.value = false;
+  } catch (err) {
+    console.log(err);
+  } finally {
+    isLoadingOtp.value = false;
   }
-  times.value = false;
 };
 
 function toFalse() {

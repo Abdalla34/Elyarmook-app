@@ -18,16 +18,13 @@
               v-if="mycars.length <= 0"
               text-button="added your car"
             />
+            <!-- car -->
             <div
               v-if="mycars.length > 0"
               class="input-user position-relative d-flex flex-column"
             >
               <label for="" class="label">my car</label>
-              <select
-                v-model="carValue"
-                class="input-style"
-                :class="{ 'is-invalid': carError }"
-              >
+              <select v-model="carValue" class="input-style">
                 <option disabled value="">Ex : {{ user.name }}</option>
                 <option v-for="car in mycars" :key="car.id" :value="car.id">
                   {{ car.car_type.title }}
@@ -36,11 +33,8 @@
               <div class="icon-shape position-absolute">
                 <icons-order-iconunion />
               </div>
-              <span v-if="carError" class="error-message text-danger">{{
-                carError
-              }}</span>
             </div>
-
+            <!-- bracnh && time -->
             <div
               class="branch-date d-flex align-items-center justify-content-between gap-3"
             >
@@ -48,11 +42,7 @@
                 class="input-barnch position-relative fix d-flex flex-column"
               >
                 <label for="" class="label">branch</label>
-                <select
-                  v-model="branchValue"
-                  class="input-style"
-                  :class="{ 'is-invalid': branchError }"
-                >
+                <select v-model="branchValue" class="input-style">
                   <option disabled value="">Select Branch</option>
                   <option v-for="br in branches" :key="br.id" :value="br.id">
                     {{ br.title }}
@@ -61,20 +51,13 @@
                 <div class="icon-shape position-absolute">
                   <icons-order-iconunion />
                 </div>
-                <span v-if="branchError" class="error-message text-danger">{{
-                  branchError
-                }}</span>
               </div>
-
+              <!-- time -->
               <div
                 class="input-barnch position-relative fix d-flex flex-column"
               >
                 <label for="" class="label">date</label>
-                <select
-                  v-model="dateValue"
-                  class="input-style"
-                  :class="{ 'is-invalid': dateError }"
-                >
+                <select v-model="dateValue" class="input-style">
                   <option disabled value="">Select Date & Time</option>
                   <template
                     v-for="dateObj in availableDates"
@@ -92,9 +75,6 @@
                 <div class="icon-shape position-absolute">
                   <icons-order-iconunion />
                 </div>
-                <span v-if="dateError" class="error-message text-danger">{{
-                  dateError
-                }}</span>
               </div>
             </div>
 
@@ -149,6 +129,7 @@
               <button
                 type="submit"
                 class="continue text-capitalize label button"
+                :disabled="!carValue || !branchValue || !dateValue"
               >
                 continue
               </button>
@@ -164,30 +145,13 @@
 </template>
 
 <script setup>
-import { useField, useForm } from "vee-validate";
-import * as yup from "yup";
-
-const schema = yup.object({
-  car: yup.string().required("Please select your car"),
-  branch: yup.string().required("Please select a branch"),
-  date: yup.mixed().required("Please select date and time"),
-  note: yup.string().nullable(),
-});
-
-const { handleSubmit } = useForm({
-  validationSchema: schema,
-});
-
-const { value: carValue, errorMessage: carError } = useField("car");
-const { value: branchValue, errorMessage: branchError } = useField("branch");
-const { value: dateValue, errorMessage: dateError } = useField("date");
+const carValue = useState("carValue", () => {});
+const branchValue = useState("branchValue", () => "");
+const dateValue = useState("dateValue", () => {});
+const note = useState("note", () => "");
 
 const dayjs = useDayjs();
 const user = useCookie("user").value;
-const note = useState("note", () => "");
-// const myCart = ref([]);
-// const resCart = await useApi().getMyCart();
-// myCart.value = resCart?.data || [];
 const route = useRoute();
 const idRoute = route.query.id;
 const msgError = ref(false);
@@ -222,7 +186,7 @@ function handleImageUpload(event) {
   }
 }
 
-const onSubmit = handleSubmit(async (values) => {
+const onSubmit = async () => {
   isLoadingOtp.value = true;
   try {
     let reservationDateTime = null;
@@ -253,9 +217,21 @@ const onSubmit = handleSubmit(async (values) => {
   } finally {
     isLoadingOtp.value = false;
   }
+};
+
+onMounted(async () => {
+  if (branchValue.value) {
+    let resDate = await useApi().getAvailableTimes(branchValue.value);
+    availableDates.value = resDate?.available_times;
+  }
 });
+
 </script>
 
 <style scoped>
 @import "@/assets/css/orderDetails.css";
+.continue:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
 </style>

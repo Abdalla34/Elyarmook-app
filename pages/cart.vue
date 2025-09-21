@@ -8,7 +8,6 @@
         />
 
         <div class="empty-cart text-center" v-if="token && !cartRes?.id">
-          <
           <div>
             <img src="/Vector.png" alt="" />
             <h3 class="text-capitalize create">your cart is empty</h3>
@@ -32,6 +31,7 @@
           <h4 class="mb-4 fw-bold">Order Details</h4>
 
           <div
+            v-if="cartRes?.type === 'wench'"
             class="cart d-flex justify-content-between align-items-center border-radius-36px mb-3"
           >
             <div class="details-cart d-flex align-items-center gap-3">

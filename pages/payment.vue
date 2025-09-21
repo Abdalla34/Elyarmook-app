@@ -132,7 +132,8 @@
                   </div>
                   <div>
                     <h1 class="point-text fw-bold fs-6 text-end">
-                      you will get a reward point !
+                      you will get a reward
+                      {{ orderPoints.points_will_earn }} point !
                     </h1>
                     <p class="p-color-fs">
                       dont forget to use it next time to save more money in your
@@ -261,10 +262,14 @@ let paymentWihtTbby = async () => {
 };
 
 const cachLayout = ref(false);
+const orderPoints = ref(null);
 let chachOnDelivery = async () => {
   let res = await useApi().chachOnDelivery(id);
   if (res?.status) {
     cachLayout.value = true;
+    const res = await useApi().getSingleOrder(id);
+    orderPoints.value = res?.data;
+    // console.log(orderPoints.value);
   }
 };
 </script>

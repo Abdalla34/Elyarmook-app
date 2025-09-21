@@ -103,8 +103,12 @@ onMounted(() => {
 function BtnShooping() {
   showDialCode.value = true;
 }
-function handleOtpSuccess() {
-  navigateTo("/order-update-details");
+const router = useRouter();
+async function handleOtpSuccess() {
+  const getCartId = await useApi().getMyCart();
+  if (getCartId?.data?.id) {
+    navigateTo(`/order-update-details?id=${getCartId.data.id}`);
+  }
 }
 </script>
 
