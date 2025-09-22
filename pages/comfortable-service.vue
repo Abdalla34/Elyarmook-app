@@ -315,13 +315,50 @@
               </div>
             </div>
           </div>
+          <!-- modal nap -->
+          <div
+            v-if="showUnavailableModal"
+            class="modal-overlay position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 d-flex align-items-center justify-content-center"
+            @click="showUnavailableModal = false"
+          >
+            <div
+              class="modal-content position-relative p-4 bg-white rounded d-flex flex-column align-items-center justify-content-center text-center"
+              @click.stop
+              style="max-width: 600px; width: 90%"
+            >
+              <button
+                type="button"
+                class="btn-close position-absolute top-0 end-0 m-3"
+                aria-label="Close"
+                @click="showUnavailableModal = false"
+              ></button>
+
+              <div
+                class="image-urgent mb-3 d-flex align-items-center justify-content-center"
+              >
+                <img src="/car-fix.png" alt="car fix" class="img-fluid" />
+              </div>
+
+              <h3 class="label mb-2">
+                alyarmook takes a nap to service you better
+              </h3>
+              <p class="p-color-fs text-capitalize">
+                time works from {{ getAvailableTimeBranch?.start_time }} to
+                {{ getAvailableTimeBranch?.end_time }}
+              </p>
+            </div>
+          </div>
 
           <!-- submit button -->
           <form
             class="buttons-order d-flex justify-content-center gap-2"
             @submit.prevent="onSubmit"
           >
-            <button type="submit" class="continue text-capitalize label button">
+            <button
+              type="submit"
+              class="continue text-capitalize label"
+              :disabled="!isBranchAvailable"
+            >
               continue
             </button>
           </form>
@@ -371,10 +408,25 @@ const defaultCar = computed(
 );
 
 const availableDates = ref([]);
+const isBranchAvailable = ref(false);
+const showUnavailableModal = ref(false);
+const getAvailableTimeBranch = ref(null);
+
 watch(branchValue, async (newId) => {
   if (newId) {
     let resDate = await useApi().getAvailableTimes(newId);
     availableDates.value = resDate?.available_times;
+
+    const responseAvailable = await useApi().getAvailableBrnchesTime(newId);
+    getAvailableTimeBranch.value = responseAvailable?.data || null;
+
+    if (getAvailableTimeBranch.value?.is_available_now) {
+      isBranchAvailable.value = true;
+      showUnavailableModal.value = false;
+    } else {
+      isBranchAvailable.value = false;
+      showUnavailableModal.value = true;
+    }
   }
 });
 watch([selectedDate, selectedTimeSlot], ([newDate, newSlot]) => {
@@ -465,6 +517,7 @@ const openMap = (returnMode = false) => {
     );
   }
 };
+
 const confirmLocation = (returnMode = false) => {
   const marker = markers[returnMode ? "return" : "pickup"].value;
   const position = marker.getPosition();
@@ -490,7 +543,8 @@ const confirmLocation = (returnMode = false) => {
 };
 
 const isBookingNow = ref(null);
-
+const service_id = ref([]);
+const spare_part_id = ref([]);
 const payload = computed(() => ({
   branch_id: branchValue.value || null,
   delivery_direction: typeDelivery.value || null,
@@ -505,8 +559,8 @@ const payload = computed(() => ({
   lng_return: returnLatLng.value.lng ? String(returnLatLng.value.lng) : null,
   is_booking_now: isBookingNow.value,
   in_cart: true,
-  service_id: [{ service_id: 41 }],
-  spare_part_id: [{ spare_part_id: 22 }],
+  service_id: service_id.value || null,
+  spare_part_id: spare_part_id.value || null,
 }));
 
 const router = useRouter();
@@ -578,5 +632,20 @@ const onSubmit = handleSubmit(async () => {
 .lay-out-box.active {
   background-color: var(--main-color);
   border-color: var(--main-color);
+}
+
+.image-urgent {
+  width: 80px;
+  height: 80px;
+  background-color: antiquewhite;
+  border-radius: 50%;
+}
+.image-urgent img {
+  width: 60px;
+}
+.continue:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background-color: #ccc;
 }
 </style>

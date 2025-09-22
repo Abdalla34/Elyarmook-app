@@ -68,6 +68,7 @@
             </div>
 
             <div
+              v-if="orderDetails?.open_cash"
               @click="chachOnDelivery"
               class="box-method d-flex gap-4 justify-content-center border-radius-36px p-color-fs align-items-center mb-4 position-relative box-hover-bg"
             >
@@ -133,7 +134,7 @@
                   <div>
                     <h1 class="point-text fw-bold fs-6 text-end">
                       you will get a reward
-                      {{ orderPoints.points_will_earn }} point !
+                      {{ orderDetails.points_will_earn }} point !
                     </h1>
                     <p class="p-color-fs">
                       dont forget to use it next time to save more money in your
@@ -173,15 +174,8 @@
 </template>
 
 <script setup>
-let orderDetails = ref(null);
-// onMounted(async () => {
-//   try {
-//     let response = await useApi().getMyCart(route.query.id);
-//     orderDetails.value = response?.data;
-//   } catch (e) {
-//     console.error(e);
-//   }
-// });
+let orderDetails = ref({});
+
 let route = useRoute();
 let id = route.query.id;
 
@@ -222,9 +216,16 @@ function selecteBrand(brandPay) {
 
 let domain = "";
 
-onMounted(() => {
+onMounted(async () => {
   domain = window.location.origin;
   formAction.value = `${window.location.origin}/payment-tamara-status`;
+  try {
+    const responseOrder = await useApi().getSingleOrder(id);
+    orderDetails.value = responseOrder?.data || {};
+    console.log(responseOrder);
+  } catch (e) {
+    console.error(e);
+  }
 });
 
 let paywithTamara = async () => {
@@ -269,7 +270,6 @@ let chachOnDelivery = async () => {
     cachLayout.value = true;
     const res = await useApi().getSingleOrder(id);
     orderPoints.value = res?.data;
-    // console.log(orderPoints.value);
   }
 };
 </script>

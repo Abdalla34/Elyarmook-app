@@ -262,7 +262,27 @@
                   </p>
                 </div>
               </div>
+              <!-- warranty -->
+              <div class="warranty">
+                <div class="input-warranty">
+                  <div class="title-warranty">
+                    <h1 class="label">{{ itemsUpdates?.data?.pro_warranty?.title }}</h1>
+                  </div>
+                  <div class="input-checked">
+                    <div class="form-check form-switch m-0">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        role="switch"
+                      />
+                    </div>
+                  </div>
+                  <p class="p-color-fs">{{ itemsUpdates?.data.pro_warranty.message_when_warranty_pro }}</p>
+                  <p>{{itemsUpdates.data.pro_warranty.message_when_default_warranty }}</p>
+                </div>
+              </div>
 
+              <!-- promo code -->
               <div
                 class="input-code position-relative"
                 v-if="itemsUpdates?.can_show_promo_code"
@@ -306,7 +326,7 @@
                   {{ amountToPay }} <span class="p-color-fs span">SAR</span>
                 </p>
               </div>
-
+              <!-- use wallet  -->
               <div
                 v-if="itemsUpdates?.data?.user_balance > 0"
                 class="wallet-box mt-3 d-flex align-items-center justify-content-between bg-light p-3 rounded-3 shadow-sm"
@@ -363,13 +383,12 @@
 
 <script setup>
 let dayjs = useDayjs();
-const { updateCartDetails, deleteItemFromCart, updateCartItemQuantity } =
-  useApi();
+const { deleteItemFromCart, updateCartItemQuantity } = useApi();
 const loadingDelete = ref({});
 const loadingQty = ref({});
 let route = useRoute();
 let order_id = route.query.id;
-const itemsUpdates = await updateCartDetails(order_id);
+const itemsUpdates = await useApi().getSingleOrder(order_id);
 const items = ref([]);
 let token = useCookie("token").value;
 let offers = ref([]);
@@ -505,6 +524,8 @@ function toContinue() {
     msgDoneUseWallet.value = true;
   }
 }
+// console.log(itemsUpdates.value.pro_warranty.title)
+
 </script>
 
 <style scoped>
@@ -552,4 +573,12 @@ function toContinue() {
   top: 10px;
   right: 10px;
 }
+.warranty {
+  border: 1px solid #e0dede;
+  padding: 10px;
+  border-radius: 12px;
+}
+/* .input-checked input {
+  appearance: none;
+} */
 </style>

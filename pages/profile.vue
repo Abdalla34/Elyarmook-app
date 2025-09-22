@@ -178,7 +178,41 @@
             <button class="text-capitalize">edit profile</button>
           </div>
 
-          <div @click="logOut" class="log-out width-height border-radius-36px">
+          <div
+            v-if="showmodalsignOut"
+            class="modal-overlay position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-dark bg-opacity-50"
+            @click="test = false"
+          >
+            >
+            <div
+              class="modal-content position-relative p-4 bg-white rounded"
+              @click.stop
+            >
+              <button
+                type="button"
+                class="btn-close position-absolute top-0 end-0 m-3"
+                aria-label="Close"
+                @click="showmodalsignOut = false"
+              ></button>
+
+              <h3 class="label text-center">sign out from application ?</h3>
+              <p class="p-color-fs text-capitalize text-center mt-3">
+                are you sure to exit application ?
+              </p>
+              <button
+                @click.prevent="logOut"
+                type="button"
+                class="btn btn-danger mt-3"
+              >
+                sign out
+              </button>
+            </div>
+          </div>
+
+          <div
+            @click="showmodalsignOut = true"
+            class="log-out width-height border-radius-36px"
+          >
             <button class="text-capitalize">log out</button>
           </div>
 
@@ -239,6 +273,7 @@
 </template>
 
 <script setup>
+const test = ref(true);
 let router = useRouter();
 let token = useCookie("token", { maxAge: 365 * 24 * 60 * 60 });
 
@@ -250,6 +285,9 @@ let profileImg = ref(false);
 function ChangeProfile() {
   profileImg.value = !profileImg.value;
 }
+
+
+const showmodalsignOut = ref(false);
 let logOut = async () => {
   await useApi().logout();
   token.value = null;

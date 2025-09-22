@@ -524,6 +524,13 @@ export const useApi = () => {
       body: form,
     });
   };
+  // done
+  const getAvailableBrnchesTime = async (branch_id: any, type: any) => {
+    return $fetch(`${baseURL}/core/branches/check-available-now`, {
+      method: "GET",
+      params: { branch_id: branch_id, type: type },
+    });
+  };
 
   return {
     sendOTP,
@@ -561,6 +568,7 @@ export const useApi = () => {
     getOffers,
     getOfferSingle,
     getCarBrands,
+    getAvailableBrnchesTime,
     cartypes,
     createCar,
     deleteCar,

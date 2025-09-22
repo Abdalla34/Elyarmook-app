@@ -98,38 +98,38 @@
 </template>
 
 <script setup>
-const getMyorder = ref([]);
-const resOrders = await useWenchServices().getLastOrder();
-getMyorder.value = resOrders?.data;
-const voucherCode = ref("");
-const msg = ref("");
+// const getMyorder = ref([]);
+// const resOrders = await useWenchServices().getLastOrder();
+// getMyorder.value = resOrders?.data;
+// const voucherCode = ref("");
+// const msg = ref("");
 
-let voucherApply = async () => {
-  try {
-    let resVoucher = await useApi().applyVoucherToCart(
-      getMyorder.value?.id,
-      voucherCode.value
-    );
+// let voucherApply = async () => {
+//   try {
+//     let resVoucher = await useApi().applyVoucherToCart(
+//       getMyorder.value?.id,
+//       voucherCode.value
+//     );
 
-    if (resVoucher?.status === false) {
-      msg.value = resVoucher?.message;
-    } else {
-      msg.value = resVoucher?.message;
-    }
-  } catch (error) {
-    console.error("Error applying voucher code:", error);
-  }
-};
+//     if (resVoucher?.status === false) {
+//       msg.value = resVoucher?.message;
+//     } else {
+//       msg.value = resVoucher?.message;
+//     }
+//   } catch (error) {
+//     console.error("Error applying voucher code:", error);
+//   }
+// };
 
-let voucherDeleted = async () => {
-  try {
-    let res = await useApi().deleteVoucherFromCart(getMyorder.value?.id);
-    msg.value = res?.message || "Voucher deleted successfully";
-    voucherCode.value = "";
-  } catch (error) {
-    console.error("Error deleting voucher code:", error);
-  }
-};
+// let voucherDeleted = async () => {
+//   try {
+//     let res = await useApi().deleteVoucherFromCart(getMyorder.value?.id);
+//     msg.value = res?.message || "Voucher deleted successfully";
+//     voucherCode.value = "";
+//   } catch (error) {
+//     console.error("Error deleting voucher code:", error);
+//   }
+// };
 
 // let router = useRouter();
 // function toContinue() {

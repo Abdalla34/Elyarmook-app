@@ -349,16 +349,11 @@ const openInMaps = (branch) => {
   window.open(url, "_blank");
 };
 
-// onMounted(() => {
-//   if(orderSelected?.)
-// })
-
 let route = useRoute();
 let order_id = route.params.id;
 let orderSelected = ref(null);
 let res = await useApi().getSingleOrder(order_id);
 orderSelected.value = res?.data ?? {};
-
 
 const getReasons = ref([]);
 let cancelOrder = ref(false);
@@ -403,6 +398,7 @@ let rescheduleOrder = async (branch_id) => {
 let messageTimeChange = ref("");
 let messageClass = ref("");
 let isLoadingOtp = ref(false);
+
 let rescheduleTime = async ({ date, time }) => {
   isLoadingOtp.value = true;
   try {
@@ -411,13 +407,20 @@ let rescheduleTime = async ({ date, time }) => {
       order_id,
       dateTime.format("YYYY-MM-DD HH:mm:ss")
     );
+
     if (res?.status && res?.message) {
       messageTimeChange.value = res?.message;
       messageClass.value = "text-success";
+
+      orderSelected.value = {
+        ...orderSelected.value,
+        reservation_time: dateTime.format("YYYY-MM-DD HH:mm"),
+      };
     } else {
       messageTimeChange.value = res?.message;
       messageClass.value = "text-danger";
     }
+
     times.value = false;
   } catch (err) {
     console.log(err);
@@ -425,6 +428,29 @@ let rescheduleTime = async ({ date, time }) => {
     isLoadingOtp.value = false;
   }
 };
+
+// let rescheduleTime = async ({ date, time }) => {
+//   isLoadingOtp.value = true;
+//   try {
+//     let dateTime = dayjs(`${date} ${time}`, "YYYY-MM-DD HH:mm");
+//     let res = await useApi().reversationTime(
+//       order_id,
+//       dateTime.format("YYYY-MM-DD HH:mm:ss")
+//     );
+//     if (res?.status && res?.message) {
+//       messageTimeChange.value = res?.message;
+//       messageClass.value = "text-success";
+//     } else {
+//       messageTimeChange.value = res?.message;
+//       messageClass.value = "text-danger";
+//     }
+//     times.value = false;
+//   } catch (err) {
+//     console.log(err);
+//   } finally {
+//     isLoadingOtp.value = false;
+//   }
+// };
 
 function toFalse() {
   cancelOrder.value = false;
