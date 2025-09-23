@@ -263,23 +263,53 @@
                 </div>
               </div>
               <!-- warranty -->
-              <div class="warranty">
-                <div class="input-warranty">
-                  <div class="title-warranty">
-                    <h1 class="label">{{ itemsUpdates?.data?.pro_warranty?.title }}</h1>
-                  </div>
+              <div class="warranty" v-if="itemsUpdates?.data?.pro_warranty">
+                <LoadingOtp :isLoadingOtp="isLoadingOtp" />
+                <div
+                  class="input-warranty d-flex align-items-center justify-content-between"
+                >
                   <div class="input-checked">
                     <div class="form-check form-switch m-0">
                       <input
                         class="form-check-input"
                         type="checkbox"
                         role="switch"
+                        v-model="itemsUpdates.data.pro_warranty.is_pro_warranty"
+                        @change="toogleWarranty"
                       />
                     </div>
                   </div>
-                  <p class="p-color-fs">{{ itemsUpdates?.data.pro_warranty.message_when_warranty_pro }}</p>
-                  <p>{{itemsUpdates.data.pro_warranty.message_when_default_warranty }}</p>
+                  <div class="title-warranty">
+                    <h1 class="label">
+                      {{ itemsUpdates.data.pro_warranty.title }}
+                    </h1>
+                  </div>
                 </div>
+
+                <!-- <p class="p-color-fs mt-2">
+                  {{ itemsUpdates.data.pro_warranty.description }}
+                </p> -->
+
+                <p class="p-color-fs mt-2">
+                  {{ itemsUpdates.data.pro_warranty.message_when_warranty_pro }}
+                </p>
+
+                <p
+                  class="mt-3"
+                  :class="{
+                    'not-warranty':
+                      !itemsUpdates.data.pro_warranty.is_pro_warranty,
+                    'success-warranty':
+                      itemsUpdates.data.pro_warranty.is_pro_warranty,
+                  }"
+                >
+                  {{
+                    itemsUpdates.data.pro_warranty.message_when_default_warranty
+                  }}
+                  <span v-if="itemsUpdates.data.pro_warranty.is_pro_warranty">
+                    <i class="fa-solid fa-check"></i>
+                  </span>
+                </p>
               </div>
 
               <!-- promo code -->
@@ -524,8 +554,32 @@ function toContinue() {
     msgDoneUseWallet.value = true;
   }
 }
-// console.log(itemsUpdates.value.pro_warranty.title)
+const isLoadingOtp = ref(false);
 
+const toogleWarranty = async () => {
+  try {
+    isLoadingOtp.value = true;
+
+    const responseWarranty = await useApi().ToggleWarranty(
+      order_id,
+      "cart_type"
+    );
+
+    if (responseWarranty?.pro_warranty) {
+      itemsUpdates = {
+        ...itemsUpdates,
+        data: {
+          ...itemsUpdates.data,
+          pro_warranty: { ...responseWarranty.pro_warranty },
+        },
+      };
+    }
+  } catch (err) {
+    console.log(err);
+  } finally {
+    isLoadingOtp.value = false;
+  }
+};
 </script>
 
 <style scoped>
@@ -578,7 +632,22 @@ function toContinue() {
   padding: 10px;
   border-radius: 12px;
 }
-/* .input-checked input {
-  appearance: none;
-} */
+.not-warranty {
+  font-size: 12px;
+  font-weight: 500;
+  font-family: var(--font-main);
+  background-color: var(--color-secound-main);
+  width: fit-content;
+  padding: 0px 8px;
+}
+.success-warranty {
+  font-size: 12px;
+  font-weight: 500;
+  font-family: var(--font-main);
+  width: fit-content;
+  padding: 5px 8px;
+  border-radius: 20px;
+  background-color: rgb(5, 153, 5);
+  color: white;
+}
 </style>
