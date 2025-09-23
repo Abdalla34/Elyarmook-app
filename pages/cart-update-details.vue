@@ -75,7 +75,9 @@
                   <button
                     class="qty-btn"
                     :disabled="loadingQty[order.id] || order.qty <= 1"
-                    @click="updateQty(order, order.qty - 1)"
+                    @click="
+                      updateQty('service', order_id, order, order.qty - 1)
+                    "
                   >
                     -
                   </button>
@@ -83,7 +85,9 @@
                   <button
                     class="qty-btn"
                     :disabled="loadingQty[order.id]"
-                    @click="updateQty(order, order.qty + 1)"
+                    @click="
+                      updateQty('service', order_id, order, order.qty + 1)
+                    "
                   >
                     +
                   </button>
@@ -165,28 +169,17 @@
                     class="qty-btn"
                     :disabled="loadingQty[sparepart.id] || sparepart.qty <= 1"
                     @click="
-                      updateQty(
-                        'spare_part',
-                        order_id,
-                        sparepart,
-                        sparepart.qty - 1
-                      )
+                      updateQty('spare_part', order_id, sparepart, sparepart.qty - 1)
                     "
                   >
                     -
                   </button>
-
                   <span class="mx-2">{{ sparepart.qty }}</span>
                   <button
                     class="qty-btn"
                     :disabled="loadingQty[sparepart.id]"
                     @click="
-                      updateQty(
-                        'spare_part',
-                        order_id,
-                        sparepart,
-                        sparepart.qty + 1
-                      )
+                      updateQty('spare_part', order_id, sparepart, sparepart.qty + 1)
                     "
                   >
                     +
@@ -456,16 +449,44 @@ async function deletedOrder(id, type) {
     console.log("test", err);
   }
 }
-async function updateQty(order, newQty) {
-  if (newQty < 1) return;
-  loadingQty.value[order.id] = true;
+// async function updateQty(order, newQty) {
+//   if (newQty < 1) return;
+//   loadingQty.value[order.id] = true;
+//   try {
+//     await updateCartItemQuantity("service", order_id, order.id, newQty);
+//     order.qty = newQty;
+//   } catch (err) {
+//     console.log("test", err);
+//   } finally {
+//     loadingQty.value[order.id] = false;
+//   }
+// }
+
+async function updateQty(type, order_id, cart_item_id, qty) {
+  loadingQty.value[cart_item_id.id] = true;
   try {
-    await updateCartItemQuantity("service", order_id, order.id, newQty);
-    order.qty = newQty;
+    let res = await updateCartItemQuantity(
+      type,
+      order_id,
+      cart_item_id.id,
+      qty
+    );
+
+    if (res?.status === true) {
+      console.log("more doneeeeeeee");
+    } else {
+      console.log("more nooooote doneeeeeeee");
+      // if (res?.errors?.qty?.length) {
+      // } else {
+      //   console.log("more nooooote doneeeeeeee");
+      // }
+    }
   } catch (err) {
-    console.log("test", err);
+    if (err?.data?.errors?.qty?.length) {
+    } else {
+    }
   } finally {
-    loadingQty.value[order.id] = false;
+    loadingQty.value[cart_item_id.id] = false;
   }
 }
 
