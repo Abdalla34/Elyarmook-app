@@ -459,7 +459,7 @@ function toFalse() {
 </script>
 
 <style scoped>
-@import "@/assets/css/ordersteps.css";
+@import "~/assets/css/ordersteps.css";
 .popup-sure-cancel {
   height: 12% !important;
   text-align: center;
