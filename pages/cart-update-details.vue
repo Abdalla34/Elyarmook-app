@@ -584,49 +584,7 @@ const toogleWarranty = async () => {
 
 <style scoped>
 @import "@/assets/css/cartorder.css";
-.updated-details {
-  color: var(--color-black);
-  padding: 10px;
-  border-radius: 20px;
-  font-family: var(--font-family);
-  font-weight: bold;
-  background-color: var(--main-color);
-}
-.error {
-  color: red;
-  font-family: var(--font-family);
-  font-size: 15px;
-}
-.border {
-  border: 2px solid green;
-}
 
-.sar {
-  color: black;
-  font-size: 12px;
-  font-weight: 600;
-}
-.msg-done-use-wallet {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 30%;
-  height: 200px;
-  padding-top: 40px;
-  text-align: center;
-  background-color: white;
-  z-index: 20;
-  border-radius: 14px;
-}
-.text-success {
-  font-size: 20px;
-}
-.cursor-pointer {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-}
 .warranty {
   border: 1px solid #e0dede;
   padding: 10px;
