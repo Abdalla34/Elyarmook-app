@@ -584,7 +584,6 @@ const toogleWarranty = async () => {
 
 <style scoped>
 @import "@/assets/css/cartorder.css";
-
 .warranty {
   border: 1px solid #e0dede;
   padding: 10px;
