@@ -6,6 +6,25 @@
         message="your orders is Empty you must create account"
       />
 
+      <div
+        class="empty-cart d-flex justify-content-center align-items-center text-center min-vh-100"
+        v-if="token && orders.length === 0"
+      >
+        <div>
+          <img src="/Vector.png" alt="" />
+          <h3 class="text-capitalize create">your orders is empty</h3>
+          <div class="btn-items mt-3">
+            <button
+              @click="navigateTo('/services')"
+              class="d-flex align-items-center gap-2 mx-auto btn rounded ps-3 pe-3"
+            >
+              <PuplicIconPlusIcon />
+              <span>Add Items</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
       <div class="row justify-content-center">
         <div class="col-lg-7 col-md-10 col-sm-12">
           <div
@@ -101,4 +120,7 @@ statusorder.value = responseStatus?.data;
 
 <style scoped>
 @import "@/assets/css/myorders.css";
+.btn {
+  background-color: var(--main-color);
+}
 </style>

@@ -170,11 +170,16 @@
         </div>
       </div>
     </div>
+    <div>
+      <loading-spinner :isLoadingOtp="isLoading" />
+    </div>
   </div>
 </template>
 
 <script setup>
 let orderDetails = ref({});
+
+const isLoading = ref(false);
 
 let route = useRoute();
 let id = route.query.id;
@@ -265,11 +270,18 @@ let paymentWihtTbby = async () => {
 const cachLayout = ref(false);
 const orderPoints = ref(null);
 let chachOnDelivery = async () => {
-  let res = await useApi().chachOnDelivery(id);
-  if (res?.status) {
-    cachLayout.value = true;
-    const res = await useApi().getSingleOrder(id);
-    orderPoints.value = res?.data;
+  isLoading.value = true;
+  try {
+    let res = await useApi().chachOnDelivery(id);
+    if (res?.status) {
+      cachLayout.value = true;
+      const res = await useApi().getSingleOrder(id);
+      orderPoints.value = res?.data;
+    }
+  } catch (err) {
+    console.log(err);
+  } finally {
+    isLoading.value = false;
   }
 };
 </script>
