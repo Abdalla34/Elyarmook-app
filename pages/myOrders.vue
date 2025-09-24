@@ -79,6 +79,28 @@
           </div>
         </div>
       </div>
+
+      <div class="d-flex justify-content-center gap-3 mt-4">
+        <button
+          @click="handlePrev"
+          class="btn"
+          :disabled="currentpage <= 1"
+        >
+          Prev
+        </button>
+
+        <span class="align-self-center">Page {{ currentpage }}</span>
+
+        <button
+          @click="handleNext"
+          class="btn"
+          :disabled="currentpage >= (pagination?.total_pages || 1)"
+        >
+          Next
+        </button>
+      </div>
+
+      <LoadingSpinner :isLoadingOtp="isloading" />
     </div>
   </div>
 </template>
@@ -90,32 +112,63 @@ dayjs.extend(customParseFormat);
 
 let msgError = ref(false);
 let loading = ref(true);
+let isloading = ref(false);
 let token = useCookie("token");
 
 const orders = ref([]);
-try {
-  const res = await useApi().getMyOrders();
-  if (res?.status === false && res?.message === "Unauthenticated") {
-    msgError.value = true;
-  } else if (token.value) {
-    orders.value = res?.data?.items ?? [];
-  }
-} catch (err) {
-  if (err?.response?.status === 401) {
-    msgError.value = true;
-  } else {
-    console.error("حدث خطأ غير متوقع:", err);
-  }
-} finally {
-  loading.value = false;
-}
 
 async function toOrderStatus(orderId) {
   navigateTo(`orderdetails/${orderId.id}`);
 }
+
 let statusorder = ref(null);
 let responseStatus = await useApi().getStatusorders();
 statusorder.value = responseStatus?.data;
+
+const pagination = ref({});
+const getOrders = async (page = 1) => {
+  isloading.value = true;
+  loading.value = true;
+  try {
+    const res = await useApi().getMyOrders(page);
+    if (res?.status === false && res?.message === "Unauthenticated") {
+      msgError.value = true;
+    } else if (token.value) {
+      orders.value = res?.data?.items ?? [];
+      pagination.value = res?.data?.paginate ?? {};
+    }
+  } catch (err) {
+    if (err?.response?.status === 401) {
+      msgError.value = true;
+    } else {
+      console.error("حدث خطأ غير متوقع:", err);
+    }
+  } finally {
+    isloading.value = false;
+    loading.value = false;
+  }
+};
+
+const currentpage = ref(1);
+
+const handleNext = async () => {
+  if (currentpage.value >= (pagination.value?.total_pages || 1)) return;
+  currentpage.value++;
+  await getOrders(currentpage.value);
+  window.scrollTo({ top: 0, behavior: "smooth" });
+};
+
+const handlePrev = async () => {
+  if (currentpage.value > 1) {
+    currentpage.value--;
+    await getOrders(currentpage.value);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+};
+
+onMounted(() => {
+  getOrders(currentpage.value);
+});
 </script>
 
 <style scoped>

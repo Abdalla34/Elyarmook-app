@@ -92,7 +92,7 @@ export const useApi = () => {
       headers,
     });
   };
-
+// done
   const getCancelReasons = async () => {
     return await $fetch(`${baseURL}/core/cancel-reasons`, {
       method: "GET",
@@ -261,16 +261,13 @@ export const useApi = () => {
     });
   };
   // done
-  const getMyOrders = async () => {
-    const token = useCookie("token");
-    return await $fetch(`${baseURL}/order/orders`, {
-      headers: {
-        Authorization: `Bearer ${token.value}`,
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
+  const getMyOrders = async (page = 1) => {
+    // const token = useCookie("token");
+    return await $fetch(`${baseURL}/order/orders?page=${page}`, {
+      headers,
     });
   };
+
   // done
   const getSingleOrder = async (order_id: any) => {
     return await $fetch(`${baseURL}/order/orders/${order_id}`, {
@@ -372,7 +369,7 @@ export const useApi = () => {
       body: { response_type },
     });
   };
-// done
+  // done
   const ToggleWarranty = async (order_id: any, response_type: any) => {
     return await $fetch(
       `${baseURL}/marketplace/order/pro_warranty/${order_id}`,
@@ -383,7 +380,7 @@ export const useApi = () => {
       }
     );
   };
-
+// done
   const getStatusorders = async () => {
     return await $fetch(`${baseURL}/core/all-available-order-statuses`, {
       method: "GET",
@@ -510,6 +507,7 @@ export const useApi = () => {
       }
     );
   };
+  // done
   const changeCartToOrder = async (order_id: any) => {
     return $fetch(`${baseURL}/order/orders/change-cart-to-order/${order_id}`, {
       method: "POST",
