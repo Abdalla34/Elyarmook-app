@@ -94,6 +94,12 @@
                   <span v-if="loadingQty[order.id]" class="ms-2"
                     >Loading...</span
                   >
+                  <div
+                    v-if="msgErrorQty[order.id]"
+                    class="text-danger label mt-2"
+                  >
+                    {{ msgErrorQty[order.id] }}
+                  </div>
                 </div>
               </div>
             </div>
@@ -118,11 +124,13 @@
                   {{ order.price }}
                   <span class="p-color-fs span">SAR</span>
                 </p>
-                <div class="qty-controls d-flex align-items-center mt-2">
+                 <div class="qty-controls d-flex align-items-center mt-2">
                   <button
                     class="qty-btn"
                     :disabled="loadingQty[order.id] || order.qty <= 1"
-                    @click="updateQty(order, order.qty - 1)"
+                    @click="
+                      updateQty('offer', order_id, order, order.qty - 1)
+                    "
                   >
                     -
                   </button>
@@ -130,13 +138,21 @@
                   <button
                     class="qty-btn"
                     :disabled="loadingQty[order.id]"
-                    @click="updateQty(order, order.qty + 1)"
+                    @click="
+                      updateQty('offer', order_id, order, order.qty + 1)
+                    "
                   >
                     +
                   </button>
                   <span v-if="loadingQty[order.id]" class="ms-2"
                     >Loading...</span
                   >
+                  <div
+                    v-if="msgErrorQty[order.id]"
+                    class="text-danger label mt-2"
+                  >
+                    {{ msgErrorQty[order.id] }}
+                  </div>
                 </div>
               </div>
             </div>
@@ -169,7 +185,12 @@
                     class="qty-btn"
                     :disabled="loadingQty[sparepart.id] || sparepart.qty <= 1"
                     @click="
-                      updateQty('spare_part', order_id, sparepart, sparepart.qty - 1)
+                      updateQty(
+                        'spare_part',
+                        order_id,
+                        sparepart,
+                        sparepart.qty - 1
+                      )
                     "
                   >
                     -
@@ -179,7 +200,12 @@
                     class="qty-btn"
                     :disabled="loadingQty[sparepart.id]"
                     @click="
-                      updateQty('spare_part', order_id, sparepart, sparepart.qty + 1)
+                      updateQty(
+                        'spare_part',
+                        order_id,
+                        sparepart,
+                        sparepart.qty + 1
+                      )
                     "
                   >
                     +
@@ -449,19 +475,8 @@ async function deletedOrder(id, type) {
     console.log("test", err);
   }
 }
-// async function updateQty(order, newQty) {
-//   if (newQty < 1) return;
-//   loadingQty.value[order.id] = true;
-//   try {
-//     await updateCartItemQuantity("service", order_id, order.id, newQty);
-//     order.qty = newQty;
-//   } catch (err) {
-//     console.log("test", err);
-//   } finally {
-//     loadingQty.value[order.id] = false;
-//   }
-// }
 
+const msgErrorQty = ref({});
 async function updateQty(type, order_id, cart_item_id, qty) {
   loadingQty.value[cart_item_id.id] = true;
   try {
@@ -473,17 +488,20 @@ async function updateQty(type, order_id, cart_item_id, qty) {
     );
 
     if (res?.status === true) {
-      console.log("more doneeeeeeee");
+      cart_item_id.qty = qty;
+      msgErrorQty.value[cart_item_id.id] = "";
     } else {
-      console.log("more nooooote doneeeeeeee");
-      // if (res?.errors?.qty?.length) {
-      // } else {
-      //   console.log("more nooooote doneeeeeeee");
-      // }
+      if (res?.errors?.qty?.length) {
+        msgErrorQty.value[cart_item_id.id] = res.errors.qty[0];
+      } else {
+        msgErrorQty.value[cart_item_id.id] = res?.message;
+      }
     }
   } catch (err) {
     if (err?.data?.errors?.qty?.length) {
+      msgErrorQty.value[cart_item_id.id] = err.data.errors.qty[0];
     } else {
+      msgErrorQty.value[cart_item_id.id] = err?.data?.message || err.message;
     }
   } finally {
     loadingQty.value[cart_item_id.id] = false;
@@ -629,4 +647,4 @@ const toogleWarranty = async () => {
   color: white;
 }
 </style>
-<!-- test -->
+

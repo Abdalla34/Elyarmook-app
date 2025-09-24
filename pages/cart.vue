@@ -351,7 +351,7 @@ async function updateQty(type, orderId, cart_item_id, newQty) {
       if (res?.errors?.qty?.length) {
         msg.value[cart_item_id.id] = res.errors.qty[0];
       } else {
-        msg.value[cart_item_id.id] = res?.message || "حدث خطأ غير متوقع";
+        msg.value[cart_item_id.id] = res?.message;
       }
     }
   } catch (err) {
