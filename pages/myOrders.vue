@@ -1,11 +1,12 @@
 <template>
   <div class="my-orders position-relative">
     <div class="container position-relative">
+      <!-- if not register  -->
       <NotRegister
         :IsNotRegitser="!loading && msgError"
         message="your orders is Empty you must create account"
       />
-
+      <!-- if orders empty  -->
       <div
         class="empty-cart d-flex justify-content-center align-items-center text-center min-vh-100"
         v-if="token && orders.length === 0"
@@ -24,7 +25,7 @@
           </div>
         </div>
       </div>
-
+      <!-- ordres -->
       <div class="row justify-content-center">
         <div class="col-lg-7 col-md-10 col-sm-12">
           <div
@@ -79,13 +80,12 @@
           </div>
         </div>
       </div>
-
-      <div class="d-flex justify-content-center gap-3 mt-4">
-        <button
-          @click="handlePrev"
-          class="btn"
-          :disabled="currentpage <= 1"
-        >
+      <!-- pagination -->
+      <div
+        v-if="token && orders.length >= 10"
+        class="d-flex justify-content-center gap-3 mt-4"
+      >
+        <button @click="handlePrev" class="btn" :disabled="currentpage <= 1">
           Prev
         </button>
 
@@ -99,7 +99,7 @@
           Next
         </button>
       </div>
-
+      <!-- load -->
       <LoadingSpinner :isLoadingOtp="isloading" />
     </div>
   </div>
