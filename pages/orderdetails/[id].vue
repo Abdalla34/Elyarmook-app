@@ -118,7 +118,7 @@
                   <p class="color-Eb" v-if="orderSelected?.can_reschedule">
                     Reschedule Order
                   </p>
-                  <p :class="[messageClass, 'text-msg-change']">
+                  <p class="fw-bold" :class="[messageClass, 'text-msg-change']">
                     {{ messageTimeChange }}
                   </p>
                 </div>
@@ -434,29 +434,6 @@ let rescheduleTime = async ({ date, time }) => {
   }
 };
 
-// let rescheduleTime = async ({ date, time }) => {
-//   isLoadingOtp.value = true;
-//   try {
-//     let dateTime = dayjs(`${date} ${time}`, "YYYY-MM-DD HH:mm");
-//     let res = await useApi().reversationTime(
-//       order_id,
-//       dateTime.format("YYYY-MM-DD HH:mm:ss")
-//     );
-//     if (res?.status && res?.message) {
-//       messageTimeChange.value = res?.message;
-//       messageClass.value = "text-success";
-//     } else {
-//       messageTimeChange.value = res?.message;
-//       messageClass.value = "text-danger";
-//     }
-//     times.value = false;
-//   } catch (err) {
-//     console.log(err);
-//   } finally {
-//     isLoadingOtp.value = false;
-//   }
-// };
-
 function toFalse() {
   cancelOrder.value = false;
   sureCancel.value = false;
@@ -464,7 +441,7 @@ function toFalse() {
 </script>
 
 <style scoped>
-/* @import "@/assets/css/ordersteps.css"; */
+
 @import "@/assets/css/ordersteps.css";
 
 .popup-sure-cancel {
