@@ -175,5 +175,6 @@ onMounted(() => {
 @import "@/assets/css/myorders.css";
 .btn {
   background-color: var(--main-color);
+  border: none;
 }
 </style>

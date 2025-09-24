@@ -86,10 +86,35 @@
                 </div>
               </div>
             </div>
+         
+            <!-- <div
+              v-if="token && orders.length >= 10"
+              class="d-flex justify-content-center gap-3 mt-4"
+            >
+              <button
+                @click="handlePrev"
+                class="btn"
+                :disabled="currentpage <= 1"
+              >
+                Prev
+              </button>
+
+              <span class="align-self-center">Page {{ currentpage }}</span>
+
+              <button
+                @click="handleNext"
+                class="btn"
+                :disabled="currentpage >= (pagination?.total_pages || 1)"
+              >
+                Next
+              </button>
+            </div> -->
+
+            <!-- pagination -->
             <div class="d-flex justify-content-center gap-3 mt-4">
               <button
                 @click="handlePrev"
-                class="btn btn-primary"
+                class="btn"
                 :disabled="currentPage <= 1"
               >
                 Prev
@@ -98,7 +123,7 @@
 
               <button
                 @click="handleNext"
-                class="btn btn-primary"
+                class="btn"
                 :disabled="
                   currentPage >=
                   (allData?.transactions?.paginate?.total_pages || 1)
@@ -160,4 +185,8 @@ onMounted(() => {
 
 <style scoped>
 @import "@/assets/css/wallet.css";
+.btn {
+  background-color: var(--main-color);
+  border: none;
+}
 </style>
