@@ -268,3 +268,26 @@
   top: 10px;
   right: 10px;
 }
+.warranty {
+  border: 1px solid #e0dede;
+  padding: 10px;
+  border-radius: 12px;
+}
+.not-warranty {
+  font-size: 12px;
+  font-weight: 500;
+  font-family: var(--font-main);
+  background-color: var(--color-secound-main);
+  width: fit-content;
+  padding: 0px 8px;
+}
+.success-warranty {
+  font-size: 12px;
+  font-weight: 500;
+  font-family: var(--font-main);
+  width: fit-content;
+  padding: 5px 8px;
+  border-radius: 20px;
+  background-color: rgb(5, 153, 5);
+  color: white;
+}

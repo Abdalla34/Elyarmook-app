@@ -2,11 +2,12 @@
   <div class="cart-parent mt-5">
     <div class="container">
       <div class="row justify-content-center">
+        <!-- if not register -->
         <NotRegister
           :IsNotRegitser="notRegister"
           message="cart is Empty you must create account "
         />
-
+        <!-- if cart empty -->
         <div
           class="empty-cart text-center"
           v-if="
@@ -56,6 +57,7 @@
           v-if="(token && items.length > 0) || offers.length > 0"
         >
           <h4 class="mb-4 fw-bold">Order Details</h4>
+          <!-- services items -->
           <div
             class="cart d-flex justify-content-between align-items-center border-radius-36px mb-3"
             v-for="order in items"
@@ -108,7 +110,7 @@
               <span v-if="loadingDelete[order.id]">Loading...</span>
             </div>
           </div>
-
+          <!-- offers items -->
           <div
             class="cart d-flex justify-content-between align-items-center border-radius-36px mb-3"
             v-for="order in offers"
@@ -124,13 +126,11 @@
                   {{ order.price }}
                   <span class="p-color-fs span">SAR</span>
                 </p>
-                 <div class="qty-controls d-flex align-items-center mt-2">
+                <div class="qty-controls d-flex align-items-center mt-2">
                   <button
                     class="qty-btn"
                     :disabled="loadingQty[order.id] || order.qty <= 1"
-                    @click="
-                      updateQty('offer', order_id, order, order.qty - 1)
-                    "
+                    @click="updateQty('offer', order_id, order, order.qty - 1)"
                   >
                     -
                   </button>
@@ -138,9 +138,7 @@
                   <button
                     class="qty-btn"
                     :disabled="loadingQty[order.id]"
-                    @click="
-                      updateQty('offer', order_id, order, order.qty + 1)
-                    "
+                    @click="updateQty('offer', order_id, order, order.qty + 1)"
                   >
                     +
                   </button>
@@ -164,7 +162,7 @@
               <span v-if="loadingDelete[order.offer_id]">Loading...</span>
             </div>
           </div>
-
+          <!-- spare parts items -->
           <div
             class="cart d-flex justify-content-between align-items-center border-radius-36px mb-3"
             v-for="sparepart in spareParts"
@@ -252,6 +250,7 @@
 
             <div class="">
               <h6 class="fw-bold">Cost Details</h6>
+              <!-- details -->
               <div class="box-design">
                 <div
                   class="total-order d-flex justify-content-between align-items-center"
@@ -367,6 +366,7 @@
                 </div>
               </div>
 
+              <!-- amount to pay  -->
               <div
                 class="total-amount d-flex align-items-center justify-content-between"
               >
@@ -375,6 +375,7 @@
                   {{ amountToPay }} <span class="p-color-fs span">SAR</span>
                 </p>
               </div>
+
               <!-- use wallet  -->
               <div
                 v-if="itemsUpdates?.data?.user_balance > 0"
@@ -407,7 +408,7 @@
           </div>
         </div>
       </div>
-
+      <!-- message done use wallet -->
       <div class="msg-done-use-wallet" v-if="msgDoneUseWallet">
         <i
           class="fa-solid fa-xmark cursor-pointer"
@@ -424,8 +425,10 @@
         >
         </button-card>
       </div>
-
+      <!-- over lay msg -->
       <div v-if="msgDoneUseWallet" class="over-lay"></div>
+      <!-- load request -->
+      <LoadingSpinner :isLoadingOtp="isloading" />
     </div>
   </div>
 </template>
@@ -593,12 +596,11 @@ function toContinue() {
     msgDoneUseWallet.value = true;
   }
 }
-const isLoadingOtp = ref(false);
+const isloading = ref(false);
 
 const toogleWarranty = async () => {
+  isloading.value = true;
   try {
-    isLoadingOtp.value = true;
-
     const responseWarranty = await useApi().ToggleWarranty(
       order_id,
       "cart_type"
@@ -616,35 +618,11 @@ const toogleWarranty = async () => {
   } catch (err) {
     console.log(err);
   } finally {
-    isLoadingOtp.value = false;
+    isloading.value = false;
   }
 };
 </script>
 
 <style scoped>
 @import "@/assets/css/cartorder.css";
-.warranty {
-  border: 1px solid #e0dede;
-  padding: 10px;
-  border-radius: 12px;
-}
-.not-warranty {
-  font-size: 12px;
-  font-weight: 500;
-  font-family: var(--font-main);
-  background-color: var(--color-secound-main);
-  width: fit-content;
-  padding: 0px 8px;
-}
-.success-warranty {
-  font-size: 12px;
-  font-weight: 500;
-  font-family: var(--font-main);
-  width: fit-content;
-  padding: 5px 8px;
-  border-radius: 20px;
-  background-color: rgb(5, 153, 5);
-  color: white;
-}
 </style>
-

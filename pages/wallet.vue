@@ -22,7 +22,7 @@
                 </div>
               </div>
             </div>
-
+            <!-- wallets  -->
             <div
               class="box-pages margin-bottom-24px col-padding"
               v-for="item in wallets"
@@ -86,29 +86,6 @@
                 </div>
               </div>
             </div>
-         
-            <!-- <div
-              v-if="token && orders.length >= 10"
-              class="d-flex justify-content-center gap-3 mt-4"
-            >
-              <button
-                @click="handlePrev"
-                class="btn"
-                :disabled="currentpage <= 1"
-              >
-                Prev
-              </button>
-
-              <span class="align-self-center">Page {{ currentpage }}</span>
-
-              <button
-                @click="handleNext"
-                class="btn"
-                :disabled="currentpage >= (pagination?.total_pages || 1)"
-              >
-                Next
-              </button>
-            </div> -->
 
             <!-- pagination -->
             <div class="d-flex justify-content-center gap-3 mt-4">
@@ -132,6 +109,8 @@
                 Next
               </button>
             </div>
+
+            <!-- load -->
             <div v-if="isLoading" class="text-center my-4">
               <div class="spinner-border text-primary" role="status">
                 <span class="visually-hidden">Loading...</span>
