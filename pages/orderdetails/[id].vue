@@ -423,9 +423,14 @@ let rescheduleTime = async ({ date, time }) => {
 
     times.value = false;
   } catch (err) {
-    console.log(err);
+    // لو فيه errors جايه من السيرفر
+    if (err?.data?.errors?.reservation_time?.length) {
+      messageTimeChange.value = err.data.errors.reservation_time[0];
+      messageClass.value = "text-danger";
+    }
   } finally {
     isLoadingOtp.value = false;
+    times.value = false;
   }
 };
 
