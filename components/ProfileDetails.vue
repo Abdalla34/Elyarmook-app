@@ -60,6 +60,17 @@
 
               <li class="">
                 <NuxtLink
+                  to="/vouchers"
+                  exact-active-class="active"
+                  class="d-flex align-items-center gap-1 border-radius-36px p-color-fs"
+                >
+                  <i class="fa-solid fa-ticket-simple"></i>
+                  <h6 class="text-capitalize link-sm">vouchers</h6>
+                </NuxtLink>
+              </li>
+
+              <li class="">
+                <NuxtLink
                   to="/help"
                   exact-active-class="active"
                   class="d-flex align-items-center gap-1 border-radius-36px p-color-fs"

@@ -92,7 +92,7 @@ export const useApi = () => {
       headers,
     });
   };
-// done
+  // done
   const getCancelReasons = async () => {
     return await $fetch(`${baseURL}/core/cancel-reasons`, {
       method: "GET",
@@ -380,7 +380,7 @@ export const useApi = () => {
       }
     );
   };
-// done
+  // done
   const getStatusorders = async () => {
     return await $fetch(`${baseURL}/core/all-available-order-statuses`, {
       method: "GET",
@@ -529,6 +529,25 @@ export const useApi = () => {
       params: { branch_id: branch_id, type: type },
     });
   };
+// done All Vouchers
+  const getAvailableVouchers = async () => {
+    return $fetch(`${baseURL}/vouchers/available`, {
+      method: "GET",
+      headers,
+    });
+  };
+  const getUsedVouhcers = async () => {
+    return $fetch(`${baseURL}/vouchers/used`, {
+      method: "GET",
+      headers,
+    });
+  };
+  const getExVouhcers = async () => {
+    return $fetch(`${baseURL}/vouchers/expired`, {
+      method: "GET",
+      headers,
+    });
+  };
 
   return {
     sendOTP,
@@ -591,5 +610,8 @@ export const useApi = () => {
     reversationTime,
     changeCartToOrder,
     contactUs,
+    getAvailableVouchers,
+    getUsedVouhcers,
+    getExVouhcers,
   };
 };
