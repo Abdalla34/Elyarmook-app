@@ -72,10 +72,11 @@ export const useApi = () => {
     });
   };
   // done
-  const getCarTypes = async () => {
+  const getCarTypes = async (idBrand: any) => {
     return await $fetch(`${baseURL}/core/car-types`, {
       method: "GET",
       headers,
+      params: { brand_id: idBrand },
     });
   };
   // done

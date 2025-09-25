@@ -23,7 +23,13 @@
                   >
                 </p>
               </div>
-              <div class="edit-car-details" style="cursor: pointer">
+              <div
+                @click="
+                  navigateTo(`/car-update-details/${carDetails.brand.id}`)
+                "
+                class="edit-car-details"
+                style="cursor: pointer"
+              >
                 <i class="fa-solid fa-pen-to-square color"></i>
               </div>
             </div>
@@ -72,7 +78,7 @@
                         show order
                       </button>
 
-                      <div style="cursor: pointer;">
+                      <div style="cursor: pointer">
                         <p class="font-p fw-bold" style="cursor: pointer">
                           {{ item.total_amount }}
                           <span class="p-color-fs fs text-uppercase">sar</span>
@@ -103,6 +109,7 @@
 const carDetails = ref({});
 const route = useRoute();
 const idCar = route.params.id;
+// console.log('brnasddddd' ,carDetails.brand.id);
 
 try {
   const responseCarDetails = await useApi().getDetailsCar(idCar);
@@ -111,7 +118,6 @@ try {
 } catch (err) {
   console.error("❌ حصل خطأ:", err);
 }
-// const editCar = async()
 </script>
 
 <style scoped>
