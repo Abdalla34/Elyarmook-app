@@ -63,7 +63,7 @@ export const useApi = () => {
       headers,
     });
   };
-
+  // done
   const getAvailableTimes = async (branch_id: any, type: any) => {
     return await $fetch(`${baseURL}/core/branches/available-times`, {
       method: "GET",
@@ -78,7 +78,7 @@ export const useApi = () => {
       headers,
     });
   };
-
+  // done
   const getProblems = async () => {
     return await $fetch(`${baseURL}/core/problems`, {
       method: "GET",
@@ -99,7 +99,7 @@ export const useApi = () => {
       headers,
     });
   };
-
+// done
   const getDeactivatedReasons = async () => {
     return await $fetch(`${baseURL}/core/deactivated-reasons`, {
       method: "GET",
@@ -167,7 +167,7 @@ export const useApi = () => {
       headers,
     });
   };
-
+  // done
   const addToCartMulti = async (
     items: { type: any; item_id: any; qty: any },
     token: any
@@ -529,7 +529,7 @@ export const useApi = () => {
       params: { branch_id: branch_id, type: type },
     });
   };
-// done All Vouchers
+  // done All Vouchers
   const getAvailableVouchers = async () => {
     return $fetch(`${baseURL}/vouchers/available`, {
       method: "GET",
