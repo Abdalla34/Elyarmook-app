@@ -79,6 +79,13 @@ export const useApi = () => {
     });
   };
   // done
+  const getDetailsCar = async (user_car_id: any) => {
+    return $fetch(`${baseURL}/car/show/${user_car_id}`, {
+      method: "GET",
+      headers,
+    });
+  };
+  // done
   const getProblems = async () => {
     return await $fetch(`${baseURL}/core/problems`, {
       method: "GET",
@@ -99,7 +106,7 @@ export const useApi = () => {
       headers,
     });
   };
-// done
+  // done
   const getDeactivatedReasons = async () => {
     return await $fetch(`${baseURL}/core/deactivated-reasons`, {
       method: "GET",
@@ -585,6 +592,7 @@ export const useApi = () => {
     getOffers,
     getOfferSingle,
     getCarBrands,
+    getDetailsCar,
     getAvailableBrnchesTime,
     cartypes,
     createCar,
