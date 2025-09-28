@@ -140,7 +140,7 @@ export const useApi = () => {
     });
   };
 
-   // const scanImage = async (image: any) => {
+  // const scanImage = async (image: any) => {
   //   return await $fetch(`${baseURL}/core/scan-image`, {
   //     method: "POST",
   //     body: { image },
@@ -156,7 +156,7 @@ export const useApi = () => {
       headers,
     });
   };
- // done
+  // done
   const changeOrderStatus = async (
     order_id: any,
     status: any,
@@ -558,6 +558,14 @@ export const useApi = () => {
     });
   };
 
+  const editCar = async (form: any) => {
+    return $fetch(`${baseURL}customer/create-car`, {
+      method: "POST",
+      headers,
+      body: { form },
+    });
+  };
+
   return {
     sendOTP,
     checkOTP,
@@ -623,5 +631,6 @@ export const useApi = () => {
     getAvailableVouchers,
     getUsedVouhcers,
     getExVouhcers,
+    editCar,
   };
 };
