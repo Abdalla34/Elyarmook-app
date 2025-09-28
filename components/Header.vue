@@ -34,17 +34,32 @@
             }}</span>
           </div>
 
-          <div
-            class="background-color-cart d-flex align-items-center justify-content-center"
-            @click="navigateTo('/my-cars')"
-          >
-            <button class="buttons">
-              <img class="bmw-img z-index-after" src="/public/BMW.png" alt="" />
-            </button>
+          <div v-if="token">
+            <div
+              class="background-color-cart d-flex align-items-center justify-content-center"
+              @click="navigateTo('/my-cars')"
+            >
+              <button class="buttons">
+                <img
+                  class="bmw-img z-index-after"
+                  :src="defaultCar?.brand?.image"
+                  alt=""
+                />
+              </button>
+            </div>
           </div>
 
           <div class="position-relative">
             <div
+              @click="navigateTo('/profile')"
+              v-if="!token"
+              class="icon-user login"
+              style="cursor: pointer"
+            >
+              <i class="fa-solid fa-user fa-2x"></i>
+            </div>
+            <div
+              v-if="token"
               @click="navigateTo('/profile')"
               class="background-color-cart d-flex align-items-center justify-content-center position-relative"
             >
@@ -55,10 +70,6 @@
                   alt="imgProfile"
                 />
               </button>
-
-              <!-- <div class="menu-profile-log">
-                <div class="login">login</div>
-              </div> -->
             </div>
           </div>
         </div>
@@ -68,19 +79,17 @@
 </template>
 
 <script setup>
-// const { getMyCart } = useApi()
-
-// const cartLength = ref(0)
-
-// onMounted(async () => {
-//   try {
-//     const res = await getMyCart()
-//     cartLength.value = res?.data?.services?.length || 0
-//   } catch (err) {
-//     console.error("Error loading cart:", err)
-//     cartLength.value = 0
-//   }
-// })
+const token = useCookie("token");
+const myCars = ref([]);
+if (token.value) {
+  const res = await useApi().getMycars();
+  myCars.value = res?.data || [];
+} else {
+  myCars.value = [];
+}
+const defaultCar = computed(
+  () => myCars.value.find((car) => car.is_default) || []
+);
 </script>
 
 <style scoped>
@@ -102,17 +111,21 @@
 }
 
 .login {
-  padding: 10px 60px;
-  background-color: var(--main-color);
+  padding: 10px 21px;
+  background-color: var(--color-secound-main);
+  width: -moz-fit-content;
   width: fit-content;
-  margin: auto auto 10px;
-  border-radius: 20px;
-  color: var(--colo-black);
+  border-radius: 11px;
   font-weight: bold;
   text-align: center;
   position: relative;
   top: 50%;
-  transform: translate(0, -50%);
+  transition: all 0.3s;
+}
+
+.login:hover {
+  background-color: #b7b7b9;
+  transform: scale(0.9);
 }
 
 .span-length {
@@ -125,5 +138,8 @@
   padding: 2px 6px;
   font-size: 12px;
   font-weight: bold;
+}
+.bmw-img {
+  width: 40px;
 }
 </style>

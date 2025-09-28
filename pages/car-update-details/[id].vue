@@ -6,7 +6,7 @@
           <div class="col-lg-7 col-md-6 parent-types">
             <div class="d-flex align-items-center gap-3 box-hover">
               <div class="img-car">
-                <img src="" alt="" />
+                <!-- <img :src="carTypes?." alt="" /> -->
               </div>
               <div class="title-car">
                 <h1></h1>
@@ -24,6 +24,10 @@ const route = useRoute();
 const id = route.params.id;
 
 const res = await useApi().getCarTypes(id);
-carTypes.value = res?.data || [];
-console.log(carTypes);
+carTypes.value = res?.data?.items || [];
+
+// const carBrand = ref([]);
+// const resBrand = await useApi().getDetailsCar(id);
+// console.log('brandddd',resBrand)
+// 201021336699
 </script>

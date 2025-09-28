@@ -34,7 +34,7 @@
               </div>
             </div>
             <div class="chassis-num details-order p-3">
-              <p class="p-colo-fs mb-2">chassis Nuber</p>
+              <p class="p-colo-fs mb-2">chassis Number</p>
               {{ carDetails.chassis_number }}
             </div>
             <!-- last-order -->
@@ -109,7 +109,7 @@
 const carDetails = ref({});
 const route = useRoute();
 const idCar = route.params.id;
-// console.log('brnasddddd' ,carDetails.brand.id);
+
 
 try {
   const responseCarDetails = await useApi().getDetailsCar(idCar);

@@ -200,9 +200,10 @@ onBeforeUnmount(() => {
 @import "@/assets/css/mycars.css";
 .fs {
   font-size: 12px;
+  transition: all 0.3s;
 }
 .fs:hover {
-  background-color: var(--main-color); 
+  background-color: var(--main-color);
   padding: 0px 7px 0px 7px;
   border-radius: 10px;
 }

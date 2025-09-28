@@ -140,22 +140,23 @@ export const useApi = () => {
     });
   };
 
-  const scanImage = async (image: any) => {
-    return await $fetch(`${baseURL}/core/scan-image`, {
-      method: "POST",
-      body: { image },
-      headers,
-    });
-  };
+   // const scanImage = async (image: any) => {
+  //   return await $fetch(`${baseURL}/core/scan-image`, {
+  //     method: "POST",
+  //     body: { image },
+  //     headers,
+  //   });
+  // };
 
   // done
+
   const getMyCart = async () => {
     return await $fetch(`${baseURL}/marketplace/cart/my-cart`, {
       method: "GET",
       headers,
     });
   };
-
+ // done
   const changeOrderStatus = async (
     order_id: any,
     status: any,
@@ -576,7 +577,7 @@ export const useApi = () => {
     getSliders,
     rateBranch,
     rateAppAndBranch,
-    scanImage,
+    // scanImage,
     getMyCart,
     getMycars,
     addToCart,

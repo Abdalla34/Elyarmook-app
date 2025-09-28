@@ -60,14 +60,10 @@
                   <label class="label">phone Number</label>
                   <input
                     type="text"
-                    placeholder="your phone"
-                    v-model="phoneNumber"
+                    :placeholder="phone"
+                    v-model="phonesliceDialcode"
+                    disabled
                   />
-                  <span
-                    class="text-danger text-capitalize mt-2"
-                    v-if="errors.phoneNumber"
-                    >{{ errors.phoneNumber }}</span
-                  >
                 </div>
               </div>
 
@@ -137,11 +133,11 @@ let allCities = ref([]);
 const schema = yup.object({
   firstName: yup.string().required("please enter your name").min(3),
   lastName: yup.string().required("please enter your last name").min(3),
-  phoneNumber: yup
-    .string()
-    .required("please enter your phone number")
-    .min(11)
-    .matches(/^\d+$/, "digits only"),
+  // phoneNumber: yup
+  //   .string()
+  //   .required("please enter your phone number")
+  //   .min(11)
+  //   .matches(/^\d+$/, "digits only"),
   city: yup.string().required("please enter your city"),
   area: yup.string().required("please enter your area"),
 });
@@ -152,7 +148,7 @@ const { handleSubmit, errors } = useForm({
 
 const { value: firstName } = useField("firstName");
 const { value: lastName } = useField("lastName");
-const { value: phoneNumber } = useField("phoneNumber");
+// const { value: phoneNumber } = useField("phoneNumber");
 const { value: area } = useField("area");
 const { value: city } = useField("city");
 
@@ -178,9 +174,10 @@ watch(area, async (newAreaId) => {
 let router = useRouter();
 let route = useRoute();
 let phone = route.query.phone;
+const phonesliceDialcode = phone.slice(2);
 let registered = route.query.registered === "true";
 let otp = route.query.otp_code;
-// let guest = useCookie("guest");
+
 let onSubmit = handleSubmit(async (values) => {
   let res = await useApi().loginOrRegister({
     first_name: values.firstName,
@@ -197,7 +194,6 @@ let onSubmit = handleSubmit(async (values) => {
     const user = useCookie("user", { maxAge: 365 * 24 * 60 * 60 });
     token.value = res.data.token;
     user.value = JSON.stringify(res.data.user);
-    // guest.value = false;
   }
   router.push("/car-brand");
 });
