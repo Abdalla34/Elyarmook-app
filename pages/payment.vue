@@ -8,13 +8,9 @@
               <img src="/Vector.png" alt="" />
               <h3 class="text-capitalize create">you must increase cart</h3>
               <div class="btn-items">
-                <button
-                  @click="navigateTo('/services')"
-                  class="d-flex align-items-center gap-2"
-                >
-                  <PuplicIconPlusIcon />
-                  <span>Add Items</span>
-                </button>
+                <div @click="navigateTo('/services')">
+                  <button-card text-button="add items" />
+                </div>
               </div>
             </div>
           </div>
@@ -223,6 +219,7 @@ let paymentWithHyperPay = async () => {
       script.type = "text/javascript";
       script.src = `https://test.oppwa.com/v1/paymentWidgets.js?checkoutId=${checkoutId.value}`;
       document.body.appendChild(script);
+      removeIdFromQuery();
     }
   } catch (err) {
     console.log(err);
