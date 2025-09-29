@@ -7,7 +7,7 @@
             <div>
               <div>
                 <!-- types brand -->
-                <div class="row justify-content-center">
+                <div v-if="step === 1" class="row justify-content-center">
                   <div
                     class="col-lg-12 col-md-6 parent-types"
                     v-for="model in carTypes"
@@ -24,18 +24,74 @@
                     </div>
                   </div>
                 </div>
-                <!-- years modal -->
+                <!-- years && chassis -->
                 <div v-if="step === 2" class="row justify-content-center">
+                  <!-- years -->
                   <div
-                    class="col-lg-12 col-md-6 parent-types"
-                    v-for="year in years"
-                    :key="year"
-                    @click="selecteYears(year)"
+                    @click="showYears = true"
+                    class="years rounded gap-2 ps-3 pe-3 pt-3 pb-3 d-flex align-items-center justify-content-between"
                   >
-                    <div class="d-flex align-items-center gap-3 box-hover">
-                      <div class="title-car">{{ year }}</div>
+                    <input
+                      type="text"
+                      placeholder="manfacture years"
+                      class="form-control border-0 shadow-none"
+                      style="flex: 1"
+                      v-model="carForm.manufacture_year"
+                      readonly
+                    />
+                    <div class="icon"><puplic-icon-arrow-bottom /></div>
+                  </div>
+                  <!-- error message -->
+                  <span
+                    v-if="errors.manufacture_year"
+                    class="text-danger small text-capitalize"
+                  >
+                    {{ errors.manufacture_year }}
+                  </span>
+                  <!-- chassis  -->
+                  <div
+                    class="chassis-num rounded ps-3 pe-3 pt-2 pb-2 d-flex align-items-center mt-3 justify-content-between border"
+                  >
+                    <input
+                      type="text"
+                      placeholder="Chassis number"
+                      class="form-control border-0 shadow-none"
+                      style="flex: 1"
+                      v-model="carForm.chassis_number"
+                    />
+                    <div class="ms-2">
+                      <span class="p-color-fs">optional</span>
                     </div>
                   </div>
+                </div>
+                <!-- modal years -->
+                <div v-if="showYears" class="modal-overlay">
+                  <div class="modal-box position-relative" @click.stop>
+                    <button
+                      class="btn-close position-absolute top-0 end-0 m-3"
+                      @click="showYears = false"
+                    ></button>
+
+                    <h1 class="label mb-3">manfacture years</h1>
+                    <div class="all-years">
+                      <div
+                        v-for="year in years"
+                        @click="selecteYears(year)"
+                        class="box-year mb-2 rounded ps-2 pe-2 pt-1 pb-1"
+                      >
+                        {{ year }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- button continue -->
+                <div
+                  v-if="step === 2"
+                  @click="sendDataCar"
+                  class="btn-continue mt-4"
+                >
+                  <button-card text-button="continue" />
                 </div>
               </div>
             </div>
@@ -47,6 +103,9 @@
 </template>
 
 <script setup>
+import { useForm, useField } from "vee-validate";
+import * as yup from "yup";
+
 let startYear = 1900;
 let endYear = new Date().getFullYear();
 let years = Array.from(
@@ -54,21 +113,16 @@ let years = Array.from(
   (_, i) => endYear - i
 );
 
-const carTypes = ref([]);
-const route = useRoute();
-const id = route.params.id;
-const res = await useApi().getCarTypes(id);
-carTypes.value = res?.data?.items || [];
-const step = ref(null);
-
-// const carBrand = ref([]);
-// try {
-//   const responseCarDetails = await useApi().getDetailsCar(id);
-//   carBrand.value = responseCarDetails?.data || {};
-//   console.log(carBrand);
-// } catch (err) {
-//   console.error("❌ حصل خطأ:", err);
-// }
+const schema = yup.object({
+  manufacture_year: yup
+    .number()
+    .typeError("من فضلك اختر سنة صحيحة")
+    .required("this input is required"),
+});
+const { handleSubmit, errors } = useForm({
+  validationSchema: schema,
+});
+const { value: manufacture_year } = useField("manufacture_year");
 
 let carForm = reactive({
   brand_id: null,
@@ -78,44 +132,89 @@ let carForm = reactive({
   is_default: null,
 });
 
+const carTypes = ref([]);
+const route = useRoute();
+const id = route.params.id;
+const getCar = await useApi().getDetailsCar(id);
+const res = await useApi().getCarTypes(getCar.data.brand.id);
+carTypes.value = res?.data?.items || [];
+const step = ref(1);
+const showYears = ref(false);
+
 function selecteTypeID(carId) {
   carForm.car_type_id = carId.id;
   step.value = 2;
-  console.log(`car Type ${carForm.car_type_id}`);
-  console.log(step.value);
+  console.log(carForm.car_type_id);
 }
 
-let selecteYears = async (year) => {
+let selecteYears = (year) => {
   carForm.manufacture_year = year;
-  step.value = 3;
-  console.log(`made in ${carForm.manufacture_year}`);
+  manufacture_year.value = carForm.manufacture_year;
+  showYears.value = false;
+  carForm.brand_id = 14;
 };
 
-// const brandId = ref(null);
-// const carTypeId = ref(null);
-// const manufactureYear = ref(null);
-// const chassisNumber = ref(null);
-// const isDefault = ref(null);
-
-// const sendDataCar = async () => {
-//   // const responseSendData = await useApi().editCar({
-//   //   brand_id: brandId.value,
-//   //   car_type_id: carTypeId.value,
-//   //   manufacture_year: manufactureYear.value,
-//   //   chassis_number: chassisNumber.value,
-//   //   is_default: isDefault.value,
-//   // });
-
-//   console.log(brandId.value);
-//   console.log(carTypeId.value);
-//   console.log(manufactureYear.value);
-//   console.log(chassisNumber.value);
-//   console.log(isDefault.value);
-// };
+const sendDataCar = handleSubmit(async (values) => {
+  try {
+    const responseSendData = await useApi().editCar(
+      {
+        brand_id: carForm.brand_id,
+        car_type_id: carForm.car_type_id,
+        manufacture_year: values.manufacture_year,
+        chassis_number: carForm.chassis_number,
+      },
+      getCar.data.id
+    );
+    if (responseSendData?.status) {
+      navigateTo("/my-cars");
+    }
+  } catch (error) {
+    console.error("❌ Error sending car data:", error);
+  }
+});
 </script>
+
 <style scoped>
 @import "@/assets/css/carbrand.css";
 .image {
   width: 40px;
+}
+.chassis-num,
+.years {
+  background-color: var(--color-secound-main);
+}
+.box-year {
+  border: 1px solid var(--color-secound-main);
+}
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-box {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  max-height: 80vh;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  width: 30%;
+}
+.modal-box::-webkit-scrollbar {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .modal-box {
+    width: 90%;
+  }
 }
 </style>

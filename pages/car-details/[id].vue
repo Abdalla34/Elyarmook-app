@@ -5,38 +5,55 @@
         <div class="col-8 col-padding">
           <div class="parent">
             <!-- car-details -->
-            <div
-              class="car-model rounded ps-3 pe-3 d-flex align-items-center justify-content-between mb-5"
-            >
-              <div class="model d-flex align-items-center gap-2">
-                <img
-                  class="img"
-                  :src="carDetails.brand.image"
-                  :alt="carDetails.brand.image"
-                />
-                <p class="label">
-                  {{ carDetails.car_type.title }} - {{ carDetails.brand.title }}
-                  <span
-                    class="p-color-fs ps-2 pe-2 rounded bg"
-                    v-if="carDetails.is_default"
-                    >defualt</span
-                  >
-                </p>
-              </div>
+            <div class="car-model rounded mb-5 border">
+              <!-- header -->
               <div
-                @click="
-                  navigateTo(`/car-update-details/${carDetails.brand.id}`)
-                "
-                class="edit-car-details"
-                style="cursor: pointer"
+                class="d-flex align-items-center justify-content-between p-3 border-bottom"
               >
-                <i class="fa-solid fa-pen-to-square color"></i>
+                <div class="model d-flex align-items-center gap-2">
+                  <img
+                    class="img"
+                    :src="carDetails.brand.image"
+                    :alt="carDetails.brand.image"
+                  />
+                  <p class="label mb-0">
+                    {{ carDetails.car_type.title }} -
+                    {{ carDetails.brand.title }}
+                    <span
+                      class="p-color-fs ps-2 pe-2 rounded bg"
+                      v-if="carDetails.is_default"
+                    >
+                      default
+                    </span>
+                  </p>
+                </div>
+                <div
+                  @click="navigateTo(`/car-update-details/${carDetails.id}`)"
+                  class="edit-car-details"
+                  style="cursor: pointer"
+                >
+                  <i class="fa-solid fa-pen-to-square color"></i>
+                </div>
+              </div>
+
+              <!-- footer -->
+              <div class="foot-box d-flex justify-content-between w-100 p-3">
+                <!-- left section -->
+                <div class="chassis-num text-center details-order flex-fill pe-3">
+                  <p class="p-colo-fs mb-2">
+                   <span class="p-color-fs">chassis Number: </span> {{ carDetails.chassis_number }}
+                  </p>
+                </div>
+
+                <!-- right section -->
+                <div class="chassis-num text-center details-order flex-fill ps-3">
+                  <p class="p-colo-fs mb-2">
+                    <span class="p-color-fs">Manufacture Year:</span> {{ carDetails.manufacture_year }}
+                  </p>
+                </div>
               </div>
             </div>
-            <div class="chassis-num details-order p-3">
-              <p class="p-colo-fs mb-2">chassis Number</p>
-              {{ carDetails.chassis_number }}
-            </div>
+
             <!-- last-order -->
             <div class="last-order">
               <h1 class="label">last orders</h1>
@@ -103,6 +120,7 @@
       </div>
     </div>
   </div>
+  <!-- 01021336699 -->
 </template>
 
 <script setup>
@@ -110,11 +128,9 @@ const carDetails = ref({});
 const route = useRoute();
 const idCar = route.params.id;
 
-
 try {
   const responseCarDetails = await useApi().getDetailsCar(idCar);
   carDetails.value = responseCarDetails?.data || {};
-  console.log(carDetails);
 } catch (err) {
   console.error("❌ حصل خطأ:", err);
 }

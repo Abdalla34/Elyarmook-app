@@ -558,11 +558,11 @@ export const useApi = () => {
     });
   };
 
-  const editCar = async (form: any) => {
-    return $fetch(`${baseURL}customer/create-car`, {
+  const editCar = async (form: any, car_type_id:any) => {
+    return await $fetch(`${baseURL}/customer/edit-car/${car_type_id}`, {
       method: "POST",
+      body: form,
       headers,
-      body: { form },
     });
   };
 
