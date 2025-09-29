@@ -151,7 +151,7 @@ let selecteYears = (year) => {
   carForm.manufacture_year = year;
   manufacture_year.value = carForm.manufacture_year;
   showYears.value = false;
-  carForm.brand_id = 14;
+  carForm.brand_id = getCar.data.brand.id;
 };
 
 const sendDataCar = handleSubmit(async (values) => {
@@ -165,11 +165,16 @@ const sendDataCar = handleSubmit(async (values) => {
       },
       getCar.data.id
     );
+
     if (responseSendData?.status) {
       navigateTo("/my-cars");
     }
   } catch (error) {
-    console.error("❌ Error sending car data:", error);
+    console.error("❌ Error sending car data:", error?.data || error);
+    // عشان تشوف الرسالة اللي جاية من السيرفر
+    if (error?.data?.errors) {
+      console.table(error.data.errors);
+    }
   }
 });
 </script>
