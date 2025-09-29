@@ -3,15 +3,30 @@
     <div class="container">
       <div class="row">
         <div class="col-8 col-padding">
+          <div class="empty-cart text-center" v-if="!id">
+            <div>
+              <img src="/Vector.png" alt="" />
+              <h3 class="text-capitalize create">you must increase cart</h3>
+              <div class="btn-items">
+                <button
+                  @click="navigateTo('/services')"
+                  class="d-flex align-items-center gap-2"
+                >
+                  <PuplicIconPlusIcon />
+                  <span>Add Items</span>
+                </button>
+              </div>
+            </div>
+          </div>
           <h1
-            v-if="!checkoutId && !cachLayout"
+            v-if="!checkoutId && !cachLayout && id"
             data-v-8bcd5751
             class="text-capitalize text title-pages"
           >
             chose payment method
           </h1>
 
-          <div v-if="!checkoutId && !cachLayout" class="methods">
+          <div v-if="!checkoutId && !cachLayout && id" class="methods">
             <div
               class="box-method border-radius-36px p-color-fs text-center mb-4 position-relative box-hover-bg"
             >
