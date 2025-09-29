@@ -260,6 +260,7 @@ let paywithTamara = async () => {
       // checkoutId.value = res.data.checkoutId;
       window.location.href = res.data.checkout_url;
     }
+    removeIdFromQuery();
   } catch (err) {
     console.log(err);
   }
@@ -276,6 +277,7 @@ let paymentWihtTbby = async () => {
     if (res && res?.data?.checkout_url) {
       // checkoutId.value = res?.data?.checkoutId;
       window.location.href = res?.data?.checkout_url;
+      removeIdFromQuery();
     }
   } catch (err) {
     console.log("err", err);
@@ -293,12 +295,20 @@ let chachOnDelivery = async () => {
       const res = await useApi().getSingleOrder(id);
       orderPoints.value = res?.data;
     }
+    removeIdFromQuery();
   } catch (err) {
     console.log(err);
   } finally {
     isLoading.value = false;
   }
 };
+const router = useRouter();
+function removeIdFromQuery() {
+  router.replace({
+    path: route.path,
+    query: {},
+  });
+}
 </script>
 
 <style scoped>
