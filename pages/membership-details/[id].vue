@@ -25,11 +25,14 @@
             <div class="name price discount">
               <h1 class="label">{{ memmberDetails.name }}</h1>
               <div class="price-des">
-                <div class="price-details d-flex gap-3">
+                <div class="price-details d-flex gap-3 align-items-center">
                   <div class="before-des text-uppercase">
                     {{ memmberDetails.price_before_discount }} sar
                   </div>
-                  <div class="after-des offers-sale text-uppercase">
+                  <div
+                    class="after-des text-uppercase"
+                    style="font-size: 18px; color: #c71f45; font-weight: 400"
+                  >
                     {{ memmberDetails.price_after_discount }} sar
                   </div>
                 </div>
@@ -103,7 +106,6 @@ onMounted(async () => {
     isloading.value = false;
   }
 });
-
 </script>
 
 <style scoped>
