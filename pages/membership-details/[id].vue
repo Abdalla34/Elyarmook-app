@@ -71,7 +71,11 @@
                 get this "actully i have one"
               </button>
             </div>
-            <div class="btn-get" v-if="!memmberDetails.has_active_subscription">
+            <div
+              @click="navigateTo({ path: '/payment', query: { id: idMember } })"
+              class="btn-get"
+              v-if="!memmberDetails.has_active_subscription"
+            >
               <ButtonCard text-button="get this membership" />
             </div>
           </div>
@@ -88,7 +92,6 @@ const idMember = route.params.id;
 const memmberDetails = ref({});
 const isloading = ref(false);
 
-// const test = true;
 onMounted(async () => {
   try {
     isloading.value = true;
@@ -100,7 +103,9 @@ onMounted(async () => {
     isloading.value = false;
   }
 });
+
 </script>
+
 <style scoped>
 .before-des {
   font-family: var(--font-main);

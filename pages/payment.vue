@@ -254,7 +254,6 @@ let paywithTamara = async () => {
       cancel_url: `${domain}/payment-tamara-status/cancel`,
     });
     if (res?.data?.checkout_url) {
-      // checkoutId.value = res.data.checkoutId;
       window.location.href = res.data.checkout_url;
     }
     removeIdFromQuery();
@@ -272,7 +271,6 @@ let paymentWihtTbby = async () => {
       cancel_url: `${domain}/payment-tamara-status/cancel`,
     });
     if (res && res?.data?.checkout_url) {
-      // checkoutId.value = res?.data?.checkoutId;
       window.location.href = res?.data?.checkout_url;
       removeIdFromQuery();
     }
