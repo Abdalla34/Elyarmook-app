@@ -8,6 +8,7 @@
               <ul
                 class="links d-flex justify-content-center align-items-end ul"
               >
+                <!-- home -->
                 <li class="">
                   <NuxtLink
                     to="/"
@@ -18,6 +19,7 @@
                     <h6 class="text-capitalize link-sm">Home</h6>
                   </NuxtLink>
                 </li>
+                <!-- orders -->
                 <li class="border-radius-36px">
                   <NuxtLink
                     to="/myorders"
@@ -28,36 +30,55 @@
                     <h6 class="text-capitalize link-sm">my orders</h6>
                   </NuxtLink>
                 </li>
-
+                <!-- services -->
                 <li class="">
                   <NuxtLink
                     to="/services"
                     exact-active-class="active"
                     class="d-flex align-items-center gap-1 border-radius-36px p-color-fs"
                   >
-                    <PuplicIconServcesIcon :isActive="$route.path === '/services'" />
+                    <PuplicIconServcesIcon
+                      :isActive="$route.path === '/services'"
+                    />
                     <h6 class="text-capitalize link-sm">services</h6>
                   </NuxtLink>
                 </li>
-
+                <!-- offers  -->
                 <li class="">
                   <NuxtLink
                     to="/offers"
                     exact-active-class="active"
                     class="d-flex align-items-center gap-1 border-radius-36px p-color-fs"
                   >
-                    <PuplicIconOfferIcon :isActive="$route.path === '/offers'" />
+                    <PuplicIconOfferIcon
+                      :isActive="$route.path === '/offers'"
+                    />
                     <h6 class="text-capitalize link-sm">offers</h6>
                   </NuxtLink>
                 </li>
-
+                <!-- membership -->
+                <li class="">
+                  <NuxtLink
+                    to="/membership"
+                    exact-active-class="active"
+                    class="d-flex align-items-center gap-1 border-radius-36px p-color-fs"
+                  >
+                    <PuplicIconOfferIcon
+                      :isActive="$route.path === '/membership'"
+                    />
+                    <h6 class="text-capitalize link-sm">membership</h6>
+                  </NuxtLink>
+                </li>
+                <!-- spare Part -->
                 <li class="">
                   <NuxtLink
                     to="/spare-parts"
                     exact-active-class="active"
                     class="d-flex align-items-center gap-1 border-radius-36px p-color-fs"
                   >
-                    <PuplicIconSparePart :isActive="$route.path === '/spare-parts'" />
+                    <PuplicIconSparePart
+                      :isActive="$route.path === '/spare-parts'"
+                    />
                     <h6 class="text-capitalize link-sm">spare Parts</h6>
                   </NuxtLink>
                 </li>
@@ -70,12 +91,7 @@
   </div>
 </template>
 
-<script setup>
-let boxOpen = ref(false);
-function toogleBox() {
-  boxOpen.value = !boxOpen.value;
-}
-</script>
+<script setup></script>
 
 <style scoped>
 .ul {

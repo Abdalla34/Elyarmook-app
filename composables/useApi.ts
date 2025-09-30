@@ -557,8 +557,8 @@ export const useApi = () => {
       headers,
     });
   };
-
-  const editCar = async (form: any, car_type_id:any) => {
+  // done
+  const editCar = async (form: any, car_type_id: any) => {
     return await $fetch(`${baseURL}/customer/edit-car/${car_type_id}`, {
       method: "POST",
       body: form,
@@ -566,6 +566,18 @@ export const useApi = () => {
     });
   };
 
+  const memberShips = async () => {
+    return $fetch(`${baseURL}/membership/memberships`, {
+      method: "GET",
+      headers,
+    });
+  };
+const memberShipDetails = async (membership_id: any) => {
+  return $fetch(`${baseURL}/membership/memberships/${membership_id}`, {
+    method: "GET",
+    headers,
+  });
+};
   return {
     sendOTP,
     checkOTP,
@@ -632,5 +644,7 @@ export const useApi = () => {
     getUsedVouhcers,
     getExVouhcers,
     editCar,
+    memberShips,
+    memberShipDetails,
   };
 };
