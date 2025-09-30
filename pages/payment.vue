@@ -255,8 +255,8 @@ let paywithTamara = async () => {
     });
     if (res?.data?.checkout_url) {
       window.location.href = res.data.checkout_url;
+      removeIdFromQuery();
     }
-    removeIdFromQuery();
   } catch (err) {
     console.log(err);
   }
@@ -290,7 +290,11 @@ let chachOnDelivery = async () => {
       const res = await useApi().getSingleOrder(id);
       orderPoints.value = res?.data;
     }
-    removeIdFromQuery();
+    if (cachLayout.value) {
+      router.replace({
+        query: {},
+      });
+    }
   } catch (err) {
     console.log(err);
   } finally {
@@ -300,7 +304,7 @@ let chachOnDelivery = async () => {
 const router = useRouter();
 function removeIdFromQuery() {
   router.replace({
-    path: route.path,
+    path: "/",
     query: {},
   });
 }
