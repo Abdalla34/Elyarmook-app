@@ -428,6 +428,13 @@ export const useApi = () => {
       headers,
     });
   };
+  const usePaymentMembership = async (membershipId: any, brand: any) => {
+    return await $fetch(`${baseURL}/payment/hyper-pay/prepare-checkout`, {
+      method: "POST",
+      body: { membership_id: membershipId, brand: brand },
+      headers,
+    });
+  };
   // done
   const getHyperpayStatus = async (id: any) => {
     return await $fetch(`${baseURL}/payment/hyper-pay/check-status`, {
@@ -438,7 +445,8 @@ export const useApi = () => {
   };
   // done
   const tamaraPayment = async (payload: {
-    order_id: any;
+    order_id?: any;
+    membership_id?: any;
     success_url: any;
     failure_url: any;
     cancel_url: any;
@@ -451,7 +459,8 @@ export const useApi = () => {
   };
   // done
   const tabyPayment = async (payload: {
-    order_id: any;
+    order_id?: any;
+    membership_id?: any;
     success_url: any;
     failure_url: any;
     cancel_url: any;
@@ -612,6 +621,7 @@ const memberShipDetails = async (membership_id: any) => {
     getMyOrders,
     getSingleOrder,
     getOffers,
+    usePaymentMembership,
     getOfferSingle,
     getCarBrands,
     getDetailsCar,

@@ -75,7 +75,7 @@
               </button>
             </div>
             <div
-              @click="navigateTo({ path: '/payment', query: { id: idMember } })"
+              @click="navigateTo({ path: '/payment', query: { membership: idMember } })"
               class="btn-get"
               v-if="!memmberDetails.has_active_subscription"
             >

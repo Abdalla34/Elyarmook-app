@@ -23,22 +23,36 @@
 
 <script setup>
 const route = useRoute();
+const router = useRouter();
 
 try {
   let paymentId = route.query.payment_id;
-  if (paymentId) {
-    res = await useApi().tabbyStatusSuccess(paymentId);
+  let hyperSucess = route.query.hyper;
+
+  if (hyperSucess === 'success') {
+    setTimeout(() => {
+      router.replace("/");
+    }, 2000);
   }
+
   if (paymentId) {
-    res = await useApi().tabbyStatusFailure(paymentId);
+    const res = await useApi().tabbyStatusSuccess(paymentId);
+    if (res?.status === true || res?.status === "true") {
+      router.replace("/");
+    } else {
+      router.replace("/payment-tamara-status/failed");
+    }
   }
-  if (paymentId) {
-    res = await useApi().tabbyStatusCancel(paymentId);
-  }
+  // if (paymentId) {
+  //   const res = await useApi().tabbyStatusFailure(paymentId);
+  // }
+  // if (paymentId) {
+  //   const res = await useApi().tabbyStatusCancel(paymentId);
+  // }
 } catch (err) {
   console.log(err);
 }
-const router = useRouter();
+
 onMounted(() => {
   if (route.query?.from === 'cart-update-details') {
     router.push("/cart");

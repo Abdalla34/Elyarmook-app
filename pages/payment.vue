@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row">
         <div class="col-8 col-padding">
-          <div class="empty-cart text-center" v-if="!id">
+          <div class="empty-cart text-center" v-if="!id && !membershipId">
             <div>
               <img src="/Vector.png" alt="" />
               <h3 class="text-capitalize create">you must increase cart</h3>
@@ -15,20 +15,20 @@
             </div>
           </div>
           <h1
-            v-if="!checkoutId && !cachLayout && id"
+            v-if="!checkoutId && !cachLayout"
             data-v-8bcd5751
             class="text-capitalize text title-pages"
           >
             chose payment method
           </h1>
 
-          <div v-if="!checkoutId && !cachLayout && id" class="methods">
-            <div
+          <div v-if="!checkoutId && !cachLayout" class="methods">
+            <div @click="selecteBrand('visa')"
               class="box-method border-radius-36px p-color-fs text-center mb-4 position-relative box-hover-bg"
             >
               <div class="position-absolute bg-hover"></div>
               <div
-                @click="selecteBrand('visa')"
+                
                 class="name text-capitalize fw-bold"
               >
                 Pay with visa
@@ -194,6 +194,7 @@ const isLoading = ref(false);
 
 let route = useRoute();
 let id = route.query.id;
+let membershipId = route.query.membership;
 
 let brand = ref("");
 let checkoutId = ref(null);
@@ -203,7 +204,14 @@ const formAction = ref("");
 
 let paymentWithHyperPay = async () => {
   try {
-    let res = await useApi().usePayment(id, brand.value);
+    let res;
+
+    if (membershipId) {
+      res = await useApi().usePaymentMembership(membershipId, brand.value);
+    } else {
+      res = await useApi().usePayment(id, brand.value);
+    }
+
     if (res) {
       checkoutId.value = res?.data?.checkoutId;
       amount.value = res?.data?.amount_to_pay;
@@ -219,7 +227,7 @@ let paymentWithHyperPay = async () => {
       script.type = "text/javascript";
       script.src = `https://test.oppwa.com/v1/paymentWidgets.js?checkoutId=${checkoutId.value}`;
       document.body.appendChild(script);
-      removeIdFromQuery();
+      // removeIdFromQuery();
     }
   } catch (err) {
     console.log(err);
@@ -227,6 +235,7 @@ let paymentWithHyperPay = async () => {
 };
 
 function selecteBrand(brandPay) {
+  console.log(brand.value);
   brand.value = brandPay;
   paymentWithHyperPay();
 }
@@ -237,9 +246,10 @@ onMounted(async () => {
   domain = window.location.origin;
   formAction.value = `${window.location.origin}/payment-tamara-status`;
   try {
-    const responseOrder = await useApi().getSingleOrder(id);
-    orderDetails.value = responseOrder?.data || {};
-    console.log(responseOrder);
+    if (id) {
+      const responseOrder = await useApi().getSingleOrder(id);
+      orderDetails.value = responseOrder?.data || {};
+    }
   } catch (e) {
     console.error(e);
   }
@@ -247,15 +257,28 @@ onMounted(async () => {
 
 let paywithTamara = async () => {
   try {
-    let res = await useApi().tamaraPayment({
-      order_id: id,
-      success_url: `${domain}/payment-tamara-status/success`,
-      failure_url: `${domain}/payment-tamara-status/failed`,
-      cancel_url: `${domain}/payment-tamara-status/cancel`,
-    });
-    if (res?.data?.checkout_url) {
-      window.location.href = res.data.checkout_url;
-      removeIdFromQuery();
+    if (id) {
+      let res = await useApi().tamaraPayment({
+        order_id: id,
+        success_url: `${domain}/payment-tamara-status/success`,
+        failure_url: `${domain}/payment-tamara-status/failed`,
+        cancel_url: `${domain}/payment-tamara-status/cancel`,
+      });
+      if (res?.data?.checkout_url) {
+        window.location.href = res.data.checkout_url;
+        // removeIdFromQuery();
+      }
+    } else {
+      let res = await useApi().tamaraPayment({
+        membership_id: membershipId,
+        success_url: `${domain}/payment-tamara-status/success`,
+        failure_url: `${domain}/payment-tamara-status/failed`,
+        cancel_url: `${domain}/payment-tamara-status/cancel`,
+      });
+      if (res?.data?.checkout_url) {
+        window.location.href = res.data.checkout_url;
+        // removeIdFromQuery();
+      }
     }
   } catch (err) {
     console.log(err);
@@ -264,15 +287,28 @@ let paywithTamara = async () => {
 
 let paymentWihtTbby = async () => {
   try {
-    let res = await useApi().tabyPayment({
-      order_id: id,
-      success_url: `${domain}/payment-tamara-status/success`,
-      failure_url: `${domain}/payment-tamara-status/failed`,
-      cancel_url: `${domain}/payment-tamara-status/cancel`,
-    });
-    if (res && res?.data?.checkout_url) {
-      window.location.href = res?.data?.checkout_url;
-      removeIdFromQuery();
+    if (id) {
+      let res = await useApi().tabyPayment({
+        order_id: id,
+        success_url: `${domain}/payment-tamara-status/success`,
+        failure_url: `${domain}/payment-tamara-status/failed`,
+        cancel_url: `${domain}/payment-tamara-status/cancel`,
+      });
+      if (res && res?.data?.checkout_url) {
+        window.location.href = res?.data?.checkout_url;
+        // removeIdFromQuery();
+      }
+    } else {
+      let res = await useApi().tabyPayment({
+        membership_id: membershipId,
+        success_url: `${domain}/payment-tamara-status/success`,
+        failure_url: `${domain}/payment-tamara-status/failed`,
+        cancel_url: `${domain}/payment-tamara-status/cancel`,
+      });
+      if (res && res?.data?.checkout_url) {
+        window.location.href = res?.data?.checkout_url;
+        // removeIdFromQuery();
+      }
     }
   } catch (err) {
     console.log("err", err);

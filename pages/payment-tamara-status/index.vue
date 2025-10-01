@@ -27,7 +27,7 @@ onMounted(async () => {
   try {
     const res = await useApi().getHyperpayStatus(rawId);
     if (res?.status === true || res?.status === "true") {
-      router.replace("/payment-tamara-status/success");
+      router.replace("/payment-tamara-status/success?hyper=success");
     } else {
       router.replace("/payment-tamara-status/failed");
     }
