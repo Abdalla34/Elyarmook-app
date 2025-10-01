@@ -285,6 +285,7 @@
 import dayjs from "#build/dayjs.imports.mjs";
 
 const { deleteItemFromCart, updateCartItemQuantity } = useApi();
+const { triggerCartUpdate } = useCartUpdate();
 const services = ref([]);
 const loadingDelete = ref({});
 const loadingQty = ref({});
@@ -327,6 +328,7 @@ async function deletedOrder(id, type) {
 
   try {
     await deleteItemFromCart(type, order_id.value, id);
+    triggerCartUpdate(); // Trigger cart update after successful deletion
   } catch (err) {
     console.log("test", err);
   }
@@ -347,6 +349,7 @@ async function updateQty(type, orderId, cart_item_id, newQty) {
 
     if (res?.status === true) {
       cart_item_id.qty = newQty;
+      triggerCartUpdate(); // Trigger cart update after successful quantity update
     } else {
       if (res?.errors?.qty?.length) {
         msg.value[cart_item_id.id] = res.errors.qty[0];

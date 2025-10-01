@@ -4,6 +4,9 @@ export function useAddToCart() {
   const allCartGuest = ref<any[]>([]);
   const btnShooping = ref(false);
   const token = useCookie("token", { maxAge: 365 * 24 * 60 * 60 });
+  
+  // Use centralized cart update function
+  const { triggerCartUpdate } = useCartUpdate();
 
   // Initialize cart state from localStorage
   function initCartFromLocalStorage() {
@@ -31,6 +34,7 @@ export function useAddToCart() {
       }
       localStorage.setItem("cartGuest", JSON.stringify(currentCart));
       allCartGuest.value = currentCart;
+      triggerCartUpdate(); // Trigger cart update for guest users
     }
 
     if (token.value) {
@@ -39,6 +43,7 @@ export function useAddToCart() {
         const res: any = await useApi().addToCart(type, service.id, 1);
         if (res.status) {
           service.in_cart = true;
+          triggerCartUpdate(); // Trigger cart update for authenticated users
         }
       } catch (err: any) {
         if (err?.response?.status === 401) {
@@ -62,6 +67,8 @@ export function useAddToCart() {
     if (cart.length === 0) {
       btnShooping.value = false;
     }
+    
+    triggerCartUpdate(); // Trigger cart update when removing items
   }
 
   return {

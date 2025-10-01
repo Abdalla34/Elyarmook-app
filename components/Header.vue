@@ -24,7 +24,7 @@
         >
           <div
             class="background-color-cart position-relative d-flex align-items-center justify-content-center"
-            @click="navigateTo('/cart')"
+            @click="navigateToCart"
           >
             <button class="buttons">
               <PuplicIconCartIcon />
@@ -90,6 +90,15 @@ if (token.value) {
 const defaultCar = computed(
   () => myCars.value.find((car) => car.is_default) || []
 );
+
+// Cart length functionality
+const { cartLength, refreshCartLength } = useCartLength();
+
+// Refresh cart length when navigating to cart
+const navigateToCart = () => {
+  navigateTo('/cart');
+  refreshCartLength();
+};
 </script>
 
 <style scoped>
