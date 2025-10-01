@@ -105,5 +105,6 @@ function conditionToken() {
 </script>
 
 <style scoped>
+@import "@/assets/css/services.css";
 @import "@/assets/css/wenchcss.css"
 </style>
