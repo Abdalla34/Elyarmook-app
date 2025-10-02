@@ -329,6 +329,13 @@ async function deletedOrder(id, type) {
   try {
     await deleteItemFromCart(type, order_id.value, id);
     triggerCartUpdate(); // Trigger cart update after successful deletion
+    if (
+      services.value.length === 0 &&
+      offers.value.length === 0 &&
+      spareParts.value.length === 0
+    ) {
+      cartRes.value = null; // كده الشرط v-if هيخلي الرسالة تظهر
+    }
   } catch (err) {
     console.log("test", err);
   }
@@ -369,6 +376,7 @@ async function updateQty(type, orderId, cart_item_id, newQty) {
 }
 let isLoadingOtp = ref(false);
 let router = useRouter();
+
 function toContinue() {
   isLoadingOtp.value = true;
   if (
@@ -391,7 +399,6 @@ function toContinue() {
     });
   }
 }
-
 </script>
 
 <style scoped>

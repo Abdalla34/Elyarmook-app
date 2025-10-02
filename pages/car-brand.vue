@@ -136,7 +136,7 @@ let carTypes = async (barnd) => {
   console.log(`car brand id ${carForm.brand_id}`);
 };
 let filterTypes = computed(() => {
-  if (!searchInTypes.value) carModels.value;
+  if (!searchInTypes.value) return carModels.value;
   return carModels.value.filter((carType) => {
     return carType?.title
       .toLowerCase()
@@ -155,10 +155,13 @@ let selecteYears = async (year) => {
   console.log(`made in ${carForm.manufacture_year}`);
 };
 
+const { addCar, fetchMyCars } = useMyCars();
+
 async function SendData() {
   try {
     let resAllCar = await useApi().getMycars();
     let isFirst = resAllCar?.data.length === 0;
+
     let res = await useApi().createCar({
       brand_id: carForm.brand_id,
       car_type_id: carForm.car_type_id,
@@ -166,8 +169,10 @@ async function SendData() {
       chassis_number: carForm.chassis_number,
       is_default: isFirst ? true : false,
     });
+
+    addCar(res?.data);
+
     navigateTo("/my-cars");
-    console.log(res);
   } catch (err) {
     if (err?.response?.status === 401) {
       return navigateTo("/createaccount");
@@ -176,8 +181,8 @@ async function SendData() {
     }
   }
 }
-let chassisError = ref("");
 
+let chassisError = ref("");
 const validateAndSend = async () => {
   if (!carForm.chassis_number || carForm.chassis_number.trim() === "") {
     chassisError.value = "Please enter chassis number";

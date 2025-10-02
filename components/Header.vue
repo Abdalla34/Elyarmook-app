@@ -81,19 +81,19 @@
 <script setup>
 const token = useCookie("token");
 const myCars = ref([]);
-if (token.value) {
-  const res = await useApi().getMycars();
-  myCars.value = res?.data || [];
-} else {
-  myCars.value = [];
-}
-const defaultCar = computed(
-  () => myCars.value.find((car) => car.is_default) || []
-);
+// const defaultCar = computed(
+//   () => myCars.value.find((car) => car.is_default) || []
+// );
+
+const { defaultCar, fetchMyCars } = useMyCars();
+
+
+onMounted(() => {
+  fetchMyCars();
+});
 
 // Cart length functionality
 const { cartLength, refreshCartLength } = useCartLength();
-
 // Refresh cart length when navigating to cart
 const navigateToCart = () => {
   navigateTo('/cart');

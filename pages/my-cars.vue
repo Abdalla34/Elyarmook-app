@@ -95,7 +95,18 @@
               <p class="text-secondary">قم بإضافة سيارتك لعرضها هنا.</p>
             </div>
 
-            <div>
+            <div
+              v-if="token"
+              class="button-save border-radius-36px width-height margin-bottom-287px"
+              @click="navigateTo('car-brand')"
+            >
+              <button class="text-capitalize">
+                <i class="fa-solid fa-plus"></i>
+                add new car
+              </button>
+            </div>
+
+            <!-- <div>
               <div
                 v-if="!guest"
                 class="button-save border-radius-36px width-height margin-bottom-287px"
@@ -112,7 +123,7 @@
                   @click="navigateTo('/order-update-details')"
                 />
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -122,10 +133,6 @@
 
 <script setup>
 let token = useCookie("token");
-let guest = useCookie("guest");
-if (guest && token.value) {
-  console.log("geust true go to main page ");
-}
 let myCars = ref([]);
 let IsNotRegitser = ref(false);
 
