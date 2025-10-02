@@ -344,9 +344,8 @@ let editProfile = async () => {
     console.error(err);
   }
 };
-if (token.value) {
-  await useApi().getDeactivatedReasons();
-}
+
+const resDeactivated = await useApi().getDeactivatedReasons();
 
 const showDeactivateModal = ref(false);
 const selectedReason = ref(null);

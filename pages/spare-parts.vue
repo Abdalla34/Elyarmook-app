@@ -106,34 +106,52 @@ let showOtpModal = ref(false);
 let showDialCode = ref(false);
 
 const spareParts = ref([]);
-const fetchSparePart = async () => {
-  const cached = localStorage.getItem("sparParts");
-  const parsed = JSON.parse(cached);
-  const dateNow = Date.now();
-  const oneDay = 24 * 60 * 60 * 1000;
+const responseSpare = await useApi().getSpareParts();
+spareParts.value = responseSpare?.data?.items;
 
-  if (cached) {
-    spareParts.value = JSON.parse(cached);
-    const parsed = JSON.parse(cached);
-    const dateNow = Date.now();
-    const oneDay = 24 * 60 * 60 * 1000;
+// const fetchSparePart = async () => {
+//   const cached = localStorage.getItem("sparParts");
+//   const parsed = JSON.parse(cached);
+//   const dateNow = Date.now();
+//   const oneDay = 24 * 60 * 60 * 1000;
 
-    if (parsed && dateNow - parsed.timeEnd < oneDay) {
-      spareParts.value = parsed.data;
-      return;
-    }
-  }
-  const responseSpare = await useApi().getSpareParts();
-  spareParts.value = responseSpare?.data?.items;
+//   if (cached) {
+//     spareParts.value = JSON.parse(cached);
+//     const parsed = JSON.parse(cached);
+//     const dateNow = Date.now();
+//     const oneDay = 24 * 60 * 60 * 1000;
 
-  localStorage.setItem(
-    "sparParts",
-    JSON.stringify({ timeEnd: Date.now(), data: spareParts.value })
-  );
-};
+//     if (parsed && dateNow - parsed.timeEnd < oneDay) {
+//       spareParts.value = parsed.data;
+//       return;
+//     }
+//   }
+//   const responseSpare = await useApi().getSpareParts();
+//   const newData = responseSpare?.data?.items || [];
+
+//   if (!parsed || JSON.stringify(parsed.data) !== JSON.stringify(newData)) {
+//     spareParts.value = newData;
+//     localStorage.setItem(
+//       "sparParts",
+//       JSON.stringify({
+//         timestamp: Date.now(),
+//         data: spareParts.value,
+//       })
+//     );
+//   } else {
+//     spareParts.value = parsed.data;
+//   }
+//   // const responseSpare = await useApi().getSpareParts();
+//   // spareParts.value = responseSpare?.data?.items;
+
+//   // localStorage.setItem(
+//   //   "sparParts",
+//   //   JSON.stringify({ timeEnd: Date.now(), data: spareParts.value })
+//   // );
+// };
 
 onMounted(() => {
-  fetchSparePart();
+  // fetchSparePart();
   initCartFromLocalStorage();
 });
 

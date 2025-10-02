@@ -57,7 +57,7 @@
                   </NuxtLink>
                 </li>
                 <!-- membership -->
-                <li class="">
+                <li v-if="token" class="">
                   <NuxtLink
                     to="/membership"
                     exact-active-class="active"
@@ -91,7 +91,9 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+const token = useCookie("token");
+</script>
 
 <style scoped>
 .ul {
