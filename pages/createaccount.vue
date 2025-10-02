@@ -69,6 +69,7 @@
         <p class="policy">Policy and Terms of use</p>
       </div>
     </div>
+    <LoadingSpinner :isLoadingOtp="isLodaing" />
   </div>
 </template>
 
@@ -77,6 +78,7 @@ import { VueTelInput } from "vue-tel-input";
 import "vue-tel-input/vue-tel-input.css";
 import { useForm, useField } from "vee-validate";
 import * as yup from "yup";
+const isLodaing = ref(false);
 
 const loading = ref(false);
 const { sendOTP } = useApi();
@@ -85,10 +87,7 @@ const schema = yup.object({
   phone: yup
     .string()
     .required("Phone number is required")
-    .matches(
-      /^\+?\d{7,15}$/,
-      "Phone number must be 7–15 digits"
-    ),
+    .matches(/^\+?\d{7,15}$/, "Phone number must be 7–15 digits"),
 });
 
 const { handleSubmit, errors } = useForm({
@@ -102,6 +101,7 @@ watch(phone, (newVal) => {
 });
 const onSubmit = handleSubmit(async (values) => {
   loading.value = true;
+  isLodaing.value = true;
   try {
     const res = await sendOTP(values.phone);
     if (res && res.data && typeof res.data.registered !== "undefined") {
@@ -120,6 +120,7 @@ const onSubmit = handleSubmit(async (values) => {
     alert("Failed to send OTP");
   } finally {
     loading.value = false;
+    isLodaing.value = false;
   }
 });
 </script>

@@ -286,7 +286,6 @@ function ChangeProfile() {
   profileImg.value = !profileImg.value;
 }
 
-
 const showmodalsignOut = ref(false);
 let logOut = async () => {
   await useApi().logout();
@@ -345,8 +344,9 @@ let editProfile = async () => {
     console.error(err);
   }
 };
-
-let resDeactivated = await useApi().getDeactivatedReasons();
+if (token.value) {
+  await useApi().getDeactivatedReasons();
+}
 
 const showDeactivateModal = ref(false);
 const selectedReason = ref(null);
