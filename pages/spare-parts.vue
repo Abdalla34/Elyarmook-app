@@ -88,8 +88,9 @@
 </template>
 
 <script setup>
+import { ca } from "date-fns/locale";
+
 const { getSpareParts } = useApi();
-// Cart composable
 const {
   loadingAddToCart,
   inCart,
@@ -104,19 +105,42 @@ const {
 let showOtpModal = ref(false);
 let showDialCode = ref(false);
 
-const { data: sparePartsData } = await useAsyncData("spare_parts", () =>
-  getSpareParts()
-);
+const spareParts = ref([]);
+const fetchSparePart = async () => {
+  const cached = localStorage.getItem("sparParts");
+  const parsed = JSON.parse(cached);
+  const dateNow = Date.now();
+  const oneDay = 24 * 60 * 60 * 1000;
 
-const spareParts = computed(() => sparePartsData.value?.data?.items || []);
+  if (cached) {
+    spareParts.value = JSON.parse(cached);
+    const parsed = JSON.parse(cached);
+    const dateNow = Date.now();
+    const oneDay = 24 * 60 * 60 * 1000;
+
+    if (parsed && dateNow - parsed.timeEnd < oneDay) {
+      spareParts.value = parsed.data;
+      return;
+    }
+  }
+  const responseSpare = await useApi().getSpareParts();
+  spareParts.value = responseSpare?.data?.items;
+
+  localStorage.setItem(
+    "sparParts",
+    JSON.stringify({ timeEnd: Date.now(), data: spareParts.value })
+  );
+};
+
+onMounted(() => {
+  fetchSparePart();
+  initCartFromLocalStorage();
+});
 
 function BtnShooping() {
   showDialCode.value = true;
 }
 
-onMounted(() => {
-  initCartFromLocalStorage();
-});
 function handleOtpSuccess() {
   navigateTo("/order-update-details");
 }

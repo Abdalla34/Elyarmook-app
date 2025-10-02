@@ -89,14 +89,38 @@ const {
   initCartFromLocalStorage,
 } = useAddToCart();
 
-try {
-  let res = await useApi().getServices();
-  services.value = res.data?.items || [];
-} catch (error) {
-  console.error("Error fetching services:", error);
-}
+const fetchServices = async () => {
+  try {
+    const cached = localStorage.getItem("servicesCache");
+    if (cached) {
+      const parsed = JSON.parse(cached);
+      const now = Date.now();
+      const oneDay = 24 * 60 * 60 * 1000;
+
+      if (now - parsed.timestamp < oneDay) {
+        services.value = parsed.data;
+        return;
+      }
+    }
+
+    let res = await useApi().getServices();
+    services.value = res.data?.items || [];
+
+    localStorage.setItem(
+      "servicesCache",
+      JSON.stringify({
+        timestamp: Date.now(),
+        data: services.value,
+      })
+    );
+    
+  } catch (error) {
+    console.error("Error fetching services:", error);
+  }
+};
 
 onMounted(() => {
+  fetchServices();
   initCartFromLocalStorage();
 });
 
