@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row">
         <div class="col-8 col-padding">
-          <div class="empty-cart text-center" v-if="!id && !membershipId">
+          <!-- <div class="empty-cart text-center" v-if="!id && !membershipId">
             <div>
               <img src="/Vector.png" alt="" />
               <h3 class="text-capitalize create">you must increase cart</h3>
@@ -13,7 +13,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
           <h1
             v-if="!checkoutId && !cachLayout"
             data-v-8bcd5751
@@ -337,6 +337,7 @@ let chachOnDelivery = async () => {
     isLoading.value = false;
   }
 };
+
 const router = useRouter();
 function removeIdFromQuery() {
   router.replace({

@@ -84,11 +84,10 @@ const router = useRouter();
 const schema = yup.object({
   phone: yup
     .string()
-    .required("")
-    .min(7, "Phone number must be at least 7 digits")
+    .required("Phone number is required")
     .matches(
-      /^\+\d{10,15}$/,
-      "Phone number must be in the format +XXXXXXXXXXX"
+      /^\+?\d{7,15}$/,
+      "Phone number must be 7–15 digits"
     ),
 });
 
