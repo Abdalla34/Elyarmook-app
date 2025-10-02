@@ -352,8 +352,18 @@ const openInMaps = (branch) => {
 let route = useRoute();
 let order_id = route.params.id;
 let orderSelected = ref(null);
-let res = await useApi().getSingleOrder(order_id);
-orderSelected.value = res?.data ?? {};
+const isLoading = ref(false);
+onMounted(async () => {
+  try {
+    isLoadingOtp.value = true;
+    let res = await useApi().getSingleOrder(order_id);
+    orderSelected.value = res?.data ?? {};
+  } catch (err) {
+    console.log(err);
+  } finally {
+    isLoadingOtp.value = false;
+  }
+});
 
 const getReasons = ref([]);
 let cancelOrder = ref(false);
@@ -441,7 +451,6 @@ function toFalse() {
 </script>
 
 <style scoped>
-
 @import "@/assets/css/ordersteps.css";
 
 .popup-sure-cancel {
