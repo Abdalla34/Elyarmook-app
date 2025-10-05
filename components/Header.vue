@@ -34,17 +34,20 @@
             }}</span>
           </div>
 
-          <div v-if="token">
+          <div>
             <div
               class="background-color-cart d-flex align-items-center justify-content-center"
               @click="navigateTo('/my-cars')"
             >
-              <button class="buttons">
+              <button v-if="token" class="buttons">
                 <img
                   class="bmw-img z-index-after"
                   :src="defaultCar?.brand?.image"
                   alt=""
                 />
+              </button>
+              <button v-if="!token" class="buttons">
+                <PuplicIconCarIcon />
               </button>
             </div>
           </div>
@@ -81,12 +84,7 @@
 <script setup>
 const token = useCookie("token");
 const myCars = ref([]);
-// const defaultCar = computed(
-//   () => myCars.value.find((car) => car.is_default) || []
-// );
-
 const { defaultCar, fetchMyCars } = useMyCars();
-
 
 onMounted(() => {
   fetchMyCars();
@@ -96,7 +94,7 @@ onMounted(() => {
 const { cartLength, refreshCartLength } = useCartLength();
 // Refresh cart length when navigating to cart
 const navigateToCart = () => {
-  navigateTo('/cart');
+  navigateTo("/cart");
   refreshCartLength();
 };
 </script>

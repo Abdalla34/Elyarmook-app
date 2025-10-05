@@ -53,11 +53,11 @@ try {
   console.log(err);
 }
 
-onMounted(() => {
-  if (route.query?.from === 'cart-update-details') {
-    router.push("/cart");
-  }
-});
+// onMounted(() => {
+//   if (route.query?.from === 'cart-update-details') {
+//     router.push("/cart");
+//   }
+// });
 
 </script>
 

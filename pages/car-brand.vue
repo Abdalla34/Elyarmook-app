@@ -85,14 +85,15 @@
             chassisError
           }}</span>
           <button-card
-            :disabled="!carForm.chassis_number"
-            text-button="add car"
+            :disabled="!carForm.chassis_number || isloadCar"
+            :text-button="isloadCar ? 'adding' : 'add car'"
             class="mt-4"
             type="submit"
           />
         </form>
       </div>
     </div>
+    <LoadingSpinner :isLoadingOtp="isAddCar" />
   </div>
 </template>
 
@@ -103,7 +104,8 @@ let years = Array.from(
   { length: endYear - startYear + 1 },
   (_, i) => endYear - i
 );
-
+const isAddCar = ref(false);
+const isloadCar = ref(false);
 let step = ref(0);
 let carBrands = ref([]);
 let resBrands = await useApi().getCarBrands();
@@ -159,6 +161,8 @@ const { addCar, fetchMyCars } = useMyCars();
 
 async function SendData() {
   try {
+    isloadCar.value = true;
+    isAddCar.value = true;
     let resAllCar = await useApi().getMycars();
     let isFirst = resAllCar?.data.length === 0;
 
@@ -179,6 +183,8 @@ async function SendData() {
     } else {
       console.log("send data", err);
     }
+    isAddCar.value = false;
+  } finally {
   }
 }
 
@@ -208,5 +214,9 @@ const validateAndSend = async () => {
 
 .chassis-input.error {
   border-color: #eb5757;
+}
+.chassis:deep(button):disabled {
+  background-color: #7e7e7e;
+  cursor: not-allowed;
 }
 </style>

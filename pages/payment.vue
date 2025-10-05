@@ -3,17 +3,6 @@
     <div class="container">
       <div class="row">
         <div class="col-8 col-padding">
-          <!-- <div class="empty-cart text-center" v-if="!id && !membershipId">
-            <div>
-              <img src="/Vector.png" alt="" />
-              <h3 class="text-capitalize create">you must increase cart</h3>
-              <div class="btn-items">
-                <div @click="navigateTo('/services')">
-                  <button-card text-button="add items" />
-                </div>
-              </div>
-            </div>
-          </div> -->
           <h1
             v-if="!checkoutId && !cachLayout"
             data-v-8bcd5751
@@ -23,20 +12,17 @@
           </h1>
 
           <div v-if="!checkoutId && !cachLayout" class="methods">
-            <div @click="selecteBrand('visa')"
+            <div
+              :disabled="isLoading"
+              @click="selecteBrand('visa')"
               class="box-method border-radius-36px p-color-fs text-center mb-4 position-relative box-hover-bg"
             >
               <div class="position-absolute bg-hover"></div>
-              <div
-                
-                class="name text-capitalize fw-bold"
-              >
-                Pay with visa
-              </div>
+              <div class="name text-capitalize fw-bold">Pay with visa</div>
             </div>
 
             <div
-              @click="selecteBrand('mada')"
+              @click="!isPayTrue && selecteBrand('mada')"
               class="box-method d-flex gap-4 justify-content-center border-radius-36px p-color-fs align-items-center mb-4 position-relative box-hover-bg"
             >
               <div class="position-absolute bg-hover"></div>
@@ -44,17 +30,20 @@
             </div>
 
             <div
+              :disabled="isLoading"
               @click="selecteBrand('applepay')"
               class="box-method d-flex gap-4 justify-content-center border-radius-36px p-color-fs align-items-center mb-4 position-relative box-hover-bg"
             >
               <div class="position-absolute bg-hover"></div>
               <div class="name text-capitalize fw-bold">apple pay</div>
+
               <div class="icon-pay">
                 <img src="/paymentImg.png" alt="" />
               </div>
             </div>
 
             <div
+              :disabled="isLoading"
               @click="selecteBrand('master')"
               class="box-method d-flex gap-4 justify-content-center border-radius-36px p-color-fs align-items-center mb-4 position-relative box-hover-bg"
             >
@@ -63,6 +52,7 @@
             </div>
 
             <div
+              :disabled="isLoading"
               @click="paywithTamara"
               class="box-method d-flex gap-4 justify-content-center border-radius-36px p-color-fs align-items-center mb-4 position-relative box-hover-bg"
             >
@@ -71,6 +61,7 @@
             </div>
 
             <div
+              :disabled="isLoading"
               @click="paymentWihtTbby"
               class="box-method d-flex gap-4 justify-content-center border-radius-36px p-color-fs align-items-center mb-4 position-relative box-hover-bg"
             >
@@ -191,7 +182,7 @@
 let orderDetails = ref({});
 
 const isLoading = ref(false);
-
+const isPayTrue = ref(false);
 let route = useRoute();
 let id = route.query.id;
 let membershipId = route.query.membership;
@@ -205,6 +196,7 @@ const formAction = ref("");
 let paymentWithHyperPay = async () => {
   try {
     let res;
+    isLoading.value = true;
 
     if (membershipId) {
       res = await useApi().usePaymentMembership(membershipId, brand.value);
@@ -227,10 +219,11 @@ let paymentWithHyperPay = async () => {
       script.type = "text/javascript";
       script.src = `https://test.oppwa.com/v1/paymentWidgets.js?checkoutId=${checkoutId.value}`;
       document.body.appendChild(script);
-      // removeIdFromQuery();
     }
   } catch (err) {
     console.log(err);
+  } finally {
+    isLoading.value = false;
   }
 };
 
@@ -257,6 +250,7 @@ onMounted(async () => {
 
 let paywithTamara = async () => {
   try {
+    isLoading.value = true;
     if (id) {
       let res = await useApi().tamaraPayment({
         order_id: id,
@@ -266,7 +260,6 @@ let paywithTamara = async () => {
       });
       if (res?.data?.checkout_url) {
         window.location.href = res.data.checkout_url;
-        // removeIdFromQuery();
       }
     } else {
       let res = await useApi().tamaraPayment({
@@ -277,16 +270,18 @@ let paywithTamara = async () => {
       });
       if (res?.data?.checkout_url) {
         window.location.href = res.data.checkout_url;
-        // removeIdFromQuery();
       }
     }
   } catch (err) {
     console.log(err);
+  } finally {
+    isLoading.value = false;
   }
 };
 
 let paymentWihtTbby = async () => {
   try {
+    isLoading.value = true;
     if (id) {
       let res = await useApi().tabyPayment({
         order_id: id,
@@ -296,7 +291,6 @@ let paymentWihtTbby = async () => {
       });
       if (res && res?.data?.checkout_url) {
         window.location.href = res?.data?.checkout_url;
-        // removeIdFromQuery();
       }
     } else {
       let res = await useApi().tabyPayment({
@@ -307,11 +301,12 @@ let paymentWihtTbby = async () => {
       });
       if (res && res?.data?.checkout_url) {
         window.location.href = res?.data?.checkout_url;
-        // removeIdFromQuery();
       }
     }
   } catch (err) {
     console.log("err", err);
+  } finally {
+    isLoading.value = false;
   }
 };
 
@@ -339,12 +334,12 @@ let chachOnDelivery = async () => {
 };
 
 const router = useRouter();
-function removeIdFromQuery() {
-  router.replace({
-    path: "/",
-    query: {},
-  });
-}
+// function removeIdFromQuery() {
+//   router.replace({
+//     path: "/",
+//     query: {},
+//   });
+// }
 </script>
 
 <style scoped>
