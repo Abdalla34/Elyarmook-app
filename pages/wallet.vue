@@ -78,6 +78,7 @@
                         dayjs(item.created_at).format("hh:mm A")
                       }}</span>
                     </p>
+                    <p class="p-color-fs fs fw-bold">{{ item.description }}</p>
                   </div>
                 </div>
                 <div class="pricewall">
@@ -167,5 +168,9 @@ onMounted(() => {
 .btn {
   background-color: var(--main-color);
   border: none;
+}
+.fs {
+  font-size: 13px;
+  color: #3d3d3d;
 }
 </style>

@@ -84,6 +84,7 @@
                     {{ dayjs(item.created_at).format("hh:mm A") }}</span
                   >
                 </p>
+                <p class="p-color-fs fw-bold">{{ item.description }}</p>
               </div>
             </div>
 
@@ -132,6 +133,7 @@
                     {{ dayjs(item.created_at).format("hh:mm A") }}</span
                   >
                 </p>
+                <p class="p-color-fs fw-bold">{{ item.description }}</p>
               </div>
             </div>
 
@@ -182,6 +184,7 @@
                     {{ dayjs(item.created_at).format("hh:mm A") }}</span
                   >
                 </p>
+                <p class="p-color-fs fw-bold">{{ item.description }}</p>
               </div>
             </div>
 
@@ -195,9 +198,6 @@
             <img src="/notPoints.png" alt="no points" />
             <p>not points yet</p>
           </div>
-          <!-- <div class="load-more d-flex justify-content-center">
-            <button class="btn btn-primary">Load More</button>
-          </div> -->
         </div>
       </div>
     </div>

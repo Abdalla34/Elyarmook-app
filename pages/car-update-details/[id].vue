@@ -188,38 +188,5 @@ const sendDataCar = handleSubmit(async (values) => {
 .years {
   background-color: var(--color-secound-main);
 }
-.box-year {
-  border: 1px solid var(--color-secound-main);
-}
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
 
-.modal-box {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  max-height: 80vh;
-  overflow-y: auto;
-  scroll-behavior: smooth;
-  width: 30%;
-}
-.modal-box::-webkit-scrollbar {
-  display: none;
-}
-
-@media (max-width: 768px) {
-  .modal-box {
-    width: 90%;
-  }
-}
 </style>

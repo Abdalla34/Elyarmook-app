@@ -55,7 +55,7 @@
         </div>
       </div>
 
-      <div class="row justify-content-center" v-if="step == 2">
+      <!-- <div class="row justify-content-center" v-if="step == 2">
         <div
           class="col-lg-7 col-md-6 parent-types"
           v-for="year in years"
@@ -66,10 +66,32 @@
             <div class="title-car">{{ year }}</div>
           </div>
         </div>
-      </div>
+      </div> -->
 
-      <div class="chassis" v-if="step == 3">
-        <form @submit.prevent="validateAndSend" class="chassis-form">
+      <div class="chassis" v-if="step == 2">
+        <form @submit.prevent="SendData" class="chassis-form">
+          <!-- choose year -->
+          <label class="chassis-label text-capitalize" for="">
+            manufacture year
+          </label>
+          <!-- input years -->
+          <div
+            @click="showYears = true"
+            class="years rounded gap-2 ps-3 pe-3 pt-3 pb-3 d-flex align-items-center justify-content-between"
+            style="cursor: pointer"
+          >
+            <input
+              id="amnufactureYaer"
+              type="text"
+              placeholder="manfacture years"
+              class="form-control border-0 shadow-none"
+              style="flex: 1; cursor: pointer"
+              v-model="carForm.manufacture_year"
+              readonly
+            />
+            <div class="icon"><puplic-icon-arrow-bottom /></div>
+          </div>
+
           <label class="chassis-label text-capitalize" for="chassisNumber">
             chassis number
           </label>
@@ -85,12 +107,33 @@
             chassisError
           }}</span>
           <button-card
-            :disabled="!carForm.chassis_number || isloadCar"
-            :text-button="isloadCar ? 'adding' : 'add car'"
+            :disabled="!carForm.chassis_number || !carForm.manufacture_year"
+            :text-button="isloadCar ? 'loading...' : 'add car'"
             class="mt-4"
             type="submit"
           />
         </form>
+      </div>
+      <!-- popup -->
+      <div v-if="showYears" class="modal-overlay">
+        <div class="modal-box position-relative">
+          <button
+            class="btn-close position-absolute top-0 end-0 m-3"
+            @click.self="showYears = false"
+          ></button>
+
+          <h1 class="label mb-3">manfacture years</h1>
+          <div class="all-years">
+            <div
+              style="cursor: pointer"
+              v-for="year in years"
+              @click="selecteYears(year)"
+              class="box-year mb-2 rounded ps-2 pe-2 pt-1 pb-1"
+            >
+              {{ year }}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <LoadingSpinner :isLoadingOtp="isAddCar" />
@@ -104,12 +147,15 @@ let years = Array.from(
   { length: endYear - startYear + 1 },
   (_, i) => endYear - i
 );
+const showYears = ref(false);
 const isAddCar = ref(false);
 const isloadCar = ref(false);
+
 let step = ref(0);
 let carBrands = ref([]);
 let resBrands = await useApi().getCarBrands();
 carBrands.value = resBrands?.data?.items;
+
 let searchInBrands = ref("");
 let filterBrands = computed(() => {
   if (!searchInBrands.value) return carBrands.value;
@@ -149,12 +195,11 @@ let filterTypes = computed(() => {
 let selecteCarType = async (car_Type) => {
   carForm.car_type_id = car_Type.id;
   step.value = 2;
-  console.log(`car Type ${carForm.car_type_id}`);
 };
+
 let selecteYears = async (year) => {
   carForm.manufacture_year = year;
-  step.value = 3;
-  console.log(`made in ${carForm.manufacture_year}`);
+  showYears.value = false;
 };
 
 const { addCar, fetchMyCars } = useMyCars();
@@ -173,7 +218,9 @@ async function SendData() {
       chassis_number: carForm.chassis_number,
       is_default: isFirst ? true : false,
     });
+    console.log(carForm.value);
 
+    addCar(carForm.value);
     addCar(res?.data);
 
     navigateTo("/my-cars");
@@ -189,13 +236,13 @@ async function SendData() {
 }
 
 let chassisError = ref("");
-const validateAndSend = async () => {
-  if (!carForm.chassis_number || carForm.chassis_number.trim() === "") {
-    chassisError.value = "Please enter chassis number";
-    return;
-  }
-  await SendData();
-};
+// const validateAndSend = async () => {
+//   if (!carForm.chassis_number || carForm.chassis_number.trim() === "") {
+//     chassisError.value = "Please enter chassis number";
+//     return;
+//   }
+//   await SendData();
+// };
 </script>
 
 <style scoped>
@@ -212,11 +259,17 @@ const validateAndSend = async () => {
   display: block;
 }
 
+.years {
+  border: 2px solid var(--main-color);
+}
 .chassis-input.error {
   border-color: #eb5757;
 }
 .chassis:deep(button):disabled {
   background-color: #7e7e7e;
   cursor: not-allowed;
+}
+.years {
+  background-color: var(--color-secound-main);
 }
 </style>

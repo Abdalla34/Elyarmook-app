@@ -10,7 +10,12 @@
           >
             chose payment method
           </h1>
-
+          <div v-if="msg" class="modal-overlay" @click.self="msg = ''">
+            <div class="modal-body">
+              <button class="close-btn" @click="msg = ''">×</button>
+              <p>{{ msg }}</p>
+            </div>
+          </div>
           <div v-if="!checkoutId && !cachLayout" class="methods">
             <div
               :disabled="isLoading"
@@ -192,7 +197,7 @@ let checkoutId = ref(null);
 let amount = ref(null);
 
 const formAction = ref("");
-
+const msg = ref("");
 let paymentWithHyperPay = async () => {
   try {
     let res;
@@ -200,6 +205,7 @@ let paymentWithHyperPay = async () => {
 
     if (membershipId) {
       res = await useApi().usePaymentMembership(membershipId, brand.value);
+      msg.value = res?.message;
     } else {
       res = await useApi().usePayment(id, brand.value);
     }
@@ -271,6 +277,9 @@ let paywithTamara = async () => {
       if (res?.data?.checkout_url) {
         window.location.href = res.data.checkout_url;
       }
+      if (!res?.status) {
+        msg.value = res?.message;
+      }
     }
   } catch (err) {
     console.log(err);
@@ -301,6 +310,9 @@ let paymentWihtTbby = async () => {
       });
       if (res && res?.data?.checkout_url) {
         window.location.href = res?.data?.checkout_url;
+      }
+      if (!res?.status) {
+        msg.value = res?.message;
       }
     }
   } catch (err) {
@@ -334,12 +346,6 @@ let chachOnDelivery = async () => {
 };
 
 const router = useRouter();
-// function removeIdFromQuery() {
-//   router.replace({
-//     path: "/",
-//     query: {},
-//   });
-// }
 </script>
 
 <style scoped>
@@ -360,5 +366,73 @@ const router = useRouter();
 }
 .point-img img {
   width: 100px;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.modal-body {
+  background: #fff;
+  color: #222;
+  padding: 25px 35px;
+  border-radius: 16px;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.2);
+  font-size: 18px;
+  font-weight: 500;
+  text-align: center;
+  max-width: 50%;
+  width: 320px;
+  animation: slideUp 0.3s ease-out;
+}
+
+.modal-text {
+  margin: 0;
+  line-height: 1.5;
+}
+.close-btn {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  background: transparent;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  color: #333;
+  transition: color 0.3s;
+}
+
+.close-btn:hover {
+  color: red;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 </style>
