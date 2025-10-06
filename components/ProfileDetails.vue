@@ -3,7 +3,7 @@
     <div class="container px-2 links">
       <div class="row">
         <div class="col-10">
-          <div class="pages border-radius-36px">
+          <div class="pages mb-4 border-radius-36px profile-scroll-container">
             <ul class="links d-flex justify-content-center align-items-end ul">
               <li class="">
                 <NuxtLink
@@ -144,14 +144,75 @@
 
 @media (max-width: 576px) {
   .pages {
-    display: none;
+    display: block;
+  }
+
+  .profile-scroll-container {
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+
+  .profile-scroll-container::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .profile-scroll-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+  }
+
+  .profile-scroll-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+  }
+
+  .profile-scroll-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+
+  .ul {
+    width: max-content;
+    flex-wrap: nowrap;
   }
 }
 
 @media (max-width: 768px) {
   .pages {
-    display: none;
+    display: block;
   }
+
+  .profile-scroll-container {
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+
+  .profile-scroll-container::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .profile-scroll-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+  }
+
+  .profile-scroll-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+  }
+
+  .profile-scroll-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+
+  .ul {
+    width: max-content;
+    flex-wrap: nowrap;
+  }
+
   .margin-bottom-40px {
     margin-bottom: 0px;
   }
