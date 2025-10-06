@@ -1,5 +1,62 @@
 <template>
-  <div
+  <div class="profile-ds">
+    <div
+      class="profile-card d-flex justify-content-center align-items-center gap-2"
+    >
+      <div
+        class="background-color-cart position-relative d-flex align-items-center justify-content-center"
+        @click="navigateToCart"
+      >
+        <button class="buttons">
+          <PuplicIconCartIcon />
+        </button>
+        <span v-if="cartLength > 0" class="span-length">{{ cartLength }}</span>
+      </div>
+
+      <div>
+        <div
+          class="background-color-cart d-flex align-items-center justify-content-center"
+          @click="navigateTo('/my-cars')"
+        >
+          <button v-if="token" class="buttons">
+            <img
+              class="bmw-img z-index-after"
+              :src="defaultCar?.brand?.image"
+              alt=""
+            />
+          </button>
+          <button v-if="!token" class="buttons">
+            <PuplicIconCarIcon />
+          </button>
+        </div>
+      </div>
+
+      <div class="position-relative">
+        <div
+          @click="navigateTo('/profile')"
+          v-if="!token"
+          class="icon-user login"
+          style="cursor: pointer"
+        >
+          <i class="fa-solid fa-user fa-2x"></i>
+        </div>
+        <div
+          v-if="token"
+          @click="navigateTo('/profile')"
+          class="background-color-cart d-flex align-items-center justify-content-center position-relative"
+        >
+          <button class="buttons">
+            <img
+              class="profile-img z-index-after"
+              src="/public/img-icon.jpg"
+              alt="imgProfile"
+            />
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <div
     class="profile-card d-flex justify-content-center align-items-center gap-2"
   >
     <div
@@ -12,7 +69,7 @@
     <div
       class="background-color-cart d-flex align-items-center justify-content-center"
     >
-      <button class="buttons" @click="navigateTo('/mycars')">
+      <button class="buttons" @click="navigateTo('/my-cars')">
         <img class="bmw-img z-index-after" src="/public/BMW.png" alt="" />
       </button>
     </div>
@@ -28,8 +85,27 @@
         />
       </button>
     </div>
-  </div>
+  </div> -->
 </template>
+
+<script setup>
+const token = useCookie("token");
+const myCars = ref([]);
+const { defaultCar, fetchMyCars } = useMyCars();
+
+onMounted(() => {
+  fetchMyCars();
+});
+
+// Cart length functionality
+const { cartLength, refreshCartLength } = useCartLength();
+// Refresh cart length when navigating to cart
+const navigateToCart = () => {
+  navigateTo("/cart");
+  refreshCartLength();
+};
+</script>
+
 <style scoped>
 .profile-img {
   width: 64px;
@@ -108,10 +184,20 @@
   transform: scale(1.05);
   filter: brightness(1.1);
 }
-
-/* @media (max-width: 768px) {
-  .profile-card {
-    display: none;
-  }
-} */
+.span-length {
+  position: absolute;
+  background-color: red;
+  border-radius: 50%;
+  padding: 8px;
+  left: 0%;
+  top: 0px;
+  z-index: 10;
+  width: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  color: white;
+  font-weight: bold;
+}
 </style>

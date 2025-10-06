@@ -1,0 +1,227 @@
+.soon-badge {
+  top: -33px;
+  z-index: 10;
+  right: -26px;
+  background: #f9cbcb;
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  color: #eb5757;
+  border-radius: 20px;
+}
+
+@media (max-width: 576px) {
+  .services-container {
+    padding: 0 12px;
+  }
+
+  .service-card {
+    width: 100%;
+    height: auto;
+    padding: 20px 15px;
+    border-radius: 30px;
+  }
+
+  .img {
+    width: 100px;
+    height: 100px;
+  }
+
+  .service-title {
+    font-size: 22px;
+    line-height: 30px;
+    margin-top: 10px;
+  }
+
+  .p-color-fs {
+    font-size: 14px;
+    line-height: 1.6;
+    padding: 0 10px;
+  }
+}
+
+@media (min-width: 577px) and (max-width: 991px) {
+  .service-card {
+    width: 100%;
+    height: auto;
+    padding: 25px;
+    border-radius: 40px;
+  }
+
+  .img {
+    width: 120px;
+    height: 120px;
+  }
+
+  .service-title {
+    font-size: 28px;
+    line-height: 36px;
+  }
+}
+
+@media (min-width: 992px) {
+  .service-card {
+    width: 100%;
+    max-width: 380px;
+    height: 420px;
+    padding: 30px;
+    border-radius: 64px;
+  }
+
+  .img {
+    width: 140px;
+    height: 140px;
+  }
+
+  .service-title {
+    font-size: 32px;
+    line-height: 40px;
+  }
+}
+/* ////////////////////////////////////////////////////////// */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 25px;
+  padding: 30px;
+}
+
+/* الصندوق الأساسي */
+.service-box {
+  background-color: #ffffff;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08), 0 4px 20px rgba(0, 0, 0, 0.04);
+  border-radius: 64px;
+  text-align: center;
+  padding: 25px 15px;
+  transition: 0.3s ease;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.service-img {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+}
+
+.service-box h3 {
+  font-size: 1.2rem;
+  margin-top: 10px;
+  color: #333;
+}
+
+.service-box p {
+  font-size: 0.9rem;
+  background-color: #fff6c4;
+  width: fit-content;
+  margin: auto;
+  padding: 0px 8px;
+  border-radius: 5px;
+}
+
+/* 📱 من أول 992px لحد 768px (تابلت كبير) */
+@media (max-width: 992px) {
+  .services-grid {
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+    padding: 20px;
+  }
+
+  .service-img {
+    width: 70px;
+    height: 70px;
+  }
+
+  .service-box {
+    border-radius: 30px;
+    padding: 20px 10px;
+  }
+
+  .service-box h3 {
+    font-size: 1.1rem;
+  }
+
+  .service-box p {
+    font-size: 0.85rem;
+  }
+}
+
+/* 📱 من أول 768px لحد 576px (تابلت صغير / موبايل أفقي) */
+@media (max-width: 768px) {
+  .services-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+
+  .service-img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .service-box {
+    padding: 18px 10px;
+    border-radius: 20px;
+  }
+
+  .service-box h3 {
+    font-size: 1rem;
+  }
+
+  .service-box p {
+    font-size: 0.75rem;
+  }
+}
+
+/* 📱 من أول 576px لحد 400px (موبايل عادي) */
+@media (max-width: 576px) {
+  .services-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    padding: 10px;
+  }
+
+  .service-box {
+    padding: 15px 8px;
+    border-radius: 15px;
+  }
+
+  .service-img {
+    width: 45px;
+    height: 45px;
+  }
+
+  .service-box h3 {
+    font-size: 0.9rem;
+  }
+
+  .service-box p {
+    font-size: 0.7rem;
+  }
+}
+
+/* 📱 أقل من 400px (شاشات صغيرة جدًا زي 320px) */
+@media (max-width: 400px) {
+  .services-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .service-box {
+    width: 100%;
+    padding: 12px 6px;
+    border-radius: 10px;
+  }
+
+  .service-img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .service-box h3 {
+    font-size: 0.8rem;
+  }
+
+  .service-box p {
+    font-size: 0.65rem;
+  }
+}

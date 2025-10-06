@@ -10,33 +10,12 @@
   transition: transform 0.3s ease, filter 0.3s ease;
   cursor: pointer;
 }
-.search {
-  position: relative;
-  width: 100%;
-  max-width: 339px;
-}
-
-.input-search {
-  width: 100%;
-  padding: 20px 48px 20px 16px; 
-  border: none;
-  border-radius: 36px;
-  background-color: #f7f7fc;
-  font-size: 16px;
-}
 
 .input-search:focus {
   outline: 2px solid var(--main-color);
 }
 
-.icon-search {
-  position: absolute;
-  right: 16px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #939393;
-  pointer-events: none;
-}
+
 
 .focus-input {
   border: none;

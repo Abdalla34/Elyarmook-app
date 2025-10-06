@@ -1,14 +1,36 @@
 <template>
   <div class="services-section border-radius-20px margin-bottom-section">
     <div class="services-container container position-relative">
-      <div class="services-header position-relative">
-        <span
-          class="soon-badge text-capitalize ps-3 pe-3 pt-1 pb-1 position-absolute border-radius-20px"
-          >Soon</span
-        >
+      <div class="services-grid">
+        <!-- الخدمات -->
+        <div class="service-box" @click="navigateTo('/services')">
+          <img class="img" src="/car-fix.png" alt="service.title" />
+          <h3 class="service-title text-capitalize mb-2">services</h3>
+          <p class="p-color-fs text-capitalize">booking now</p>
+        </div>
+
+        <!-- العروض -->
+        <div class="service-box" @click="navigateTo('/offers')">
+          <img class="img" src="/Discount Gift.png" alt="service.title" />
+          <h3 class="service-title text-capitalize mb-2">offers</h3>
+          <p class="p-color-fs text-capitalize">Find now</p>
+        </div>
+
+        <!-- قطع الغيار -->
+        <div class="service-box" @click="navigateTo('/spare-parts')">
+          <div class="services-header position-relative">
+            <span
+              class="soon-badge text-capitalize ps-3 pe-3 pt-1 pb-1 position-absolute border-radius-20px"
+              >Soon</span
+            >
+          </div>
+          <img class="img" src="/parts.png" alt="service.title" />
+          <h3 class="service-title text-capitalize mb-2">spare Part</h3>
+          <p class="p-color-fs text-capitalize">order now</p>
+        </div>
       </div>
 
-      <div class="row">
+      <!-- <div class="row">
         <div class="col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center">
           <div
             class="service-card text-center mb-4"
@@ -59,7 +81,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -73,24 +95,14 @@ import "swiper/css/navigation";
 </script>
 
 <style scoped>
-.services-container {
+/* .services-container {
   margin: 0 auto;
   padding: 0 40px;
 }
 .services-header {
   position: relative;
 }
-.soon-badge {
-  top: -20px;
-  z-index: 10;
-  right: 8px;
-  background: #f9cbcb;
-  font-size: 0.75rem;
-  letter-spacing: 1px;
-  transition: all 0.3s ease;
-  color: #eb5757;
-  border-radius: 20px;
-}
+
 
 .service-card {
   display: flex;
@@ -127,78 +139,6 @@ import "swiper/css/navigation";
   line-height: 44px;
   letter-spacing: -2%;
   color: #4e4b66;
-}
-
-/* موبايل */
-@media (max-width: 576px) {
-  .services-container {
-    padding: 0 12px;
-  }
-
-  .service-card {
-    width: 100%;
-    height: auto;
-    padding: 20px 15px;
-    border-radius: 30px;
-  }
-
-  .img {
-    width: 100px;
-    height: 100px;
-  }
-
-  .service-title {
-    font-size: 22px;
-    line-height: 30px;
-    margin-top: 10px;
-  }
-
-  .p-color-fs {
-    font-size: 14px;
-    line-height: 1.6;
-    padding: 0 10px;
-  }
-}
-
-/* تابلت */
-@media (min-width: 577px) and (max-width: 991px) {
-  .service-card {
-    width: 100%;
-    height: auto;
-    padding: 25px;
-    border-radius: 40px;
-  }
-
-  .img {
-    width: 120px;
-    height: 120px;
-  }
-
-  .service-title {
-    font-size: 28px;
-    line-height: 36px;
-  }
-}
-
-/* ديسكتوب */
-@media (min-width: 992px) {
-  .service-card {
-    width: 100%;
-    max-width: 380px;
-    height: 420px;
-    padding: 30px;
-    border-radius: 64px;
-  }
-
-  .img {
-    width: 140px;
-    height: 140px;
-  }
-
-  .service-title {
-    font-size: 32px;
-    line-height: 40px;
-  }
-}
-
+} */
+@import "@/assets/css/sectionCard.css";
 </style>
