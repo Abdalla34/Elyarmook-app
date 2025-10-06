@@ -213,7 +213,7 @@ Points.value = res?.data;
 let step = ref(0);
 
 const title = computed(() => {
-  if (step.value === 0) return "eanread";
+  if (step.value === 0) return "earned";
   if (step.value === 1) return "redeem";
   if (step.value === 2) return "expired";
   return;
