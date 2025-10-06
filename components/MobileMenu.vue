@@ -1,8 +1,16 @@
 <template>
   <!-- Enhanced Burger Menu Icon -->
   <div class="mobile-menu-wrapper">
-    <div class="menu-icon" @click="toggleMenu" :class="{ active: isMenuOpen }">
+    <!-- Cart Icon -->
+    <div class="cart-icon-wrapper" @click="navigateToCart">
+      <div class="cart-icon-inner">
+        <PuplicIconCartIcon />
+        <span v-if="cartLength > 0" class="cart-badge">{{ cartLength }}</span>
+      </div>
+    </div>
 
+    <!-- Burger Menu Icon -->
+    <div class="menu-icon" @click="toggleMenu" :class="{ active: isMenuOpen }">
       <div class="burger-lines">
         <span class="line line1"></span>
         <span class="line line2"></span>
@@ -15,13 +23,13 @@
 
     <!-- Enhanced Mobile Menu -->
     <transition name="slide-menu">
-      <div v-if="isMenuOpen" class="box-phone" :class="{ open: isMenuOpen }">
+      <div v-if="isMenuOpen" class="box-phone">
         <div class="menu-header">
           <h3 class="menu-title">Menu</h3>
           <button class="close-btn" @click="toggleMenu">×</button>
         </div>
-        
-        <ul class="links ul-phone">
+
+        <ul class="ul-phone">
           <li class="menu-item">
             <NuxtLink
               to="/"
@@ -78,13 +86,12 @@
             </NuxtLink>
           </li>
         </ul>
-        
+
         <div class="menu-footer">
           <ProfileCard />
         </div>
       </div>
     </transition>
-
   </div>
 </template>
 
@@ -95,11 +102,20 @@ const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value;
 };
 
-// Close menu when route changes
+const { cartLength, refreshCartLength } = useCartLength();
+// Refresh cart length when navigating to cart
+const navigateToCart = () => {
+  navigateTo("/cart");
+  refreshCartLength();
+};
+
 const route = useRoute();
-watch(() => route.path, () => {
-  isMenuOpen.value = false;
-});
+watch(
+  () => route.path,
+  () => {
+    isMenuOpen.value = false;
+  }
+);
 </script>
 
 <style scoped>
@@ -107,14 +123,17 @@ watch(() => route.path, () => {
 .mobile-menu-wrapper {
   position: relative;
   z-index: 1000;
-}
-
-/* Enhanced Burger Menu Icon */
-.menu-icon {
-  position: absolute;
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  align-items: center;
+  position: fixed;
   top: 20px;
   right: 20px;
-  z-index: 1000;
+}
+
+/* Cart Icon Wrapper */
+.cart-icon-wrapper {
   background: rgba(255, 255, 255, 0.95);
   padding: 12px;
   border-radius: 15px;
@@ -124,6 +143,66 @@ watch(() => route.path, () => {
   backdrop-filter: blur(10px);
   border: 2px solid rgba(255, 230, 84, 0.2);
   display: none;
+  z-index: 1000;
+}
+
+.cart-icon-wrapper:hover {
+  background: rgba(255, 255, 255, 1);
+  transform: scale(1.05);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+  border-color: rgba(255, 230, 84, 0.4);
+}
+
+.cart-icon-inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
+.cart-badge {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  background: linear-gradient(135deg, #ff4757, #ff6b81);
+  color: white;
+  border-radius: 50%;
+  min-width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 5px;
+  box-shadow: 0 2px 8px rgba(255, 71, 87, 0.4);
+  animation: pulse 2s ease-in-out infinite;
+  border: 2px solid white;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+/* Enhanced Burger Menu Icon */
+.menu-icon {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 12px;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 230, 84, 0.2);
+  display: none;
+  z-index: 1000;
 }
 
 .menu-icon:hover {
@@ -262,13 +341,18 @@ watch(() => route.path, () => {
 }
 
 .menu-link::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 230, 84, 0.1), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 230, 84, 0.1),
+    transparent
+  );
   transition: left 0.5s ease;
 }
 
@@ -341,17 +425,36 @@ watch(() => route.path, () => {
 
 /* Mobile Devices (≤768px) */
 @media (max-width: 768px) {
-  .menu-icon {
+  .menu-icon,
+  .cart-icon-wrapper {
     display: block;
   }
 }
 
 /* Mobile Devices (≤576px) */
 @media (max-width: 576px) {
-  .menu-icon {
+  .mobile-menu-wrapper {
     top: 15px;
     right: 15px;
+    gap: 8px;
+  }
+
+  .menu-icon,
+  .cart-icon-wrapper {
     padding: 10px;
+  }
+
+  .cart-icon-inner {
+    width: 20px;
+    height: 20px;
+  }
+
+  .cart-badge {
+    min-width: 18px;
+    height: 18px;
+    font-size: 10px;
+    top: -18px;
+    right: -10px;
   }
 
   .box-phone {
@@ -402,78 +505,17 @@ watch(() => route.path, () => {
 
 /* Tablet Landscape (769px - 991px) */
 @media (min-width: 769px) and (max-width: 991px) {
-  .menu-icon {
+  .menu-icon,
+  .cart-icon-wrapper {
     display: none;
   }
 }
 
 /* Desktop (≥992px) */
 @media (min-width: 992px) {
-  .menu-icon {
+  .menu-icon,
+  .cart-icon-wrapper {
     display: none;
-  }
-}
-
-/* Animation Enhancements */
-@keyframes slideInRight {
-  from {
-    transform: translateX(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-@keyframes slideOutRight {
-  from {
-    transform: translateX(0);
-    opacity: 1;
-  }
-  to {
-    transform: translateX(100%);
-    opacity: 0;
-  }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes fadeOut {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
-
-/* Menu Item Stagger Animation */
-.menu-item {
-  animation: slideInLeft 0.3s ease-out;
-}
-
-.menu-item:nth-child(1) { animation-delay: 0.1s; }
-.menu-item:nth-child(2) { animation-delay: 0.2s; }
-.menu-item:nth-child(3) { animation-delay: 0.3s; }
-.menu-item:nth-child(4) { animation-delay: 0.4s; }
-.menu-item:nth-child(5) { animation-delay: 0.5s; }
-
-@keyframes slideInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
   }
 }
 </style>

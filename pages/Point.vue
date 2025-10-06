@@ -84,7 +84,7 @@
                     {{ dayjs(item.created_at).format("hh:mm A") }}</span
                   >
                 </p>
-                <p class="p-color-fs fw-bold">{{ item.description }}</p>
+                <p class="p-color-fs fw-bold fs">{{ item.description }}</p>
               </div>
             </div>
 
@@ -257,5 +257,8 @@ console.log(Points);
 }
 .box-point:hover:after {
   width: 100%;
+}
+.fs {
+  font-size: 12px;
 }
 </style>

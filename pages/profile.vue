@@ -16,9 +16,10 @@
               <h1 class="margin-bottom-24px text-capitalize personal mb-0">
                 personal information
               </h1>
-              <div class="box-img position-relative text-center">
+              <!-- <div class="box-img position-relative text-center">
                 <img disabled src="/Ellipse 2.png" alt="" class="img-profile" />
-              </div>
+                <i class="fa-solid fa-user fa-2x"></i>
+              </div> -->
             </div>
           </div>
 

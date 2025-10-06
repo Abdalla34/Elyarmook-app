@@ -148,6 +148,9 @@
 
 /* 📱 من أول 768px لحد 576px (تابلت صغير / موبايل أفقي) */
 @media (max-width: 768px) {
+  .soon-badge {
+    top: -16px;
+  }
   .services-grid {
     grid-template-columns: 1fr 1fr;
     gap: 18px;

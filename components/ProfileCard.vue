@@ -3,16 +3,6 @@
     <div
       class="profile-card d-flex justify-content-center align-items-center gap-2"
     >
-      <div
-        class="background-color-cart position-relative d-flex align-items-center justify-content-center"
-        @click="navigateToCart"
-      >
-        <button class="buttons">
-          <PuplicIconCartIcon />
-        </button>
-        <span v-if="cartLength > 0" class="span-length">{{ cartLength }}</span>
-      </div>
-
       <div>
         <div
           class="background-color-cart d-flex align-items-center justify-content-center"
@@ -56,36 +46,6 @@
       </div>
     </div>
   </div>
-  <!-- <div
-    class="profile-card d-flex justify-content-center align-items-center gap-2"
-  >
-    <div
-      class="background-color-cart d-flex align-items-center justify-content-center"
-    >
-      <button class="buttons" @click="navigateTo('/cart')">
-        <PuplicIconCartIcon />
-      </button>
-    </div>
-    <div
-      class="background-color-cart d-flex align-items-center justify-content-center"
-    >
-      <button class="buttons" @click="navigateTo('/my-cars')">
-        <img class="bmw-img z-index-after" src="/public/BMW.png" alt="" />
-      </button>
-    </div>
-    <div
-      class="background-color-cart d-flex align-items-center justify-content-center"
-    >
-      <button class="buttons">
-        <img
-          class="profile-img z-index-after"
-          src="/public/img-icon.jpg"
-          alt=""
-          @click="navigateTo('/profile')"
-        />
-      </button>
-    </div>
-  </div> -->
 </template>
 
 <script setup>
@@ -96,14 +56,6 @@ const { defaultCar, fetchMyCars } = useMyCars();
 onMounted(() => {
   fetchMyCars();
 });
-
-// Cart length functionality
-const { cartLength, refreshCartLength } = useCartLength();
-// Refresh cart length when navigating to cart
-const navigateToCart = () => {
-  navigateTo("/cart");
-  refreshCartLength();
-};
 </script>
 
 <style scoped>
