@@ -8,11 +8,15 @@
             class="current-point d-flex align-items-center justify-content-between"
           >
             <div class="point-num text-center">
-              <h4 class="title-pages">{{ Points?.current_points }}</h4>
+              <h4 class="title-pages">{{ Points?.current_points_int }}</h4>
               <p class="p-color-fs text-capitalize created-at">current point</p>
             </div>
 
-            <div class="redeem p-color-fs text-capitalize border-radius-36px">
+            <div
+              :style="{ cursor: 'pointer' }"
+              class="redeem p-color-fs text-capitalize border-radius-36px"
+              @click="buttonsOpen = true"
+            >
               {{ title }}
             </div>
           </div>
@@ -200,18 +204,350 @@
           </div>
         </div>
       </div>
+      <!-- box buttons -->
+      <div
+        v-if="buttonsOpen"
+        class="modal-overlay"
+        @click.self="buttonsOpen = false"
+      >
+        <div class="modal-content">
+          <div class="mdoal-box">
+            <div class="d-flex align-items-center justify-content-between mb-2">
+              <h1 class="text-capitalize label">send points</h1>
+              <div
+                class="icon-to-page d-flex justify-content-center align-items-center"
+                @click="buttonsOpen = false"
+              >
+                <i class="fa-solid fa-xmark"></i>
+              </div>
+            </div>
+            <!-- buttons choose opertaions -->
+            <div>
+              <ButtonCard
+                @click="handleRedeemClick"
+                text-button="redeem points"
+                class="mt-4"
+                :class="{ 'disabled-btn': !current_points_int }"
+              />
+
+              <button
+                :class="{ 'disabled-btn': !current_points_int }"
+                @click="handleTransferClick"
+                class="additems text-capitalize label"
+              >
+                <i class="fa-solid fa-paper-plane"></i>
+                send points
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- box redeem -->
+      <div
+        v-if="popupRedeem"
+        class="modal-overlay"
+        @click.self="popupRedeem = false"
+      >
+        <div class="modal-content">
+          <div class="mdoal-box">
+            <div class="input-num">
+              <!-- input numbe points -->
+              <div
+                class="d-flex align-items-center justify-content-between mb-2"
+              >
+                <h1 class="text-capitalize label">redeem points</h1>
+                <div
+                  class="icon-to-page d-flex justify-content-center align-items-center"
+                  @click="popupRedeem = false"
+                >
+                  <i class="fa-solid fa-xmark"></i>
+                </div>
+              </div>
+              <input
+                type="text"
+                class="input-point w-100 p-2 rounded"
+                :placeholder="current_points_int"
+                v-model="pointNum"
+              />
+              <p class="p-color-fs text-capitalize mt-2">
+                NOTES: Minimum points = 1000 points
+              </p>
+            </div>
+            <!-- box details operation -->
+            <div
+              class="box-style p-3 mt-3 rounded d-flex align-items-center justify-content-between"
+            >
+              <div class="point-num text-center">
+                <h6
+                  v-if="pointNum && current_points_int"
+                  style="
+                    font-family: var(--font-main);
+                    font-weight: 700;
+                    font-style: Bold;
+                    font-size: 16px;
+
+                    line-height: 100%;
+                    letter-spacing: 0%;
+                    text-align: center;
+                  "
+                >
+                  {{ pointNum || current_points_int }}
+                </h6>
+                <h6
+                  v-else
+                  style="
+                    font-family: var(--font-main);
+                    font-weight: 700;
+                    font-style: Bold;
+                    font-size: 16px;
+
+                    line-height: 100%;
+                    letter-spacing: 0%;
+                    text-align: center;
+                  "
+                >
+                  0
+                </h6>
+                <p class="p-color-fs text-capitalize">point</p>
+              </div>
+              <!-- redeem to -->
+              <div class="point-redeemto text-center">
+                <PuplicIconDubleArrows />
+                <p class="p-color-fs text-capitalize">redeem to</p>
+              </div>
+              <!-- calculater -->
+              <div class="num-sar text-center">
+                <h6
+                  style="
+                    font-family: var(--font-main);
+                    font-weight: 700;
+                    font-style: Bold;
+                    font-size: 16px;
+
+                    line-height: 100%;
+                    letter-spacing: 0%;
+                    text-align: center;
+                  "
+                >
+                  {{ calculatedSar }}
+                </h6>
+                <p class="p-color-fs text-uppercase">sar</p>
+              </div>
+            </div>
+          </div>
+          <!-- buttons -->
+          <div>
+            <button
+              v-if="!current_points_int"
+              class="disabled-btn rounded mt-3 p-3 text-capitalize"
+            >
+              redeem points
+            </button>
+
+            <ButtonCard
+              @click="sendRedeemPoints"
+              v-else
+              text-button="redeem points"
+              class="mt-4"
+            />
+          </div>
+        </div>
+      </div>
+      <!-- box transfer  -->
+      <div
+        v-if="popupTransfer"
+        class="modal-overlay"
+        @click.self="popupTransfer = false"
+      >
+        <div class="modal-content">
+          <div class="mdoal-box">
+            <div class="input-num">
+              <div
+                class="d-flex align-items-center justify-content-between mb-2"
+              >
+                <h1 class="text-capitalize label">send points</h1>
+                <div
+                  class="icon-to-page d-flex justify-content-center align-items-center"
+                  @click="popupTransfer = false"
+                >
+                  <i class="fa-solid fa-xmark"></i>
+                </div>
+              </div>
+              <!-- input number point -->
+              <label for="" class="label">points</label>
+              <input
+                type="text"
+                class="input-point w-100 p-2 rounded mb-3"
+                placeholder="number with dial code like +966"
+                v-model="phoneNumberSend"
+              />
+              <input
+                type="text"
+                class="input-point w-100 p-2 rounded"
+                :placeholder="current_points_int"
+                v-model="pointNum"
+              />
+              <p class="p-color-fs fs text-capitalize mt-2">
+                NOTES: please you shouled this number used in yarmook app
+              </p>
+            </div>
+          </div>
+          <!-- button -->
+          <div>
+            <button
+              v-if="!phoneNumberSend"
+              class="disabled-btn rounded mt-3 p-3 text-capitalize"
+            >
+              send
+            </button>
+            <ButtonCard
+              v-else
+              @click="sendTransferPoints"
+              text-button="send points"
+              class="mt-4"
+            />
+          </div>
+        </div>
+      </div>
+      <!-- box congratulation -->
+      <div v-if="congrate" class="modal-overlay" @click.self="congrate = false">
+        <div class="modal-content">
+          <div class="modal-box box-width text-center p-3 rounded">
+            <div class="mb-3 text-end">
+              <div
+                class="icon-to-page d-flex justify-content-center align-items-center"
+                @click="congrate = false"
+              >
+                <i class="fa-solid fa-xmark"></i>
+              </div>
+            </div>
+            <img
+              v-if="statusOperation"
+              src="/congratulation.png"
+              alt="congratulations"
+              class="img-fluid mb-3"
+            />
+
+            <p
+              class="fs-5 fw-bold"
+              :class="statusOperation ? 'text-success' : 'text-danger'"
+            >
+              {{ messageYourOperation }}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <LoadingSpinner :is-loading-otp="isLoading" />
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
 import dayjs from "#build/dayjs.imports.mjs";
+import { number } from "yup";
+
+const buttonsOpen = ref(false);
+const popupRedeem = ref(false);
+const popupTransfer = ref(false);
+
+const isLoading = ref(false);
+const congrate = ref(false);
+const statusOperation = ref(false);
+
+const phoneNumberSend = ref(null);
+const messageYourOperation = ref("");
+
+const handleRedeemClick = () => {
+  if (current_points_int.value) {
+    popupRedeem.value = true;
+    buttonsOpen.value = false;
+  }
+};
+const handleTransferClick = () => {
+  if (current_points_int.value) {
+    popupTransfer.value = true;
+    buttonsOpen.value = false;
+  }
+};
 
 let Points = ref([]);
 let res = await useApi().getPoints();
 Points.value = res?.data;
-let step = ref(0);
 
+const current_points_int = ref(0);
+const example_rate = ref({ points: 1000, amount: 10 });
+const pointNum = ref(0);
+
+current_points_int.value = res.data.current_points_int;
+pointNum.value = res.data.current_points_int;
+example_rate.value = res.data.example_rate;
+
+const calculatedSar = computed(() => {
+  if (!pointNum.value || pointNum.value <= 0) return 0;
+  const rate = example_rate.value;
+  return ((pointNum.value / rate.points) * rate.amount).toFixed(2);
+});
+
+const pointToNumber = computed(() => Number(pointNum.value));
+const sendRedeemPoints = async () => {
+  isLoading.value = true;
+  try {
+    const res = await useApi().redeemPoints(pointToNumber.value);
+    if (res?.status) {
+      popupRedeem.value = false;
+      messageYourOperation.value = res?.message || "";
+      congrate.value = true;
+      statusOperation.value = res?.status;
+      Points.value = {
+        ...Points.value,
+        current_points: current_points_int.value,
+      };
+    } else {
+      messageYourOperation.value = res?.message || "";
+      congrate.value = true;
+      popupRedeem.value = false;
+    }
+  } catch (err) {
+    console.log(err);
+  } finally {
+    isLoading.value = false;
+  }
+};
+
+const sendTransferPoints = async () => {
+  try {
+    isLoading.value = true;
+    const res = await useApi().pointTransfer(pointNum.value, phoneNumberSend.value);
+
+    if (res?.status) {
+      
+      Points.value = {
+        ...Points.value,
+        current_points: Points.value.current_points - pointNum.value,
+      };
+      current_points_int.value = Points.value.current_points;
+
+      popupTransfer.value = false;
+      messageYourOperation.value = res?.message || "";
+      congrate.value = true;
+      statusOperation.value = res?.status;
+    } else {
+      messageYourOperation.value = res?.message || "";
+      congrate.value = true;
+      popupTransfer.value = false;
+    }
+    console.log(res);
+  } catch (err) {
+    console.log(err?.response);
+  } finally {
+    isLoading.value = false;
+  }
+};
+
+
+let step = ref(0);
 const title = computed(() => {
   if (step.value === 0) return "earned";
   if (step.value === 1) return "redeem";
@@ -228,8 +564,6 @@ function redeem() {
 function expired() {
   step.value = 2;
 }
-
-console.log(Points);
 </script>
 
 <style scoped>
@@ -260,5 +594,25 @@ console.log(Points);
 }
 .fs {
   font-size: 12px;
+}
+.input-point {
+  border: none;
+  background-color: #f7f7fc;
+}
+.input-point::placeholder {
+  text-transform: capitalize;
+}
+.box-style {
+  background-color: #ecfaf2;
+}
+.disabled-btn {
+  background-color: #f7f7fc;
+  border: none;
+  cursor: not-allowed;
+  opacity: 0.6;
+  width: 100%;
+}
+.box-width {
+  width: 100%;
 }
 </style>

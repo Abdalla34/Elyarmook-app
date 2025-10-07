@@ -404,6 +404,23 @@ export const useApi = () => {
     });
   };
   // done
+  const redeemPoints = async (points: any) => {
+    return await $fetch(`${baseURL}/customer/redeem-points`, {
+      method: "POST",
+      headers,
+      body: { points: points },
+    });
+  };
+  // done
+  const pointTransfer = async (points: any, phone: any) => {
+    return await $fetch(`${baseURL}/point/transfer`, {
+      method: "POST",
+      headers,
+      body: { points: points, phone: phone },
+    });
+  };
+
+  // done
   const gethome = async () => {
     return await $fetch(`${baseURL}/home`, {
       method: "GET",
@@ -581,12 +598,12 @@ export const useApi = () => {
       headers,
     });
   };
-const memberShipDetails = async (membership_id: any) => {
-  return $fetch(`${baseURL}/membership/memberships/${membership_id}`, {
-    method: "GET",
-    headers,
-  });
-};
+  const memberShipDetails = async (membership_id: any) => {
+    return $fetch(`${baseURL}/membership/memberships/${membership_id}`, {
+      method: "GET",
+      headers,
+    });
+  };
   return {
     sendOTP,
     checkOTP,
@@ -633,6 +650,8 @@ const memberShipDetails = async (membership_id: any) => {
     getWallet,
     getStatusorders,
     getPoints,
+    redeemPoints,
+    pointTransfer,
     gethome,
     deleteaccount,
     usePayment,

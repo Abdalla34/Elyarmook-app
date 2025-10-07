@@ -29,60 +29,8 @@
           <p class="p-color-fs text-capitalize">order now</p>
         </div>
       </div>
-
-      <!-- <div class="row">
-        <div class="col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center">
-          <div
-            class="service-card text-center mb-4"
-            @click="navigateTo('/services')"
-          >
-            <div class="service-icon-wrapper">
-              <div class="service-icon">
-                <img class="img" src="/car-fix.png" alt="service.title" />
-              </div>
-            </div>
-            <div class="service-content">
-              <h3 class="service-title text-capitalize">services</h3>
-              <p class="p-color-fs">Lorem ipsum dolor sit amet</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center">
-          <div
-            class="service-card text-center mb-4"
-            @click="navigateTo('/offers')"
-          >
-            <div class="service-icon-wrapper">
-              <div class="service-icon">
-                <img class="img" src="/Discount Gift.png" alt="service.title" />
-              </div>
-            </div>
-            <div class="service-content">
-              <h3 class="service-title text-capitalize">offers</h3>
-              <p class="p-color-fs">Lorem ipsum dolor sit amet</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center">
-          <div
-            class="service-card text-center mb-4"
-            @click="navigateTo('/spare-parts')"
-          >
-            <div class="service-icon-wrapper">
-              <div class="service-icon">
-                <img class="img" src="/parts.png" alt="service.title" />
-              </div>
-            </div>
-            <div class="service-content">
-              <h3 class="service-title text-capitalize">spare Parts</h3>
-              <p class="p-color-fs">Lorem ipsum dolor sit amet</p>
-            </div>
-          </div>
-        </div>
-      </div> -->
     </div>
+
   </div>
 </template>
 
@@ -95,50 +43,5 @@ import "swiper/css/navigation";
 </script>
 
 <style scoped>
-/* .services-container {
-  margin: 0 auto;
-  padding: 0 40px;
-}
-.services-header {
-  position: relative;
-}
-
-
-.service-card {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 442px;
-  width: 397px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08), 0 4px 20px rgba(0, 0, 0, 0.04);
-  transition: all 0.4s;
-  position: relative;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.8);
-  background-color: #ffffff;
-  border-radius: 64px;
-  cursor: pointer;
-}
-
-.service-card:hover {
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15), 0 10px 30px rgba(0, 0, 0, 0.1);
-  background-color: #ebebeb;
-}
-
-.img {
-  width: 160px;
-  height: 160px;
-}
-
-.service-title {
-  font-family: var(--font-main);
-  font-weight: 700;
-  font-size: 36px;
-  line-height: 44px;
-  letter-spacing: -2%;
-  color: #4e4b66;
-} */
 @import "@/assets/css/sectionCard.css";
 </style>
