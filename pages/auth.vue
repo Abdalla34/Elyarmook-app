@@ -23,8 +23,8 @@
                 :placeholder="['-', '-', '-', '-']"
               />
             </div>
-            <div class="text-center mt-3">
-              <p v-if="!showResendOtp" class="p-color-fs text-capitalize">
+            <div class="text-center mt-3 mb-3">
+              <p v-if="!showResendOtp" class="p-color-fs text-capitalize ">
                 resend code after<span class="text-danger ps-2">
                   {{ counter }} second
                 </span>
@@ -155,7 +155,7 @@ const handleCheckOTP = async (otpValue) => {
 <style>
 .otp {
   background-color: #ffffff;
-  box-shadow: 0px 0px 15px 0px #0000000d;
+  box-shadow: 10px 10px 25px 10px #0000000d;
   width: fit-content;
   padding: 60px 40px;
   border-radius: 50px;
@@ -216,5 +216,20 @@ const handleCheckOTP = async (otpValue) => {
 }
 .mt-32px {
   margin-top: 32px;
+}
+
+@media (max-width: 768px) {
+  .otp {
+    width: 90%;
+    padding: 40px 20px;
+    border-radius: 20px;
+    transform: translate(-50%, 20%);
+  }
+  .input-style-otp {
+    width: 60px;
+    height: 60px;
+    margin: 0 5px;
+    font-size: 18px;
+  }
 }
 </style>

@@ -627,6 +627,7 @@ textarea {
   overflow-y: auto;
   scroll-behavior: smooth;
   width: 30%;
+  margin: auto;
 }
 .modal-box::-webkit-scrollbar {
   display: none;

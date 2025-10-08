@@ -92,7 +92,7 @@
               </div>
             </div>
 
-            <div class="points d-flex gap-2">
+            <div class="points d-flex align-items-center gap-2">
               <p class="num">{{ item.points }}</p>
               <span class="span"> point</span>
             </div>
@@ -519,10 +519,12 @@ const sendRedeemPoints = async () => {
 const sendTransferPoints = async () => {
   try {
     isLoading.value = true;
-    const res = await useApi().pointTransfer(pointNum.value, phoneNumberSend.value);
+    const res = await useApi().pointTransfer(
+      pointNum.value,
+      phoneNumberSend.value
+    );
 
     if (res?.status) {
-      
       Points.value = {
         ...Points.value,
         current_points: Points.value.current_points - pointNum.value,
@@ -546,7 +548,6 @@ const sendTransferPoints = async () => {
   }
 };
 
-
 let step = ref(0);
 const title = computed(() => {
   if (step.value === 0) return "earned";
@@ -568,51 +569,4 @@ function expired() {
 
 <style scoped>
 @import "@/assets/css/point.css";
-.box-point {
-  border: 1px solid #ebebeb;
-  border-radius: 12px;
-  border-width: 1px;
-  padding: 20px 16px;
-  transition: all 0.4s ease;
-  margin-bottom: 16px;
-  position: relative;
-}
-.box-point::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 0;
-  height: 100%;
-  background-color: #e4e1e1;
-  z-index: -1;
-  transition: all 0.4s ease-in-out;
-  border-radius: 12px;
-}
-.box-point:hover:after {
-  width: 100%;
-}
-.fs {
-  font-size: 12px;
-}
-.input-point {
-  border: none;
-  background-color: #f7f7fc;
-}
-.input-point::placeholder {
-  text-transform: capitalize;
-}
-.box-style {
-  background-color: #ecfaf2;
-}
-.disabled-btn {
-  background-color: #f7f7fc;
-  border: none;
-  cursor: not-allowed;
-  opacity: 0.6;
-  width: 100%;
-}
-.box-width {
-  width: 100%;
-}
 </style>

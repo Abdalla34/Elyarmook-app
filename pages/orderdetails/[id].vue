@@ -53,6 +53,7 @@
       <div class="row justify-content-center mt-3">
         <div class="col-7 pb-4 mt-2 mb-4 background">
           <div v-if="orderSelected">
+            <!-- order title -->
             <div
               class="order-img-name pt-5 d-flex align-items-center justify-content-between"
             >
@@ -74,7 +75,7 @@
               <!-- status orders -->
               <OrderStatus :order="orderSelected" />
             </div>
-
+            <!-- car modal -->
             <div
               class="model-car margin-60px d-flex flex-wrap justify-content-between align-items-center gap-3"
             >
@@ -102,7 +103,7 @@
                 </div>
               </div>
             </div>
-
+            <!-- reschedule time -->
             <div
               class="time-order margin-20px d-flex justify-content-between gap-3"
             >
@@ -153,7 +154,7 @@
               <h1 class="title-step"></h1>
               <p class="width-p"></p>
             </div>
-
+            <!-- steps -->
             <div class="steps">
               <ul
                 class="d-flex justify-content-center align-items-center gap-4 flex-nowrap overflow-auto"
@@ -272,6 +273,173 @@
               </ul>
             </div>
 
+            <div class="invoice-details">
+              <button @click="openInvoice" class="btn btn-primary">
+                show invoice
+              </button>
+            </div>
+
+            <!-- items details -->
+            <div
+              v-if="
+                orderSelected?.services.length ||
+                orderSelected?.spare_parts.length ||
+                orderSelected?.offers.length
+              "
+              class="parent-items"
+            >
+              <div
+                class="d-flex align-items-center justify-content-between mt-2"
+              >
+                <h4 class="label">items</h4>
+
+                <h4 class="label">
+                  {{ orderSelected?.total_amount }}
+                  <span class="span">SAR</span>
+                </h4>
+              </div>
+              <div class="items-order order-amount mt-3">
+                <div
+                  class="title d-flex align-items-center justify-content-between"
+                  v-for="item in orderSelected?.services.slice(0, 1)"
+                  :key="item.id"
+                >
+                  <div class="img-title d-flex align-items-center gap-2">
+                    <img :src="item.image" class="image-width" alt="" />
+                    <h4 class="label">{{ item.title }}</h4>
+                  </div>
+                  <button
+                    @click="popupItems = true"
+                    type="button"
+                    class="btn btn-danger txet-capitalize"
+                  >
+                    more
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- modal items show -->
+            <div
+              v-if="popupItems"
+              class="modal-overlay"
+              @click.self="popupItems = false"
+            >
+              <div class="modal-content">
+                <div class="modal-box">
+                  <div
+                    class="d-flex align-items-center justify-content-between"
+                  >
+                    <h1 class="label">items order</h1>
+                    <i
+                      @click="popupItems = false"
+                      class="fa-solid fa-xmark"
+                      style="cursor: pointer"
+                    ></i>
+                  </div>
+                  <!-- services -->
+                  <div v-if="orderSelected.services" class="services">
+                    <h4 class="label">services</h4>
+                    <div class="service-list">
+                      <div
+                        class="order-amount border-box-item d-flex align-items-center gap-2"
+                        v-for="service in orderSelected.services"
+                        :key="service.id"
+                      >
+                        <img :src="service.image" class="image-width" alt="" />
+                        <div class="title-price">
+                          <h5 class="label">{{ service.title }}</h5>
+                          <p class="text-danger fw-bold">
+                            {{ service.price }} SAR
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- spare Parts -->
+                  <div
+                    v-if="orderSelected.spare_parts.length"
+                    class="spareparts"
+                  >
+                    <h4 class="label">spare parts</h4>
+                    <div class="spare-list">
+                      <div
+                        class="order-amount border-box-item d-flex align-items-center gap-2"
+                        v-for="sparePart in orderSelected.spare_parts"
+                        :key="sparePart.id"
+                      >
+                        <img
+                          :src="sparePart.image"
+                          class="image-width"
+                          alt=""
+                        />
+                        <div class="title-price">
+                          <h5 class="label">{{ sparePart.title }}</h5>
+                          <p class="text-danger fw-bold">
+                            {{ sparePart.price }} SAR
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- offers -->
+                  <div v-if="orderSelected.offers.length" class="offers">
+                    <h4 class="label">offers</h4>
+                    <div class="offer-list">
+                      <div
+                        class="order-amount border-box-item d-flex align-items-center gap-2"
+                        v-for="offer in orderSelected.offers"
+                        :key="offer.offerid"
+                      >
+                        <img :src="offer.image" class="image-width" alt="" />
+                        <div class="title-price">
+                          <h5 class="label">{{ offer.title }}</h5>
+                          <p class="text-danger fw-bold">
+                            {{ offer.price }} SAR
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- details items price -->
+                  <div class="details-items">
+                    <div class="box-design">
+                      <div
+                        class="total-order d-flex justify-content-between align-items-center"
+                      >
+                        <h4 class="label">sub total</h4>
+                        <p class="text-capitalize">
+                          {{ orderSelected.sub_total }}
+                          <span class="p-color-fs span">SAR</span>
+                        </p>
+                      </div>
+
+                      <div
+                        class="vat d-flex justify-content-between align-items-center"
+                      >
+                        <h4 class="label">vat</h4>
+                        <p class="text-capitalize">
+                          {{ orderSelected?.vat_amount }}
+                        </p>
+                      </div>
+
+                      <div
+                        class="final-amount d-flex justify-content-between align-items-center"
+                      >
+                        <h4 class="label">Final Amount</h4>
+                        <p class="text-capitalize">
+                          {{ orderSelected.total_amount }}
+                          <span class="p-color-fs span">SAR</span>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- details amount -->
             <div
               v-for="order in orderSelected?.order_attributes"
               :key="order.id"
@@ -284,7 +452,6 @@
                 {{ order.value }}
               </div>
             </div>
-
             <div
               class="totla-amount margin-20px d-flex align-items-center justify-content-between"
             >
@@ -294,6 +461,7 @@
                 <span class="span">SAR</span>
               </div>
             </div>
+            <!-- cancel order -->
             <div
               v-if="orderSelected?.can_cancel"
               @click="sureCancel = true"
@@ -347,6 +515,14 @@ const openInMaps = (branch) => {
   if (!branch?.lat || !branch?.lng) return;
   const url = `https://www.google.com/maps/search/?api=1&query=${branch.lat},${branch.lng}`;
   window.open(url, "_blank");
+};
+
+const showPdf = ref(false);
+const pdfUrl = ref("");
+
+const openInvoice = () => {
+  pdfUrl.value = "https://yarmok.co/invoice/1";
+  showPdf.value = true;
 };
 
 let route = useRoute();
@@ -448,13 +624,47 @@ function toFalse() {
   cancelOrder.value = false;
   sureCancel.value = false;
 }
+const popupItems = ref(false);
 </script>
 
 <style scoped>
 @import "@/assets/css/ordersteps.css";
-
+@import "@/assets/css/cartorder.css";
+.image-width {
+  width: 40px;
+}
 .popup-sure-cancel {
   height: 12% !important;
   text-align: center;
+}
+.border-box-item {
+  border: 1px solid #c71f45;
+}
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  max-width: 600px;
+  width: 100%;
+}
+.modal-box {
+  width: 100%;
+}
+.amount,
+.text-success {
+  font-size: 15px !important;
 }
 </style>

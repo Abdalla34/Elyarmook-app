@@ -76,7 +76,7 @@ defineProps({
 }
 
 .bg-canceled {
-  background-color: #ffebee; /* أحمر فاتح */
+  background-color: #ffebee; 
   color: #c62828;
 }
 
