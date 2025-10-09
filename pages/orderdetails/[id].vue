@@ -561,6 +561,7 @@ try {
 let sureCancel = ref(false);
 let changeStatusOrder = async (order_status, cancel_Reason_id) => {
   try {
+    isLoadingOtp.value = true;
     const response = await useApi().changeOrderStatus(
       order_id,
       order_status,
@@ -578,6 +579,8 @@ let changeStatusOrder = async (order_status, cancel_Reason_id) => {
     sureCancel.value = false;
   } catch (error) {
     console.error("Error changing order status:", error);
+  }finally{
+    isLoadingOtp.value = false
   }
 };
 
