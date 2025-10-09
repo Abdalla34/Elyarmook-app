@@ -272,7 +272,7 @@
                 </li>
               </ul>
             </div>
-
+            <!-- invoice -->
             <div class="invoice-details">
               <button @click="openInvoice" class="btn btn-primary">
                 show invoice
@@ -330,7 +330,7 @@
                   <div
                     class="d-flex align-items-center justify-content-between"
                   >
-                    <h1 class="label">items order</h1>
+                    <h1 class="p-color-fs">items order</h1>
                     <i
                       @click="popupItems = false"
                       class="fa-solid fa-xmark"
@@ -342,7 +342,7 @@
                     <h4 class="label">services</h4>
                     <div class="service-list">
                       <div
-                        class="order-amount border-box-item d-flex align-items-center gap-2"
+                        class="order-amount transparent mb-3 border-box-item d-flex align-items-center gap-2"
                         v-for="service in orderSelected.services"
                         :key="service.id"
                       >
@@ -364,7 +364,7 @@
                     <h4 class="label">spare parts</h4>
                     <div class="spare-list">
                       <div
-                        class="order-amount border-box-item d-flex align-items-center gap-2"
+                        class="order-amount transparent mb-3 border-box-item d-flex align-items-center gap-2"
                         v-for="sparePart in orderSelected.spare_parts"
                         :key="sparePart.id"
                       >
@@ -388,7 +388,7 @@
                     <h4 class="label">offers</h4>
                     <div class="offer-list">
                       <div
-                        class="order-amount border-box-item d-flex align-items-center gap-2"
+                        class="order-amount transparent mb-3 border-box-item d-flex align-items-center gap-2"
                         v-for="offer in orderSelected.offers"
                         :key="offer.offerid"
                       >
@@ -517,18 +517,15 @@ const openInMaps = (branch) => {
   window.open(url, "_blank");
 };
 
-const showPdf = ref(false);
-const pdfUrl = ref("");
-
-const openInvoice = () => {
-  pdfUrl.value = "https://yarmok.co/invoice/1";
-  showPdf.value = true;
-};
+// const openInvoice = () => {
+//   window.open("https://yarmok.co/invoice/1?inline=1#toolbar=0", "_blank");
+// };
 
 let route = useRoute();
 let order_id = route.params.id;
 let orderSelected = ref(null);
 const isLoading = ref(false);
+
 onMounted(async () => {
   try {
     isLoadingOtp.value = true;
@@ -540,6 +537,17 @@ onMounted(async () => {
     isLoadingOtp.value = false;
   }
 });
+
+const openInvoice = () => {
+  if (process.client) {
+    // const invoiceUrl = `https://yarmok.co/invoice/${order_id}?inline=1#toolbar=0`;
+    const invoiceUrl = `https://yarmok.co/invoice/1`;
+    const viewerUrl = `https://docs.google.com/gview?embedded=true&url=${encodeURIComponent(
+      invoiceUrl
+    )}#file=Invoice`;
+    window.open(viewerUrl, "_blank");
+  }
+};
 
 const getReasons = ref([]);
 let cancelOrder = ref(false);
@@ -666,5 +674,8 @@ const popupItems = ref(false);
 .amount,
 .text-success {
   font-size: 15px !important;
+}
+.transparent {
+  background-color: transparent !important;
 }
 </style>

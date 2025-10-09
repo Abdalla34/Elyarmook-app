@@ -8,7 +8,7 @@
             class="current-point d-flex align-items-center justify-content-between"
           >
             <div class="point-num text-center">
-              <h4 class="title-pages">{{ Points?.current_points_int }}</h4>
+              <h4 class="title-pages">{{ Points?.current_points }}</h4>
               <p class="p-color-fs text-capitalize created-at">current point</p>
             </div>
 
@@ -278,41 +278,15 @@
               class="box-style p-3 mt-3 rounded d-flex align-items-center justify-content-between"
             >
               <div class="point-num text-center">
-                <h6
-                  v-if="pointNum && current_points_int"
-                  style="
-                    font-family: var(--font-main);
-                    font-weight: 700;
-                    font-style: Bold;
-                    font-size: 16px;
-
-                    line-height: 100%;
-                    letter-spacing: 0%;
-                    text-align: center;
-                  "
-                >
+                <h6 v-if="pointNum && current_points_int" class="h4point label fw-bold">
                   {{ pointNum || current_points_int }}
                 </h6>
-                <h6
-                  v-else
-                  style="
-                    font-family: var(--font-main);
-                    font-weight: 700;
-                    font-style: Bold;
-                    font-size: 16px;
-
-                    line-height: 100%;
-                    letter-spacing: 0%;
-                    text-align: center;
-                  "
-                >
-                  0
-                </h6>
+                <h6 v-else class="h4point label">0</h6>
                 <p class="p-color-fs text-capitalize">point</p>
               </div>
               <!-- redeem to -->
               <div class="point-redeemto text-center">
-                <PuplicIconDubleArrows />
+                <PublicIconDubleArrows />
                 <p class="p-color-fs text-capitalize">redeem to</p>
               </div>
               <!-- calculater -->
@@ -437,6 +411,7 @@
           </div>
         </div>
       </div>
+
       <div>
         <LoadingSpinner :is-loading-otp="isLoading" />
       </div>
@@ -446,6 +421,7 @@
 
 <script setup>
 import dayjs from "#build/dayjs.imports.mjs";
+import { startOfSecond } from "date-fns";
 import { number } from "yup";
 
 const buttonsOpen = ref(false);
@@ -456,8 +432,8 @@ const isLoading = ref(false);
 const congrate = ref(false);
 const statusOperation = ref(false);
 
-const phoneNumberSend = ref(null);
 const messageYourOperation = ref("");
+const phoneNumberSend = ref(null);
 
 const handleRedeemClick = () => {
   if (current_points_int.value) {
@@ -500,10 +476,12 @@ const sendRedeemPoints = async () => {
       messageYourOperation.value = res?.message || "";
       congrate.value = true;
       statusOperation.value = res?.status;
-      Points.value = {
-        ...Points.value,
-        current_points: current_points_int.value,
-      };
+      // Update current points immediately
+      Points.value.current_points =
+        Points.value.current_points - pointToNumber.value;
+      Points.value.current_points_int = Points.value.current_points;
+      current_points_int.value = Points.value.current_points;
+      pointNum.value = Points.value.current_points;
     } else {
       messageYourOperation.value = res?.message || "";
       congrate.value = true;
@@ -524,25 +502,31 @@ const sendTransferPoints = async () => {
       phoneNumberSend.value
     );
 
-    if (res?.status) {
-      Points.value = {
-        ...Points.value,
-        current_points: Points.value.current_points - pointNum.value,
-      };
+    const data = res?._data;
+
+    if (data?.status) {
+      // Update current points immediately
+      Points.value.current_points =
+        Points.value.current_points - pointNum.value;
+      Points.value.current_points_int = Points.value.current_points;
       current_points_int.value = Points.value.current_points;
+      pointNum.value = Points.value.current_points;
 
       popupTransfer.value = false;
       messageYourOperation.value = res?.message || "";
       congrate.value = true;
-      statusOperation.value = res?.status;
+      statusOperation.value = data?.status;
     } else {
-      messageYourOperation.value = res?.message || "";
+      messageYourOperation.value = data?.message || data?.errors?.user?.[0];
+      statusOperation.value = false;
       congrate.value = true;
       popupTransfer.value = false;
     }
-    console.log(res);
   } catch (err) {
-    console.log(err?.response);
+    messageYourOperation.value =
+      err?.response?._data?.message || err?.response?._data?.errors?.user?.[0];
+    congrate.value = true;
+    popupTransfer.value = false;
   } finally {
     isLoading.value = false;
   }
