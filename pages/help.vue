@@ -45,24 +45,27 @@
               </div>
 
               <!-- contact us -->
-              <div class="help margin-bottom-24px box-pages">
-                <div class="help-box">
-                  <div
-                    class="help-detalis d-flex justify-content-between align-items-center"
-                  >
-                    <div class="d-flex align-items-center gap-2">
-                      <PuplicIconCallUs />
-                      <div class="d-flex flex-column">
-                        <h1 class="details">Call Us</h1>
-                        <p class="p-color-fs">0500000</p>
-                      </div>
-                    </div>
-                    <div class="Arrow">
-                      <PuplicIconArrowRight />
+         <div class="help-box">
+               <a
+                :href="`tel:${getsettings.mobile}`"
+                class="text-decoration-none"
+              >
+                <div
+                  class="help-detalis d-flex justify-content-between align-items-center"
+                >
+                  <div class="d-flex align-items-center gap-2">
+                    <PuplicIconCallUs />
+                    <div class="d-flex flex-column">
+                      <h1 class="details">Call Us</h1>
+                      <p class="p-color-fs">{{ getsettings.mobile }}</p>
                     </div>
                   </div>
+                  <div class="Arrow">
+                    <PuplicIconArrowRight />
+                  </div>
                 </div>
-              </div>
+              </a>
+         </div>
 
               <!-- visit branch -->
               <div class="help margin-bottom-24px box-pages">
@@ -89,8 +92,11 @@
 </template>
 
 <script setup>
+const getsettings = ref([]);
+const resSettings = await useApi().getSettings();
+getsettings.value = resSettings?.data?.settings;
+console.log(getsettings.mobile, "getsettings");
 </script>
-
 
 <style scoped>
 .margin-280px {

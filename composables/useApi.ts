@@ -93,7 +93,7 @@ export const useApi = () => {
       headers,
     });
   };
-
+// done
   const getSettings = async () => {
     return await $fetch(`${baseURL}/settings`, {
       method: "GET",

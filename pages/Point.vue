@@ -278,7 +278,10 @@
               class="box-style p-3 mt-3 rounded d-flex align-items-center justify-content-between"
             >
               <div class="point-num text-center">
-                <h6 v-if="pointNum && current_points_int" class="h4point label fw-bold">
+                <h6
+                  v-if="pointNum && current_points_int"
+                  class="h4point label fw-bold"
+                >
                   {{ pointNum || current_points_int }}
                 </h6>
                 <h6 v-else class="h4point label">0</h6>
@@ -286,23 +289,12 @@
               </div>
               <!-- redeem to -->
               <div class="point-redeemto text-center">
-                <PublicIconDubleArrows />
+                <PuplicIconDubleArrows />
                 <p class="p-color-fs text-capitalize">redeem to</p>
               </div>
               <!-- calculater -->
               <div class="num-sar text-center">
-                <h6
-                  style="
-                    font-family: var(--font-main);
-                    font-weight: 700;
-                    font-style: Bold;
-                    font-size: 16px;
-
-                    line-height: 100%;
-                    letter-spacing: 0%;
-                    text-align: center;
-                  "
-                >
+                <h6 class="label fw-bold">
                   {{ calculatedSar }}
                 </h6>
                 <p class="p-color-fs text-uppercase">sar</p>
