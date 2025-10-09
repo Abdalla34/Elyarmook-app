@@ -3,13 +3,20 @@
     <div class="create-acc text-center">
       <div class="logo">
         <img src="/newLogo.png" />
-        <h1 class="text-capitalize">create an account</h1>
+        <h1 class="text-capitalize">Continue with phone</h1>
         <p>Kindly fill in your details below to create an account</p>
       </div>
 
       <div class="phone-number d-flex flex-column">
         <label class="label" for="phone-number">Phone Number</label>
-        <VueTelInput
+        <input
+          class="input"
+          type="text"
+          placeholder="+966 xx xxx xxxx"
+          v-model="phone"
+          id="phone-number"
+        />
+        <!-- <VueTelInput
           v-model="phone"
           mode="international"
           autoDefaultCountry
@@ -20,8 +27,8 @@
             showFlags: true,
             showDialCodeInSelection: true,
           }"
-        />
-        <span v-if="errors.phone" class="text-danger">{{ errors.phone }}</span>
+        /> -->
+        <span v-if="errors.phone" class="text-danger mt-2">{{ errors.phone }}</span>
       </div>
 
       <div class="btn-continue w-100 enter">
@@ -87,7 +94,7 @@ const schema = yup.object({
   phone: yup
     .string()
     .required("Phone number is required")
-    .matches(/^\+?\d{7,15}$/, "Phone number must be 7–15 digits"),
+    .matches(/^\+?\d{7,15}$/, "Phone number must be 7–15 digits and not contain letters"),
 });
 
 const { handleSubmit, errors } = useForm({
@@ -127,4 +134,10 @@ const onSubmit = handleSubmit(async (values) => {
 
 <style scoped>
 @import "@/assets/css/createacc.css";
+.input {
+  border-radius: 12px;
+  padding: 12px 16px;
+  border: 1px solid #f1f3f9;
+  appearance: none;
+}
 </style>
