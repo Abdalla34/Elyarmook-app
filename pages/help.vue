@@ -45,27 +45,26 @@
               </div>
 
               <!-- contact us -->
-         <div class="help-box">
-               <a
-                :href="`tel:${getsettings.mobile}`"
-                class="text-decoration-none"
-              >
-                <div
-                  class="help-detalis d-flex justify-content-between align-items-center"
-                >
-                  <div class="d-flex align-items-center gap-2">
-                    <PuplicIconCallUs />
-                    <div class="d-flex flex-column">
-                      <h1 class="details">Call Us</h1>
-                      <p class="p-color-fs">{{ getsettings.mobile }}</p>
+              <div class="help margin-bottom-24px box-pages">
+                <div class="help-box">
+                  <a :href="`tel:${getsettings.mobile}`" class="call-link">
+                    <div
+                      class="help-detalis d-flex justify-content-between align-items-center"
+                    >
+                      <div class="d-flex align-items-center gap-2">
+                        <PuplicIconCallUs />
+                        <div class="d-flex flex-column">
+                          <h1 class="details">Call Us</h1>
+                          <p class="p-color-fs">{{ getsettings.mobile }}</p>
+                        </div>
+                      </div>
+                      <div class="Arrow">
+                        <PuplicIconArrowRight />
+                      </div>
                     </div>
-                  </div>
-                  <div class="Arrow">
-                    <PuplicIconArrowRight />
-                  </div>
+                  </a>
                 </div>
-              </a>
-         </div>
+              </div>
 
               <!-- visit branch -->
               <div class="help margin-bottom-24px box-pages">
@@ -95,7 +94,6 @@
 const getsettings = ref([]);
 const resSettings = await useApi().getSettings();
 getsettings.value = resSettings?.data?.settings;
-console.log(getsettings.mobile, "getsettings");
 </script>
 
 <style scoped>
@@ -109,5 +107,14 @@ console.log(getsettings.mobile, "getsettings");
   font-size: 18px;
   line-height: 28px;
   letter-spacing: 0%;
+}
+
+.call-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+.call-link:hover {
+  opacity: 0.9; 
 }
 </style>
