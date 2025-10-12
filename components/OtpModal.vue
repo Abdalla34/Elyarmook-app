@@ -25,34 +25,40 @@
             ></button>
           </div>
           <div class="modal-body">
-            <div class="phone-input-container mb-4">
-              <VueTelInput
-                v-model="phone"
-                mode="international"
-                autoDefaultCountry
-                defaultCountry="EG"
-                validCharactersOnly
-                :inputOptions="{
-                  showDialCode: true,
-                  showFlags: true,
-                  showDialCodeInSelection: true,
-                }"
-                class="phone-input"
-              />
-            </div>
-            <button
-              :disabled="!phone || phone.length < 8"
-              class="btn btn-outline-warning w-100"
-              @click="handleSendOtp"
-            >
-              Continue
-            </button>
-            <button
-              class="btn btn-outline-danger mt-2 w-100"
-              @click="$emit('close-dial-code')"
-            >
-              Cancel
-            </button>
+            <form @submit.prevent="handleSendOtp">
+              <div class="phone-input-container mb-4">
+                <VueTelInput
+                  v-model="phone"
+                  mode="international"
+                  autoDefaultCountry
+                  defaultCountry="SA"
+                  validCharactersOnly
+                  :inputOptions="{
+                    showDialCode: true,
+                    showFlags: true,
+                    showDialCodeInSelection: true,
+                  }"
+                  :class="{ 'is-invalid': phoneError }"
+                  class="phone-input"
+                />
+                <div v-if="phoneError" class="invalid-feedback d-block">
+                  {{ phoneError }}
+                </div>
+              </div>
+              <button
+                type="submit"
+                :disabled="!isValidPhone"
+                class="btn btn-outline-warning w-100"
+              >
+                Continue
+              </button>
+              <button
+                class="btn btn-outline-danger mt-2 w-100"
+                @click="$emit('close-dial-code')"
+              >
+                Cancel
+              </button>
+            </form>
           </div>
         </div>
       </div>
@@ -143,6 +149,7 @@ const props = defineProps({
 });
 
 let phone = ref(null);
+let phoneError = ref('');
 let codeOtp = ref("");
 let showResendOtp = ref(false);
 let codecorrect = ref(null);
@@ -219,21 +226,49 @@ function startCountdown() {
   }, 1000);
 }
 
-async function handleSendOtp() {
-  let phoneToSend = phone.value || lastPhone.value;
-  let res = await useApi().sendOTP(phoneToSend);
-  if (res?.status) {
-    lastPhone.value = phoneToSend;
-    emit("open-otp-modal");
-    emit("close-dial-code");
-    showResendOtp.value = false;
-    counter.value = 30;
-    startCountdown();
+const isValidPhone = computed(() => {
+  const phoneVal = phone.value;
+  return phoneVal && 
+         phoneVal.length >= 8 && 
+         phoneVal.length <= 11 && 
+         !phoneError.value;
+});
+
+async function handleSendOtp(event) {
+  event?.preventDefault();
+  if (!isValidPhone.value) return;
+
+  try {
+    const phoneToSend = phone.value || lastPhone.value;
+    let res = await useApi().sendOTP(phoneToSend);
+    if (res?.status) {
+      lastPhone.value = phoneToSend;
+      emit("open-otp-modal");
+      emit("close-dial-code");
+      showResendOtp.value = false;
+      counter.value = 30;
+      startCountdown();
+    }
+  } catch (error) {
+    console.error('Failed to send OTP:', error);
+    phoneError.value = 'Failed to send OTP. Please try again.';
   }
 }
 
 watch(phone, (newVal) => {
-  phone.value = newVal.replace(/\s+/g, "");
+  if (newVal) {
+    const cleanNumber = newVal.replace(/\s+/g, "");
+    // Check phone length
+    if (cleanNumber.length > 11) {
+      phoneError.value = 'Phone number cannot be longer than 11 digits';
+      phone.value = cleanNumber.slice(0, 11);
+    } else if (cleanNumber.length < 8) {
+      phoneError.value = 'Phone number must be at least 8 digits';
+    } else {
+      phoneError.value = '';
+    }
+    phone.value = cleanNumber;
+  }
 });
 
 // emit
@@ -252,5 +287,14 @@ const emit = defineEmits([
   border: 1px solid #ccc;
   border-radius: 8px;
   margin: 0 5px; 
+}
+.is-invalid {
+  border-color: #dc3545;
+}
+
+.invalid-feedback {
+  color: #dc3545;
+  font-size: 0.875em;
+  margin-top: 0.25rem;
 }
 </style>

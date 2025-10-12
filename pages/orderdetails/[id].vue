@@ -275,10 +275,18 @@
             <!-- invoice -->
             <div class="invoice-details">
               <button @click="openInvoice" class="btn btn-primary">
-                show invoice
+                View invoice
               </button>
             </div>
-
+            <div>
+              <a
+                href="https://yarmok.co/invoice/1"
+                target="_blank"
+                rel="noopener noreferrer"
+                >View Invoice</a
+              >
+            </div>
+            <!-- https://yarmok.co/invoice/1 -->
             <!-- items details -->
             <div
               v-if="
@@ -579,8 +587,8 @@ let changeStatusOrder = async (order_status, cancel_Reason_id) => {
     sureCancel.value = false;
   } catch (error) {
     console.error("Error changing order status:", error);
-  }finally{
-    isLoadingOtp.value = false
+  } finally {
+    isLoadingOtp.value = false;
   }
 };
 

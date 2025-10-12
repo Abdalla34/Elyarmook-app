@@ -270,10 +270,12 @@
         </div>
       </div>
     </div>
+    <LoadingSpinner :is-loading-otp="isLoading" />
   </div>
 </template>
 
 <script setup>
+const isLoading = ref(false);
 const test = ref(true);
 let router = useRouter();
 let token = useCookie("token", { maxAge: 365 * 24 * 60 * 60 });
@@ -289,10 +291,17 @@ function ChangeProfile() {
 
 const showmodalsignOut = ref(false);
 let logOut = async () => {
-  await useApi().logout();
-  token.value = null;
-  cookie.value = null;
-  router.push("/");
+  try {
+    isLoading.value = true;
+    await useApi().logout();
+    token.value = null;
+    cookie.value = null;
+    router.push("/");
+  } catch (err) {
+    console.error(err);
+  } finally {
+    isLoading.value = false;
+  }
 };
 
 let allAreas = ref([]);
