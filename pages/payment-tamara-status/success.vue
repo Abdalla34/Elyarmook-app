@@ -13,10 +13,7 @@
       </div>
     </div>
 
-    <button-card
-      @click="navigateTo('/myorders')"
-      text-button="view my orders"
-    >
+    <button-card @click="navigateTo('/myorders')" text-button="view my orders">
     </button-card>
   </div>
 </template>
@@ -24,12 +21,13 @@
 <script setup>
 const route = useRoute();
 const router = useRouter();
-
+const { triggerCartUpdate } = useCartUpdate();
 try {
   let paymentId = route.query.payment_id;
   let hyperSucess = route.query.hyper;
 
-  if (hyperSucess === 'success') {
+  if (hyperSucess === "success") {
+    triggerCartUpdate();
     setTimeout(() => {
       router.replace("/");
     }, 2000);
@@ -38,6 +36,7 @@ try {
   if (paymentId) {
     const res = await useApi().tabbyStatusSuccess(paymentId);
     if (res?.status === true || res?.status === "true") {
+      triggerCartUpdate();
       router.replace("/");
     } else {
       router.replace("/payment-tamara-status/failed");

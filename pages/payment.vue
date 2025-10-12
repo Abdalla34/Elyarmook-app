@@ -322,6 +322,8 @@ let paymentWihtTbby = async () => {
   }
 };
 
+const { triggerCartUpdate } = useCartUpdate();
+
 const cachLayout = ref(false);
 const orderPoints = ref(null);
 let chachOnDelivery = async () => {
@@ -329,6 +331,7 @@ let chachOnDelivery = async () => {
   try {
     let res = await useApi().chachOnDelivery(id);
     if (res?.status) {
+      triggerCartUpdate();
       cachLayout.value = true;
       const res = await useApi().getSingleOrder(id);
       orderPoints.value = res?.data;
