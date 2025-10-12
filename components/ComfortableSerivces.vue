@@ -94,6 +94,7 @@
       @close-dial-code="showDialCode = false"
       @close-otp-modal="showOtpModal = false"
       @open-otp-modal="showOtpModal = true"
+      @otp-success="handleOtpSuccess"
     />
   </div>
 </template>
@@ -105,6 +106,14 @@ const showComponentOtp = ref(false);
 const showServiceModal = ref(false);
 const showOtpModal = ref(false);
 const showDialCode = ref(false);
+
+ // Show service modal after successful registration
+function handleOtpSuccess() {
+  showComponentOtp.value = false;
+  showDialCode.value = false;
+  showOtpModal.value = false;
+  showServiceModal.value = true;
+}
 
 function conditionToken() {
   if (!token.value) {

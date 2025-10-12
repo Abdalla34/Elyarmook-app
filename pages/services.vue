@@ -79,6 +79,32 @@ let services = ref([]);
 let showOtpModal = ref(false);
 let showDialCode = ref(false);
 
+const timeEndCach = 60 * 60 * 1000;
+
+async function isCacheValid() {
+  const cachData = localStorage.getItem("servicesCache");
+  const currentTime = Date.now();
+  if (cachData) {
+    const parseData = JSON.parse(cachData);
+
+    if (currentTime - parseData.timestamp < timeEndCach) {
+      services.value = parseData.services;
+      return;
+    }
+  }
+
+  let res = await useApi().getServices();
+  services.value = res?.data?.items || [];
+
+  localStorage.setItem(
+    "servicesCache",
+    JSON.stringify({
+      services: services.value,
+      timestamp: currentTime,
+    })
+  );
+}
+
 const {
   loadingAddToCart,
   inCart,
@@ -88,13 +114,10 @@ const {
   removeFromlocal,
   initCartFromLocalStorage,
 } = useAddToCart();
-let res = await useApi().getServices();
-services.value = res?.data?.items;
-
-
 
 onMounted(() => {
   initCartFromLocalStorage();
+  isCacheValid();
 });
 
 function BtnShooping() {

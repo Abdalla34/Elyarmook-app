@@ -89,6 +89,7 @@
 
 <script setup>
 import { ca } from "date-fns/locale";
+const spareParts = ref([]);
 
 const {
   loadingAddToCart,
@@ -104,14 +105,36 @@ const {
 let showOtpModal = ref(false);
 let showDialCode = ref(false);
 
-const spareParts = ref([]);
-const responseSpare = await useApi().getSpareParts();
-spareParts.value = responseSpare?.data?.items;
- 
+const endTimeCache = 60 * 60 * 1000; // 1 ساعة
 
+async function isCach() {
+  const getCache = localStorage.getItem("sparePartsCache");
+  const currentTime = Date.now();
+
+  if (getCache) {
+    const parsedData = JSON.parse(getCache);
+
+    if (currentTime - parsedData.timestamp < endTimeCache) {
+      spareParts.value = parsedData.spareParts;
+      return;
+    }
+  }
+
+  const responseSpare = await useApi().getSpareParts();
+  spareParts.value = responseSpare?.data?.items || [];
+
+  localStorage.setItem(
+    "sparePartsCache",
+    JSON.stringify({
+      spareParts: spareParts.value,
+      timestamp: currentTime,
+    })
+  );
+}
 
 onMounted(() => {
   initCartFromLocalStorage();
+  isCach();
 });
 
 function BtnShooping() {

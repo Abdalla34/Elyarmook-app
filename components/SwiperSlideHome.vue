@@ -33,10 +33,29 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 
 let images = ref([]);
-let res = await useApi().gethome();
-images.value = res?.data?.sliders;
-// console.log(res)
 
+const time = 60 * 60 * 1000;
+async function cachedData() {
+  const cached = localStorage.getItem("homeData");
+  const currentTime = Date.now();
+  if (cached) {
+    const parseData = JSON.parse(cached);
+    if (currentTime - parseData.timestamp < time) {
+      images.value = parseData.sliders;
+      return;
+    }
+  }
+
+  let res = await useApi().gethome();
+  images.value = res?.data?.sliders;
+  localStorage.setItem(
+    "homeData",
+    JSON.stringify({ sliders: images.value, timestamp: currentTime })
+  );
+}
+onMounted(() => {
+  cachedData();
+});
 </script>
 
 <style scoped>
