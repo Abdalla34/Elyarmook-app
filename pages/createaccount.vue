@@ -46,7 +46,7 @@
         >
       </div>
 
-      <div class="parent-boxes d-flex justify-content-between gap-2">
+      <div class="parent-boxes d-flex flex-column flex-md-row justify-content-between gap-3">
         <div
           @click="navigateTo('/services')"
           class="visit-box box-soon d-flex align-items-center justify-content-center gap-2"
@@ -54,7 +54,7 @@
           <div class="icon">
             <PuplicIconFastOrder />
           </div>
-          <div>
+          <div class="box-text">
             <h1>Fast Scheduling Order</h1>
           </div>
           <span class="position-absolute text-capitalize">soon</span>
@@ -65,7 +65,7 @@
           class="visit-box d-flex align-items-center justify-content-center gap-2"
         >
           <div class="icon"><ProfileIcon /></div>
-          <div>
+          <div class="box-text">
             <h1>Enter as a visitor</h1>
           </div>
         </div>
@@ -139,5 +139,59 @@ const onSubmit = handleSubmit(async (values) => {
   padding: 12px 16px;
   border: 1px solid #f1f3f9;
   appearance: none;
+}
+.parent-boxes {
+  width: 100%;
+  margin: 2rem 0;
+}
+
+.visit-box {
+  flex: 1;
+  min-width: 200px;
+  padding: 1rem;
+  border-radius: 12px;
+  background: #f8f9fa;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.visit-box:hover {
+  background: #e9ecef;
+}
+
+.box-text h1 {
+  font-size: 1rem;
+  margin: 0;
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .visit-box {
+    width: 100%;
+    min-height: 80px;
+  }
+  
+  .box-text h1 {
+    font-size: 0.9rem;
+  }
+  
+  .icon {
+    transform: scale(0.9);
+  }
+}
+
+@media (max-width: 480px) {
+  .parent-boxes {
+    gap: 1rem !important;
+  }
+  
+  .visit-box {
+    padding: 0.75rem;
+  }
+  
+  .box-text h1 {
+    font-size: 0.8rem;
+  }
 }
 </style>

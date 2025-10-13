@@ -366,7 +366,7 @@
       </div>
     </div>
     <!-- load component -->
-    <!-- <LoadingSpinner :is-loading-otp="isLoadingOtp" /> -->
+    <LoadingSpinner :is-loading-otp="isLoading" />
   </div>
 </template>
 
@@ -558,40 +558,49 @@ const payload = computed(() => ({
   lat_return: returnLatLng.value.lat ? String(returnLatLng.value.lat) : null,
   lng_return: returnLatLng.value.lng ? String(returnLatLng.value.lng) : null,
   is_booking_now: isBookingNow.value,
-  in_cart: true,
+  in_cart: false,
   service_id: service_id.value || null,
   spare_part_id: spare_part_id.value || null,
 }));
-
+const isLoading = ref(false);
 const router = useRouter();
 async function createOrderWench() {
-  const rawPayload = payload.value;
+  try {
+    isLoading.value = true;
+    const rawPayload = payload.value;
 
-  if (!rawPayload.reservation_time) {
-    isBookingNow.value = true;
-    reservationTime.value = dayjs()
-      .add(2, "hour")
-      .format("YYYY-MM-DD HH:mm:ss");
-  } else {
-    isBookingNow.value = false;
-  }
+    if (!rawPayload.reservation_time) {
+      isBookingNow.value = true;
+      reservationTime.value = dayjs()
+        .add(2, "hour")
+        .format("YYYY-MM-DD HH:mm:ss");
+    } else {
+      isBookingNow.value = false;
+    }
 
-  const cleanedPayload = Object.fromEntries(
-    Object.entries(payload.value).filter(([_, v]) => v !== null && v !== "")
-  );
+    const cleanedPayload = Object.fromEntries(
+      Object.entries(payload.value).filter(([_, v]) => v !== null && v !== "")
+    );
 
-  const res = await useWenchServices().createWenchOrder(
-    cleanedPayload,
-    "wench"
-  );
-  if (res && res.status) {
-    navigateTo(`/cart`);
-    console.log(res?.data?.id);
-  } else {
-    console.log("Failed to create order: " + (res?.message || "Unknown error"));
+    const res = await useWenchServices().createWenchOrder(
+      cleanedPayload,
+      "wench"
+    );
+    if (res && res.status) {
+      navigateTo(`/cart-comfortable-service/${res?.data?.id}`);
+      console.log(res?.data?.id);
+    } else {
+      console.log(
+        "Failed to create order: " + (res?.message || "Unknown error")
+      );
+    }
+  } catch (error) {
+    console.error("Error creating order:", error);
+    alert("An error occurred while creating the order. Please try again.");
+  } finally {
+    isLoading.value = false;
   }
 }
-
 const onSubmit = handleSubmit(async () => {
   await createOrderWench();
 });

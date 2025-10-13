@@ -93,7 +93,7 @@ export const useApi = () => {
       headers,
     });
   };
-// done
+  // done
   const getSettings = async () => {
     return await $fetch(`${baseURL}/settings`, {
       method: "GET",
@@ -571,12 +571,14 @@ export const useApi = () => {
       headers,
     });
   };
+  // done
   const getUsedVouhcers = async () => {
     return $fetch(`${baseURL}/vouchers/used`, {
       method: "GET",
       headers,
     });
   };
+  // done
   const getExVouhcers = async () => {
     return $fetch(`${baseURL}/vouchers/expired`, {
       method: "GET",
@@ -591,15 +593,23 @@ export const useApi = () => {
       headers,
     });
   };
-
+  // done
   const memberShips = async () => {
     return $fetch(`${baseURL}/membership/memberships`, {
       method: "GET",
       headers,
     });
   };
+  // done
   const memberShipDetails = async (membership_id: any) => {
     return $fetch(`${baseURL}/membership/memberships/${membership_id}`, {
+      method: "GET",
+      headers,
+    });
+  };
+
+  const getWenchInCart = async () => {
+    return $fetch(`${baseURL}/order/wench-cart`, {
       method: "GET",
       headers,
     });
@@ -675,5 +685,6 @@ export const useApi = () => {
     editCar,
     memberShips,
     memberShipDetails,
+    getWenchInCart,
   };
 };

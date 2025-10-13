@@ -25,30 +25,11 @@
 
         <!-- left section -->
         <div
+        
           class="col-12 col-md-12 col-lg-6 col-md-6"
           v-if="token && cartRes?.id"
         >
           <h4 class="mb-4 fw-bold">Order Details</h4>
-
-          <div
-            v-if="cartRes?.type === 'wench'"
-            class="cart d-flex justify-content-between align-items-center border-radius-36px mb-3"
-          >
-            <div class="details-cart d-flex align-items-center gap-3">
-              <div class="img">
-                <img
-                  :src="cartRes?.default_car.brand.image"
-                  :alt="cartRes?.default_car.brand.title.title"
-                />
-              </div>
-              <div class="name-cart">
-                <p class="price">
-                  {{ cartRes?.default_car.brand.title }} -
-                  {{ cartRes?.default_car.car_type.title }}
-                </p>
-              </div>
-            </div>
-          </div>
 
           <div
             class="cart d-flex justify-content-between align-items-center border-radius-36px mb-3"
@@ -379,25 +360,12 @@ let router = useRouter();
 
 function toContinue() {
   isLoadingOtp.value = true;
-  if (
-    spareParts.value.length === 0 &&
-    offers.value.length === 0 &&
-    services.value.length === 0
-  ) {
-    router.push({
-      path: `/payment`,
-      query: {
-        id: order_id.value,
-      },
-    });
-  } else {
-    router.push({
-      path: `/order-update-details`,
-      query: {
-        id: order_id.value,
-      },
-    });
-  }
+  router.push({
+    path: `/order-update-details`,
+    query: {
+      id: order_id.value,
+    },
+  });
 }
 </script>
 

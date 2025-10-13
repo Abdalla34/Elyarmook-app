@@ -105,25 +105,6 @@
                 add new car
               </button>
             </div>
-
-            <!-- <div>
-              <div
-                v-if="!guest"
-                class="button-save border-radius-36px width-height margin-bottom-287px"
-                @click="navigateTo('car-brand')"
-              >
-                <button class="text-capitalize">
-                  <i class="fa-solid fa-plus"></i>
-                  add new car
-                </button>
-              </div>
-              <div class="" v-else>
-                <ButtonCard
-                  text-button="go to home"
-                  @click="navigateTo('/order-update-details')"
-                />
-              </div>
-            </div> -->
           </div>
         </div>
       </div>
@@ -184,23 +165,24 @@ async function setDefault(carId) {
     console.error("فشل تعيين السيارة كافتراضية", err);
   }
 }
+
 const router = useRouter();
 const getCarDetails = async (id) => {
   router.push(`/car-details/${id}`);
 };
-function handleClickOutside(e) {
-  if (!e.target.closest(".car-box")) {
-    activeCarId.value = null;
-  }
-}
+// function handleClickOutside(e) {
+//   if (!e.target.closest(".car-box")) {
+//     activeCarId.value = null;
+//   }
+// }
 
-onMounted(() => {
-  document.addEventListener("click", handleClickOutside);
-});
+// onMounted(() => {
+//   document.addEventListener("click", handleClickOutside);
+// });
 
-onBeforeUnmount(() => {
-  document.removeEventListener("click", handleClickOutside);
-});
+// onBeforeUnmount(() => {
+//   document.removeEventListener("click", handleClickOutside);
+// });
 </script>
 
 <style scoped>
