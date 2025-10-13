@@ -689,4 +689,45 @@ const popupItems = ref(false);
 .transparent {
   background-color: transparent !important;
 }
+.popup-reschedule {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  width: 90%;
+  max-width: 500px;
+  height: 50vh;
+  display: flex;
+  flex-direction: column;
+  z-index: 1100;
+}
+
+.time-box {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 10px;
+  margin-top: 10px;
+}
+
+.slots {
+  margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+  .popup-reschedule {
+    width: 95%;
+    padding: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .popup-reschedule {
+    width: 100%;
+    border-radius: 12px;
+    /* margin: 10px; */
+  }
+}
 </style>
