@@ -101,6 +101,8 @@ async function sendOtpFn() {
   }
 }
 
+const cartCount = useState("cartCount", () => 0)
+
 const handleCheckOTP = async (otpValue) => {
   const otp = otpValue || code.value;
   if (!phone.value || !otp) return;
@@ -123,11 +125,33 @@ const handleCheckOTP = async (otpValue) => {
           loginRes.data.token &&
           loginRes.data.user
         ) {
-          const token = useCookie("token", { maxAge: 365 * 24 * 60 * 60 });
+          const token = useCookie("token");
           const user = useCookie("user", { maxAge: 365 * 24 * 60 * 60 });
 
           token.value = loginRes.data.token;
           user.value = JSON.stringify(loginRes.data.user);
+
+
+          cartCount.value = 0;
+          await useApi().getToken(loginRes.data.token)
+          let resCart = await useApi().getMyCart()
+
+          if (resCart?.status) {
+            // Calculate total cart length including quantities
+            const services = resCart.data?.services || [];
+            const offers = resCart.data?.offers || [];
+            const spareParts = resCart.data?.spare_parts || [];
+
+            // Sum up quantities for services and spare parts
+            const servicesCount = services.reduce((total, item) => total + (item.qty || 1), 0);
+            const sparePartsCount = spareParts.reduce((total, item) => total + (item.qty || 1), 0);
+            // Offers typically don't have quantities, so count each as 1
+            const offersCount = offers.reduce((total, item) => total + (item.qty || 1), 0);
+            
+            const totalCartLength = servicesCount + sparePartsCount + offersCount;
+            
+            cartCount.value = totalCartLength;
+          }          
         }
 
         router.push("/services");

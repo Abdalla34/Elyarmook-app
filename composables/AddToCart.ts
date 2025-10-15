@@ -8,9 +8,11 @@ export function useAddToCart() {
   const allCartGuest = ref<any[]>([]);
   const btnShooping = ref(false);
   const token = useCookie("token", { maxAge: 365 * 24 * 60 * 60 });
+  const cartCount = useState("cartCount", () => 0)
 
   // Initialize cart state from localStorage
-  function initCartFromLocalStorage() {
+  async function initCartFromLocalStorage() {
+    if (token.value) return;
     const storedCart = JSON.parse(localStorage.getItem("cartGuest") || "[]");
     allCartGuest.value = storedCart;
     // allCartGuest.value = currentCart;
@@ -19,6 +21,8 @@ export function useAddToCart() {
       inCart.value[item.id] = true;
       btnShooping.value = true;
     });
+
+    cartCount.value = allCartGuest.value.length;
   }
 
   async function handleAdd(service: any, type: string) {
@@ -37,6 +41,7 @@ export function useAddToCart() {
       }
       localStorage.setItem("cartGuest", JSON.stringify(currentCart));
       allCartGuest.value = currentCart;
+      cartCount.value = allCartGuest.value.length;
     }
 
     if (token.value) {
@@ -45,6 +50,7 @@ export function useAddToCart() {
         const res: any = await useApi().addToCart(type, service.id, 1);
         if (res.status) {
           service.in_cart = true;
+          cartCount.value = cartCount.value + 1;
           // await getMyCart();
         }
       } catch (err: any) {
@@ -64,6 +70,7 @@ export function useAddToCart() {
     localStorage.setItem("cartGuest", JSON.stringify(cart));
     allCartGuest.value = cart;
     inCart.value[service.id] = false;
+    cartCount.value = allCartGuest.value.length;
 
     // Only hide shopping button if cart is empty
     if (cart.length === 0) {
@@ -77,6 +84,7 @@ export function useAddToCart() {
     allCartGuest,
     btnShooping,
     handleAdd,
+    cartCount,
     removeFromlocal,
     initCartFromLocalStorage,
   };

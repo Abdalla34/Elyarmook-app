@@ -11,6 +11,13 @@ export const useApi = () => {
     Accept: "application/json",
     "Access-Control-Allow-Origin": "*",
   };
+
+  const resetToken = async () => {
+    token.value = null;
+  }
+  const getToken = async (userToken) => {
+    token.value = userToken;
+  }
   // done
   const sendOTP = async (phone: any) => {
     return await $fetch(`${baseURL}/auth/send-otp`, {
@@ -151,9 +158,15 @@ export const useApi = () => {
   // done
 
   const getMyCart = async () => {
+    let tokens = useCookie("token", { maxAge: 365 * 24 * 60 * 60 });
     return await $fetch(`${baseURL}/marketplace/cart/my-cart`, {
       method: "GET",
-      headers,
+      headers: {
+        Authorization: `Bearer ${tokens.value}`,
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
     });
   };
   // done
@@ -686,5 +699,7 @@ export const useApi = () => {
     memberShips,
     memberShipDetails,
     getWenchInCart,
+    resetToken,
+    getToken,
   };
 };

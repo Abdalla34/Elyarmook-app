@@ -296,6 +296,8 @@ let logOut = async () => {
     await useApi().logout();
     token.value = null;
     cookie.value = null;
+    await useApi().resetToken();
+    await useAddToCart().initCartFromLocalStorage();
     router.push("/");
   } catch (err) {
     console.error(err);

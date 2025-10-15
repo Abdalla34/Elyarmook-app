@@ -31,13 +31,12 @@ useHead({
   ],
 });
 
+const {
+  initCartFromLocalStorage
+} = useAddToCart();
+
 import { useRoute } from "vue-router";
-
-// const { getMyCart } = useCart();
-
-
-// getMyCart();
-
+const token = useCookie("token", { maxAge: 365 * 24 * 60 * 60 });
 
 const route = useRoute();
 
@@ -55,6 +54,38 @@ const showViews = computed(() => {
   const path = ["/cart", "/order-details"];
   return !path.includes(route.path);
 });
+
+
+const cartCount = useState("cartCount", () => 0)
+
+if (token.value) {
+  cartCount.value = 0;
+  let res = await useApi().getMyCart()
+
+  if (res?.status) {
+    // Calculate total cart length including quantities
+    const services = res.data?.services || [];
+    const offers = res.data?.offers || [];
+    const spareParts = res.data?.spare_parts || [];
+    
+    // Sum up quantities for services and spare parts
+    const servicesCount = services.reduce((total, item) => total + (item.qty || 1), 0);
+    const sparePartsCount = spareParts.reduce((total, item) => total + (item.qty || 1), 0);
+    // Offers typically don't have quantities, so count each as 1
+    const offersCount = offers.reduce((total, item) => total + (item.qty || 1), 0);
+    
+    const totalCartLength = servicesCount + sparePartsCount + offersCount;
+    
+    cartCount.value = totalCartLength;
+  }
+}
+
+onMounted(async () => {
+  if (!token.value) {
+    initCartFromLocalStorage();
+  }
+});
+
 </script>
 
 <style>

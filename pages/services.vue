@@ -89,7 +89,6 @@ async function isCacheValid() {
 
     if (currentTime - parseData.timestamp < timeEndCach) {
       services.value = parseData.services;
-      return;
     }
   }
 
@@ -112,12 +111,12 @@ const {
   btnShooping,
   handleAdd,
   removeFromlocal,
-  initCartFromLocalStorage,
+  initCartFromLocalStorage
 } = useAddToCart();
 
-onMounted(() => {
+onMounted(async () => {
+  await isCacheValid();
   initCartFromLocalStorage();
-  isCacheValid();
 });
 
 function BtnShooping() {
