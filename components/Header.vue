@@ -29,9 +29,9 @@
             <button class="buttons">
               <PuplicIconCartIcon />
             </button>
-            <span v-if="cartLength > 0" class="span-length">{{
-              cartLength
-            }}</span>
+          <span v-if="cartCount > 0" class="span-length">
+          <!-- {{ cartCount }} -->
+        </span>
           </div>
 
           <div>
@@ -90,12 +90,14 @@ onMounted(() => {
   fetchMyCars();
 });
 
+// const { cartCount } = useCart();
+
 // Cart length functionality
-const { cartLength, refreshCartLength } = useCartLength();
+// const { cartLength, refreshCartLength } = useCartLength();
 // Refresh cart length when navigating to cart
 const navigateToCart = () => {
   navigateTo("/cart");
-  refreshCartLength();
+  // refreshCartLength();
 };
 </script>
 

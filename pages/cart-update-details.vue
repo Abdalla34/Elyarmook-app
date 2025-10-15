@@ -436,7 +436,7 @@
 <script setup>
 let dayjs = useDayjs();
 const { deleteItemFromCart, updateCartItemQuantity } = useApi();
-const { triggerCartUpdate } = useCartUpdate();
+// const { triggerCartUpdate } = useCartUpdate();
 const loadingDelete = ref({});
 const loadingQty = ref({});
 let route = useRoute();
@@ -475,7 +475,7 @@ async function deletedOrder(id, type) {
 
   try {
     await deleteItemFromCart(type, order_id, id);
-    triggerCartUpdate(); // Trigger cart update after successful deletion
+    // triggerCartUpdate(); // Trigger cart update after successful deletion
   } catch (err) {
     console.log("test", err);
   }
@@ -495,7 +495,7 @@ async function updateQty(type, order_id, cart_item_id, qty) {
     if (res?.status === true) {
       cart_item_id.qty = qty;
       msgErrorQty.value[cart_item_id.id] = "";
-      triggerCartUpdate(); // Trigger cart update after successful quantity update
+      // triggerCartUpdate(); // Trigger cart update after successful quantity update
     } else {
       if (res?.errors?.qty?.length) {
         msgErrorQty.value[cart_item_id.id] = res.errors.qty[0];

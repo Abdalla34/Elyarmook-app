@@ -1,17 +1,20 @@
+
+// import { useCart } from "./useCartState"; 
+
 export function useAddToCart() {
+  // const { syncCartCount, getMyCart } = useCart();
   const loadingAddToCart = ref<{ [key: number]: boolean }>({});
   const inCart = ref<{ [key: number]: boolean }>({});
   const allCartGuest = ref<any[]>([]);
   const btnShooping = ref(false);
   const token = useCookie("token", { maxAge: 365 * 24 * 60 * 60 });
-  
-  // Use centralized cart update function
-  const { triggerCartUpdate } = useCartUpdate();
 
   // Initialize cart state from localStorage
   function initCartFromLocalStorage() {
     const storedCart = JSON.parse(localStorage.getItem("cartGuest") || "[]");
     allCartGuest.value = storedCart;
+    // allCartGuest.value = currentCart;
+    // syncCartCount();
     storedCart.forEach((item: any) => {
       inCart.value[item.id] = true;
       btnShooping.value = true;
@@ -34,7 +37,6 @@ export function useAddToCart() {
       }
       localStorage.setItem("cartGuest", JSON.stringify(currentCart));
       allCartGuest.value = currentCart;
-      triggerCartUpdate(); // Trigger cart update for guest users
     }
 
     if (token.value) {
@@ -43,7 +45,7 @@ export function useAddToCart() {
         const res: any = await useApi().addToCart(type, service.id, 1);
         if (res.status) {
           service.in_cart = true;
-          triggerCartUpdate(); // Trigger cart update for authenticated users
+          // await getMyCart();
         }
       } catch (err: any) {
         if (err?.response?.status === 401) {
@@ -67,8 +69,6 @@ export function useAddToCart() {
     if (cart.length === 0) {
       btnShooping.value = false;
     }
-    
-    triggerCartUpdate(); // Trigger cart update when removing items
   }
 
   return {

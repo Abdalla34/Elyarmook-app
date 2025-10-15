@@ -5,7 +5,7 @@
     <div class="cart-icon-wrapper" @click="navigateToCart">
       <div class="cart-icon-inner">
         <PuplicIconCartIcon />
-        <span v-if="cartLength > 0" class="cart-badge">{{ cartLength }}</span>
+        <!-- <span v-if="cartCount > 0" class="cart-badge">{{ cartCount }}</span> -->
       </div>
     </div>
 
@@ -102,11 +102,13 @@ const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value;
 };
 
-const { cartLength, refreshCartLength } = useCartLength();
+// const { cartCount } = useCart();
+
+// const { cartLength, refreshCartLength } = useCartLength();
 // Refresh cart length when navigating to cart
 const navigateToCart = () => {
   navigateTo("/cart");
-  refreshCartLength();
+  // refreshCartLength();
 };
 
 const route = useRoute();

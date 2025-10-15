@@ -7,7 +7,7 @@
           message="cart is Empty you must create account "
         />
 
-        <div class="empty-cart text-center" v-if="token && !cartRes?.id">
+        <div class="empty-cart text-center" v-if="token && cartCount === 0">
           <div>
             <img src="/Vector.png" alt="" />
             <h3 class="text-capitalize create">your cart is empty</h3>
@@ -25,15 +25,14 @@
 
         <!-- left section -->
         <div
-        
           class="col-12 col-md-12 col-lg-6 col-md-6"
-          v-if="token && cartRes?.id"
+          v-if="token && cartCount > 0"
         >
           <h4 class="mb-4 fw-bold">Order Details</h4>
 
           <div
             class="cart d-flex justify-content-between align-items-center border-radius-36px mb-3"
-            v-for="service in services"
+            v-for="service in cartItems.services"
             :key="service.id"
           >
             <div class="details-cart d-flex align-items-center gap-3">
@@ -51,7 +50,11 @@
                     class="qty-btn"
                     :disabled="loadingQty[service.id] || service.qty <= 1"
                     @click="
-                      updateQty('service', order_id, service, service.qty - 1)
+                      changeQty(
+                        'service',
+                        service,
+                        Number(service.qty) - 1
+                      )
                     "
                   >
                     -
@@ -59,7 +62,11 @@
                   <span class="mx-2">{{ service.qty }}</span>
                   <button
                     @click="
-                      updateQty('service', order_id, service, service.qty + 1)
+                      changeQty(
+                        'service',
+                        service,
+                        Number(service.qty) + 1
+                      )
                     "
                     class="qty-btn"
                     :disabled="loadingQty[service.id]"
@@ -102,19 +109,21 @@
                   <button
                     class="qty-btn"
                     :disabled="loadingQty[offer.id] || offer.qty <= 1"
-                    @click="updateQty('offer', order_id, offer, offer.qty - 1)"
+                    @click="changeQty('offer', offer, Number(offer.qty) - 1)"
                   >
                     -
                   </button>
 
                   <span class="mx-2">{{ offer.qty }}</span>
+
                   <button
                     class="qty-btn"
                     :disabled="loadingQty[offer.id]"
-                    @click="updateQty('offer', order_id, offer, offer.qty + 1)"
+                    @click="changeQty('offer', offer, Number(offer.qty) + 1)"
                   >
                     +
                   </button>
+
                   <span v-if="loadingQty[offer.id]" class="ms-2"
                     >Loading...</span
                   >
@@ -132,7 +141,7 @@
 
           <div
             class="cart d-flex justify-content-between align-items-center border-radius-36px mb-3"
-            v-for="sparepart in spareParts"
+            v-for="sparepart in cartItems.spare_parts"
             :key="sparepart.id"
           >
             <div class="details-cart d-flex align-items-center gap-3">
@@ -150,11 +159,10 @@
                     class="qty-btn"
                     :disabled="loadingQty[sparepart.id] || sparepart.qty <= 1"
                     @click="
-                      updateQty(
+                      changeQty(
                         'spare_part',
-                        order_id,
                         sparepart,
-                        sparepart.qty - 1
+                        Number(sparepart.qty) - 1
                       )
                     "
                   >
@@ -162,20 +170,21 @@
                   </button>
 
                   <span class="mx-2">{{ sparepart.qty }}</span>
+
                   <button
                     class="qty-btn"
                     :disabled="loadingQty[sparepart.id]"
                     @click="
-                      updateQty(
+                      changeQty(
                         'spare_part',
-                        order_id,
                         sparepart,
-                        sparepart.qty + 1
+                        Number(sparepart.qty) + 1
                       )
                     "
                   >
                     +
                   </button>
+
                   <span v-if="loadingQty[sparepart.id]" class="ms-2"
                     >Loading...</span
                   >
@@ -196,7 +205,7 @@
         <!-- right section -->
         <div
           class="col-12 col-md-12 col-lg-4 col-test"
-          v-if="token && cartRes?.id"
+          v-if="token && cartCount > 0"
         >
           <div class="h-100">
             <div class=""></div>
@@ -208,14 +217,14 @@
                   class="total-order d-flex justify-content-between align-items-center"
                 >
                   <h4 class="label">sub total</h4>
-                  <p class="text-capitalize">{{ cartRes?.sub_total }}</p>
+                  <p class="text-capitalize">{{ cartItems?.sub_total }}</p>
                 </div>
 
                 <div
                   class="vat d-flex justify-content-between align-items-center"
                 >
                   <h4 class="label">vat</h4>
-                  <p class="text-capitalize">{{ cartRes?.vat_amount }}</p>
+                  <p class="text-capitalize">{{ cartItems?.vat_amount }}</p>
                 </div>
 
                 <div
@@ -223,7 +232,7 @@
                 >
                   <h4 class="label">Final Amount</h4>
                   <p class="text-capitalize">
-                    {{ cartRes?.amount_to_pay }}
+                    {{ cartItems?.amount_to_pay }}
                     <span class="p-color-fs span">SAR</span>
                   </p>
                 </div>
@@ -233,7 +242,7 @@
                 class="total-amount d-flex align-items-center justify-content-between"
               >
                 <h1 class="amount text-capitalize">total amount</h1>
-                <p>{{ cartRes?.total_amount }}</p>
+                <p>{{ cartItems?.total_amount }}</p>
               </div>
 
               <div class="buttion-confirm" @click="toContinue">
@@ -241,11 +250,7 @@
               </div>
               <div class="buttion-confirm">
                 <button
-                  v-if="
-                    services.length >= 1 ||
-                    offers.length >= 1 ||
-                    spareParts.length >= 1
-                  "
+                  v-if="cartCount > 0"
                   @click="navigateTo('/services')"
                   class="additems text-capitalize label"
                 >
@@ -263,98 +268,129 @@
 </template>
 
 <script setup>
-import dayjs from "#build/dayjs.imports.mjs";
+// import dayjs from "#build/dayjs.imports.mjs";
 
-const { deleteItemFromCart, updateCartItemQuantity } = useApi();
-const { triggerCartUpdate } = useCartUpdate();
-const services = ref([]);
-const loadingDelete = ref({});
-const loadingQty = ref({});
-const cartRes = ref(null);
-const order_id = ref(null);
-let notRegister = ref(false);
-let token = useCookie("token").value;
-let offers = ref([]);
-let spareParts = ref([]);
+// const {
+//   cartItems,
+//   cartCount,
+//   loadingQty,
+//   loadingDelete,
+//   msg,
+//   getMyCart,
+//   updateQty,
+//   deleteItem,
+//   order_id, // 👈 خده من داخل الـ composable مباشرة
+// } = useCart();
 
-try {
-  if (!token) {
-    notRegister.value = true;
-  }
-  let res = await useApi().getMyCart();
-  cartRes.value = res?.data;
-  services.value = cartRes.value?.services || [];
-  offers.value = cartRes.value?.offers || [];
-  spareParts.value = cartRes.value?.spare_parts || [];
-  order_id.value = res?.data?.id;
-} catch (err) {
-  if (err?.response.status === 401) {
-    console.log(err);
-  }
-}
+// const notRegister = ref(false);
+// const token = useCookie("token").value;
 
-async function deletedOrder(id, type) {
-  if (type === "service") {
-    services.value = services.value.filter((o) => o.id !== id);
-    loadingDelete.value[id] = true;
-  } else if (type === "offer") {
-    loadingDelete.value[id] = true;
-    offers.value = offers.value.filter((o) => o.offer_id !== id);
-  } else if (type === "spare_part") {
-    loadingDelete.value[id] = true;
-    spareParts.value = spareParts.value.filter((o) => o.id !== id);
-  } else {
-    return;
-  }
+// onMounted(async () => {
+//   if (!token) {
+//     notRegister.value = true;
+//     return;
+//   }
 
-  try {
-    await deleteItemFromCart(type, order_id.value, id);
-    triggerCartUpdate(); // Trigger cart update after successful deletion
-    if (
-      services.value.length === 0 &&
-      offers.value.length === 0 &&
-      spareParts.value.length === 0
-    ) {
-      cartRes.value = null; // كده الشرط v-if هيخلي الرسالة تظهر
-    }
-  } catch (err) {
-    console.log("test", err);
-  }
-}
+//   await getMyCart();
+// });
 
-let msg = ref({});
-async function updateQty(type, orderId, cart_item_id, newQty) {
-  loadingQty.value[cart_item_id.id] = true;
-  msg.value[cart_item_id.id] = "";
+// const deletedOrder = (id, type) => {
+//   deleteItem(id, type);
+// };
 
-  try {
-    let res = await updateCartItemQuantity(
-      type,
-      orderId,
-      cart_item_id.id,
-      newQty
-    );
+// const changeQty = (type, cart_item, newQty) => {
+//   updateQty(type, order_id.value, cart_item.id, newQty);
+// };
 
-    if (res?.status === true) {
-      cart_item_id.qty = newQty;
-      triggerCartUpdate(); // Trigger cart update after successful quantity update
-    } else {
-      if (res?.errors?.qty?.length) {
-        msg.value[cart_item_id.id] = res.errors.qty[0];
-      } else {
-        msg.value[cart_item_id.id] = res?.message;
-      }
-    }
-  } catch (err) {
-    if (err?.data?.errors?.qty?.length) {
-      msg.value[cart_item_id.id] = err.data.errors.qty[0];
-    } else {
-      msg.value[cart_item_id.id] = err?.data?.message;
-    }
-  } finally {
-    loadingQty.value[cart_item_id.id] = false;
-  }
-}
+// const { deleteItemFromCart, updateCartItemQuantity } = useApi();
+// // const { triggerCartUpdate } = useCartUpdate();
+// const services = ref([]);
+// const loadingDelete = ref({});
+// const loadingQty = ref({});
+// const cartRes = ref(null);
+// const order_id = ref(null);
+// let notRegister = ref(false);
+// let token = useCookie("token").value;
+// let offers = ref([]);
+// let spareParts = ref([]);
+
+// try {
+//   if (!token) {
+//     notRegister.value = true;
+//   }
+//   let res = await useApi().getMyCart();
+//   cartRes.value = res?.data;
+//   services.value = cartRes.value?.services || [];
+//   offers.value = cartRes.value?.offers || [];
+//   spareParts.value = cartRes.value?.spare_parts || [];
+//   order_id.value = res?.data?.id;
+// } catch (err) {
+//   if (err?.response.status === 401) {
+//     console.log(err);
+//   }
+// }
+
+// async function deletedOrder(id, type) {
+//   if (type === "service") {
+//     services.value = services.value.filter((o) => o.id !== id);
+//     loadingDelete.value[id] = true;
+//   } else if (type === "offer") {
+//     loadingDelete.value[id] = true;
+//     offers.value = offers.value.filter((o) => o.offer_id !== id);
+//   } else if (type === "spare_part") {
+//     loadingDelete.value[id] = true;
+//     spareParts.value = spareParts.value.filter((o) => o.id !== id);
+//   } else {
+//     return;
+//   }
+
+//   try {
+//     await deleteItemFromCart(type, order_id.value, id);
+
+//     if (
+//       services.value.length === 0 &&
+//       offers.value.length === 0 &&
+//       spareParts.value.length === 0
+//     ) {
+//       cartRes.value = null; // كده الشرط v-if هيخلي الرسالة تظهر
+//     }
+//   } catch (err) {
+//     console.log("test", err);
+//   }
+// }
+
+// let msg = ref({});
+// async function updateQty(type, orderId, cart_item_id, newQty) {
+//   loadingQty.value[cart_item_id.id] = true;
+//   msg.value[cart_item_id.id] = "";
+
+//   try {
+//     let res = await updateCartItemQuantity(
+//       type,
+//       orderId,
+//       cart_item_id.id,
+//       newQty
+//     );
+
+//     if (res?.status === true) {
+//       cart_item_id.qty = newQty;
+//     } else {
+//       if (res?.errors?.qty?.length) {
+//         msg.value[cart_item_id.id] = res.errors.qty[0];
+//       } else {
+//         msg.value[cart_item_id.id] = res?.message;
+//       }
+//     }
+//   } catch (err) {
+//     if (err?.data?.errors?.qty?.length) {
+//       msg.value[cart_item_id.id] = err.data.errors.qty[0];
+//     } else {
+//       msg.value[cart_item_id.id] = err?.data?.message;
+//     }
+//   } finally {
+//     loadingQty.value[cart_item_id.id] = false;
+//   }
+// }
 let isLoadingOtp = ref(false);
 let router = useRouter();
 

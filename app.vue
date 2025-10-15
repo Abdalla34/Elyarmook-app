@@ -33,6 +33,12 @@ useHead({
 
 import { useRoute } from "vue-router";
 
+// const { getMyCart } = useCart();
+
+
+// getMyCart();
+
+
 const route = useRoute();
 
 const noLayoutPages = [
