@@ -28,7 +28,16 @@
                     <img :src="car.car_type.image" :alt="car.car_type.title" />
                   </div>
                   <div class="car-name z-index position-relative">
-                    <p>{{ car.car_type.title }}</p>
+                    <p>
+                      {{ car.car_type.title }}
+                      <span
+                        class="p-color-fs ps-2 pe-2 rounded bg text-capitalize"
+                        v-if="car.is_default"
+                        style="background-color: var(--main-color)"
+                      >
+                        default
+                      </span>
+                    </p>
                   </div>
                 </div>
 

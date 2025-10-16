@@ -24,7 +24,7 @@
         >
           <div
             class="background-color-cart position-relative d-flex align-items-center justify-content-center"
-            @click="navigateToCart"
+            @click="navigateTo('/cart')"
           >
             <button class="buttons">
               <PuplicIconCartIcon />
@@ -83,18 +83,20 @@
 
 <script setup>
 const token = useCookie("token");
-const myCars = ref([]);
 const { defaultCar, fetchMyCars } = useMyCars();
 
 onMounted(() => {
   fetchMyCars();
 });
 
+watch(
+  () => token.value,
+  () => {
+    fetchMyCars();
+  }
+);
 const cartCount = useState("cartCount", () => 0)
 
-const navigateToCart = () => {
-  navigateTo("/cart");
-};
 </script>
 
 <style scoped>

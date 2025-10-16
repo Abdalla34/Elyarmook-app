@@ -130,7 +130,7 @@
                   <button
                     class="qty-btn"
                     :disabled="loadingQty[order.id] || order.qty <= 1"
-                    @click="updateQty('offer', order_id, order, order.qty - 1)"
+                    @click="updateQty('offer', order_id, order, order.qty - 1 , 'minus')"
                   >
                     -
                   </button>
@@ -138,7 +138,7 @@
                   <button
                     class="qty-btn"
                     :disabled="loadingQty[order.id]"
-                    @click="updateQty('offer', order_id, order, order.qty + 1)"
+                    @click="updateQty('offer', order_id, order, order.qty + 1 , 'plus')"
                   >
                     +
                   </button>
@@ -187,7 +187,8 @@
                         'spare_part',
                         order_id,
                         sparepart,
-                        sparepart.qty - 1
+                        sparepart.qty - 1,
+                        'minus'
                       )
                     "
                   >
@@ -202,7 +203,8 @@
                         'spare_part',
                         order_id,
                         sparepart,
-                        sparepart.qty + 1
+                        sparepart.qty + 1,
+                        'plus'
                       )
                     "
                   >
@@ -447,6 +449,7 @@ let token = useCookie("token").value;
 let offers = ref([]);
 let spareParts = ref([]);
 let notRegister = ref(false);
+const cartCount = useState("cartCount", () => 0);
 
 if (!order_id) {
   notRegister.value = true;
@@ -475,14 +478,14 @@ async function deletedOrder(id, type) {
 
   try {
     await deleteItemFromCart(type, order_id, id);
-    // triggerCartUpdate(); // Trigger cart update after successful deletion
+    cartCount.value = cartCount.value - 1;
   } catch (err) {
     console.log("test", err);
   }
 }
 
 const msgErrorQty = ref({});
-async function updateQty(type, order_id, cart_item_id, qty) {
+async function updateQty(type, order_id, cart_item_id, qty, action) {
   loadingQty.value[cart_item_id.id] = true;
   try {
     let res = await updateCartItemQuantity(
@@ -495,7 +498,11 @@ async function updateQty(type, order_id, cart_item_id, qty) {
     if (res?.status === true) {
       cart_item_id.qty = qty;
       msgErrorQty.value[cart_item_id.id] = "";
-      // triggerCartUpdate(); // Trigger cart update after successful quantity update
+      if (action === "plus") {
+        cartCount.value = cartCount.value + 1;
+      } else {
+        cartCount.value = cartCount.value - 1;
+      }
     } else {
       if (res?.errors?.qty?.length) {
         msgErrorQty.value[cart_item_id.id] = res.errors.qty[0];

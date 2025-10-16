@@ -31,26 +31,6 @@
           <h4 class="mb-4 fw-bold">Order Details</h4>
 
           <div
-            v-if="cartRes?.type === 'wench'"
-            class="cart d-flex justify-content-between align-items-center border-radius-36px mb-3"
-          >
-            <div class="details-cart d-flex align-items-center gap-3">
-              <div class="img">
-                <img
-                  :src="cartRes?.default_car.brand.image"
-                  :alt="cartRes?.default_car.brand.title.title"
-                />
-              </div>
-              <div class="name-cart">
-                <p class="price">
-                  {{ cartRes?.default_car.brand.title }} -
-                  {{ cartRes?.default_car.car_type.title }}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div
             class="cart d-flex justify-content-between align-items-center border-radius-36px mb-3"
             v-for="service in services"
             :key="service.id"
@@ -70,7 +50,13 @@
                     class="qty-btn"
                     :disabled="loadingQty[service.id] || service.qty <= 1"
                     @click="
-                      updateQty('service', order_id, service, service.qty - 1, 'minus')
+                      updateQty(
+                        'service',
+                        order_id,
+                        service,
+                        service.qty - 1,
+                        'minus'
+                      )
                     "
                   >
                     -
@@ -78,7 +64,13 @@
                   <span class="mx-2">{{ service.qty }}</span>
                   <button
                     @click="
-                      updateQty('service', order_id, service, service.qty + 1, 'plus')
+                      updateQty(
+                        'service',
+                        order_id,
+                        service,
+                        service.qty + 1,
+                        'plus'
+                      )
                     "
                     class="qty-btn"
                     :disabled="loadingQty[service.id]"
@@ -121,7 +113,15 @@
                   <button
                     class="qty-btn"
                     :disabled="loadingQty[offer.id] || offer.qty <= 1"
-                    @click="updateQty('offer', order_id, offer, offer.qty - 1, 'minus')"
+                    @click="
+                      updateQty(
+                        'offer',
+                        order_id,
+                        offer,
+                        offer.qty - 1,
+                        'minus'
+                      )
+                    "
                   >
                     -
                   </button>
@@ -130,7 +130,9 @@
                   <button
                     class="qty-btn"
                     :disabled="loadingQty[offer.id]"
-                    @click="updateQty('offer', order_id, offer, offer.qty + 1, 'plus')"
+                    @click="
+                      updateQty('offer', order_id, offer, offer.qty + 1, 'plus')
+                    "
                   >
                     +
                   </button>
@@ -296,7 +298,7 @@ let notRegister = ref(false);
 let token = useCookie("token").value;
 let offers = ref([]);
 let spareParts = ref([]);
-const cartCount = useState("cartCount", () => 0)
+const cartCount = useState("cartCount", () => 0);
 
 try {
   if (!token) {
@@ -338,7 +340,6 @@ async function deletedOrder(id, type, quantity) {
 
 let msg = ref({});
 async function updateQty(type, orderId, cart_item_id, newQty, action) {
-  
   loadingQty.value[cart_item_id.id] = true;
   msg.value[cart_item_id.id] = "";
 
@@ -352,9 +353,9 @@ async function updateQty(type, orderId, cart_item_id, newQty, action) {
 
     if (res?.status === true) {
       cart_item_id.qty = newQty;
-      if (action === 'minus') {
+      if (action === "minus") {
         cartCount.value = cartCount.value - 1;
-      } else if (action === 'plus') {
+      } else if (action === "plus") {
         cartCount.value = cartCount.value + 1;
       }
     } else {
@@ -374,31 +375,18 @@ async function updateQty(type, orderId, cart_item_id, newQty, action) {
     loadingQty.value[cart_item_id.id] = false;
   }
 }
+
 let isLoadingOtp = ref(false);
 let router = useRouter();
 function toContinue() {
   isLoadingOtp.value = true;
-  if (
-    spareParts.value.length === 0 &&
-    offers.value.length === 0 &&
-    services.value.length === 0
-  ) {
-    router.push({
-      path: `/payment`,
-      query: {
-        id: order_id.value,
-      },
-    });
-  } else {
-    router.push({
-      path: `/order-update-details`,
-      query: {
-        id: order_id.value,
-      },
-    });
-  }
+  router.push({
+    path: `/order-update-details`,
+    query: {
+      id: order_id.value,
+    },
+  });
 }
-
 </script>
 
 <style scoped>

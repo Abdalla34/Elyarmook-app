@@ -1,6 +1,4 @@
 
-// import { useCart } from "./useCartState"; 
-
 export function useAddToCart() {
   // const { syncCartCount, getMyCart } = useCart();
   const loadingAddToCart = ref<{ [key: number]: boolean }>({});
@@ -15,8 +13,6 @@ export function useAddToCart() {
     if (token.value) return;
     const storedCart = JSON.parse(localStorage.getItem("cartGuest") || "[]");
     allCartGuest.value = storedCart;
-    // allCartGuest.value = currentCart;
-    // syncCartCount();
     storedCart.forEach((item: any) => {
       inCart.value[item.id] = true;
       btnShooping.value = true;

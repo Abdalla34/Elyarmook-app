@@ -19,7 +19,7 @@
                 />
               </div>
             </div>
-
+            <!-- component services title -->
             <div class="service-content d-flex flex-column align-items-center">
               <TitleServices
                 :title="sparepart.title"
@@ -69,7 +69,7 @@
             </div>
           </div>
         </div>
-
+        <!-- component otp modal -->
         <OtpModal
           :showDialCode="showDialCode"
           :showOtpModal="showOtpModal"
@@ -78,6 +78,7 @@
           @open-otp-modal="showOtpModal = true"
           @otp-success="handleOtpSuccess"
         />
+        <!-- show if cart empty -->
         <div class="isEmpty"></div>
         <div v-if="btnShooping" class="btn-shooping position-fixed bottom-0">
           <ButtonCard @click="BtnShooping" textButton="continue shopping" />
@@ -116,7 +117,6 @@ async function isCach() {
 
     if (currentTime - parsedData.timestamp < endTimeCache) {
       spareParts.value = parsedData.spareParts;
-      return;
     }
   }
 
@@ -132,9 +132,9 @@ async function isCach() {
   );
 }
 
-onMounted(() => {
+onMounted(async () => {
+  await isCach();
   initCartFromLocalStorage();
-  isCach();
 });
 
 function BtnShooping() {

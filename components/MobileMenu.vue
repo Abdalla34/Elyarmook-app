@@ -2,10 +2,10 @@
   <!-- Enhanced Burger Menu Icon -->
   <div class="mobile-menu-wrapper">
     <!-- Cart Icon -->
-    <div class="cart-icon-wrapper" @click="navigateToCart">
+    <div class="cart-icon-wrapper" @click="navigateTo('/cart')">
       <div class="cart-icon-inner">
         <PuplicIconCartIcon />
-        <!-- <span v-if="cartCount > 0" class="cart-badge">{{ cartCount }}</span> -->
+        <span v-if="cartCount > 0" class="cart-badge">{{ cartCount }}</span>
       </div>
     </div>
 
@@ -101,15 +101,7 @@ const isMenuOpen = ref(false);
 const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value;
 };
-
-// const { cartCount } = useCart();
-
-// const { cartLength, refreshCartLength } = useCartLength();
-// Refresh cart length when navigating to cart
-const navigateToCart = () => {
-  navigateTo("/cart");
-  // refreshCartLength();
-};
+const cartCount = useState("cartCount", () => 0);
 
 const route = useRoute();
 watch(
@@ -185,7 +177,8 @@ watch(
 }
 
 @keyframes pulse {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
   }
   50% {

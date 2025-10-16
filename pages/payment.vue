@@ -322,7 +322,7 @@ let paymentWihtTbby = async () => {
   }
 };
 
-const { triggerCartUpdate } = useCartUpdate();
+
 
 const cachLayout = ref(false);
 const orderPoints = ref(null);
