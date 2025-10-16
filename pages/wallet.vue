@@ -8,9 +8,17 @@
             <div
               class="wllet-title d-flex align-items-center justify-content-between"
             >
-              <h1 class="margin-bottom-24px text-capitalize title-pages mb-0">
-                wallet
-              </h1>
+              <div class="d-flex align-items-center gap-3">
+                <h1 class="margin-bottom-24px text-capitalize title-pages mb-0">
+                  wallet
+                </h1>
+                <button
+                  @click="otpModalAmount = true"
+                  class="btn text-capitalize"
+                >
+                  deposit money
+                </button>
+              </div>
 
               <div class="balance d-flex flex-column text-center">
                 <span class="p-color-fs fs">current blance</span>
@@ -119,16 +127,77 @@
             </div>
           </div>
         </div>
+
+        <div
+          v-if="otpModalAmount"
+          class="modal-overlay"
+          @click.self="otpModalAmount = false"
+        >
+          <div class="modal-content">
+            <div class="mdoal-box">
+              <h4 class="label fw-bold mb-2">the amount</h4>
+              <!-- amount input -->
+              <input
+                type="number"
+                class="input w-100 p-2 rounded mb-3"
+                placeholder=""
+                v-model="walletAmount"
+              />
+              <!-- box-details -->
+              <div class="box-details rounded p-3 mb-3">
+                <div class="d-flex align-items-centre justify-content-between">
+                  <h1 class="label">the amount</h1>
+                  <p class="label">0.0 sar</p>
+                </div>
+                <div class="d-flex align-items-centre justify-content-between">
+                  <h1 class="label">Cash back</h1>
+                  <p class="label text-success">0.0 SAR</p>
+                </div>
+                <div class="d-flex align-items-centre justify-content-between">
+                  <h1 class="label">Expenses</h1>
+                  <p class="label text-success">0.0 SAR</p>
+                </div>
+              </div>
+              <!-- total amount -->
+              <div class="totalamount text-center rounded p-1">
+                <span class="p-color-fs text-capitalize">the amount</span>
+                <h4 v-if="walletAmount">
+                  {{ walletAmount }} <span class="label">SAR</span>
+                </h4>
+                <h4 v-else>0 <span class="label">SAR</span></h4>
+              </div>
+              <!-- to pay -->
+              <div
+                class="to-pay mt-3"
+                @click="
+                  navigateTo({
+                    path: '/payment',
+                    query: { totalAmountWall: walletAmount },
+                  })
+                "
+              >
+                <ButtonCard
+                  textButton="deposit money"
+                  :disabled="!walletAmount"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
+// import OtpModal from '~/components/OtpModal.vue';
+
 let dayjs = useDayjs();
 let wallets = ref([]);
 let allData = ref(null);
 let currentPage = ref(1);
+const otpModalAmount = ref(false);
+const walletAmount = ref(null);
 
 const isLoading = ref(true);
 
@@ -172,5 +241,23 @@ onMounted(() => {
 .fs {
   font-size: 13px;
   color: #3d3d3d;
+}
+.mdoal-box input {
+  outline: none;
+  background-color: var(--color-secound-main);
+  border: 2px solid var(--color-secound-main);
+}
+.box-details {
+  background-color: var(--color-secound-main);
+}
+.totalamount {
+  background-color: #ecfaf2;
+}
+
+.to-pay :deep(button:disabled) {
+  background-color: #ccc !important;
+  color: #666 !important;
+  border-color: #bbb !important;
+  cursor: not-allowed !important;
 }
 </style>

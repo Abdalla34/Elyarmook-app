@@ -11,13 +11,14 @@ export const useApi = () => {
     Accept: "application/json",
     "Access-Control-Allow-Origin": "*",
   };
-
+  // done
   const resetToken = async () => {
     token.value = null;
-  }
-  const getToken = async (userToken) => {
+  };
+  // done
+  const getToken = async (userToken: any) => {
     token.value = userToken;
-  }
+  };
   // done
   const sendOTP = async (phone: any) => {
     return await $fetch(`${baseURL}/auth/send-otp`, {
@@ -147,16 +148,7 @@ export const useApi = () => {
     });
   };
 
-  // const scanImage = async (image: any) => {
-  //   return await $fetch(`${baseURL}/core/scan-image`, {
-  //     method: "POST",
-  //     body: { image },
-  //     headers,
-  //   });
-  // };
-
   // done
-
   const getMyCart = async () => {
     let tokens = useCookie("token", { maxAge: 365 * 24 * 60 * 60 });
     return await $fetch(`${baseURL}/marketplace/cart/my-cart`, {
@@ -465,6 +457,13 @@ export const useApi = () => {
       headers,
     });
   };
+  const usePaymentToChargeWallet = async (wallet_amount: any, brand: any) => {
+    return await $fetch(`${baseURL}/payment/hyper-pay/prepare-checkout`, {
+      method: "POST",
+      body: { wallet_amount: wallet_amount, brand: brand },
+      headers,
+    });
+  };
   // done
   const getHyperpayStatus = async (id: any) => {
     return await $fetch(`${baseURL}/payment/hyper-pay/check-status`, {
@@ -477,6 +476,7 @@ export const useApi = () => {
   const tamaraPayment = async (payload: {
     order_id?: any;
     membership_id?: any;
+    wallet_amount?: any;
     success_url: any;
     failure_url: any;
     cancel_url: any;
@@ -491,6 +491,7 @@ export const useApi = () => {
   const tabyPayment = async (payload: {
     order_id?: any;
     membership_id?: any;
+    wallet_amount?: any;
     success_url: any;
     failure_url: any;
     cancel_url: any;
@@ -646,7 +647,6 @@ export const useApi = () => {
     getSliders,
     rateBranch,
     rateAppAndBranch,
-    // scanImage,
     getMyCart,
     getMycars,
     addToCart,
@@ -698,6 +698,7 @@ export const useApi = () => {
     editCar,
     memberShips,
     memberShipDetails,
+    usePaymentToChargeWallet,
     getWenchInCart,
     resetToken,
     getToken,

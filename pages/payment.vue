@@ -16,7 +16,9 @@
               <p>{{ msg }}</p>
             </div>
           </div>
+          <!-- payment methods -->
           <div v-if="!checkoutId && !cachLayout" class="methods">
+            <!-- visa -->
             <div
               :disabled="isLoading"
               @click="selecteBrand('visa')"
@@ -25,7 +27,7 @@
               <div class="position-absolute bg-hover"></div>
               <div class="name text-capitalize fw-bold">Pay with visa</div>
             </div>
-
+            <!-- mada -->
             <div
               @click="!isPayTrue && selecteBrand('mada')"
               class="box-method d-flex gap-4 justify-content-center border-radius-36px p-color-fs align-items-center mb-4 position-relative box-hover-bg"
@@ -33,7 +35,7 @@
               <div class="position-absolute bg-hover"></div>
               <div class="name text-capitalize fw-bold">pay whith mada</div>
             </div>
-
+            <!-- apple pay -->
             <div
               :disabled="isLoading"
               @click="selecteBrand('applepay')"
@@ -46,7 +48,7 @@
                 <img src="/paymentImg.png" alt="" />
               </div>
             </div>
-
+            <!-- master -->
             <div
               :disabled="isLoading"
               @click="selecteBrand('master')"
@@ -55,7 +57,7 @@
               <div class="position-absolute bg-hover"></div>
               <div class="name text-capitalize fw-bold">master</div>
             </div>
-
+            <!-- tamara -->
             <div
               :disabled="isLoading"
               @click="paywithTamara"
@@ -64,7 +66,7 @@
               <div class="position-absolute bg-hover"></div>
               <div class="name text-capitalize fw-bold">tamara</div>
             </div>
-
+            <!-- tabby -->
             <div
               :disabled="isLoading"
               @click="paymentWihtTbby"
@@ -73,7 +75,7 @@
               <div class="position-absolute bg-hover"></div>
               <div class="name text-capitalize fw-bold">tabby</div>
             </div>
-
+            <!-- cach on delivery -->
             <div
               v-if="orderDetails?.open_cash"
               @click="chachOnDelivery"
@@ -191,23 +193,39 @@ const isPayTrue = ref(false);
 let route = useRoute();
 let id = route.query.id;
 let membershipId = route.query.membership;
+const walletAmount = ref(0);
+walletAmount.value = route.query.totalAmountWall || 0;
 
 let brand = ref("");
 let checkoutId = ref(null);
 let amount = ref(null);
 
+watch(checkoutId, async (val) => {
+  if (val) {
+    await nextTick();
+    let script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = `https://test.oppwa.com/v1/paymentWidgets.js?checkoutId=${checkoutId.value}`;
+    document.body.appendChild(script);
+  }
+});
+
 const formAction = ref("");
 const msg = ref("");
+
 let paymentWithHyperPay = async () => {
   try {
+    const amountTonum = Number(walletAmount.value);
     let res;
     isLoading.value = true;
 
     if (membershipId) {
       res = await useApi().usePaymentMembership(membershipId, brand.value);
       msg.value = res?.message;
+    } else if (id) {
+      res = await useApi().usePaymentMembership(id, brand.value);
     } else {
-      res = await useApi().usePayment(id, brand.value);
+      res = await useApi().usePaymentToChargeWallet(amountTonum, brand.value);
     }
 
     if (res) {
@@ -267,9 +285,22 @@ let paywithTamara = async () => {
       if (res?.data?.checkout_url) {
         window.location.href = res.data.checkout_url;
       }
-    } else {
+    } else if (membershipId) {
       let res = await useApi().tamaraPayment({
         membership_id: membershipId,
+        success_url: `${domain}/payment-tamara-status/success`,
+        failure_url: `${domain}/payment-tamara-status/failed`,
+        cancel_url: `${domain}/payment-tamara-status/cancel`,
+      });
+      if (res?.data?.checkout_url) {
+        window.location.href = res.data.checkout_url;
+      }
+      if (!res?.status) {
+        msg.value = res?.message;
+      }
+    } else {
+      let res = await useApi().tamaraPayment({
+        wallet_amount: walletAmount.value,
         success_url: `${domain}/payment-tamara-status/success`,
         failure_url: `${domain}/payment-tamara-status/failed`,
         cancel_url: `${domain}/payment-tamara-status/cancel`,
@@ -301,9 +332,22 @@ let paymentWihtTbby = async () => {
       if (res && res?.data?.checkout_url) {
         window.location.href = res?.data?.checkout_url;
       }
-    } else {
+    } else if (membershipId) {
       let res = await useApi().tabyPayment({
         membership_id: membershipId,
+        success_url: `${domain}/payment-tamara-status/success`,
+        failure_url: `${domain}/payment-tamara-status/failed`,
+        cancel_url: `${domain}/payment-tamara-status/cancel`,
+      });
+      if (res && res?.data?.checkout_url) {
+        window.location.href = res?.data?.checkout_url;
+      }
+      if (!res?.status) {
+        msg.value = res?.message;
+      }
+    } else {
+      let res = await useApi().tabyPayment({
+        wallet_amount: walletAmount.value,
         success_url: `${domain}/payment-tamara-status/success`,
         failure_url: `${domain}/payment-tamara-status/failed`,
         cancel_url: `${domain}/payment-tamara-status/cancel`,
@@ -321,8 +365,6 @@ let paymentWihtTbby = async () => {
     isLoading.value = false;
   }
 };
-
-
 
 const cachLayout = ref(false);
 const orderPoints = ref(null);
