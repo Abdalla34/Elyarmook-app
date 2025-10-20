@@ -19,6 +19,8 @@ onMounted(async () => {
   loading.value = true;
 
   const rawId = route.query.id;
+  const paymentType = route.query.type;
+
   if (!rawId) {
     router.replace("/payment-tamara-status/failed");
     return;
@@ -27,15 +29,45 @@ onMounted(async () => {
   try {
     const res = await useApi().getHyperpayStatus(rawId);
     if (res?.status === true || res?.status === "true") {
-      router.replace("/payment-tamara-status/success?hyper=success");
+      if (paymentType === "wallet") {
+        router.push("/wallet");
+      } else {
+        router.push("/payment-tamara-status/success?hyper=success");
+      }
     } else {
-      router.replace("/payment-tamara-status/failed");
+      router.push("/payment-tamara-status/failed");
     }
   } catch (err) {
-    console.error(err);
-    router.replace("/payment-tamara-status/failed");
+    router.push("/payment-tamara-status/failed");
   } finally {
     loading.value = false;
   }
 });
+
+// onMounted(async () => {
+//   if (isChecking) return;
+//   isChecking = true;
+//   loading.value = true;
+
+//   const rawId = route.query.id;
+//   if (!rawId) {
+//     router.replace("/payment-tamara-status/failed");
+//     return;
+//   }
+
+//   try {
+//     const res = await useApi().getHyperpayStatus(rawId);
+//     if(res?.statu && res?.message === 'payment')
+//     if (res?.status === true || res?.status === "true") {
+//       router.replace("/payment-tamara-status/success?hyper=success");
+//     } else {
+//       router.replace("/payment-tamara-status/failed");
+//     }
+//   } catch (err) {
+//     console.error(err);
+//     router.replace("/payment-tamara-status/failed");
+//   } finally {
+//     loading.value = false;
+//   }
+// });
 </script>

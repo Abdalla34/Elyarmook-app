@@ -221,11 +221,14 @@ let paymentWithHyperPay = async () => {
 
     if (membershipId) {
       res = await useApi().usePaymentMembership(membershipId, brand.value);
+      formAction.value = `${window.location.origin}/payment-tamara-status?type=order`;
       msg.value = res?.message;
     } else if (id) {
-      res = await useApi().usePaymentMembership(id, brand.value);
+      res = await useApi().usePayment(id, brand.value);
+      formAction.value = `${window.location.origin}/payment-tamara-status?type=order`;
     } else {
       res = await useApi().usePaymentToChargeWallet(amountTonum, brand.value);
+      formAction.value = `${window.location.origin}/payment-tamara-status?type=wallet`
     }
 
     if (res) {
@@ -252,7 +255,6 @@ let paymentWithHyperPay = async () => {
 };
 
 function selecteBrand(brandPay) {
-  console.log(brand.value);
   brand.value = brandPay;
   paymentWithHyperPay();
 }
@@ -301,9 +303,9 @@ let paywithTamara = async () => {
     } else {
       let res = await useApi().tamaraPayment({
         wallet_amount: walletAmount.value,
-        success_url: `${domain}/payment-tamara-status/success`,
-        failure_url: `${domain}/payment-tamara-status/failed`,
-        cancel_url: `${domain}/payment-tamara-status/cancel`,
+        success_url: `${domain}/wallet`,
+        failure_url: `${domain}/wallet`,
+        cancel_url: `${domain}/wallet`,
       });
       if (res?.data?.checkout_url) {
         window.location.href = res.data.checkout_url;
@@ -348,9 +350,9 @@ let paymentWihtTbby = async () => {
     } else {
       let res = await useApi().tabyPayment({
         wallet_amount: walletAmount.value,
-        success_url: `${domain}/payment-tamara-status/success`,
-        failure_url: `${domain}/payment-tamara-status/failed`,
-        cancel_url: `${domain}/payment-tamara-status/cancel`,
+        success_url: `${domain}/wallet`,
+        failure_url: `${domain}/wallet`,
+        cancel_url: `${domain}/wallet`,
       });
       if (res && res?.data?.checkout_url) {
         window.location.href = res?.data?.checkout_url;

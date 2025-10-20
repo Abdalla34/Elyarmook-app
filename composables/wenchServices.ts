@@ -32,9 +32,20 @@ export function useWenchServices() {
     });
   };
 
+  const updateWenchOrder = async (orderId: any, payload: any) => {
+    return await $fetch(`${baseURL}/order/orders/${orderId}`, {
+      method: "PUT",
+      headers,
+      body: {
+        payload,
+      },
+    });
+  };
+
   return {
     problems,
     createWenchOrder,
     getLastOrder,
+    updateWenchOrder,
   };
 }

@@ -4,12 +4,12 @@
       <div>
         <img src="/donePayment.png" alt="تم الدفع بنجاح" />
         <h1 class="text-green-600 text-3xl font-bold mb-4">
-          An appointment has been set successfully
+          {{ message }}
         </h1>
-        <p class="label">
+        <!-- <p class="label">
           Lorem ipsum dolor sit amet,Lorem Lorem ipsum dolor sit amet,Lorem
           Lorem ipsum dolor sit amet sit amet,Lorem
-        </p>
+        </p> -->
       </div>
     </div>
 
@@ -19,15 +19,14 @@
 </template>
 
 <script setup>
+const message = ref("");
 const route = useRoute();
 const router = useRouter();
-const { triggerCartUpdate } = useCartUpdate();
 try {
   let paymentId = route.query.payment_id;
   let hyperSucess = route.query.hyper;
 
   if (hyperSucess === "success") {
-    triggerCartUpdate();
     setTimeout(() => {
       router.replace("/");
     }, 2000);
@@ -36,10 +35,11 @@ try {
   if (paymentId) {
     const res = await useApi().tabbyStatusSuccess(paymentId);
     if (res?.status === true || res?.status === "true") {
-      triggerCartUpdate();
+      message.value = res?.message || "تمت عملية الدفع بنجاح";
       router.replace("/");
     } else {
       router.replace("/payment-tamara-status/failed");
+      message.value = res?.message || "فشلت عملية الدفع";
     }
   }
   // if (paymentId) {

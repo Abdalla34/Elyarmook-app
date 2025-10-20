@@ -147,11 +147,15 @@
               <div class="box-details rounded p-3 mb-3">
                 <div class="d-flex align-items-centre justify-content-between">
                   <h1 class="label">the amount</h1>
-                  <p class="label">0.0 sar</p>
+                  <p v-if="cashback" class="label">{{ cashback.amount }} SAR</p>
+                  <p v-else class="label">0.0 SAR</p>
                 </div>
                 <div class="d-flex align-items-centre justify-content-between">
                   <h1 class="label">Cash back</h1>
-                  <p class="label text-success">0.0 SAR</p>
+                  <p v-if="cashback" class="label text-success">
+                    {{ cashback.cashback }} SAR
+                  </p>
+                  <p v-else class="label text-success">0.0 SAR</p>
                 </div>
                 <div class="d-flex align-items-centre justify-content-between">
                   <h1 class="label">Expenses</h1>
@@ -161,8 +165,8 @@
               <!-- total amount -->
               <div class="totalamount text-center rounded p-1">
                 <span class="p-color-fs text-capitalize">the amount</span>
-                <h4 v-if="walletAmount">
-                  {{ walletAmount }} <span class="label">SAR</span>
+                <h4 v-if="cashback">
+                  {{ cashback.total }} <span class="label">SAR</span>
                 </h4>
                 <h4 v-else>0 <span class="label">SAR</span></h4>
               </div>
@@ -190,8 +194,6 @@
 </template>
 
 <script setup>
-// import OtpModal from '~/components/OtpModal.vue';
-
 let dayjs = useDayjs();
 let wallets = ref([]);
 let allData = ref(null);
@@ -207,6 +209,32 @@ let getDataWallet = async (page = 1) => {
     let resWallet = await useApi().getWallet(page);
     allData.value = resWallet?.data || null;
     wallets.value = resWallet?.data?.transactions?.items || [];
+  } finally {
+    isLoading.value = false;
+  }
+};
+
+const cashback = ref(null);
+
+let debounceTimer;
+
+watch(walletAmount, (val) => {
+  clearTimeout(debounceTimer);
+  if (!val) {
+    cashback.value = null;
+    return;
+  }
+  debounceTimer = setTimeout(() => {
+    getCashbackWallet(val);
+  }, 200);
+});
+
+let getCashbackWallet = async (amount) => {
+  isLoading.value = true;
+  try {
+    let resWallet = await useApi().getCashbackWallet(walletAmount.value);
+    cashback.value = resWallet?.data || null;
+    console.log(cashback.value);
   } finally {
     isLoading.value = false;
   }

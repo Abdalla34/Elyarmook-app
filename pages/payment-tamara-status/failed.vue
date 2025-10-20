@@ -1,7 +1,7 @@
 <template>
   <div class="container text-center py-10">
     <h1 class="text-danger text-3xl font-bold mb-4">
-      فشل الدفع. يرجى المحاولة مرة أخرى.
+      {{ message }}
     </h1>
 
     <NuxtLink
@@ -16,10 +16,12 @@
 <script setup>
 const route = useRoute();
 const router = useRouter();
+const message = ref("");
 try {
   let paymentId = route.query.payment_id;
   if (paymentId) {
     const res = await useApi().tabbyStatusFailure(paymentId);
+    message.value = res?.message || "فشلت عملية الدفع";
   }
 } catch (err) {
   console.log(err);

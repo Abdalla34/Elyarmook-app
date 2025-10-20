@@ -376,6 +376,14 @@ export const useApi = () => {
     });
   };
   // done
+  const getCashbackWallet = async (amount: any) => {
+    return await $fetch(`${baseURL}/wallet/get-cashback-wallet`, {
+      method: "POST",
+      headers,
+      body: { amount },
+    });
+  };
+  // done
   const toggleUseWallet = async (order_id: any, response_type: any) => {
     return await $fetch(`${baseURL}/marketplace/order/use_wallet/${order_id}`, {
       method: "POST",
@@ -671,6 +679,7 @@ export const useApi = () => {
     deleteCar,
     changeCarToDefault,
     getWallet,
+    getCashbackWallet,
     getStatusorders,
     getPoints,
     redeemPoints,

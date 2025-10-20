@@ -553,17 +553,19 @@ const payload = computed(() => ({
   address: address.value || null,
   lat: currentLatLng.value.lat ? String(currentLatLng.value.lat) : null,
   lng: currentLatLng.value.lng ? String(currentLatLng.value.lng) : null,
-  user_car_id: defaultCar.value ? defaultCar.value.id : null,
+  user_car_id: defaultCar.value?.id || mycars.value[0]?.id || null,
   address_return: addressReturn.value ? String(addressReturn.value) : null,
   lat_return: returnLatLng.value.lat ? String(returnLatLng.value.lat) : null,
   lng_return: returnLatLng.value.lng ? String(returnLatLng.value.lng) : null,
   is_booking_now: isBookingNow.value,
-  in_cart: false,
+  in_cart: true,
   service_id: service_id.value || null,
   spare_part_id: spare_part_id.value || null,
 }));
+
 const isLoading = ref(false);
 const router = useRouter();
+const updateOrderId = useState("updateOrderId", () => null);
 async function createOrderWench() {
   try {
     isLoading.value = true;
@@ -588,7 +590,8 @@ async function createOrderWench() {
     );
     if (res && res.status) {
       navigateTo(`/cart-comfortable-service/${res?.data?.id}`);
-      console.log(res?.data?.id);
+      updateOrderId.value = res?.data?.id
+      console.log("after created done", updateOrderId);
     } else {
       console.log(
         "Failed to create order: " + (res?.message || "Unknown error")
@@ -602,7 +605,19 @@ async function createOrderWench() {
   }
 }
 const onSubmit = handleSubmit(async () => {
-  await createOrderWench();
+      const cleanedPayload = Object.fromEntries(
+      Object.entries(payload.value).filter(([_, v]) => v !== null && v !== "")
+    );
+  if (updateOrderId.value) {
+    let res = await useWenchServices().updateWenchOrder(updateOrderId.value, cleanedPayload);
+    if (res && res.status) {
+      navigateTo(`/cart-comfortable-service/${updateOrderId.value}`);
+      console.log("after updated done", updateOrderId);
+      console.log("defaultCar", defaultCar.value);
+    }
+  } else {
+    await createOrderWench();
+  }
 });
 </script>
 
