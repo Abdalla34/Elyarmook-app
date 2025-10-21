@@ -226,7 +226,7 @@ watch(walletAmount, (val) => {
   }
   debounceTimer = setTimeout(() => {
     getCashbackWallet(val);
-  }, 200);
+  }, 300);
 });
 
 let getCashbackWallet = async (amount) => {

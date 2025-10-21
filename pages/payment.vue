@@ -10,12 +10,26 @@
           >
             chose payment method
           </h1>
+          <!-- message if user have a membership -->
           <div v-if="msg" class="modal-overlay" @click.self="msg = ''">
             <div class="modal-body">
               <button class="close-btn" @click="msg = ''">×</button>
               <p>{{ msg }}</p>
             </div>
           </div>
+
+          <!-- message if user charge wallet field -->
+          <div
+            v-if="walletChargeMsg"
+            class="modal-overlay"
+            @click.self="walletChargeMsg = ''"
+          >
+            <div class="modal-body">
+              <button class="close-btn" @click="walletChargeMsg = ''">×</button>
+              <p>{{ walletChargeMsg }}</p>
+            </div>
+          </div>
+
           <!-- payment methods -->
           <div v-if="!checkoutId && !cachLayout" class="methods">
             <!-- visa -->
@@ -212,6 +226,7 @@ watch(checkoutId, async (val) => {
 
 const formAction = ref("");
 const msg = ref("");
+const walletChargeMsg = ref("");
 
 let paymentWithHyperPay = async () => {
   try {
@@ -228,7 +243,7 @@ let paymentWithHyperPay = async () => {
       formAction.value = `${window.location.origin}/payment-tamara-status?type=order`;
     } else {
       res = await useApi().usePaymentToChargeWallet(amountTonum, brand.value);
-      formAction.value = `${window.location.origin}/payment-tamara-status?type=wallet`
+      formAction.value = `${window.location.origin}/payment-tamara-status?type=wallet`;
     }
 
     if (res) {
@@ -276,6 +291,7 @@ onMounted(async () => {
 
 let paywithTamara = async () => {
   try {
+    const walletToNum = Number(walletAmount.value);
     isLoading.value = true;
     if (id) {
       let res = await useApi().tamaraPayment({
@@ -302,11 +318,14 @@ let paywithTamara = async () => {
       }
     } else {
       let res = await useApi().tamaraPayment({
-        wallet_amount: walletAmount.value,
+        wallet_amount: walletToNum,
         success_url: `${domain}/wallet`,
         failure_url: `${domain}/wallet`,
         cancel_url: `${domain}/wallet`,
       });
+      if (!res.status) {
+        walletChargeMsg.value = res?.message;
+      }
       if (res?.data?.checkout_url) {
         window.location.href = res.data.checkout_url;
       }
@@ -315,7 +334,7 @@ let paywithTamara = async () => {
       }
     }
   } catch (err) {
-    console.log(err);
+    walletChargeMsg.value = "Something went wrong!";
   } finally {
     isLoading.value = false;
   }
@@ -354,6 +373,9 @@ let paymentWihtTbby = async () => {
         failure_url: `${domain}/wallet`,
         cancel_url: `${domain}/wallet`,
       });
+      if (!res.status) {
+        walletChargeMsg.value = res?.message;
+      }
       if (res && res?.data?.checkout_url) {
         window.location.href = res?.data?.checkout_url;
       }
@@ -363,6 +385,7 @@ let paymentWihtTbby = async () => {
     }
   } catch (err) {
     console.log("err", err);
+    walletChargeMsg.value = err?.response?.message;
   } finally {
     isLoading.value = false;
   }

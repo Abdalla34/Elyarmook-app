@@ -373,28 +373,44 @@
 <script setup>
 import { useForm, useField } from "vee-validate";
 import * as yup from "yup";
+// const schema = yup.object({
+//   branchValue: yup.string().required("you should selected branch"),
+//   problem: yup.string().required("you should selected type porblem "),
+//   address: yup.string().required(" address required"),
+// });
+
+// const { handleSubmit } = useForm({
+//   validationSchema: schema,
+// });
+
+// const { value: branchValue, errorMessage: branchError } =
+//   useField("branchValue");
+// const { value: problem, errorMessage: problemError } = useField("problem");
+// const { value: address, errorMessage: addressError } = useField("address");
+
 const schema = yup.object({
-  branchValue: yup.string().required("you should selected branch"),
-  problem: yup.string().required("you should selected type porblem "),
-  address: yup.string().required(" address required"),
+  branchValue: yup.string().required("you should select a branch"),
+  problem: yup.string().required("you should select a problem type"),
+  address: yup.string().required("address is required"),
 });
+// const { handleSubmit } = useForm({
+//   validationSchema: schema,
+// });
+const branchValue = useState("branchValue", () => "");
+const problem = useState("problem", () => "");
+const address = useState("address", () => "");
 
-const { handleSubmit } = useForm({
-  validationSchema: schema,
-});
-
-const { value: branchValue, errorMessage: branchError } =
-  useField("branchValue");
-const { value: problem, errorMessage: problemError } = useField("problem");
-const { value: address, errorMessage: addressError } = useField("address");
+const branchError = useState("branchError", () => "");
+const problemError = useState("problemError", () => "");
+const addressError = useState("addressError", () => "");
 
 const dayjs = useDayjs();
 const branches = ref([]);
 
-const typeDelivery = ref("");
+const typeDelivery = useState("typeDelivery", () => "standard");
 const mycars = ref([]);
 
-const reservationTime = ref(null);
+const reservationTime = useState("reservationTime", () => null);
 const rescar = await useApi().getMycars();
 mycars.value = rescar?.data || [];
 const getProblems = ref([]);
@@ -407,10 +423,10 @@ const defaultCar = computed(
   () => mycars.value.find((car) => car.is_default) || null
 );
 
-const availableDates = ref([]);
+const availableDates = useState("availableDates", () => []);
 const isBranchAvailable = ref(false);
 const showUnavailableModal = ref(false);
-const getAvailableTimeBranch = ref(null);
+const getAvailableTimeBranch = useState("getAvailableTimeBranch", () => null);
 
 watch(branchValue, async (newId) => {
   if (newId) {
@@ -476,8 +492,8 @@ const markers = {
 };
 
 const currentLatLng = ref({ lat: null, lng: null });
-const returnLatLng = ref({ lat: null, lng: null });
-const addressReturn = ref("");
+const returnLatLng = useState("returnLatLng", () => ({ lat: null, lng: null }));
+const addressReturn = useState("addressReturn", () => "");
 
 const openMap = (returnMode = false) => {
   if (returnMode) {
@@ -542,21 +558,21 @@ const confirmLocation = (returnMode = false) => {
   });
 };
 
-const isBookingNow = ref(null);
-const service_id = ref([]);
-const spare_part_id = ref([]);
+const isBookingNow = useState("isBookingNow", () => null);
+const service_id = useState("service_id", () => []);
+const spare_part_id = useState("spare_part_id", () => []);
 const payload = computed(() => ({
   branch_id: branchValue.value || null,
   delivery_direction: typeDelivery.value || null,
   problem_id: problem.value || null,
   reservation_time: reservationTime.value,
   address: address.value || null,
-  lat: currentLatLng.value.lat ? String(currentLatLng.value.lat) : null,
-  lng: currentLatLng.value.lng ? String(currentLatLng.value.lng) : null,
+  lat: currentLatLng.value.lat ? String(currentLatLng.value.lat) : '0',
+  lng: currentLatLng.value.lng ? String(currentLatLng.value.lng) : '0',
   user_car_id: defaultCar.value?.id || mycars.value[0]?.id || null,
-  address_return: addressReturn.value ? String(addressReturn.value) : null,
-  lat_return: returnLatLng.value.lat ? String(returnLatLng.value.lat) : null,
-  lng_return: returnLatLng.value.lng ? String(returnLatLng.value.lng) : null,
+  address_return: addressReturn.value ? String(addressReturn.value) : '0',
+  lat_return: returnLatLng.value.lat ? String(returnLatLng.value.lat) : '0',
+  lng_return: returnLatLng.value.lng ? String(returnLatLng.value.lng) : '0',
   is_booking_now: isBookingNow.value,
   in_cart: true,
   service_id: service_id.value || null,
@@ -564,8 +580,8 @@ const payload = computed(() => ({
 }));
 
 const isLoading = ref(false);
-const router = useRouter();
 const updateOrderId = useState("updateOrderId", () => null);
+
 async function createOrderWench() {
   try {
     isLoading.value = true;
@@ -590,8 +606,8 @@ async function createOrderWench() {
     );
     if (res && res.status) {
       navigateTo(`/cart-comfortable-service/${res?.data?.id}`);
-      updateOrderId.value = res?.data?.id
-      console.log("after created done", updateOrderId);
+      updateOrderId.value = res?.data?.id;
+      console.log("after created done", updateOrderId.value);
     } else {
       console.log(
         "Failed to create order: " + (res?.message || "Unknown error")
@@ -604,21 +620,40 @@ async function createOrderWench() {
     isLoading.value = false;
   }
 }
-const onSubmit = handleSubmit(async () => {
-      const cleanedPayload = Object.fromEntries(
-      Object.entries(payload.value).filter(([_, v]) => v !== null && v !== "")
-    );
+
+const onSubmit = async () => {
+  const isValid = await schema.isValid({
+    branchValue: branchValue.value,
+    problem: problem.value,
+    address: address.value,
+  });
   if (updateOrderId.value) {
-    let res = await useWenchServices().updateWenchOrder(updateOrderId.value, cleanedPayload);
+    let res = await useWenchServices().updateWenchOrder(
+      updateOrderId.value,
+      payload.value
+    );
     if (res && res.status) {
-      navigateTo(`/cart-comfortable-service/${updateOrderId.value}`);
+      navigateTo(`/cart-comfortable-service/${res?.data?.id}`);
       console.log("after updated done", updateOrderId);
-      console.log("defaultCar", defaultCar.value);
+      console.log(res?.data);
     }
   } else {
     await createOrderWench();
   }
-});
+};
+console.log("userCarId", defaultCar.value.id);
+console.log("updateorderId", updateOrderId.value);
+// const onSubmit = async () => {
+//   if (updateOrderId.value) {
+//     let res = await useWenchServices().updateWenchOrder(updateOrderId.value);
+//     if (res && res.status) {
+//       navigateTo(`/cart-comfortable-service/${updateOrderId.value}`);
+//       console.log("after updated done", updateOrderId);
+//     }
+//   } else {
+//     await createOrderWench();
+//   }
+// };
 </script>
 
 <style scoped>

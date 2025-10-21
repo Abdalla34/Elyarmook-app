@@ -630,12 +630,6 @@ export const useApi = () => {
     });
   };
 
-  const getWenchInCart = async () => {
-    return $fetch(`${baseURL}/order/wench-cart`, {
-      method: "GET",
-      headers,
-    });
-  };
   return {
     sendOTP,
     checkOTP,
@@ -708,7 +702,6 @@ export const useApi = () => {
     memberShips,
     memberShipDetails,
     usePaymentToChargeWallet,
-    getWenchInCart,
     resetToken,
     getToken,
   };

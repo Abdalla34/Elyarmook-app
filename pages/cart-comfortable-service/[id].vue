@@ -88,7 +88,7 @@ const isLoading = ref(true);
 
 onMounted(async () => {
   try {
-    const response = await useApi().getWenchInCart();
+    const response = await useWenchServices().getWenchInCart();
     wenchOrder.value = response?.data;
   } catch (error) {
     console.error("Error fetching wench order:", error);
