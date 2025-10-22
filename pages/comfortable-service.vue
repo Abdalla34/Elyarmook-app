@@ -31,7 +31,7 @@
 
           <!-- location to receive  -->
           <div
-            v-if="address"
+            v-if="address && !showMapPickup"
             class="box-car mt-3 d-flex align-items-center justify-content-between mb-3 pt-1 pb-1 pe-3 ps-3"
           >
             <div
@@ -49,7 +49,7 @@
             </div>
           </div>
 
-          <div v-else>
+          <div v-if="!address && !showMapPickup">
             <div
               class="location-receive-car mt-5 mb-2 d-flex align-items-center justify-content-center text-capitalize"
               style="cursor: pointer"
@@ -58,22 +58,24 @@
               location to receive car
             </div>
             <span class="text-danger">{{ addressError }}</span>
+          </div>
 
-            <div
-              v-if="showMapPickup"
-              style="position: relative; height: 400px; width: 100%"
+          <!-- Map container - always available when showMapPickup is true -->
+          <div
+            v-if="showMapPickup"
+            class="mt-3"
+            style="position: relative; height: 400px; width: 100%"
+          >
+            <div id="mapPickup" style="height: 100%; width: 100%"></div>
+
+            <!--  btn sure -->
+            <button
+              @click="confirmLocation(false)"
+              class="btn-confirm-location text-capitalize button position-absolute bottom-0 start-50 translate-middle-x mb-3 ps-3 pe-3 pt-1 pb-1"
+              style="cursor: pointer"
             >
-              <div id="mapPickup" style="height: 100%; width: 100%"></div>
-
-              <!--  btn sure -->
-              <button
-                @click="confirmLocation(false)"
-                class="btn-confirm-location text-capitalize button position-absolute bottom-0 start-50 translate-middle-x mb-3 ps-3 pe-3 pt-1 pb-1"
-                style="cursor: pointer"
-              >
-                Confirm Location
-              </button>
-            </div>
+              Confirm Location
+            </button>
           </div>
 
           <!-- select branch -->
@@ -213,7 +215,7 @@
 
           <!-- location to return   -->
           <div
-            v-if="addressReturn"
+            v-if="addressReturn && !showMapReturn && typeDelivery === 'twoWay'"
             class="box-car mt-3 d-flex align-items-center justify-content-between mb-3 pt-1 pb-1 pe-3 ps-3"
           >
             <div
@@ -231,7 +233,7 @@
             </div>
           </div>
 
-          <div v-else-if="typeDelivery === 'twoWay'">
+          <div v-if="!addressReturn && typeDelivery === 'twoWay' && !showMapReturn">
             <div
               class="location-receive-car mt-2 mb-2 d-flex align-items-center justify-content-center text-capitalize"
               style="cursor: pointer"
@@ -239,22 +241,24 @@
             >
               location to return car
             </div>
+          </div>
 
-            <div
-              v-if="showMapReturn"
-              style="position: relative; height: 400px; width: 100%"
+          <!-- Return Map container - always available when showMapReturn is true -->
+          <div
+            v-if="showMapReturn"
+            class="mt-3"
+            style="position: relative; height: 400px; width: 100%"
+          >
+            <div id="mapReturn" style="height: 100%; width: 100%"></div>
+
+            <!--  btn sure -->
+            <button
+              @click="confirmLocation(true)"
+              class="btn-confirm-location text-capitalize button position-absolute bottom-0 start-50 translate-middle-x mb-3 ps-3 pe-3 pt-1 pb-1"
+              style="cursor: pointer"
             >
-              <div id="mapReturn" style="height: 100%; width: 100%"></div>
-
-              <!--  btn sure -->
-              <button
-                @click="confirmLocation(true)"
-                class="btn-confirm-location text-capitalize button position-absolute bottom-0 start-50 translate-middle-x mb-3 ps-3 pe-3 pt-1 pb-1"
-                style="cursor: pointer"
-              >
-                Confirm Location
-              </button>
-            </div>
+              Confirm Location
+            </button>
           </div>
 
           <!-- type problem -->
@@ -479,6 +483,22 @@ onMounted(async () => {
   }
 });
 
+// Cleanup map instances when component is unmounted
+onUnmounted(() => {
+  if (maps.pickup.value) {
+    maps.pickup.value = null;
+  }
+  if (maps.return.value) {
+    maps.return.value = null;
+  }
+  if (markers.pickup.value) {
+    markers.pickup.value = null;
+  }
+  if (markers.return.value) {
+    markers.return.value = null;
+  }
+});
+
 const showMapPickup = ref(false);
 const showMapReturn = ref(false);
 
@@ -496,12 +516,31 @@ const returnLatLng = useState("returnLatLng", () => ({ lat: null, lng: null }));
 const addressReturn = useState("addressReturn", () => "");
 
 const openMap = (returnMode = false) => {
+  // Clean up existing map instances first
+  const mapType = returnMode ? "return" : "pickup";
+  if (maps[mapType].value) {
+    maps[mapType].value = null;
+  }
+  if (markers[mapType].value) {
+    markers[mapType].value = null;
+  }
+
   if (returnMode) {
     showMapReturn.value = true;
   } else {
     showMapPickup.value = true;
   }
 
+  // Wait for DOM to update and then initialize map
+  nextTick(() => {
+    // Add a small delay to ensure DOM is fully rendered
+    setTimeout(() => {
+      initializeMap(returnMode);
+    }, 100);
+  });
+};
+
+const initializeMap = (returnMode = false) => {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
       (pos) => {
@@ -510,22 +549,42 @@ const openMap = (returnMode = false) => {
           lng: pos.coords.longitude,
         };
 
+        const mapType = returnMode ? "return" : "pickup";
         const mapId = returnMode ? "mapReturn" : "mapPickup";
+        
+        let retryCount = 0;
+        const maxRetries = 20; // Maximum 20 retries (1 second total wait)
+        
+        // Wait for element to be available
+        const checkElement = () => {
+          const mapElement = document.getElementById(mapId);
+          
+          if (mapElement) {
+            try {
+              maps[mapType].value = new google.maps.Map(mapElement, {
+                center: startPosition,
+                zoom: 15,
+              });
 
-        maps[returnMode ? "return" : "pickup"].value = new google.maps.Map(
-          document.getElementById(mapId),
-          {
-            center: startPosition,
-            zoom: 15,
+              markers[mapType].value = new google.maps.Marker({
+                position: startPosition,
+                map: maps[mapType].value,
+                draggable: true,
+              });
+            } catch (error) {
+              console.error(`Error initializing map: ${error.message}`);
+            }
+          } else if (retryCount < maxRetries) {
+            // If element not found and we haven't exceeded max retries, try again
+            retryCount++;
+            console.log(`Waiting for map element ${mapId}... (attempt ${retryCount}/${maxRetries})`);
+            setTimeout(checkElement, 50);
+          } else {
+            console.error(`Map element ${mapId} not found after ${maxRetries} attempts`);
           }
-        );
-
-        markers[returnMode ? "return" : "pickup"].value =
-          new google.maps.Marker({
-            position: startPosition,
-            map: maps[returnMode ? "return" : "pickup"].value,
-            draggable: true,
-          });
+        };
+        
+        checkElement();
       },
       (err) => {
         alert("Error: " + err.message);
@@ -535,7 +594,14 @@ const openMap = (returnMode = false) => {
 };
 
 const confirmLocation = (returnMode = false) => {
-  const marker = markers[returnMode ? "return" : "pickup"].value;
+  const mapType = returnMode ? "return" : "pickup";
+  const marker = markers[mapType].value;
+  
+  if (!marker) {
+    alert("No marker found. Please try again.");
+    return;
+  }
+
   const position = marker.getPosition();
   const lat = position.lat();
   const lng = position.lng();
@@ -551,6 +617,14 @@ const confirmLocation = (returnMode = false) => {
         currentLatLng.value = { lat, lng };
         address.value = results[0].formatted_address;
         showMapPickup.value = false;
+      }
+
+      // Clean up map instances after confirmation
+      if (maps[mapType].value) {
+        maps[mapType].value = null;
+      }
+      if (markers[mapType].value) {
+        markers[mapType].value = null;
       }
     } else {
       alert("لم أستطع جلب العنوان");
