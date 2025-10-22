@@ -154,15 +154,9 @@ export const useApi = () => {
 
   // done
   const getMyCart = async () => {
-    let tokens = useCookie("token", { maxAge: 365 * 24 * 60 * 60 });
     return await $fetch(`${baseURL}/marketplace/cart/my-cart`, {
       method: "GET",
-      headers: {
-        Authorization: `Bearer ${tokens.value}`,
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
+      headers,
     });
   };
   // done
@@ -267,6 +261,9 @@ export const useApi = () => {
       headers: {
         Authorization: `Bearer ${token.value}`,
         "Content-Type": "application/json",
+        Accept: "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Accept-Language": locale.value,
       },
       params,
     });

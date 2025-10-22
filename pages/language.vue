@@ -117,7 +117,8 @@
 <script setup>
 let isArabic = ref(false);
 let isEnglish = ref(false);
-
+const { setLocale } = useI18n()
+// setLocale('en');
 const isConfirmationOpen = computed(() => isArabic.value || isEnglish.value);
 
 function cancelArabic() {

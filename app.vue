@@ -12,8 +12,18 @@
 </template>
 
 <script setup>
+
+const { locale } = useI18n()
+
+// Set HTML dir attribute based on locale
+const direction = computed(() => locale.value === 'ar' ? 'rtl' : 'ltr')
+
 // Global app configuration
 useHead({
+  htmlAttrs: {
+    dir: direction,
+    lang: locale
+  },
   title: "Yarmook - Car Services",
   meta: [
     {
@@ -30,6 +40,19 @@ useHead({
     },
   ],
 });
+
+// Client-side fallback for hydration
+onMounted(() => {
+  document.documentElement.setAttribute('dir', direction.value)
+  document.documentElement.setAttribute('lang', locale.value)
+  
+  // Watch for locale changes
+  watch([direction, locale], ([newDir, newLocale]) => {
+    document.documentElement.setAttribute('dir', newDir)
+    document.documentElement.setAttribute('lang', newLocale)
+  })
+})
+
 
 const {
   initCartFromLocalStorage
