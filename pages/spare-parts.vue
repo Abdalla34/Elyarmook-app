@@ -24,7 +24,7 @@
               <TitleServices
                 :title="sparepart.title"
                 :currency="
-                  sparepart.has_price ? sparepart.price_text + ' sar' : ''
+                  sparepart.has_price ? sparepart.price_text + $t('sar') : ''
                 "
               />
 
@@ -36,7 +36,7 @@
                 <button
                   class="btn btn-outline-danger btn-sm d-flex gap-2 align-items-center"
                 >
-                  delete <Trash />
+                  {{ $("delete") }} <Trash />
                 </button>
               </div>
             </div>
@@ -45,7 +45,7 @@
               v-if="!sparepart.has_price"
               class="text-danger price-value mt-5"
             >
-              سوف يتم تحديد السعر قريبا
+              {{ $t("The price will be determined soon") }}
             </div>
 
             <!-- btn add to cart -->
@@ -53,7 +53,9 @@
               <ButtonCard
                 v-if="!sparepart.in_cart && !inCart[sparepart.id]"
                 :textButton="
-                  loadingAddToCart[sparepart.id] ? 'loading...' : 'add to cart'
+                  loadingAddToCart[sparepart.id]
+                    ? $t('loading...')
+                    : $t('add to cart')
                 "
                 @click="handleAdd(sparepart, 'spare_part')"
               />
@@ -64,7 +66,7 @@
                 disabled
               >
                 <PuplicIconBtnCartAdded />
-                added to cart
+                {{ $t("added to cart") }}
               </button>
             </div>
           </div>
@@ -81,7 +83,10 @@
         <!-- show if cart empty -->
         <div class="isEmpty"></div>
         <div v-if="btnShooping" class="btn-shooping position-fixed bottom-0">
-          <ButtonCard @click="BtnShooping" textButton="continue shopping" />
+          <ButtonCard
+            @click="BtnShooping"
+            :textButton="$t('continue shopping')"
+          />
         </div>
       </div>
     </div>
@@ -89,7 +94,6 @@
 </template>
 
 <script setup>
-import { ca } from "date-fns/locale";
 const spareParts = ref([]);
 
 const {

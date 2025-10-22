@@ -607,7 +607,7 @@ async function createOrderWench() {
     if (res && res.status) {
       navigateTo(`/cart-comfortable-service/${res?.data?.id}`);
       updateOrderId.value = res?.data?.id;
-      console.log("after created done", updateOrderId.value);
+   
     } else {
       console.log(
         "Failed to create order: " + (res?.message || "Unknown error")
@@ -634,26 +634,11 @@ const onSubmit = async () => {
     );
     if (res && res.status) {
       navigateTo(`/cart-comfortable-service/${res?.data?.id}`);
-      console.log("after updated done", updateOrderId);
-      console.log(res?.data);
     }
   } else {
     await createOrderWench();
   }
 };
-console.log("userCarId", defaultCar.value.id);
-console.log("updateorderId", updateOrderId.value);
-// const onSubmit = async () => {
-//   if (updateOrderId.value) {
-//     let res = await useWenchServices().updateWenchOrder(updateOrderId.value);
-//     if (res && res.status) {
-//       navigateTo(`/cart-comfortable-service/${updateOrderId.value}`);
-//       console.log("after updated done", updateOrderId);
-//     }
-//   } else {
-//     await createOrderWench();
-//   }
-// };
 </script>
 
 <style scoped>

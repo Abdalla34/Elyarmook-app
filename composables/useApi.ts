@@ -4,12 +4,14 @@ export const useApi = () => {
   const appConfig = useAppConfig();
   const baseURL = appConfig.baseURL;
   let token = useCookie("token", { maxAge: 365 * 24 * 60 * 60 });
+  const { locale } = useI18n();
 
   const headers = {
     Authorization: `Bearer ${token.value}`,
     "Content-Type": "application/json",
     Accept: "application/json",
     "Access-Control-Allow-Origin": "*",
+    "Aaccept-language": locale.value,
   };
   // done
   const resetToken = async () => {
@@ -24,6 +26,7 @@ export const useApi = () => {
     return await $fetch(`${baseURL}/auth/send-otp`, {
       method: "POST",
       body: { phone },
+      headers
     });
   };
   // done
@@ -31,6 +34,7 @@ export const useApi = () => {
     return await $fetch(`${baseURL}/auth/check-code`, {
       method: "POST",
       body: { phone, code },
+      headers
     });
   };
   // done
@@ -376,7 +380,7 @@ export const useApi = () => {
     });
   };
   // done
-  const getCashbackWallet = async (amount: any) => {
+  const getCashbackWalletReq = async (amount: any) => {
     return await $fetch(`${baseURL}/wallet/get-cashback-wallet`, {
       method: "POST",
       headers,
@@ -673,7 +677,7 @@ export const useApi = () => {
     deleteCar,
     changeCarToDefault,
     getWallet,
-    getCashbackWallet,
+    getCashbackWalletReq,
     getStatusorders,
     getPoints,
     redeemPoints,

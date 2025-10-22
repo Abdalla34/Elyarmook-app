@@ -10,18 +10,18 @@
             >
               <div class="d-flex align-items-center gap-3">
                 <h1 class="margin-bottom-24px text-capitalize title-pages mb-0">
-                  wallet
+                  {{ $t("wallet") }}
                 </h1>
                 <button
                   @click="otpModalAmount = true"
                   class="btn text-capitalize"
                 >
-                  deposit money
+                  {{ $t("deposit money") }}
                 </button>
               </div>
 
               <div class="balance d-flex flex-column text-center">
-                <span class="p-color-fs fs">current blance</span>
+                <span class="p-color-fs fs">{{ $t("current balance") }}</span>
                 <div
                   class="d-flex align-items-center gap-2 justify-conent-center"
                 >
@@ -43,7 +43,7 @@
                   <div class="icon">
                     <div class="icon">
                       <div
-                        v-if="item.type === 'deposit'"
+                        v-if="item.type === $t('deposit')"
                         class="background-plus radius-padding"
                       >
                         <svg
@@ -60,7 +60,7 @@
                         </svg>
                       </div>
                       <div
-                        v-else-if="item.type === 'withdraw'"
+                        v-else-if="item.type === $t('withdraw')"
                         class="background radius-padding"
                       >
                         <svg
@@ -91,7 +91,7 @@
                 </div>
                 <div class="pricewall">
                   {{ item.amount }}
-                  <span class="span fs">SAR</span>
+                  <span class="span fs">{{ $t("sar") }}</span>
                 </div>
               </div>
             </div>
@@ -103,9 +103,11 @@
                 class="btn"
                 :disabled="currentPage <= 1"
               >
-                Prev
+                {{ $t("Prev") }}
               </button>
-              <span class="align-self-center">Page {{ currentPage }}</span>
+              <span class="align-self-center"
+                >{{ $t("Page") }} {{ currentPage }}</span
+              >
 
               <button
                 @click="handleNext"
@@ -115,14 +117,14 @@
                   (allData?.transactions?.paginate?.total_pages || 1)
                 "
               >
-                Next
+                {{ $t("Next") }}
               </button>
             </div>
 
             <!-- load -->
             <div v-if="isLoading" class="text-center my-4">
               <div class="spinner-border text-primary" role="status">
-                <span class="visually-hidden">Loading...</span>
+                <span class="visually-hidden">{{ $t("loading...") }}</span>
               </div>
             </div>
           </div>
@@ -135,7 +137,7 @@
         >
           <div class="modal-content">
             <div class="mdoal-box">
-              <h4 class="label fw-bold mb-2">the amount</h4>
+              <h4 class="label fw-bold mb-2">{{ $t("the amount") }}</h4>
               <!-- amount input -->
               <input
                 type="number"
@@ -146,29 +148,39 @@
               <!-- box-details -->
               <div class="box-details rounded p-3 mb-3">
                 <div class="d-flex align-items-centre justify-content-between">
-                  <h1 class="label">the amount</h1>
-                  <p v-if="cashback" class="label">{{ cashback.amount }} SAR</p>
-                  <p v-else class="label">0.0 SAR</p>
-                </div>
-                <div class="d-flex align-items-centre justify-content-between">
-                  <h1 class="label">Cash back</h1>
-                  <p v-if="cashback" class="label text-success">
-                    {{ cashback.cashback }} SAR
+                  <h1 class="label">{{ $t("the amount") }}</h1>
+                  <p v-if="cashback" class="label">
+                    {{ cashback.amount }} {{ $t("sar") }}
                   </p>
-                  <p v-else class="label text-success">0.0 SAR</p>
+                  <p v-else class="label">0.0 {{ $t("sar") }}</p>
                 </div>
                 <div class="d-flex align-items-centre justify-content-between">
-                  <h1 class="label">Expenses</h1>
-                  <p class="label text-success">0.0 SAR</p>
+                  <h1 class="label">{{ $t("Cash back") }}</h1>
+                  <p v-if="cashback" class="label text-success">
+                    {{ cashback.cashback }} {{ $t("sar") }}
+                  </p>
+                  <p v-else class="label text-success">0.0 {{ $t("sar") }}</p>
+                </div>
+                <div class="d-flex align-items-centre justify-content-between">
+                  <h1 class="label">{{ $t("Expenses") }}</h1>
+                  <p v-if="cashback" class="label text-success">
+                    {{ cashback.fees }} {{ $t("sar") }}
+                  </p>
+                  <p v-else class="label text-success">0.0 {{ $t("sar") }}</p>
                 </div>
               </div>
               <!-- total amount -->
               <div class="totalamount text-center rounded p-1">
-                <span class="p-color-fs text-capitalize">the amount</span>
+                <span class="p-color-fs text-capitalize">{{
+                  $t("the amount")
+                }}</span>
                 <h4 v-if="cashback">
-                  {{ cashback.total }} <span class="label">SAR</span>
+                  {{ cashback.total }}
+                  <span class="label">{{ $t("sar") }}</span>
                 </h4>
-                <h4 v-else>0 <span class="label">SAR</span></h4>
+                <h4 v-else>
+                  0 <span class="label">{{ $t("sar") }}</span>
+                </h4>
               </div>
               <!-- to pay -->
               <div
@@ -181,7 +193,7 @@
                 "
               >
                 <ButtonCard
-                  textButton="deposit money"
+                  :textButton="$t('deposit money')"
                   :disabled="!walletAmount"
                 />
               </div>
@@ -194,6 +206,7 @@
 </template>
 
 <script setup>
+const { getCashbackWalletReq } = useApi();
 let dayjs = useDayjs();
 let wallets = ref([]);
 let allData = ref(null);
@@ -232,7 +245,7 @@ watch(walletAmount, (val) => {
 let getCashbackWallet = async (amount) => {
   isLoading.value = true;
   try {
-    let resWallet = await useApi().getCashbackWallet(walletAmount.value);
+    let resWallet = await getCashbackWalletReq(walletAmount.value);
     cashback.value = resWallet?.data || null;
     console.log(cashback.value);
   } finally {
