@@ -1,4 +1,4 @@
-.color {
+/* .color {
   color: #c71f45;
 }
 .color-gray {
@@ -127,9 +127,9 @@ h3 {
   border-radius: 50%;
 }
 
-/* ✅ إزالة البوردر اللي بيظهر عند الضغط */
+
 .custom-checkbox:focus {
   outline: none;
   box-shadow: none;
   border: 1px solid var(--main-color);
-}
+} */

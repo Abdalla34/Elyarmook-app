@@ -1,5 +1,5 @@
 <template>
-  <div class="permium">
+  <!-- <div class="permium">
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-8">
@@ -96,10 +96,10 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 </template>
 
-<script setup>
+<!-- <script setup>
 let ismemberShip = ref(true);
 let isAddCart = ref(false);
 
@@ -107,8 +107,8 @@ const toggleButton = () => {
   ismemberShip.value = !ismemberShip.value;
   isAddCart.value = !isAddCart.value;
 };
-</script>
+</script> -->
 
-<style scoped>
+<!-- <style scoped>
 @import "@/assets/css/premium.css";
-</style>
+</style> -->
