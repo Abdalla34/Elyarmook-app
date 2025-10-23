@@ -20,7 +20,7 @@
                   <h1 class="item-name">{{ item.title }}</h1>
                   <span
                     class="offers-sale d-flex align-items-center justify-content-center"
-                    >{{ item.discount_percentage_text }} OFF
+                    >{{ item.discount_percentage_text }} {{ $t("OFF") }}
                   </span>
                 </div>
 
@@ -30,15 +30,17 @@
                   <div class="price-section d-flex align-items-end gap-2">
                     <p class="price">
                       {{ item.price_after_discount }}
-                      <span class="sar">SAR</span>
+                      <span class="sar text-capitalize">{{ $t("sar") }}</span>
                     </p>
                     <p class="end-date">
                       {{ item.price_before_discount }}
-                      <span class="span">SAR</span>
+                      <span class="sar text-capitalize">{{ $t("sar") }}</span>
                     </p>
                   </div>
                   <div class="date text-center">
-                    <span class="end-date-span text-capitalize">end date</span>
+                    <span class="end-date-span text-capitalize">{{
+                      $t("end date")
+                    }}</span>
                     <p class="">
                       {{ dayjs(item.expires_at).format("ddd, MMM D, YYYY") }}
                     </p>
@@ -49,8 +51,8 @@
 
             <div class="ing-false text-center not-offer" v-if="isNotOffers">
               <PuplicIconNotOffer />
-              <h1>There are no Offer</h1>
-              <p>There are no Offer, Stay stand</p>
+              <h1>{{ $t("There are no Offer") }}</h1>
+              <p>{{ $t("There are no Offer, Stay stand") }}</p>
             </div>
           </div>
         </div>
@@ -60,8 +62,6 @@
 </template>
 
 <script setup>
-import { LazyPuplicIconNotOffer, PuplicIconNotOffer } from "#components";
-
 let dayjs = useDayjs();
 
 let offers = await useApi().getOffers();

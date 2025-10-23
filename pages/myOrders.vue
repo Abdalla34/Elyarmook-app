@@ -4,7 +4,7 @@
       <!-- if not register  -->
       <NotRegister
         :IsNotRegitser="!loading && msgError"
-        message="your orders is Empty you must create account"
+        :message="$t('your orders is Empty you must create account')"
       />
       <!-- if orders empty  -->
       <div
@@ -13,14 +13,16 @@
       >
         <div>
           <img src="/Vector.png" alt="" />
-          <h3 class="text-capitalize create">your orders is empty</h3>
+          <h3 class="text-capitalize create">
+            {{ $t("your orders is empty") }}
+          </h3>
           <div class="btn-items mt-3">
             <button
               @click="navigateTo('/services')"
               class="d-flex align-items-center gap-2 mx-auto btn rounded ps-3 pe-3"
             >
               <PuplicIconPlusIcon />
-              <span>Add Items</span>
+              <span>{{ $t("Add Items") }}</span>
             </button>
           </div>
         </div>
@@ -45,7 +47,7 @@
                 </h4>
                 <p class="price">
                   {{ order.total_amount }}
-                  <span class="SAR">SAR</span>
+                  <span class="SAR text-capitalize">{{ $t("sar") }}</span>
                 </p>
               </div>
             </div>
@@ -86,17 +88,19 @@
         class="d-flex justify-content-center gap-3 mt-4"
       >
         <button @click="handlePrev" class="btn" :disabled="currentpage <= 1">
-          Prev
+          {{ $t("Prev") }}
         </button>
 
-        <span class="align-self-center">Page {{ currentpage }}</span>
+        <span class="align-self-center"
+          >{{ $t("Page") }} {{ currentpage }}</span
+        >
 
         <button
           @click="handleNext"
           class="btn"
           :disabled="currentpage >= (pagination?.total_pages || 1)"
         >
-          Next
+          {{ $t("Next") }}
         </button>
       </div>
       <!-- load -->

@@ -32,7 +32,7 @@
                 <button
                   class="btn btn-outline-danger btn-sm d-flex gap-2 align-items-center"
                 >
-                  delete <Trash />
+                  {{ $t("delete") }} <Trash />
                 </button>
               </div>
             </div>
@@ -41,7 +41,9 @@
               <ButtonCard
                 v-if="!service.in_cart && !inCart[service.id]"
                 :textButton="
-                  loadingAddToCart[service.id] ? 'loading...' : 'add to cart'
+                  loadingAddToCart[service.id]
+                    ? $t('loading...')
+                    : $t('add to cart')
                 "
                 @click="handleAdd(service, 'service')"
               />
@@ -52,7 +54,7 @@
                 disabled
               >
                 <PuplicIconBtnCartAdded />
-                added to cart
+                {{ $t("added to cart") }}
               </button>
             </div>
           </div>
@@ -67,7 +69,10 @@
         />
         <div class="isEmpty"></div>
         <div v-if="btnShooping" class="btn-shooping position-fixed bottom-0">
-          <ButtonCard @click="BtnShooping" textButton="continue shopping" />
+          <ButtonCard
+            @click="BtnShooping"
+            :textButton="$t('continue shopping')"
+          />
         </div>
       </div>
     </div>
@@ -111,7 +116,7 @@ const {
   btnShooping,
   handleAdd,
   removeFromlocal,
-  initCartFromLocalStorage
+  initCartFromLocalStorage,
 } = useAddToCart();
 
 onMounted(async () => {

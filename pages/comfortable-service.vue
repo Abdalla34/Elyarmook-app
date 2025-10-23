@@ -233,7 +233,9 @@
             </div>
           </div>
 
-          <div v-if="!addressReturn && typeDelivery === 'twoWay' && !showMapReturn">
+          <div
+            v-if="!addressReturn && typeDelivery === 'twoWay' && !showMapReturn"
+          >
             <div
               class="location-receive-car mt-2 mb-2 d-flex align-items-center justify-content-center text-capitalize"
               style="cursor: pointer"
@@ -270,7 +272,7 @@
               <select v-model="problem" class="input-style">
                 <option disabled value="">Select type problem</option>
                 <option
-                  v-for="value in getProblems"
+                  v-for="value in getProblemss"
                   :key="value.id"
                   :value="value.id"
                 >
@@ -377,29 +379,17 @@
 <script setup>
 import { useForm, useField } from "vee-validate";
 import * as yup from "yup";
-// const schema = yup.object({
-//   branchValue: yup.string().required("you should selected branch"),
-//   problem: yup.string().required("you should selected type porblem "),
-//   address: yup.string().required(" address required"),
-// });
 
-// const { handleSubmit } = useForm({
-//   validationSchema: schema,
-// });
 
-// const { value: branchValue, errorMessage: branchError } =
-//   useField("branchValue");
-// const { value: problem, errorMessage: problemError } = useField("problem");
-// const { value: address, errorMessage: addressError } = useField("address");
+const { getAvailableTimes, getAvailableBrnchesTime, getBranches  , getProblems} = useApi();
+const { createWenchOrder ,updateWenchOrder } = useWenchServices();
 
 const schema = yup.object({
   branchValue: yup.string().required("you should select a branch"),
   problem: yup.string().required("you should select a problem type"),
   address: yup.string().required("address is required"),
 });
-// const { handleSubmit } = useForm({
-//   validationSchema: schema,
-// });
+
 const branchValue = useState("branchValue", () => "");
 const problem = useState("problem", () => "");
 const address = useState("address", () => "");
@@ -417,7 +407,7 @@ const mycars = ref([]);
 const reservationTime = useState("reservationTime", () => null);
 const rescar = await useApi().getMycars();
 mycars.value = rescar?.data || [];
-const getProblems = ref([]);
+const getProblemss = ref([]);
 
 const typeService = ref("urgent");
 const selectedDate = ref(null);
@@ -434,10 +424,10 @@ const getAvailableTimeBranch = useState("getAvailableTimeBranch", () => null);
 
 watch(branchValue, async (newId) => {
   if (newId) {
-    let resDate = await useApi().getAvailableTimes(newId);
+    let resDate = await getAvailableTimes(newId);
     availableDates.value = resDate?.available_times;
 
-    const responseAvailable = await useApi().getAvailableBrnchesTime(newId);
+    const responseAvailable = await getAvailableBrnchesTime(newId);
     getAvailableTimeBranch.value = responseAvailable?.data || null;
 
     if (getAvailableTimeBranch.value?.is_available_now) {
@@ -474,10 +464,10 @@ watch(typeService, (newVal) => {
 
 onMounted(async () => {
   try {
-    const resbranch = await useApi().getBranches();
+    const resbranch = await getBranches();
     branches.value = resbranch.data?.items || [];
-    const resProblems = await useApi().getProblems();
-    getProblems.value = resProblems.data?.items || [];
+    const resProblems = await getProblems();
+    getProblemss.value = resProblems.data?.items || [];
   } catch (e) {
     console.error("Error fetching my cars:", e);
   }
@@ -551,14 +541,14 @@ const initializeMap = (returnMode = false) => {
 
         const mapType = returnMode ? "return" : "pickup";
         const mapId = returnMode ? "mapReturn" : "mapPickup";
-        
+
         let retryCount = 0;
         const maxRetries = 20; // Maximum 20 retries (1 second total wait)
-        
+
         // Wait for element to be available
         const checkElement = () => {
           const mapElement = document.getElementById(mapId);
-          
+
           if (mapElement) {
             try {
               maps[mapType].value = new google.maps.Map(mapElement, {
@@ -577,13 +567,17 @@ const initializeMap = (returnMode = false) => {
           } else if (retryCount < maxRetries) {
             // If element not found and we haven't exceeded max retries, try again
             retryCount++;
-            console.log(`Waiting for map element ${mapId}... (attempt ${retryCount}/${maxRetries})`);
+            console.log(
+              `Waiting for map element ${mapId}... (attempt ${retryCount}/${maxRetries})`
+            );
             setTimeout(checkElement, 50);
           } else {
-            console.error(`Map element ${mapId} not found after ${maxRetries} attempts`);
+            console.error(
+              `Map element ${mapId} not found after ${maxRetries} attempts`
+            );
           }
         };
-        
+
         checkElement();
       },
       (err) => {
@@ -596,7 +590,7 @@ const initializeMap = (returnMode = false) => {
 const confirmLocation = (returnMode = false) => {
   const mapType = returnMode ? "return" : "pickup";
   const marker = markers[mapType].value;
-  
+
   if (!marker) {
     alert("No marker found. Please try again.");
     return;
@@ -641,12 +635,12 @@ const payload = computed(() => ({
   problem_id: problem.value || null,
   reservation_time: reservationTime.value,
   address: address.value || null,
-  lat: currentLatLng.value.lat ? String(currentLatLng.value.lat) : '0',
-  lng: currentLatLng.value.lng ? String(currentLatLng.value.lng) : '0',
+  lat: currentLatLng.value.lat ? String(currentLatLng.value.lat) : "0",
+  lng: currentLatLng.value.lng ? String(currentLatLng.value.lng) : "0",
   user_car_id: defaultCar.value?.id || mycars.value[0]?.id || null,
-  address_return: addressReturn.value ? String(addressReturn.value) : '0',
-  lat_return: returnLatLng.value.lat ? String(returnLatLng.value.lat) : '0',
-  lng_return: returnLatLng.value.lng ? String(returnLatLng.value.lng) : '0',
+  address_return: addressReturn.value ? String(addressReturn.value) : "0",
+  lat_return: returnLatLng.value.lat ? String(returnLatLng.value.lat) : "0",
+  lng_return: returnLatLng.value.lng ? String(returnLatLng.value.lng) : "0",
   is_booking_now: isBookingNow.value,
   in_cart: true,
   service_id: service_id.value || null,
@@ -674,14 +668,13 @@ async function createOrderWench() {
       Object.entries(payload.value).filter(([_, v]) => v !== null && v !== "")
     );
 
-    const res = await useWenchServices().createWenchOrder(
+    const res = await createWenchOrder(
       cleanedPayload,
       "wench"
     );
     if (res && res.status) {
       navigateTo(`/cart-comfortable-service/${res?.data?.id}`);
       updateOrderId.value = res?.data?.id;
-   
     } else {
       console.log(
         "Failed to create order: " + (res?.message || "Unknown error")
@@ -702,7 +695,7 @@ const onSubmit = async () => {
     address: address.value,
   });
   if (updateOrderId.value) {
-    let res = await useWenchServices().updateWenchOrder(
+    let res = await updateWenchOrder(
       updateOrderId.value,
       payload.value
     );

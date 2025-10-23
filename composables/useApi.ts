@@ -11,7 +11,7 @@ export const useApi = () => {
     "Content-Type": "application/json",
     Accept: "application/json",
     "Access-Control-Allow-Origin": "*",
-    "Aaccept-language": locale.value,
+    "accept-language": locale.value,
   };
   // done
   const resetToken = async () => {

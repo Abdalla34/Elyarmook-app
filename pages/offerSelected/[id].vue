@@ -4,13 +4,14 @@
       <div class="row offer-details">
         <div class="col-12 col-lg-7 col-padding">
           <div class="offer-box margin-bottom-24px" v-if="offerId?.data?.offer">
-            <GoPageArrow title="offer Details" backPath="/offers" />
+            <GoPageArrow :title="$t('offer Details')" backPath="/offers" />
 
             <!-- Image Section -->
             <div class="img-offer-card position-relative margin-bottom-24px">
               <img :src="offerId?.data?.offer.image" alt="Offer Image" />
               <span class="offers-sale position-absolute sale-offer">
-                {{ Math.trunc(offerId.data.offer.discount_percentage) }}% OFF
+                {{ Math.trunc(offerId.data.offer.discount_percentage) }}%
+                {{ $t("OFF") }}
               </span>
             </div>
 
@@ -21,14 +22,18 @@
               <h1 class="item-name">{{ offerId.data.offer.title }}</h1>
               <p class="price-value size-font color mb-0">
                 {{ offerId.data.offer.price_after_discount }}
-                <span class="font-size-currency text-uppercase color">sar</span>
+                <span class="font-size-currency text-uppercase color">{{
+                  $t("sar")
+                }}</span>
               </p>
             </div>
 
             <!-- End Date -->
             <div class="date-end d-flex justify-content-between mt-3 flex-wrap">
               <div>
-                <span class="text-capitalize date color-gray">End date: </span>
+                <span class="text-capitalize date color-gray"
+                  >{{ $t("end date") }}:
+                </span>
                 <span class="text-capitalize date-end">
                   {{
                     dayjs(offerId.data.offer.expires_at).format(
@@ -37,8 +42,8 @@
                   }}
                 </span>
               </div>
-              <p class="text-line color-gray">
-                {{ offerId.data.offer.price_before_discount }} SAR
+              <p class="text-line color-gray text-capitalize">
+                {{ offerId.data.offer.price_before_discount }} {{ $t("sar") }}
               </p>
             </div>
 
@@ -55,18 +60,23 @@
                   class="tabby-img"
                 />
                 <p class="tabby-text mb-0 text-break flex-grow-1">
-                  4 Interest-free payments of
-                  <span class="sar-currency fw-bold">22.41 SAR</span> With Tabby
+                  {{ $t("4 Interest-free payments of") }}
+                  <span class="sar-currency fw-bold text-uppercase"
+                    >22.41 {{ $t("sar") }}</span
+                  >
+                  {{ $t("With Tabby") }}
                 </p>
               </div>
               <div class="button-more p-color-fs text-capitalize text-nowrap">
-                learn more
+                {{ $t("learn more") }}
               </div>
             </div>
 
             <!-- Features -->
             <div class="offer-features margin-bottom-24px">
-              <h1 class="margin-bottom-24px features-size">offer features</h1>
+              <h1 class="margin-bottom-24px features-size">
+                {{ $t("offer features") }}
+              </h1>
               <div
                 v-for="(step, index) in steps"
                 :key="index"
@@ -97,7 +107,7 @@
               <button
                 class="btn btn-outline-danger btn-sm d-flex gap-2 align-items-center w-100 justify-content-center"
               >
-                delete <Trash />
+                {{ $t("delete") }} <Trash />
               </button>
             </div>
 
@@ -106,8 +116,8 @@
                 v-if="!isOfferInCart"
                 :textButton="
                   loadingAddToCart[offerId?.data?.offer?.id]
-                    ? 'loading...'
-                    : 'add to cart'
+                    ? $t('loading...')
+                    : $t('add to cart')
                 "
                 @click="handleAddToCart"
               />
@@ -117,15 +127,18 @@
                 disabled
               >
                 <PuplicIconBtnCartAdded />
-                added to cart
+                {{ $t("added to cart") }}
               </button>
             </div>
           </div>
         </div>
       </div>
-      
+
       <div v-if="btnShooping" class="btn-shooping position-fixed bottom-0">
-        <ButtonCard @click="BtnShooping" textButton="continue shopping" />
+        <ButtonCard
+          @click="BtnShooping"
+          :textButton="$t('continue shopping')"
+        />
       </div>
     </div>
   </div>
@@ -203,5 +216,4 @@ function handleOtpSuccess() {
 <style scoped>
 @import "@/assets/css/services.css";
 @import "@/assets/css/singleoffer.css";
-
 </style>

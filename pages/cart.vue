@@ -4,20 +4,22 @@
       <div class="row justify-content-center">
         <NotRegister
           :IsNotRegitser="notRegister"
-          message="cart is Empty you must create account "
+          :message="$t('cart is Empty you must create account')"
         />
 
         <div class="empty-cart text-center" v-if="token && !cartRes?.id">
           <div>
             <img src="/Vector.png" alt="" />
-            <h3 class="text-capitalize create">your cart is empty</h3>
+            <h3 class="text-capitalize create">
+              {{ $t("your cart is empty") }}
+            </h3>
             <div class="btn-items">
               <button
                 @click="navigateTo('/services')"
                 class="d-flex align-items-center gap-2"
               >
                 <PuplicIconPlusIcon />
-                <span>Add Items</span>
+                <span>{{ $t("Add Items") }}</span>
               </button>
             </div>
           </div>
@@ -28,7 +30,7 @@
           class="col-12 col-md-12 col-lg-6 col-md-6"
           v-if="token && cartRes?.id"
         >
-          <h4 class="mb-4 fw-bold">Order Details</h4>
+          <h4 class="mb-4 fw-bold">{{ $t("Order Details") }}</h4>
 
           <div
             class="cart d-flex justify-content-between align-items-center border-radius-36px mb-3"
@@ -43,7 +45,9 @@
                 <h4 class="item-name item-left">{{ service.title }}</h4>
                 <p class="price">
                   {{ service.price }}
-                  <span class="p-color-fs span">SAR</span>
+                  <span class="p-color-fs span text-uppercase">{{
+                    "sar"
+                  }}</span>
                 </p>
                 <div class="qty-controls d-flex align-items-center mt-2">
                   <button
@@ -77,9 +81,9 @@
                   >
                     +
                   </button>
-                  <span v-if="loadingQty[service.id]" class="ms-2"
-                    >Loading...</span
-                  >
+                  <span v-if="loadingQty[service.id]" class="ms-2">{{
+                    $t("Loading...")
+                  }}</span>
                   <div v-if="msg[service.id]" class="text-danger label mt-2">
                     {{ msg[service.id] }}
                   </div>
@@ -107,7 +111,9 @@
                 <h4 class="item-name item-left">{{ offer.title }}</h4>
                 <p class="price">
                   {{ offer.price }}
-                  <span class="p-color-fs span">SAR</span>
+                  <span class="p-color-fs span text-uppercase">{{
+                    $t("sar")
+                  }}</span>
                 </p>
                 <div class="qty-controls d-flex align-items-center mt-2">
                   <button
@@ -136,9 +142,9 @@
                   >
                     +
                   </button>
-                  <span v-if="loadingQty[offer.id]" class="ms-2"
-                    >Loading...</span
-                  >
+                  <span v-if="loadingQty[offer.id]" class="ms-2">{{
+                    $t("Loading...")
+                  }}</span>
                 </div>
               </div>
             </div>
@@ -147,7 +153,9 @@
               @click="deletedOrder(offer.offer_id, 'offer', offer.qty)"
             >
               <trash />
-              <span v-if="loadingDelete[offer.offer_id]">Loading...</span>
+              <span v-if="loadingDelete[offer.offer_id]">
+                {{ $t("Loading...") }}</span
+              >
             </div>
           </div>
 
@@ -164,7 +172,9 @@
                 <h4 class="item-name item-left">{{ sparepart.title }}</h4>
                 <p class="price">
                   {{ sparepart.price }}
-                  <span class="p-color-fs span">SAR</span>
+                  <span class="p-color-fs span text-uppercase">{{
+                    $t("sar")
+                  }}</span>
                 </p>
                 <div class="qty-controls d-flex align-items-center mt-2">
                   <button
@@ -199,9 +209,9 @@
                   >
                     +
                   </button>
-                  <span v-if="loadingQty[sparepart.id]" class="ms-2"
-                    >Loading...</span
-                  >
+                  <span v-if="loadingQty[sparepart.id]" class="ms-2">{{
+                    $t("Loading...")
+                  }}</span>
                 </div>
               </div>
             </div>
@@ -210,7 +220,9 @@
               @click="deletedOrder(sparepart.id, 'spare_part', sparepart.qty)"
             >
               <trash />
-              <span v-if="loadingDelete[sparepart.id]">Loading...</span>
+              <span v-if="loadingDelete[sparepart.id]">{{
+                $t("Loading...")
+              }}</span>
             </div>
           </div>
         </div>
@@ -225,12 +237,12 @@
             <div class=""></div>
             <!-- price details -->
             <div class="">
-              <h6 class="fw-bold">Cost Details</h6>
+              <h6 class="fw-bold">{{ $t("Cost Details") }}</h6>
               <div class="box-design">
                 <div
                   class="total-order d-flex justify-content-between align-items-center"
                 >
-                  <h4 class="label">sub total</h4>
+                  <h4 class="label">{{ $t("sub total") }}</h4>
                   <p class="text-capitalize">{{ cartRes?.sub_total }}</p>
                 </div>
 
@@ -244,10 +256,12 @@
                 <div
                   class="final-amount d-flex justify-content-between align-items-center"
                 >
-                  <h4 class="label">Final Amount</h4>
+                  <h4 class="label">{{ $t("Final Amount") }}</h4>
                   <p class="text-capitalize">
                     {{ cartRes?.amount_to_pay }}
-                    <span class="p-color-fs span">SAR</span>
+                    <span class="p-color-fs span text-uppercase">{{
+                      $t("sar")
+                    }}</span>
                   </p>
                 </div>
               </div>
@@ -255,7 +269,7 @@
               <div
                 class="total-amount d-flex align-items-center justify-content-between"
               >
-                <h1 class="amount text-capitalize">total amount</h1>
+                <h1 class="amount text-capitalize">{{ $t("total amount") }}</h1>
                 <p>{{ cartRes?.total_amount }}</p>
               </div>
 
@@ -273,7 +287,7 @@
                   class="additems text-capitalize label"
                 >
                   <i class="fa-solid fa-plus"></i>
-                  add another items
+                 {{$t('add another items')}}
                 </button>
               </div>
             </div>

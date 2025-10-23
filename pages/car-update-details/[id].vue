@@ -106,6 +106,7 @@
 import { useForm, useField } from "vee-validate";
 import * as yup from "yup";
 
+const {getDetailsCar , getCarTypes, editCar}  = useApi()
 let startYear = 1900;
 let endYear = new Date().getFullYear();
 let years = Array.from(
@@ -135,8 +136,8 @@ let carForm = reactive({
 const carTypes = ref([]);
 const route = useRoute();
 const id = route.params.id;
-const getCar = await useApi().getDetailsCar(id);
-const res = await useApi().getCarTypes(getCar.data.brand.id);
+const getCar = await getDetailsCar(id);
+const res = await getCarTypes(getCar.data.brand.id);
 carTypes.value = res?.data?.items || [];
 const step = ref(1);
 const showYears = ref(false);
@@ -144,7 +145,6 @@ const showYears = ref(false);
 function selecteTypeID(carId) {
   carForm.car_type_id = carId.id;
   step.value = 2;
-  console.log(carForm.car_type_id);
 }
 
 let selecteYears = (year) => {
@@ -156,7 +156,7 @@ let selecteYears = (year) => {
 
 const sendDataCar = handleSubmit(async (values) => {
   try {
-    const responseSendData = await useApi().editCar(
+    const responseSendData = await editCar(
       {
         brand_id: carForm.brand_id,
         car_type_id: carForm.car_type_id,

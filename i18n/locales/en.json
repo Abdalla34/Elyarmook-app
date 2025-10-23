@@ -7,6 +7,7 @@
   "We receive it.. we fix it.. we return it": "We receive it.. we fix it.. we return it",
   "WhatsApp": "WhatsApp",
   "we accept": "we accept",
+  "With Tabby": "With Tabby",
 
   "Home": "Home",
   "How it works": "How it works",
@@ -14,12 +15,20 @@
 
   "The price will be determined soon": "The price will be determined soon.",
   "the amount": "the amount",
+  "There are no Offer": "There are no Offer",
+  "There are no Offer, Stay stand": "There are no Offer, Stay stand",
+  "total amount": "total amount",
 
   "offers": "offers",
   "Order Now": "Order Now",
+  "OFF": "OFF",
+  "offer Details": "offer Details",
+  "offer features": "offer features",
+  "Order Details": "Order Details",
 
   "my orders": "my orders",
   "membership": "membership",
+  "memberships includes": "memberships includes",
   "not Information you must create account": "not Information you must create account",
 
   "delete": "delete",
@@ -30,17 +39,20 @@
   "Download our app": "Download our app",
 
   "added to cart": " added to cart",
+  "add another items": "add another items",
   "add to cart": "add to cart",
   "area": "area",
   "are you sure to exit application": " are you sure to exit application",
   "About Service": "About Service",
   "A comfortable service - that makes you comfortable": "A comfortable service - that makes you comfortable",
   "App Store": "App Store",
+  "Add Items": "Add Items",
 
   "loading...": "loading...",
   "log out": "log out",
   "last name": "last name",
   "Links": "Links",
+  "learn more": "learn more",
 
   "services": "services",
   "sar": "sar",
@@ -49,10 +61,13 @@
   "social Media": "social Media",
   "sign out from application": "sign out from application",
   "sign out": "sign out",
+  "subscripe now": "subscripe now",
+  "sub total": "sub total",
 
   "Expenses": "Expenses",
   "edit profile": "edit profile",
   "Everyday": "Everyday",
+  "end date": "end date",
 
   "continue shopping": "continue shopping",
   "Cash back": "Cash back",
@@ -62,6 +77,7 @@
   "current balance": "current balance",
   "Comfortable Service": "Comfortable Service",
   "Contact Us": "Contact Us",
+  "Cost Details": "Cost Details",
 
   "Next": "Next",
   "Prev": "Prev",
@@ -79,10 +95,20 @@
   "Find now": "Find now",
 
   "Important Note": "Important Note",
+  "4 Interest-free payments of": "Interest-free payments of",
+
   "1. Request service": "1. Request service",
   "2. Share location": "2. Share location",
   "3. Wait for arrival": "3. Wait for arrival",
   "4. Get assistance": "4. Get assistance",
 
-  "Google Play": "Google Play"
+  "Google Play": "Google Play",
+  "get this actully i have one": " get this actully i have one",
+
+  "your orders is empty": "your orders is empty",
+  "your cart is empty": "your cart is empty",
+  "your orders is Empty you must create account": "your orders is Empty you must create account",
+  "cart is Empty you must create account": "cart is Empty you must create account",
+
+  "Final Amount": "Final Amount"
 }

@@ -1,12 +1,12 @@
-
 export function useAddToCart() {
   // const { syncCartCount, getMyCart } = useCart();
+  const { addToCart , getMyCart } = useApi();
   const loadingAddToCart = ref<{ [key: number]: boolean }>({});
   const inCart = ref<{ [key: number]: boolean }>({});
   const allCartGuest = ref<any[]>([]);
   const btnShooping = ref(false);
   const token = useCookie("token", { maxAge: 365 * 24 * 60 * 60 });
-  const cartCount = useState("cartCount", () => 0)
+  const cartCount = useState("cartCount", () => 0);
 
   // Initialize cart state from localStorage
   async function initCartFromLocalStorage() {
@@ -43,7 +43,7 @@ export function useAddToCart() {
     if (token.value) {
       loadingAddToCart.value[service.id] = true;
       try {
-        const res: any = await useApi().addToCart(type, service.id, 1);
+        const res: any = await addToCart(type, service.id, 1);
         if (res.status) {
           service.in_cart = true;
           cartCount.value = cartCount.value + 1;

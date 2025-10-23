@@ -145,6 +145,7 @@
 </template>
 
 <script setup>
+const { getMycars, getBranches, getAvailableTimes ,updateCartDetails  } = useApi();
 const carValue = useState("carValue", () => {});
 const branchValue = useState("branchValue", () => "");
 const dateValue = useState("dateValue", () => {});
@@ -157,17 +158,17 @@ const idRoute = route.query.id;
 const msgError = ref(false);
 
 const mycars = ref([]);
-const res = await useApi().getMycars();
+const res = await getMycars();
 mycars.value = res?.data || [];
 
 const branches = ref([]);
-const resBranshes = await useApi().getBranches();
+const resBranshes = await getBranches();
 branches.value = resBranshes?.data?.items;
 
 const availableDates = ref([]);
 watch(branchValue, async (newId) => {
   if (newId) {
-    let resDate = await useApi().getAvailableTimes(newId);
+    let resDate = await getAvailableTimes(newId);
     availableDates.value = resDate?.available_times;
   }
 });
@@ -207,7 +208,7 @@ const onSubmit = async () => {
       formData.append("images[]", problemPhoto.value);
     }
 
-    await useApi().updateCartDetails(idRoute, formData);
+    await updateCartDetails(idRoute, formData);
     router.push({
       path: "/cart-update-details",
       query: { id: idRoute },
@@ -221,11 +222,10 @@ const onSubmit = async () => {
 
 onMounted(async () => {
   if (branchValue.value) {
-    let resDate = await useApi().getAvailableTimes(branchValue.value);
+    let resDate = await getAvailableTimes(branchValue.value);
     availableDates.value = resDate?.available_times;
   }
 });
-
 </script>
 
 <style scoped>

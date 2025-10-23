@@ -20,7 +20,7 @@
               <div class="price-month d-flex align-items-center gap-2">
                 <p class="price">
                   {{ value.price_after_discount }}
-                  <span class="text-uppercase">sar</span>
+                  <span class="text-uppercase">{{ $t("sar") }}</span>
                 </p>
                 <p>
                   | {{ value.plan_duration }}
@@ -30,7 +30,9 @@
                 </p>
               </div>
               <div class="subscripe" style="cursor: pointer">
-                <p class="text-capitalize text-danger label">subscripe now ></p>
+                <p class="text-capitalize text-danger label">
+                  {{ $t("subscripe now") }} >
+                </p>
               </div>
             </div>
           </div>

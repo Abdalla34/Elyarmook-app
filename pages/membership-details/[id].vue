@@ -27,20 +27,22 @@
               <div class="price-des">
                 <div class="price-details d-flex gap-3 align-items-center">
                   <div class="before-des text-uppercase">
-                    {{ memmberDetails.price_before_discount }} sar
+                    {{ memmberDetails.price_before_discount }} {{ $t("sar") }}
                   </div>
                   <div
                     class="after-des text-uppercase"
                     style="font-size: 18px; color: #c71f45; font-weight: 400"
                   >
-                    {{ memmberDetails.price_after_discount }} sar
+                    {{ memmberDetails.price_after_discount }} {{ $t("sar") }}
                   </div>
                 </div>
               </div>
               <hr />
             </div>
             <div class="member-includes">
-              <h1 class="label text-uppercase">memberships includes :</h1>
+              <h1 class="label text-uppercase">
+                {{ $t("memberships includes") }} :
+              </h1>
               <div v-for="value in memmberDetails.includes" class="items">
                 <div class="title d-flex align-items-center gap-3 mb-3">
                   <div
@@ -71,11 +73,16 @@
                 "
                 class="p-color-fs text-capitalize"
               >
-                get this "actully i have one"
+                {{ $t("get this actully i have one") }}
               </button>
             </div>
             <div
-              @click="navigateTo({ path: '/payment', query: { membership: idMember } })"
+              @click="
+                navigateTo({
+                  path: '/payment',
+                  query: { membership: idMember },
+                })
+              "
               class="btn-get"
               v-if="!memmberDetails.has_active_subscription"
             >
