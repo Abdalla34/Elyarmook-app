@@ -105,7 +105,7 @@ const {
   removeFromlocal,
   initCartFromLocalStorage,
 } = useAddToCart();
-
+const {getSpareParts} = useApi()
 // Modal state
 let showOtpModal = ref(false);
 let showDialCode = ref(false);
@@ -124,7 +124,7 @@ async function isCach() {
     }
   }
 
-  const responseSpare = await useApi().getSpareParts();
+  const responseSpare = await getSpareParts();
   spareParts.value = responseSpare?.data?.items || [];
 
   localStorage.setItem(
