@@ -32,57 +32,61 @@
         <ul class="ul-phone">
           <li class="menu-item">
             <NuxtLink
-              to="/"
+              :to="$localePath('/')"
               exact-active-class="active"
               class="menu-link"
               @click="toggleMenu"
             >
               <PuplicIconHome class="menu-icon-svg" />
-              <span class="menu-text">Home</span>
+              <span class="menu-text">{{ $t("Home") }}</span>
             </NuxtLink>
           </li>
           <li class="menu-item">
             <NuxtLink
-              to="/myOrders"
+              :to="$localePath('/myOrders')"
               exact-active-class="active"
               class="menu-link"
               @click="toggleMenu"
             >
               <PuplicIconBagTic class="menu-icon-svg" />
-              <span class="menu-text">My Orders</span>
+              <span class="menu-text text-uppercase">{{
+                $t("my orders")
+              }}</span>
             </NuxtLink>
           </li>
           <li class="menu-item">
             <NuxtLink
-              to="/services"
+              :to="$localePath('/services')"
               exact-active-class="active"
               class="menu-link"
               @click="toggleMenu"
             >
               <PuplicIconServcesIcon class="menu-icon-svg" />
-              <span class="menu-text">Services</span>
+              <span class="menu-text text-uppercase">{{ $t("services") }}</span>
             </NuxtLink>
           </li>
           <li class="menu-item">
             <NuxtLink
-              to="/offers"
+              :to="$localePath('/offers')"
               exact-active-class="active"
               class="menu-link"
               @click="toggleMenu"
             >
               <PuplicIconOfferIcon class="menu-icon-svg" />
-              <span class="menu-text">Offers</span>
+              <span class="menu-text text-uppercase">{{ $t("offers") }}</span>
             </NuxtLink>
           </li>
           <li class="menu-item">
             <NuxtLink
-              to="/spareParts"
+              :to="$localePath('/spareParts')"
               exact-active-class="active"
               class="menu-link"
               @click="toggleMenu"
             >
               <PuplicIconSparePart class="menu-icon-svg" />
-              <span class="menu-text">Spare Parts</span>
+              <span class="menu-text text-uppercase">{{
+                $t("spare Parts")
+              }}</span>
             </NuxtLink>
           </li>
         </ul>
