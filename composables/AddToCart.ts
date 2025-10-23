@@ -1,6 +1,6 @@
 export function useAddToCart() {
   // const { syncCartCount, getMyCart } = useCart();
-  const { addToCart , getMyCart } = useApi();
+  const { addToCart, getMyCart } = useApi();
   const loadingAddToCart = ref<{ [key: number]: boolean }>({});
   const inCart = ref<{ [key: number]: boolean }>({});
   const allCartGuest = ref<any[]>([]);
@@ -66,6 +66,7 @@ export function useAddToCart() {
     localStorage.setItem("cartGuest", JSON.stringify(cart));
     allCartGuest.value = cart;
     inCart.value[service.id] = false;
+    inCart.value = { ...inCart.value };
     cartCount.value = allCartGuest.value.length;
 
     // Only hide shopping button if cart is empty

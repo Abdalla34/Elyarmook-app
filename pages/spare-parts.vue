@@ -36,7 +36,7 @@
                 <button
                   class="btn btn-outline-danger btn-sm d-flex gap-2 align-items-center"
                 >
-                  {{ $("delete") }} <Trash />
+                  {{ $t("delete") }} <Trash />
                 </button>
               </div>
             </div>
@@ -105,13 +105,36 @@ const {
   removeFromlocal,
   initCartFromLocalStorage,
 } = useAddToCart();
-const {getSpareParts} = useApi()
+const { getSpareParts } = useApi();
 // Modal state
 let showOtpModal = ref(false);
 let showDialCode = ref(false);
 
 const endTimeCache = 60 * 60 * 1000; // 1 ساعة
 
+// async function isCach() {
+//   const getCache = localStorage.getItem("sparePartsCache");
+//   const currentTime = Date.now();
+
+//   if (getCache) {
+//     const parsedData = JSON.parse(getCache);
+
+//     if (currentTime - parsedData.timestamp < endTimeCache) {
+//       spareParts.value = parsedData.spareParts;
+//     }
+//   }
+
+//   const responseSpare = await getSpareParts();
+//   spareParts.value = responseSpare?.data?.items || [];
+
+//   localStorage.setItem(
+//     "sparePartsCache",
+//     JSON.stringify({
+//       spareParts: spareParts.value,
+//       timestamp: currentTime,
+//     })
+//   );
+// }
 async function isCach() {
   const getCache = localStorage.getItem("sparePartsCache");
   const currentTime = Date.now();
@@ -122,18 +145,22 @@ async function isCach() {
     if (currentTime - parsedData.timestamp < endTimeCache) {
       spareParts.value = parsedData.spareParts;
     }
+  } else {
+    spareParts.value = []; // Prevent flicker
   }
 
-  const responseSpare = await getSpareParts();
-  spareParts.value = responseSpare?.data?.items || [];
+  const responseSpare = await useApi().getSpareParts();
+  if (responseSpare?.data?.items) {
+    spareParts.value = responseSpare.data.items;
 
-  localStorage.setItem(
-    "sparePartsCache",
-    JSON.stringify({
-      spareParts: spareParts.value,
-      timestamp: currentTime,
-    })
-  );
+    localStorage.setItem(
+      "sparePartsCache",
+      JSON.stringify({
+        spareParts: spareParts.value,
+        timestamp: currentTime,
+      })
+    );
+  }
 }
 
 onMounted(async () => {
