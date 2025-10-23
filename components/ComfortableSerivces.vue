@@ -14,8 +14,10 @@
           </div>
 
           <div class="order-now text-center text-md-start">
-            <h1 class="mb-3 fw-bold fs-4 fs-md-3">Comfortable Service</h1>
-            <button class="btn-order">Order Now</button>
+            <h1 class="mb-3 fw-bold fs-4 fs-md-3">
+              {{ $t("Comfortable Service") }}
+            </h1>
+            <button class="btn-order">{{ $t("Order Now") }}</button>
           </div>
         </div>
       </div>
@@ -27,7 +29,7 @@
         <div
           class="modal-header d-flex justify-content-between align-items-center"
         >
-          <h3 class="text-capitalize title">About Service</h3>
+          <h3 class="text-capitalize title">{{ $t("About Service") }}</h3>
           <i
             class="fa-solid fa-xmark cursor-pointer"
             @click="showServiceModal = false"
@@ -43,30 +45,35 @@
 
           <div class="service-info mt-4">
             <h4 class="title text-capitalize">
-              A comfortable service - that makes you comfortable
+              {{ $t("A comfortable service - that makes you comfortable") }}
             </h4>
             <p class="service-description p-color-fs">
-              We repair your car while you are there, without any industrial
-              trips.
+              {{
+                $t(
+                  "We repair your car while you are there, without any industrial trips"
+                )
+              }}.
             </p>
             <p class="text-capitalize p-color-fs text-danger fw-bold mt-2">
-              # We receive it.. we fix it.. we return it.
+              # {{ $t("We receive it.. we fix it.. we return it") }}.
             </p>
 
             <div class="note-box mt-3 p-3 bg-light rounded">
-              <h5 class="text-capitalize text-danger mb-1">Important Note:</h5>
+              <h5 class="text-capitalize text-danger mb-1">
+                {{ $t("Important Note") }}:
+              </h5>
               <p class="text-capitalize text-danger mb-0">
-                Service comfortable availability in Riyadh only.
+                {{ $t("Service comfortable availability in Riyadh only") }}.
               </p>
             </div>
 
             <div class="steps-container mt-4">
-              <h5 class="text-capitalize label">How it works:</h5>
+              <h5 class="text-capitalize label">{{ $t("How it works") }}:</h5>
               <div class="steps text-capitalize text-start">
-                <div class="step">1. Request service</div>
-                <div class="step">2. Share location</div>
-                <div class="step">3. Wait for arrival</div>
-                <div class="step">4. Get assistance</div>
+                <div class="step">{{ $t("1. Request service") }}</div>
+                <div class="step">{{ $t("2. Share location") }}</div>
+                <div class="step">{{ $t("3. Wait for arrival") }}</div>
+                <div class="step">{{ $t("4. Get assistance") }}</div>
               </div>
             </div>
           </div>
@@ -74,13 +81,13 @@
 
         <div class="modal-footer mt-4 d-flex flex-column gap-2">
           <button type="button" class="btn btn-light w-100">
-            Don't show next time
+            {{ $t("Dont show next time") }}
           </button>
           <button
             @click="navigateTo('/comfortable-service')"
             class="btn-order w-100"
           >
-            Order Now
+            {{ $t("Order Now") }}
           </button>
         </div>
       </div>
@@ -107,7 +114,7 @@ const showServiceModal = ref(false);
 const showOtpModal = ref(false);
 const showDialCode = ref(false);
 
- // Show service modal after successful registration
+// Show service modal after successful registration
 function handleOtpSuccess() {
   showComponentOtp.value = false;
   showDialCode.value = false;
@@ -142,7 +149,7 @@ function conditionToken() {
     max-width: 95%;
     padding: 15px;
   }
-  .wench-service{
+  .wench-service {
     margin-bottom: 40px;
   }
 }

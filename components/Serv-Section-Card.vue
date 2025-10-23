@@ -2,21 +2,23 @@
   <div class="services-section border-radius-20px margin-bottom-section">
     <div class="services-container container position-relative">
       <div class="services-grid">
-        <!-- الخدمات -->
+        <!-- services -->
         <div class="service-box" @click="navigateTo('/services')">
           <img class="img" src="/car-fix.png" alt="service.title" />
-          <h3 class="service-title text-capitalize mb-2">services</h3>
-          <p class="p-color-fs text-capitalize">booking now</p>
+          <h3 class="service-title text-capitalize mb-2">
+            {{ $t("services") }}
+          </h3>
+          <p class="p-color-fs text-capitalize">{{ $t("booking now") }}</p>
         </div>
 
-        <!-- العروض -->
+        <!-- offers -->
         <div class="service-box" @click="navigateTo('/offers')">
           <img class="img" src="/Discount Gift.png" alt="service.title" />
-          <h3 class="service-title text-capitalize mb-2">offers</h3>
-          <p class="p-color-fs text-capitalize">Find now</p>
+          <h3 class="service-title text-capitalize mb-2">{{ $t("offers") }}</h3>
+          <p class="p-color-fs text-capitalize">{{ $t("Find now") }}</p>
         </div>
 
-        <!-- قطع الغيار -->
+        <!-- spare Parts -->
         <div class="service-box" @click="navigateTo('/spare-parts')">
           <div class="services-header position-relative">
             <span
@@ -25,12 +27,13 @@
             >
           </div>
           <img class="img" src="/parts.png" alt="service.title" />
-          <h3 class="service-title text-capitalize mb-2">spare Part</h3>
-          <p class="p-color-fs text-capitalize">order now</p>
+          <h3 class="service-title text-capitalize mb-2">
+            {{ $t("spare Parts") }}
+          </h3>
+          <p class="p-color-fs text-capitalize">{{ $t("Order Now") }}</p>
         </div>
       </div>
     </div>
-
   </div>
 </template>
 

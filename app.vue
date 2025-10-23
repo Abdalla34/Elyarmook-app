@@ -1,5 +1,6 @@
 <template>
   <div class="app-wrapper">
+    <Switch />
     <!-- Global Mobile Menu - Available on all pages -->
     <MobileMenu />
     <Header v-if="showLayout" />
@@ -12,17 +13,16 @@
 </template>
 
 <script setup>
-
-const { locale } = useI18n()
+const { locale } = useI18n();
 
 // Set HTML dir attribute based on locale
-const direction = computed(() => locale.value === 'ar' ? 'rtl' : 'ltr')
+const direction = computed(() => (locale.value === "ar" ? "rtl" : "ltr"));
 
 // Global app configuration
 useHead({
   htmlAttrs: {
     dir: direction,
-    lang: locale
+    lang: locale,
   },
   title: "Yarmook - Car Services",
   meta: [
@@ -43,20 +43,17 @@ useHead({
 
 // Client-side fallback for hydration
 onMounted(() => {
-  document.documentElement.setAttribute('dir', direction.value)
-  document.documentElement.setAttribute('lang', locale.value)
-  
+  document.documentElement.setAttribute("dir", direction.value);
+  document.documentElement.setAttribute("lang", locale.value);
+
   // Watch for locale changes
   watch([direction, locale], ([newDir, newLocale]) => {
-    document.documentElement.setAttribute('dir', newDir)
-    document.documentElement.setAttribute('lang', newLocale)
-  })
-})
+    document.documentElement.setAttribute("dir", newDir);
+    document.documentElement.setAttribute("lang", newLocale);
+  });
+});
 
-
-const {
-  initCartFromLocalStorage
-} = useAddToCart();
+const { initCartFromLocalStorage } = useAddToCart();
 
 import { useRoute } from "vue-router";
 const token = useCookie("token", { maxAge: 365 * 24 * 60 * 60 });
@@ -78,27 +75,35 @@ const showViews = computed(() => {
   return !path.includes(route.path);
 });
 
-
-const cartCount = useState("cartCount", () => 0)
+const cartCount = useState("cartCount", () => 0);
 
 if (token.value) {
   cartCount.value = 0;
-  let res = await useApi().getMyCart()
+  let res = await useApi().getMyCart();
 
   if (res?.status) {
     // Calculate total cart length including quantities
     const services = res.data?.services || [];
     const offers = res.data?.offers || [];
     const spareParts = res.data?.spare_parts || [];
-    
+
     // Sum up quantities for services and spare parts
-    const servicesCount = services.reduce((total, item) => total + (item.qty || 1), 0);
-    const sparePartsCount = spareParts.reduce((total, item) => total + (item.qty || 1), 0);
+    const servicesCount = services.reduce(
+      (total, item) => total + (item.qty || 1),
+      0
+    );
+    const sparePartsCount = spareParts.reduce(
+      (total, item) => total + (item.qty || 1),
+      0
+    );
     // Offers typically don't have quantities, so count each as 1
-    const offersCount = offers.reduce((total, item) => total + (item.qty || 1), 0);
-    
+    const offersCount = offers.reduce(
+      (total, item) => total + (item.qty || 1),
+      0
+    );
+
     const totalCartLength = servicesCount + sparePartsCount + offersCount;
-    
+
     cartCount.value = totalCartLength;
   }
 }
@@ -108,7 +113,6 @@ onMounted(async () => {
     initCartFromLocalStorage();
   }
 });
-
 </script>
 
 <style>

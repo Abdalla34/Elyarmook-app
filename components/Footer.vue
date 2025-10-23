@@ -1,8 +1,3 @@
-<script setup lang="ts">
-import { PuplicIconInstagramIcon, PuplicIconWhatsApp } from '#components';
-
-</script>
-
 <template>
   <div class="footer p-5 text-light">
     <div class="container">
@@ -14,77 +9,125 @@ import { PuplicIconInstagramIcon, PuplicIconWhatsApp } from '#components';
             alt="Yarmook Logo"
             class="img-fluid mb-3"
           />
-          <p class="text-light mb-3">Download our app</p>
+          <p class="text-light mb-3">{{ $t("Download our app") }}</p>
           <div class="icons-link d-flex flex-wrap justify-content-start gap-2">
             <div
               class="google d-flex align-items-center gap-2 ps-3 pe-3 pt-2 pb-2 box-style"
             >
               <img class="icon" src="/Google-logo.png" alt="Google" />
-              <span class="text-capitalize span">Google Play</span>
+
+              <a
+                style="text-decoration: none; color: white"
+                class="text-capitalize span"
+                :href="getSettings?.android_customer_app"
+                target="_blank"
+                >{{ $t("Google Play") }}</a
+              >
             </div>
             <div
               class="apple d-flex align-items-center gap-2 ps-3 pe-3 pt-2 pb-2 box-style"
             >
               <img class="icon" src="/Apple-logo.png" alt="Apple" />
-              <span class="text-capitalize span">App Store</span>
+
+              <a
+                style="text-decoration: none; color: white"
+                class="text-capitalize span"
+                :href="getSettings?.ios_customer_app"
+                target="_blank"
+                >{{$t('App Store')}}</a
+              >
             </div>
           </div>
           <div class="contact-us mt-4">
-            <h6 class="text-capitalize">Contact us:</h6>
-            <p class="mt-2 num">0123456789</p>
-            <p class="days">Everyday 8 am - 12 am</p>
+            <h6 class="text-capitalize">{{ $t("Contact us") }}:</h6>
+            <p class="mt-2 num">{{ getSettings.mobile }}</p>
+            <p class="days">{{ $t("Everyday") }} 8 am - 12 am</p>
           </div>
         </div>
-
+        <!-- links  -->
         <div class="col-lg-2 col-md-3 col-sm-12">
-          <h6 class="text-capitalize mb-3 font-size-title">Links</h6>
+          <h6 class="text-capitalize mb-3 font-size-title">
+            {{ $t("Links") }}
+          </h6>
           <ul class="list-unstyled">
             <li class="pt-1">
-              <NuxtLink class="font-size-16px" to="/">Home</NuxtLink>
+              <NuxtLink class="font-size-16px" :to="$localePath('/')">{{
+                $t("Home")
+              }}</NuxtLink>
             </li>
             <li class="pt-1">
-              <NuxtLink class="font-size-16px" to="/services"
-                >Services</NuxtLink
+              <NuxtLink class="font-size-16px" :to="$localePath('services')">{{
+                $t("services")
+              }}</NuxtLink>
+            </li>
+            <li class="pt-1">
+              <NuxtLink
+                class="font-product"
+                :to="$localePath('/Spare-parts')"
+                >{{ $t("spare Parts") }}</NuxtLink
               >
             </li>
             <li class="pt-1">
-              <NuxtLink class="font-product" to="/Spare-parts"
-                >Spare Parts</NuxtLink
+              <NuxtLink class="font-size-16px" :to="$localePath('/offers')">{{
+                $t("offers")
+              }}</NuxtLink>
+            </li>
+            <li class="pt-1">
+              <NuxtLink
+                class="font-size-16px"
+                :to="$localePath('/membership')"
+                >{{ $t("membership") }}</NuxtLink
               >
-            </li>
-            <li class="pt-1">
-              <NuxtLink class="font-size-16px" to="/offers">Offers</NuxtLink>
-            </li>
-            <li class="pt-1">
-              <NuxtLink class="font-size-16px" to="/">Membership</NuxtLink>
             </li>
           </ul>
         </div>
 
         <div class="col-lg-2 col-md-3 col-sm-12">
-          <h6 class="text-capitalize mb-3 font-size-title">Products</h6>
-          <p class="pt-1 font-size-16px font-size-16px">Product 1</p>
-          <p class="pt-1 font-size-16px font-size-16px">Product 2</p>
-          <p class="pt-1 font-size-16px font-size-16px">Product 3</p>
-          <p class="pt-1 font-size-16px font-size-16px">Product 4</p>
+          <h6 class="text-capitalize mb-3 font-size-title">
+            {{ $t("Products") }}
+          </h6>
+          <p class="pt-1 font-size-16px font-size-16px">
+            {{ $t("Product 1") }}
+          </p>
+          <p class="pt-1 font-size-16px font-size-16px">
+            {{ $t("Product 2") }}
+          </p>
+          <p class="pt-1 font-size-16px font-size-16px">
+            {{ $t("Product 3") }}
+          </p>
+          <p class="pt-1 font-size-16px font-size-16px">
+            {{ $t("Product 4") }}
+          </p>
         </div>
 
         <div class="col-lg-2 col-md-3 col-sm-12">
-          <h6 class="text-capitalize mb-3 font-size-title">Help</h6>
-          <p @click="navigateTo('/faq-from-help')" class="pt-1 font-size-16px">FAQ</p>
-          <p @click="navigateTo('/fill-form')" class="pt-1 font-size-16px">Contact Us</p>
-          <p class="pt-1 font-size-16px">WhatsApp</p>
+          <h6 class="text-capitalize mb-3 font-size-title">{{ $t("Help") }}</h6>
+          <p @click="navigateTo('/faq-from-help')" class="pt-1 font-size-16px">
+            FAQ
+          </p>
+          <p @click="navigateTo('/fill-form')" class="pt-1 font-size-16px">
+            {{ $t("Contact Us") }}
+          </p>
+          <p class="pt-1 font-size-16px">{{ $t("WhatsApp") }}</p>
         </div>
 
         <div class="col-lg-2 col-md-3 col-sm-12">
-          <h6 class="text-capitalize mb-3 font-size-title">social Media</h6>
+          <h6 class="text-capitalize mb-3 font-size-title">
+            {{ $t("social Media") }}
+          </h6>
           <div
             class="d-flex gap-2 align-items-center justify-content-start gap-4"
           >
             <div class="box-hover-icons">
               <PuplicIconFacebook />
             </div>
-            <div class="box-hover-icons">
+            <div
+              class="box-hover-icons"
+              :class="{ disabled: !getSettings?.instagram }"
+              @click="
+                getSettings?.instagram && navigateTo(getSettings.instagram)
+              "
+            >
               <PuplicIconInstagramIcon />
             </div>
             <div class="box-hover-icons">
@@ -94,7 +137,7 @@ import { PuplicIconInstagramIcon, PuplicIconWhatsApp } from '#components';
 
           <div class="accpet">
             <h6 class="text-capitalize mb-3 font-size-title mt-2 text-center">
-              we accept
+              {{ $t("we accept") }}
             </h6>
             <button class="button-visa">
               <img src="/tamara.png" alt="" />
@@ -120,6 +163,16 @@ import { PuplicIconInstagramIcon, PuplicIconWhatsApp } from '#components';
     </div>
   </div>
 </template>
+
+<script setup>
+const getSettings = ref({});
+const resSettings = await useApi().getSettings();
+getSettings.value = resSettings?.data?.settings || {};
+const navigateTo = (link) => {
+  if (!link) return;
+  window.open(link, "_blank");
+};
+</script>
 
 <style scoped>
 p {
@@ -272,15 +325,6 @@ ul li a:hover::after {
 .button-visa:hover {
   transform: scale(1.1);
 }
-
-/* .box-hover-icons {
-  cursor: pointer;
-  border-radius: 10px;
-}
-.box-hover-icons:hover {
-  background-color: white;
-  stroke: black;
-} */
 
 /* Social media and other text links */
 .col-lg-2 p {

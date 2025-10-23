@@ -3,41 +3,86 @@
   "withdraw": "withdraw",
   "wallet": "wallet",
   "Why are you leaving us": "Why are you leaving us",
+  "We repair your car while you are there, without any industrial trips": " We repair your car while you are there, without any industrial trips",
+  "We receive it.. we fix it.. we return it": "We receive it.. we fix it.. we return it",
+  "WhatsApp": "WhatsApp",
+  "we accept": "we accept",
+
   "Home": "Home",
+  "How it works": "How it works",
+  "Help": "Help",
+
   "The price will be determined soon": "The price will be determined soon.",
   "the amount": "the amount",
+
   "offers": "offers",
+  "Order Now": "Order Now",
+
   "my orders": "my orders",
   "membership": "membership",
   "not Information you must create account": "not Information you must create account",
+
   "delete": "delete",
   "deposit money": "deposit money",
   "deposit": "deposit",
   "delete my account": "delete my account",
+  "Dont show next time": "Dont show next time",
+  "Download our app": "Download our app",
+
   "added to cart": " added to cart",
   "add to cart": "add to cart",
   "area": "area",
   "are you sure to exit application": " are you sure to exit application",
+  "About Service": "About Service",
+  "A comfortable service - that makes you comfortable": "A comfortable service - that makes you comfortable",
+  "App Store": "App Store",
+
   "loading...": "loading...",
   "log out": "log out",
   "last name": "last name",
+  "Links": "Links",
+
   "services": "services",
   "sar": "sar",
   "spare Parts": "spare Parts",
+  "Service comfortable availability in Riyadh only": "Service comfortable availability in Riyadh only",
+  "social Media": "social Media",
+  "sign out from application": "sign out from application",
+  "sign out": "sign out",
+
   "Expenses": "Expenses",
+  "edit profile": "edit profile",
+  "Everyday": "Everyday",
+
   "continue shopping": "continue shopping",
   "Cash back": "Cash back",
   "city": "city",
   "Cancel": "Cancel",
   "Confirm Delete": "Confirm Delete",
   "current balance": "current balance",
+  "Comfortable Service": "Comfortable Service",
+  "Contact Us": "Contact Us",
+
   "Next": "Next",
   "Prev": "Prev",
   "Page": "Page",
+  "Products": "Products",
+  "Product 1": "Product 1",
+  "Product 2": "Product 2",
+  "Product 3": "Product 3",
+  "Product 4": "Product 4",
   "personal information": "personal information",
   "phone Number": "phone Number",
+  "booking now": "booking now",
+
   "first name": "first name",
-  "edit profile": "edit profile",
-  "sign out from application": "sign out from application",
-  "sign out": "sign out"
+  "Find now": "Find now",
+
+  "Important Note": "Important Note",
+  "1. Request service": "1. Request service",
+  "2. Share location": "2. Share location",
+  "3. Wait for arrival": "3. Wait for arrival",
+  "4. Get assistance": "4. Get assistance",
+
+  "Google Play": "Google Play"
 }

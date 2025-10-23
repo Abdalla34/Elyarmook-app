@@ -11,75 +11,83 @@
                 <!-- home -->
                 <li class="">
                   <NuxtLink
-                    to="/"
+                    :to="$localePath('/')"
                     exact-active-class="active"
                     class="d-flex align-items-center gap-1 border-radius-36px p-color-fs"
                   >
                     <PuplicIconHome :isActive="$route.path === '/'" />
-                    <h6 class="text-capitalize link-sm">Home</h6>
+                    <h6 class="text-capitalize link-sm">{{ $t("Home") }}</h6>
                   </NuxtLink>
                 </li>
                 <!-- orders -->
                 <li class="border-radius-36px">
                   <NuxtLink
-                    to="/myorders"
+                    :to="$localePath('/myorders')"
                     exact-active-class="active"
                     class="d-flex align-items-center gap-1 border-radius-36px p-color-fs"
                   >
                     <PuplicIconBagTic :isActive="$route.path === 'myOrders'" />
-                    <h6 class="text-capitalize link-sm">my orders</h6>
+                    <h6 class="text-capitalize link-sm">
+                      {{ $t("my orders") }}
+                    </h6>
                   </NuxtLink>
                 </li>
                 <!-- services -->
                 <li class="">
                   <NuxtLink
-                    to="/services"
+                    :to="$localePath('/services')"
                     exact-active-class="active"
                     class="d-flex align-items-center gap-1 border-radius-36px p-color-fs"
                   >
                     <PuplicIconServcesIcon
                       :isActive="$route.path === '/services'"
                     />
-                    <h6 class="text-capitalize link-sm">services</h6>
+                    <h6 class="text-capitalize link-sm">
+                      {{ $t("services") }}
+                    </h6>
                   </NuxtLink>
                 </li>
                 <!-- offers  -->
                 <li class="">
                   <NuxtLink
-                    to="/offers"
+                    :to="$localePath('/offers')"
                     exact-active-class="active"
                     class="d-flex align-items-center gap-1 border-radius-36px p-color-fs"
                   >
                     <PuplicIconOfferIcon
                       :isActive="$route.path === '/offers'"
                     />
-                    <h6 class="text-capitalize link-sm">offers</h6>
+                    <h6 class="text-capitalize link-sm">{{ $t("offers") }}</h6>
                   </NuxtLink>
                 </li>
                 <!-- membership -->
                 <li v-if="token" class="">
                   <NuxtLink
-                    to="/membership"
+                    :to="$localePath('/membership')"
                     exact-active-class="active"
                     class="d-flex align-items-center gap-1 border-radius-36px p-color-fs"
                   >
                     <PuplicIconOfferIcon
                       :isActive="$route.path === '/membership'"
                     />
-                    <h6 class="text-capitalize link-sm">membership</h6>
+                    <h6 class="text-capitalize link-sm">
+                      {{ $t("membership") }}
+                    </h6>
                   </NuxtLink>
                 </li>
                 <!-- spare Part -->
                 <li class="">
                   <NuxtLink
-                    to="/spare-parts"
+                    :to="$localePath('/spare-parts')"
                     exact-active-class="active"
                     class="d-flex align-items-center gap-1 border-radius-36px p-color-fs"
                   >
                     <PuplicIconSparePart
                       :isActive="$route.path === '/spare-parts'"
                     />
-                    <h6 class="text-capitalize link-sm">spare Parts</h6>
+                    <h6 class="text-capitalize link-sm">
+                      {{ $t("spare Parts") }}
+                    </h6>
                   </NuxtLink>
                 </li>
               </ul>
@@ -92,6 +100,7 @@
 </template>
 
 <script setup>
+// import { useI18n, useLocalePath } from '#imports'
 const token = useCookie("token");
 </script>
 
