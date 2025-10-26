@@ -39,7 +39,7 @@
             </div>
           </div>
           <div class="contact-us mt-4">
-            <h6 class="text-capitalize">{{ $t("Contact us") }}:</h6>
+            <h6 class="text-capitalize">{{ $t("Contact Us") }}:</h6>
             <p class="mt-2 num">{{ getSettings.mobile }}</p>
             <p class="days">{{ $t("Everyday") }} 8 am - 12 am</p>
           </div>

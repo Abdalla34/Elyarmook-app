@@ -5,7 +5,7 @@
       <div class="container">
         <NotRegister
           :IsNotRegitser="IsNotRegitser"
-          message="your cars Empty you must create account "
+          :message="$t('your cars Empty you must create account')"
         />
         <div class="row">
           <div class="col-8 col-padding">
@@ -35,7 +35,7 @@
                         v-if="car.is_default"
                         style="background-color: var(--main-color)"
                       >
-                        default
+                        {{ $t("default") }}
                       </span>
                     </p>
                   </div>
@@ -49,7 +49,7 @@
                     <PuplicIconDoted />
                   </div>
                   <div @click.stop="getCarDetails(car.id)" class="btn-details">
-                    <p class="fs text-danger">show car details</p>
+                    <p class="fs text-danger">{{ $t("car details") }}</p>
                   </div>
                 </div>
 
@@ -58,7 +58,7 @@
                   v-if="activeCarId === car.id"
                   class="poup-edit text-center mb-3"
                 >
-                  <h6 class="text-capitalize mb-3">car model</h6>
+                  <h6 class="text-capitalize mb-3">{{ $t("car model") }}</h6>
 
                   <!-- car toogle default -->
                   <div
@@ -78,7 +78,7 @@
                       :for="`car-${car.id}`"
                       class="text-capitalize label-cursor"
                     >
-                      set as default
+                      {{ $t("set as default") }}
                     </label>
                   </div>
 
@@ -90,7 +90,7 @@
                     <div>
                       <Trash class="trash-icon" />
                     </div>
-                    <h6 class="text-capitalize">delete</h6>
+                    <h6 class="text-capitalize">{{ $t("delete") }}</h6>
                   </div>
                 </div>
               </div>
@@ -100,8 +100,12 @@
               v-if="myCars.length === 0 && token"
               class="empty-message text-center p-4 mb-2"
             >
-              <p class="text-muted fs-5">🚗 لا توجد سيارات مضافة حاليًا</p>
-              <p class="text-secondary">قم بإضافة سيارتك لعرضها هنا.</p>
+              <p class="text-muted fs-5">
+                {{ $t("There are no cars added currently") }}
+              </p>
+              <p class="text-secondary">
+                {{ $t("Add your car to display here") }}
+              </p>
             </div>
 
             <div
@@ -110,8 +114,8 @@
               @click="navigateTo('car-brand')"
             >
               <button class="text-capitalize">
-                <i class="fa-solid fa-plus"></i>
-                add new car
+                <!-- <i class="fa-solid fa-plus"></i> -->
+                {{ $t("add new car") }}
               </button>
             </div>
           </div>
@@ -176,8 +180,10 @@ async function setDefault(carId) {
 }
 
 const router = useRouter();
+const localePath = useLocalePath();
+
 const getCarDetails = async (id) => {
-  router.push(`/car-details/${id}`);
+  router.push(localePath(`/car-details/${id}`));
 };
 // function handleClickOutside(e) {
 //   if (!e.target.closest(".car-box")) {

@@ -2,58 +2,106 @@
   "welcome": "مرحبًا",
   "withdraw": "سحب",
   "wallet": "المحفظة",
-  "Why are you leaving us": "لماذا تغادرنا؟",
-  "We repair your car while you are there, without any industrial trips": "نصلح سيارتك وأنت في مكانك بدون أي مشاوير للورش",
-  "We receive it.. we fix it.. we return it": "نستلمها.. نصلحها.. نرجعها",
+  "Why are you leaving us": "لماذا تتركنا؟",
+  "We repair your car while you are there, without any industrial trips": "نصلح سيارتك وأنت في مكانك دون أي مشاوير للورش",
+  "We receive it.. we fix it.. we return it": "نستلمها.. نصلحها.. نعيدها",
   "WhatsApp": "واتساب",
-  "we accept": "نحن نقبل",
+  "we accept": "نقبل",
+  "With Tabby": "مع تابي",
+  "We're sorry, but your order has been canceled.": "نأسف، لقد تم إلغاء طلبك.",
 
   "Home": "الرئيسية",
-  "How it works": "كيف تعمل؟",
+  "How it works": "كيف تعمل الخدمة",
   "Help": "مساعدة",
 
   "The price will be determined soon": "سيتم تحديد السعر قريبًا",
   "the amount": "المبلغ",
+  "There are no Offer": "لا توجد عروض",
+  "There are no Offer, Stay stand": "لا توجد عروض، ترقّب قريبًا",
+  "total amount": "إجمالي المبلغ",
+  "try the app": "جرّب التطبيق",
+  "There are no cars added currently": "لا توجد سيارات مضافة حاليًا 🚗",
+  "ther a not points yet": "لا توجد نقاط بعد",
+  "there as not found vouchers yet": "لا توجد قسائم بعد",
 
   "offers": "العروض",
   "Order Now": "اطلب الآن",
+  "OFF": "خصم",
+  "offer Details": "تفاصيل العرض",
+  "offer features": "مميزات العرض",
+  "Order Details": "تفاصيل الطلب",
 
   "my orders": "طلباتي",
   "membership": "العضوية",
+  "memberships includes": "تشمل العضوية",
+  "my cars": "سياراتي",
+  "Manufacture Year:": "سنة الصنع:",
+  "more": "المزيد",
+  "maintenance": "الصيانة",
+  "Mention reason": "اذكر السبب",
+
   "not Information you must create account": "لا توجد بيانات، يجب إنشاء حساب",
+  "not found orders yet": "لا توجد طلبات بعد",
+  "number order..": "رقم الطلب..",
+  "NOTES: Minimum points = 1000 points": "ملاحظة: الحد الأدنى للنقاط = 1000 نقطة",
+  "NOTES: please you shouled this number used in yarmook app": "ملاحظة: يجب استخدام هذا الرقم في تطبيق اليرموك",
 
   "delete": "حذف",
-  "deposit money": "إيداع الأموال",
+  "deposit money": "إيداع رصيد",
   "deposit": "إيداع",
   "delete my account": "حذف حسابي",
   "Dont show next time": "لا تظهر مرة أخرى",
   "Download our app": "حمّل تطبيقنا",
+  "default": "افتراضي",
+  "details amount": "تفاصيل المبلغ",
 
-  "added to cart": "تمت الإضافة للسلة",
-  "add to cart": "أضف إلى السلة",
+  "added to cart": "تمت الإضافة إلى السلة",
+  "add another items": "أضف عناصر أخرى",
+  "add new car": "إضافة سيارة جديدة +",
+  "add to cart": "إضافة إلى السلة",
   "area": "المنطقة",
+  "available": "متاح",
   "are you sure to exit application": "هل أنت متأكد من الخروج من التطبيق؟",
   "About Service": "عن الخدمة",
-  "A comfortable service - that makes you comfortable": "خدمة مريحة - تريحك",
+  "A comfortable service - that makes you comfortable": "خدمة مريحة - تريحك فعلًا",
   "App Store": "آب ستور",
+  "Add Items": "إضافة عناصر",
+  "Add your car to display here": "أضف سيارتك لتظهر هنا",
+  "Are you sure you want to cancel this order?": "هل أنت متأكد من إلغاء هذا الطلب؟",
 
-  "loading...": "جاري التحميل...",
-  "log out": "تسجيل الخروج",
-  "last name": "اسم العائلة",
+  "loading...": "جارٍ التحميل...",
+  "log out": "تسجيل خروج",
+  "last name": "الاسم الأخير",
   "Links": "روابط",
+  "learn more": "اعرف أكثر",
+  "language": "اللغة",
 
   "services": "الخدمات",
   "sar": "ر.س",
-  "spare Parts": "قطع الغيار",
-  "Service comfortable availability in Riyadh only": "الخدمة متوفرة في الرياض فقط",
+  "spare Parts": "قطع غيار",
+  "Service comfortable availability in Riyadh only": "الخدمة متاحة في الرياض فقط",
   "social Media": "وسائل التواصل الاجتماعي",
-  "sign out from application": "تسجيل الخروج من التطبيق",
-  "sign out": "تسجيل الخروج",
+  "sign out from application": "تسجيل الخروج من التطبيق؟",
+  "sign out": "تسجيل خروج",
+  "subscripe now": "اشترك الآن",
+  "sub total": "المجموع الفرعي",
+  "Soon": "قريبًا",
+  "scan to download": "امسح لتحميل التطبيق",
+  "Select city": "اختر المدينة",
+  "Select area": "اختر المنطقة",
+  "set as default": "تعيين كافتراضي",
+  "show order": "عرض الطلب",
+  "send points": "إرسال نقاط",
+  "send": "إرسال",
+  "show in maps": "عرض على الخرائط",
 
-  "Expenses": "المصاريف",
+  "Expenses": "المصروفات",
   "edit profile": "تعديل الملف الشخصي",
-  "Everyday": "كل يوم",
+  "Everyday": "يوميًا",
   "end date": "تاريخ الانتهاء",
+  "earned": "المكتسبة",
+  "expired": "منتهية",
+  "expired at": "انتهت في",
 
   "continue shopping": "متابعة التسوق",
   "Cash back": "استرجاع نقدي",
@@ -61,8 +109,21 @@
   "Cancel": "إلغاء",
   "Confirm Delete": "تأكيد الحذف",
   "current balance": "الرصيد الحالي",
-  "Comfortable Service": "الخدمة المريحة",
+  "Comfortable Service": "خدمة مريحة",
   "Contact Us": "اتصل بنا",
+  "Cost Details": "تفاصيل التكلفة",
+  "continue": "متابعة",
+  "car details": "تفاصيل السيارة",
+  "car model": "موديل السيارة",
+  "chassis Number:": "رقم الشاصيه:",
+  "current point": "النقاط الحالية",
+  "copy": "نسخ",
+  "call us": "اتصل بنا",
+  "cancel order": "إلغاء الطلب",
+  "choose from the date available": "اختر من التواريخ المتاحة",
+  "completed": "مكتمل",
+  "car is fine": "السيارة بخير",
+  "Canceled": "ملغي",
 
   "Next": "التالي",
   "Prev": "السابق",
@@ -75,15 +136,51 @@
   "personal information": "البيانات الشخصية",
   "phone Number": "رقم الهاتف",
   "booking now": "احجز الآن",
+  "profile": "الملف الشخصي",
+  "point": "نقطة",
+  "booked": "محجوز",
 
   "first name": "الاسم الأول",
   "Find now": "ابحث الآن",
+  "faq": "الأسئلة الشائعة",
 
   "Important Note": "ملاحظة مهمة",
+  "4 Interest-free payments of": "أربع دفعات بدون فوائد بقيمة",
+
   "1. Request service": "1. اطلب الخدمة",
   "2. Share location": "2. شارك الموقع",
-  "3. Wait for arrival": "3. انتظر الوصول",
+  "3. Wait for arrival": "3. انتظر وصول الفني",
   "4. Get assistance": "4. احصل على المساعدة",
 
-  "Google Play": "جوجل بلاي"
+  "Google Play": "جوجل بلاي",
+  "get this actully i have one": "لدي واحدة بالفعل",
+
+  "your orders is empty": "طلباتك فارغة",
+  "your cart is empty": "سلتك فارغة",
+  "your orders is Empty you must create account": "طلباتك فارغة، يجب إنشاء حساب",
+  "cart is Empty you must create account": "السلة فارغة، يجب إنشاء حساب",
+  "your cars Empty you must create account ": "لا توجد سيارات، يجب إنشاء حساب",
+  "Yes, Cancel Order": "نعم، إلغاء الطلب",
+
+  "Final Amount": "المبلغ النهائي",
+  "Fill a Form": "املأ النموذج",
+
+  "redeem points": "استبدال النقاط",
+  "redeem": "استبدال",
+  "redeem to": "استبدال إلى",
+  "Reschedule Order": "إعادة جدولة الطلب",
+  "ready": "جاهز",
+  "reuested": "تم الطلب",
+  "report": "تقرير",
+
+  "items": "العناصر",
+  "items order": "عنصر في الطلب",
+  "inspection": "فحص",
+
+  "vouchers": "قسائم",
+  "Visit Your Nearest Branch": "قم بزيارة أقرب فرع",
+  "vat": "ضريبة القيمة المضافة",
+  "View Invoice": "عرض الفاتورة",
+
+  "used": "مستخدم"
 }

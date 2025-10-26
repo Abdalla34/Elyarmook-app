@@ -1,6 +1,6 @@
 <template>
-  <div class="qr-slider-wrapper p-4 box-diesign ">
-    <div class="container ">
+  <div class="qr-slider-wrapper p-4 box-diesign">
+    <div class="container">
       <div class="up-box position-relative">
         <Swiper
           :modules="[Navigation, Pagination]"
@@ -30,8 +30,10 @@
               >
                 <img src="/QR_code.png" alt="" />
                 <div class="scan-text">
-                  <h6 class="text-capitalize">try the app</h6>
-                  <p class="text-capitalize font-14px">scan to download</p>
+                  <h6 class="text-capitalize">{{ $t("try the app") }}</h6>
+                  <p class="text-capitalize font-14px">
+                    {{ $t("scan to download") }}
+                  </p>
                 </div>
               </div>
             </div>
@@ -65,5 +67,5 @@ let offersCards = ref([
 </script>
 
 <style scoped>
-@import "@/assets/css/sliderQr.css"; 
+@import "@/assets/css/sliderQr.css";
 </style>

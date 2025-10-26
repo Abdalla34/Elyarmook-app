@@ -21,7 +21,7 @@
               <TitleServices
                 :title="service.title"
                 :currency="service.price"
-                :sar="'sar'"
+                :sar="$t('sar')"
               />
 
               <div

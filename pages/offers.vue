@@ -67,8 +67,9 @@ let dayjs = useDayjs();
 let offers = await useApi().getOffers();
 
 let router = useRouter();
+const localePath = useLocalePath();
 function toBox(item) {
-  router.push(`/offerSelected/${item.id}`);
+  router.push(localePath(`/offerSelected/${item.id}`));
 }
 
 let isNotOffers = ref(false);

@@ -23,7 +23,7 @@
           <div class="services-header position-relative">
             <span
               class="soon-badge text-capitalize ps-3 pe-3 pt-1 pb-1 position-absolute border-radius-20px"
-              >Soon</span
+              >{{ $t("Soon") }}</span
             >
           </div>
           <img class="img" src="/parts.png" alt="service.title" />

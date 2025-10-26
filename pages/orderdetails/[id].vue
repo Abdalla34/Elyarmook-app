@@ -12,10 +12,14 @@
           @click="sureCancel = false"
         ></i>
       </div>
-      <h1 class="mt-3">cancel order</h1>
-      <p class="p-color-fs">Are you sure you want to cancel this order?</p>
+      <h1 class="mt-3">{{ $t("cancel order") }}</h1>
+      <p class="p-color-fs">
+        {{ $t("Are you sure you want to cancel this order?") }}
+      </p>
       <div class="button-cancel cancel-order mt-3">
-        <button @click="cancelOrder = true">Yes, Cancel Order</button>
+        <button @click="cancelOrder = true">
+          {{ $t("Yes, Cancel Order") }}
+        </button>
       </div>
     </div>
   </div>
@@ -25,7 +29,7 @@
       <div class="reasons">
         <div class="d-flex justify-content-between">
           <div class="Mention-reason reason-title mb-5 mt-2">
-            Mention reason
+            {{ $t("Mention reason") }}
           </div>
 
           <div
@@ -68,7 +72,7 @@
                   <h1 class="h1 text-capitalize">{{ orderSelected.type }}</h1>
                   <p class="price">
                     {{ Math.trunc(orderSelected.total_amount) }}
-                    <span class="span text-uppercase">sar</span>
+                    <span class="span text-uppercase">{{ $t("sar") }}</span>
                   </p>
                 </div>
               </div>
@@ -86,7 +90,7 @@
                   <PuplicIconCarIconOrder />
                 </div>
                 <div class="name" v-if="orderSelected.car_type">
-                  <p class="text-capitalize parag">car model</p>
+                  <p class="text-capitalize parag">{{ $t("car model") }}</p>
                   <p class="name-order">{{ orderSelected.car_type.title }}</p>
                 </div>
               </div>
@@ -98,7 +102,9 @@
                   <PuplicIconHashtag />
                 </div>
                 <div class="number">
-                  <p class="text-capitalize parag">order number</p>
+                  <p class="text-capitalize parag">
+                    {{ $t("number order..") }}
+                  </p>
                   <p class="name-order">{{ orderSelected.order_num }}</p>
                 </div>
               </div>
@@ -117,7 +123,7 @@
                 <div class="days-time">
                   <h4>{{ orderSelected.reservation_time }}</h4>
                   <p class="color-Eb" v-if="orderSelected?.can_reschedule">
-                    Reschedule Order
+                    {{ $t("Reschedule Order") }}
                   </p>
                   <p class="fw-bold" :class="[messageClass, 'text-msg-change']">
                     {{ messageTimeChange }}
@@ -137,7 +143,9 @@
                   <h4 v-if="orderSelected.branch?.title">
                     {{ orderSelected.branch.title }}
                   </h4>
-                  <p class="color-Eb text-capitalize">show in maps</p>
+                  <p class="color-Eb text-capitalize">
+                    {{ $t("show in maps") }}
+                  </p>
                 </div>
               </div>
             </div>
@@ -145,9 +153,9 @@
             <div class="like text-center margin-30px">
               <div v-if="orderSelected?.status === 'canceled'">
                 <PuplicIconCancelOrderIcon />
-                <h1 class="title-step">Canceled</h1>
+                <h1 class="title-step">{{ $t("Canceled") }}</h1>
                 <p class="width-p">
-                  We're sorry, but your order has been canceled.
+                  {{ $t("Were sorry, but your order has been canceled.") }}
                 </p>
               </div>
 
@@ -178,7 +186,7 @@
                       />
                     </svg>
                   </div>
-                  <p class="step-name">reuested</p>
+                  <p class="step-name">{{ $t("reuested") }}</p>
                 </li>
 
                 <li>
@@ -190,7 +198,7 @@
                   >
                     <icons-status-step-booked :status="orderSelected.status" />
                   </div>
-                  <p class="step-name">booked</p>
+                  <p class="step-name">{{ $t("booked") }}</p>
                 </li>
 
                 <li>
@@ -203,7 +211,7 @@
                   >
                     <icons-status-step-inspection />
                   </div>
-                  <p class="step-name">inspection</p>
+                  <p class="step-name">{{ $t("inspection") }}</p>
                 </li>
 
                 <li>
@@ -215,7 +223,7 @@
                   >
                     <icons-status-step-report />
                   </div>
-                  <p class="step-name">report</p>
+                  <p class="step-name">{{ $t("report") }}</p>
                 </li>
 
                 <li>
@@ -229,7 +237,7 @@
                       :status="orderSelected.status"
                     />
                   </div>
-                  <p class="step-name">car is fine</p>
+                  <p class="step-name">{{ $t("car is fine") }}</p>
                 </li>
 
                 <li>
@@ -242,7 +250,7 @@
                   >
                     <icons-status-step-maintenance />
                   </div>
-                  <p class="step-name">maintenance</p>
+                  <p class="step-name">{{ $t("maintenance") }}</p>
                 </li>
 
                 <li>
@@ -254,7 +262,7 @@
                   >
                     <icons-status-step-ready />
                   </div>
-                  <p class="step-name">ready</p>
+                  <p class="step-name">{{ $t("ready") }}</p>
                 </li>
 
                 <li>
@@ -268,14 +276,14 @@
                       :status="orderSelected.status"
                     />
                   </div>
-                  <p class="step-name">completed</p>
+                  <p class="step-name">{{ $t("completed") }}</p>
                 </li>
               </ul>
             </div>
             <!-- invoice -->
             <div class="invoice-details">
               <button @click="openInvoice" class="btn btn-primary">
-                View invoice
+                {{ $t("View Invoice") }}
               </button>
             </div>
             <div>
@@ -283,7 +291,7 @@
                 href="https://yarmok.co/invoice/1"
                 target="_blank"
                 rel="noopener noreferrer"
-                >View Invoice</a
+                >{{ $t("View Invoice") }}</a
               >
             </div>
             <!-- https://yarmok.co/invoice/1 -->
@@ -299,11 +307,11 @@
               <div
                 class="d-flex align-items-center justify-content-between mt-2"
               >
-                <h4 class="label">items</h4>
+                <h4 class="label">{{ $t("items") }}</h4>
 
                 <h4 class="label">
                   {{ orderSelected?.total_amount }}
-                  <span class="span">SAR</span>
+                  <span class="span text-uppercasr">{{ $t("sar") }}</span>
                 </h4>
               </div>
               <div class="items-order order-amount mt-3">
@@ -321,7 +329,7 @@
                     type="button"
                     class="btn btn-danger txet-capitalize"
                   >
-                    more
+                    {{ $t("more") }}
                   </button>
                 </div>
               </div>
@@ -338,7 +346,7 @@
                   <div
                     class="d-flex align-items-center justify-content-between"
                   >
-                    <h1 class="p-color-fs">items order</h1>
+                    <h1 class="p-color-fs">{{ $t("items order") }}</h1>
                     <i
                       @click="popupItems = false"
                       class="fa-solid fa-xmark"
@@ -347,7 +355,7 @@
                   </div>
                   <!-- services -->
                   <div v-if="orderSelected.services" class="services">
-                    <h4 class="label">services</h4>
+                    <h4 class="label">{{ $t("services") }}</h4>
                     <div class="service-list">
                       <div
                         class="order-amount transparent mb-3 border-box-item d-flex align-items-center gap-2"
@@ -357,8 +365,8 @@
                         <img :src="service.image" class="image-width" alt="" />
                         <div class="title-price">
                           <h5 class="label">{{ service.title }}</h5>
-                          <p class="text-danger fw-bold">
-                            {{ service.price }} SAR
+                          <p class="text-danger text-uppercase fw-bold">
+                            {{ service.price }} {{ $t("sar") }}
                           </p>
                         </div>
                       </div>
@@ -369,7 +377,7 @@
                     v-if="orderSelected.spare_parts.length"
                     class="spareparts"
                   >
-                    <h4 class="label">spare parts</h4>
+                    <h4 class="label">{{ $t("spare parts") }}</h4>
                     <div class="spare-list">
                       <div
                         class="order-amount transparent mb-3 border-box-item d-flex align-items-center gap-2"
@@ -383,8 +391,8 @@
                         />
                         <div class="title-price">
                           <h5 class="label">{{ sparePart.title }}</h5>
-                          <p class="text-danger fw-bold">
-                            {{ sparePart.price }} SAR
+                          <p class="text-danger text-uppercase fw-bold">
+                            {{ sparePart.price }} {{ $t("sar") }}
                           </p>
                         </div>
                       </div>
@@ -393,7 +401,7 @@
 
                   <!-- offers -->
                   <div v-if="orderSelected.offers.length" class="offers">
-                    <h4 class="label">offers</h4>
+                    <h4 class="label">{{ $t("offers") }}</h4>
                     <div class="offer-list">
                       <div
                         class="order-amount transparent mb-3 border-box-item d-flex align-items-center gap-2"
@@ -403,8 +411,8 @@
                         <img :src="offer.image" class="image-width" alt="" />
                         <div class="title-price">
                           <h5 class="label">{{ offer.title }}</h5>
-                          <p class="text-danger fw-bold">
-                            {{ offer.price }} SAR
+                          <p class="text-danger text-uppercase fw-bold">
+                            {{ offer.price }} {{ $t("sar") }}
                           </p>
                         </div>
                       </div>
@@ -416,17 +424,19 @@
                       <div
                         class="total-order d-flex justify-content-between align-items-center"
                       >
-                        <h4 class="label">sub total</h4>
+                        <h4 class="label">{{ $t("sub total") }}</h4>
                         <p class="text-capitalize">
                           {{ orderSelected.sub_total }}
-                          <span class="p-color-fs span">SAR</span>
+                          <span class="p-color-fs text-uppercase span">{{
+                            $t("sar")
+                          }}</span>
                         </p>
                       </div>
 
                       <div
                         class="vat d-flex justify-content-between align-items-center"
                       >
-                        <h4 class="label">vat</h4>
+                        <h4 class="label">{{ $t("vat") }}</h4>
                         <p class="text-capitalize">
                           {{ orderSelected?.vat_amount }}
                         </p>
@@ -435,10 +445,12 @@
                       <div
                         class="final-amount d-flex justify-content-between align-items-center"
                       >
-                        <h4 class="label">Final Amount</h4>
+                        <h4 class="label">{{ $t("Final Amount") }}</h4>
                         <p class="text-capitalize">
                           {{ orderSelected.total_amount }}
-                          <span class="p-color-fs span">SAR</span>
+                          <span class="p-color-fs text-uppercase span">{{
+                            $t("sar")
+                          }}</span>
                         </p>
                       </div>
                     </div>
@@ -463,10 +475,10 @@
             <div
               class="totla-amount margin-20px d-flex align-items-center justify-content-between"
             >
-              <div class="total text-capitalize">total amount</div>
+              <div class="total text-capitalize">{{ $t("total amount") }}</div>
               <div class="price-total">
                 {{ orderSelected.total_amount }}
-                <span class="span">SAR</span>
+                <span class="span text-uppercase">{{ $t("sar") }}</span>
               </div>
             </div>
             <!-- cancel order -->
@@ -476,7 +488,7 @@
               :class="{ 'd-none': orderSelected?.status === 'canceled' }"
               class="cancel-order mt-4 position-relative d-flex align-items-center"
             >
-              <button>cancel order</button>
+              <button>{{ $t("cancel order") }}</button>
             </div>
           </div>
         </div>
@@ -486,7 +498,7 @@
     <div v-if="times" class="popup-reschedule">
       <div class="d-flex justify-content-between">
         <div class="Mention-reason reason-title mb-3 mt-2">
-          choose from the date available
+          {{ $t("choose from the date available") }}
         </div>
 
         <div

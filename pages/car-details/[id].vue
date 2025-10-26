@@ -23,7 +23,7 @@
                       class="p-color-fs ps-2 pe-2 rounded bg"
                       v-if="carDetails.is_default"
                     >
-                      default
+                      {{ $t("default") }}
                     </span>
                   </p>
                 </div>
@@ -39,16 +39,24 @@
               <!-- footer -->
               <div class="foot-box d-flex justify-content-between w-100 p-3">
                 <!-- left section -->
-                <div class="chassis-num text-center details-order flex-fill pe-3">
+                <div
+                  class="chassis-num text-center details-order flex-fill pe-3"
+                >
                   <p class="p-colo-fs mb-2">
-                   <span class="p-color-fs">chassis Number: </span> {{ carDetails.chassis_number }}
+                    <span class="p-color-fs">{{ $t("chassis Number:") }} </span>
+                    {{ carDetails.chassis_number }}
                   </p>
                 </div>
 
                 <!-- right section -->
-                <div class="chassis-num text-center details-order flex-fill ps-3">
+                <div
+                  class="chassis-num text-center details-order flex-fill ps-3"
+                >
                   <p class="p-colo-fs mb-2">
-                    <span class="p-color-fs">Manufacture Year:</span> {{ carDetails.manufacture_year }}
+                    <span class="p-color-fs">{{
+                      $t("Manufacture Year:")
+                    }}</span>
+                    {{ carDetails.manufacture_year }}
                   </p>
                 </div>
               </div>
@@ -76,7 +84,7 @@
                         {{ item.vendor_name }}
                       </h1>
                       <p class="p-color-fs fs">
-                        number order..
+                        {{ $t("number order..") }}
                         <span class="font-p fw-bold"
                           >#{{ item.order_num }}</span
                         >
@@ -92,16 +100,18 @@
                       class="show-details d-flex align-items-center justify-content-between"
                     >
                       <button class="btn order-bg text-light p-color-fs fs">
-                        show order
+                        {{ $t("show order") }}
                       </button>
 
                       <div style="cursor: pointer">
                         <p class="font-p fw-bold" style="cursor: pointer">
                           {{ item.total_amount }}
-                          <span class="p-color-fs fs text-uppercase">sar</span>
+                          <span class="p-color-fs fs text-uppercase">{{
+                            $t("sar")
+                          }}</span>
                         </p>
                         <p class="p-color-fs fs text-capitalize">
-                          details amount
+                          {{ $t("details amount") }}
                         </p>
                       </div>
                     </div>
@@ -112,7 +122,7 @@
                 v-if="carDetails.latest_orders.length === 0"
                 class="empty-order p-color-fs text-uppercase"
               >
-                not found orders yet
+                {{ $t("not found orders yet") }}
               </div>
             </div>
           </div>
@@ -120,7 +130,6 @@
       </div>
     </div>
   </div>
-  <!-- 01021336699 -->
 </template>
 
 <script setup>

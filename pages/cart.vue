@@ -274,7 +274,7 @@
               </div>
 
               <div class="buttion-confirm" @click="toContinue">
-                <ButtonCard textButton="continue" />
+                <ButtonCard :textButton="$t('continue')" />
               </div>
               <div class="buttion-confirm">
                 <button
@@ -287,7 +287,7 @@
                   class="additems text-capitalize label"
                 >
                   <i class="fa-solid fa-plus"></i>
-                 {{$t('add another items')}}
+                  {{ $t("add another items") }}
                 </button>
               </div>
             </div>
@@ -395,7 +395,7 @@ let router = useRouter();
 function toContinue() {
   isLoadingOtp.value = true;
   router.push({
-    path: `/order-update-details`,
+    path: $t(`/order-update-details`),
     query: {
       id: order_id.value,
     },

@@ -14,12 +14,8 @@
               class="profiel-img d-flex justify-content-between align-items-center margin-bottom-24px"
             >
               <h1 class="margin-bottom-24px text-capitalize personal mb-0">
-                personal information
+                {{ $t("personal information") }}
               </h1>
-              <!-- <div class="box-img position-relative text-center">
-                <img disabled src="/Ellipse 2.png" alt="" class="img-profile" />
-                <i class="fa-solid fa-user fa-2x"></i>
-              </div> -->
             </div>
           </div>
 
@@ -27,31 +23,31 @@
             <div v-if="user" class="inputs">
               <div class="row-inputs">
                 <div class="input d-flex flex-column">
-                  <label class="label">first name</label>
+                  <label class="label">{{ $t("first name") }}</label>
                   <input v-model="user.first_name" type="text" disabled />
                 </div>
 
                 <div class="input d-flex flex-column">
-                  <label class="label">last name</label>
+                  <label class="label">{{ $t("last name") }}</label>
                   <input type="text" disabled v-model="user.last_name" />
                 </div>
               </div>
 
               <div class="row-inputs">
                 <div class="input d-flex flex-column">
-                  <label class="label">phone Number</label>
+                  <label class="label">{{ $t("phone Number") }}</label>
                   <input type="text" disabled v-model="user.phone" />
                 </div>
               </div>
 
               <div class="row-inputs" v-if="user.area && user.city">
                 <div class="input d-flex flex-column">
-                  <label class="label" for="area">area</label>
+                  <label class="label" for="area">{{ $t("area") }}</label>
                   <input type="text" disabled v-model="user.area.title" />
                 </div>
 
                 <div class="input d-flex flex-column">
-                  <label class="label" for="city">city</label>
+                  <label class="label" for="city">{{ $t("city") }}</label>
                   <input type="text" disabled v-model="user.city.title" />
                 </div>
               </div>
@@ -64,28 +60,18 @@
               class="profiel-img d-flex justify-content-between align-items-center margin-bottom-24px"
             >
               <h1 class="margin-bottom-24px text-capitalize personal mb-0">
-                personal information
+                {{ $t("personal information") }}
               </h1>
               <div class="box-img position-relative text-center">
-                <img
-                  @click="ChangeProfile"
-                  src="/Ellipse 2.png"
-                  alt="profile"
-                  class="img-profile"
-                />
                 <div
                   class="change-profile position-absolute"
                   :class="{ 'd-block': profileImg }"
                 >
-                  <h6 class="h6 text-capitalize">profile picture</h6>
+                  <!-- <h6 class="h6 text-capitalize">profile picture</h6> -->
                   <div
                     class="change box-design d-flex gap-2 justify-content-center align-items-center"
                   >
                     <PresonalIconsChange />
-
-                    <p class="mb-0 text-capitalize paragraph-change font-p">
-                      change
-                    </p>
                   </div>
                   <div
                     class="delete box-design d-flex gap-2 justify-content-center align-items-center"
@@ -93,7 +79,7 @@
                     <PresonalIconsIconDeleted />
 
                     <p class="mb-0 text-capitalize font-p color-delete">
-                      delete
+                      {{ $t("delete") }}
                     </p>
                   </div>
                 </div>
@@ -105,7 +91,7 @@
             <div v-if="user" class="inputs">
               <div class="row-inputs">
                 <div class="input d-flex flex-column">
-                  <label class="label">first name</label>
+                  <label class="label">{{ $t("first name") }}</label>
                   <input
                     v-model="user.first_name"
                     type="text"
@@ -114,7 +100,7 @@
                 </div>
 
                 <div class="input d-flex flex-column">
-                  <label class="label">last name</label>
+                  <label class="label">{{ $t("last name") }}</label>
                   <input
                     type="text"
                     placeholder="your name"
@@ -125,7 +111,7 @@
 
               <div class="row-inputs">
                 <div class="input d-flex flex-column">
-                  <label class="label">phone Number</label>
+                  <label class="label">{{ $t("phone Number") }}</label>
                   <input
                     type="text"
                     placeholder="your phone"
@@ -136,9 +122,9 @@
 
               <div class="row-inputs">
                 <div class="input d-flex flex-column">
-                  <label class="label" for="area">area</label>
+                  <label class="label" for="area">{{ $t("area") }}</label>
                   <select id="area" class="select" v-model="areaId">
-                    <option value="" disabled>Select area</option>
+                    <option value="" disabled>{{ $t("Select area") }}</option>
                     <option
                       v-for="areaItem in allAreas"
                       :key="areaItem.id"
@@ -150,9 +136,9 @@
                 </div>
 
                 <div class="input d-flex flex-column">
-                  <label class="label" for="city">city</label>
+                  <label class="label" for="city">{{ $t("city") }}</label>
                   <select id="city" class="select" v-model="cityId">
-                    <option value="" disabled>Select city</option>
+                    <option value="" disabled>{{ $t("Select city") }}</option>
                     <option
                       v-for="cityItem in allCities"
                       :key="cityItem.id"
@@ -169,14 +155,14 @@
               @click="editProfile"
               class="width-height border-radius-36px Edit"
             >
-              <button class="text-capitalize">continue</button>
+              <button class="text-capitalize">{{ $t("continue") }}</button>
             </div>
           </div>
         </div>
 
         <div v-if="user && !editDone">
           <div @click="toEdit" class="width-height border-radius-36px Edit">
-            <button class="text-capitalize">edit profile</button>
+            <button class="text-capitalize">{{ $t("edit profile") }}</button>
           </div>
 
           <div
@@ -196,16 +182,18 @@
                 @click="showmodalsignOut = false"
               ></button>
 
-              <h3 class="label text-center">sign out from application ?</h3>
+              <h3 class="label text-center">
+                {{ $t("sign out from application") }}
+              </h3>
               <p class="p-color-fs text-capitalize text-center mt-3">
-                are you sure to exit application ?
+                {{ $t("are you sure to exit application") }}
               </p>
               <button
                 @click.prevent="logOut"
                 type="button"
                 class="btn btn-danger mt-3"
               >
-                sign out
+                {{ $t("sign out") }}
               </button>
             </div>
           </div>
@@ -214,7 +202,7 @@
             @click="showmodalsignOut = true"
             class="log-out width-height border-radius-36px"
           >
-            <button class="text-capitalize">log out</button>
+            <button class="text-capitalize">{{ $t("log out") }}</button>
           </div>
 
           <div
@@ -225,7 +213,7 @@
               class="text-capitalize color-but d-flex align-items-center gap-3"
             >
               <Trash />
-              <span>delete my account</span>
+              <span>{{ $t("delete my account") }}</span>
             </button>
           </div>
         </div>
@@ -256,14 +244,14 @@
                 class="btn-cancel me-2"
                 @click="showDeactivateModal = false"
               >
-                Cancel
+                {{ $t("Cancel") }}
               </button>
               <button
                 type="submit"
-                class="btn-confirm"
+                class="btn-confirm me-2"
                 :disabled="!selectedReason"
               >
-                Confirm Delete
+                {{ $t("Confirm Delete") }}
               </button>
             </div>
           </form>

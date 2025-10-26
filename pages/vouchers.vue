@@ -10,7 +10,9 @@
           >
             <div class="point-num text-center">
               <h4 class="title-pages"></h4>
-              <p class="p-color-fs text-capitalize created-at">vouchers</p>
+              <p class="p-color-fs text-capitalize created-at">
+                {{ $t("vouchers") }}
+              </p>
             </div>
 
             <div class="redeem p-color-fs text-capitalize border-radius-36px">
@@ -27,21 +29,21 @@
                 @click="available"
                 class="li-point link"
               >
-                available
+                {{ $t("available") }}
               </li>
               <li
                 :class="{ active: step === 1 }"
                 @click="used"
                 class="li-point link"
               >
-                used
+                {{ $t("used") }}
               </li>
               <li
                 :class="{ active: step === 2 }"
                 @click="expired"
                 class="li-point link"
               >
-                expired
+                {{ $t("expired") }}
               </li>
             </ul>
           </div>
@@ -64,16 +66,18 @@
               <div
                 class="d-flex justify-content-between align-items-center mt-3"
               >
-                <button class="coupon-code">نسخ "{{ voucher.code }}"</button>
+                <button class="coupon-code">{{$t("copy")}} "{{ voucher.code }}"</button>
                 <div>
-                  <span class="price-currency">expired at</span>
+                  <span class="price-currency">{{ $t("expired at") }}</span>
                   <p class="text-muted">{{ voucher.expires_at }}</p>
                 </div>
               </div>
               <div class="empty-msg fw-bold mb-1 label" v-if="messageEmpty">
                 <div class="ing-false text-center not-offer">
                   <PuplicIconNotOffer />
-                  <h1 class="label fw-bold">not found vouchers yet</h1>
+                  <h1 class="label fw-bold">
+                    {{ $t("there as not found vouchers yet") }}
+                  </h1>
                 </div>
               </div>
             </div>
@@ -100,7 +104,7 @@
               >
                 <!-- <button class="coupon-code">نسخ "{{ voucher.code }}"</button> -->
                 <div>
-                  <span class="price-currency">expired at</span>
+                  <span class="price-currency">{{ $t("expired at") }}</span>
                   <p class="text-muted">{{ voucher.expires_at }}</p>
                 </div>
               </div>
@@ -108,7 +112,9 @@
             <div class="empty-msg fw-bold mb-1 label" v-if="messageEmpty">
               <div class="ing-false text-center not-offer">
                 <PuplicIconNotOffer />
-                <h1 class="label fw-bold">not found vouchers yet</h1>
+                <h1 class="label fw-bold">
+                  {{ $t("there as not found vouchers yet") }}
+                </h1>
               </div>
             </div>
           </div>
@@ -134,7 +140,7 @@
               >
                 <!-- <button class="coupon-code">نسخ "{{ voucher.code }}"</button> -->
                 <div>
-                  <span class="price-currency">expired at</span>
+                  <span class="price-currency">{{ $t("expired at") }}</span>
                   <p class="text-muted">{{ voucher.expires_at }}</p>
                 </div>
               </div>
@@ -142,7 +148,9 @@
             <div class="empty-msg fw-bold mb-1 label" v-if="messageEmpty">
               <div class="ing-false text-center not-offer">
                 <PuplicIconNotOffer />
-                <h1 class="label fw-bold">not found vouchers yet</h1>
+                <h1 class="label fw-bold">
+                  {{ $t("there as not found vouchers yet") }}
+                </h1>
               </div>
             </div>
           </div>
@@ -167,9 +175,9 @@ ExVouchers.value = resExVouchers?.data || [];
 
 const step = ref(0);
 const title = computed(() => {
-  if (step.value === 0) return "available";
-  if (step.value === 1) return "used";
-  if (step.value === 2) return "expired";
+  if (step.value === 0) return $t("available");
+  if (step.value === 1) return $t("used");
+  if (step.value === 2) return $t("expired");
   return;
 });
 

@@ -7,76 +7,76 @@
             <ul class="links d-flex justify-content-center align-items-end ul">
               <li class="">
                 <NuxtLink
-                  to="/profile"
+                  :to="$localePath('/profile')"
                   exact-active-class="active"
                   class="d-flex align-items-center gap-1 border-radius-36px p-color-fs"
                 >
                   <PuplicIconProfileIcon />
-                  <h6 class="text-capitalize link-sm">profile</h6>
+                  <h6 class="text-capitalize link-sm">{{ $t("profile") }}</h6>
                 </NuxtLink>
               </li>
               <li class="border-radius-36px">
                 <NuxtLink
-                  to="/my-cars"
+                  :to="$localePath('/my-cars')"
                   exact-active-class="active"
                   class="d-flex align-items-center gap-1 border-radius-36px p-color-fs"
                 >
                   <PuplicIconCarIcon />
-                  <h6 class="text-capitalize link-sm">my cars</h6>
+                  <h6 class="text-capitalize link-sm">{{ $t("my cars") }}</h6>
                 </NuxtLink>
               </li>
               <li class="">
                 <NuxtLink
-                  to="/wallet"
+                  :to="$localePath('/wallet')"
                   exact-active-class="active"
                   class="d-flex align-items-center gap-1 border-radius-36px p-color-fs"
                 >
                   <PuplicIconWalletIcon />
-                  <h6 class="text-capitalize link-sm">wallet</h6>
+                  <h6 class="text-capitalize link-sm">{{ $t("wallet") }}</h6>
                 </NuxtLink>
               </li>
               <li class="">
                 <NuxtLink
-                  to="/language"
+                  :to="$localePath('/language')"
                   exact-active-class="active"
                   class="d-flex align-items-center gap-1 border-radius-36px p-color-fs"
                 >
                   <PuplicIconLanguageIcon />
-                  <h6 class="text-capitalize link-sm">language</h6>
+                  <h6 class="text-capitalize link-sm">{{ $t("language") }}</h6>
                 </NuxtLink>
               </li>
 
               <li class="">
                 <NuxtLink
-                  to="/point"
+                  :to="$localePath('/point')"
                   exact-active-class="active"
                   class="d-flex align-items-center gap-1 border-radius-36px p-color-fs"
                 >
                   <PuplicIconPointIcon />
 
-                  <h6 class="text-capitalize link-sm">point</h6>
+                  <h6 class="text-capitalize link-sm">{{ $t("point") }}</h6>
                 </NuxtLink>
               </li>
 
               <li class="">
                 <NuxtLink
-                  to="/vouchers"
+                  :to="$localePath('/vouchers')"
                   exact-active-class="active"
                   class="d-flex align-items-center gap-1 border-radius-36px p-color-fs"
                 >
                   <i class="fa-solid fa-ticket-simple"></i>
-                  <h6 class="text-capitalize link-sm">vouchers</h6>
+                  <h6 class="text-capitalize link-sm">{{ $t("vouchers") }}</h6>
                 </NuxtLink>
               </li>
 
               <li class="">
                 <NuxtLink
-                  to="/help"
+                  :to="$localePath('/help')"
                   exact-active-class="active"
                   class="d-flex align-items-center gap-1 border-radius-36px p-color-fs"
                 >
                   <PuplicIconHelpIcon />
-                  <h6 class="text-capitalize link-sm">help</h6>
+                  <h6 class="text-capitalize link-sm">{{ $t("Help") }}</h6>
                 </NuxtLink>
               </li>
             </ul>
@@ -86,6 +86,9 @@
     </div>
   </div>
 </template>
+<script setup>
+const localePath = useLocalePath();
+</script>
 
 <style>
 .margin-bottom-40px {

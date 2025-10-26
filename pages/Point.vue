@@ -9,7 +9,9 @@
           >
             <div class="point-num text-center">
               <h4 class="title-pages">{{ Points?.current_points }}</h4>
-              <p class="p-color-fs text-capitalize created-at">current point</p>
+              <p class="p-color-fs text-capitalize created-at">
+                {{ $t("current point") }}
+              </p>
             </div>
 
             <div
@@ -30,21 +32,21 @@
                 class="li-point link"
                 :class="{ active: step === 0 }"
               >
-                earned
+                {{ $t("earned") }}
               </li>
               <li
                 @click="redeem"
                 class="li-point link"
                 :class="{ active: step === 1 }"
               >
-                redeem
+                {{ $t("redeem") }}
               </li>
               <li
                 @click="expired"
                 class="li-point link"
                 :class="{ active: step === 2 }"
               >
-                expired
+                {{ $t("expired") }}
               </li>
             </ul>
           </div>
@@ -94,7 +96,7 @@
 
             <div class="points d-flex align-items-center gap-2">
               <p class="num">{{ item.points }}</p>
-              <span class="span"> point</span>
+              <span class="span">{{ $t("point") }}</span>
             </div>
           </div>
 
@@ -143,7 +145,7 @@
 
             <div class="points d-flex gap-2">
               <p class="num">{{ item.points }}</p>
-              <span class="span"> point</span>
+              <span class="span">{{ $t("point") }}</span>
             </div>
           </div>
 
@@ -194,13 +196,13 @@
 
             <div class="points d-flex gap-2">
               <p class="num">{{ item.points }}</p>
-              <span class="span"> point</span>
+              <span class="span">{{ $t("point") }}</span>
             </div>
           </div>
 
           <div v-if="Points.length === 0" class="not-point text-center">
             <img src="/notPoints.png" alt="no points" />
-            <p>not points yet</p>
+            <p>{{ $t("ther a not points yet") }}</p>
           </div>
         </div>
       </div>
@@ -213,7 +215,7 @@
         <div class="modal-content">
           <div class="mdoal-box">
             <div class="d-flex align-items-center justify-content-between mb-2">
-              <h1 class="text-capitalize label">send points</h1>
+              <h1 class="text-capitalize label">{{ $t("send points") }}</h1>
               <div
                 class="icon-to-page d-flex justify-content-center align-items-center"
                 @click="buttonsOpen = false"
@@ -225,7 +227,7 @@
             <div>
               <ButtonCard
                 @click="handleRedeemClick"
-                text-button="redeem points"
+                :text-button="$t('redeem points')"
                 class="mt-4"
                 :class="{ 'disabled-btn': !current_points_int }"
               />
@@ -236,7 +238,7 @@
                 class="additems text-capitalize label"
               >
                 <i class="fa-solid fa-paper-plane"></i>
-                send points
+                {{ $t("send points") }}
               </button>
             </div>
           </div>
@@ -255,7 +257,7 @@
               <div
                 class="d-flex align-items-center justify-content-between mb-2"
               >
-                <h1 class="text-capitalize label">redeem points</h1>
+                <h1 class="text-capitalize label">{{ $t("redeem points") }}</h1>
                 <div
                   class="icon-to-page d-flex justify-content-center align-items-center"
                   @click="popupRedeem = false"
@@ -270,7 +272,7 @@
                 v-model="pointNum"
               />
               <p class="p-color-fs text-capitalize mt-2">
-                NOTES: Minimum points = 1000 points
+                {{ $t("NOTES: Minimum points = 1000 points") }}
               </p>
             </div>
             <!-- box details operation -->
@@ -285,19 +287,19 @@
                   {{ pointNum || current_points_int }}
                 </h6>
                 <h6 v-else class="h4point label">0</h6>
-                <p class="p-color-fs text-capitalize">point</p>
+                <p class="p-color-fs text-capitalize">{{ $t("point") }}</p>
               </div>
               <!-- redeem to -->
               <div class="point-redeemto text-center">
                 <PuplicIconDubleArrows />
-                <p class="p-color-fs text-capitalize">redeem to</p>
+                <p class="p-color-fs text-capitalize">{{ $t("redeem to") }}</p>
               </div>
               <!-- calculater -->
               <div class="num-sar text-center">
                 <h6 class="label fw-bold">
                   {{ calculatedSar }}
                 </h6>
-                <p class="p-color-fs text-uppercase">sar</p>
+                <p class="p-color-fs text-uppercase">{{ $t("sar") }}</p>
               </div>
             </div>
           </div>
@@ -307,7 +309,7 @@
               v-if="!current_points_int"
               class="disabled-btn rounded mt-3 p-3 text-capitalize"
             >
-              redeem points
+              {{ $t("redeem points") }}
             </button>
 
             <ButtonCard
@@ -331,7 +333,7 @@
               <div
                 class="d-flex align-items-center justify-content-between mb-2"
               >
-                <h1 class="text-capitalize label">send points</h1>
+                <h1 class="text-capitalize label">{{ $t("send points") }}</h1>
                 <div
                   class="icon-to-page d-flex justify-content-center align-items-center"
                   @click="popupTransfer = false"
@@ -340,7 +342,7 @@
                 </div>
               </div>
               <!-- input number point -->
-              <label for="" class="label">points</label>
+              <label for="" class="label">{{ $t("point") }}</label>
               <input
                 type="text"
                 class="input-point w-100 p-2 rounded mb-3"
@@ -354,7 +356,7 @@
                 v-model="pointNum"
               />
               <p class="p-color-fs fs text-capitalize mt-2">
-                NOTES: please you shouled this number used in yarmook app
+                {{$t("NOTES: please you shouled this number used in yarmook app")}}
               </p>
             </div>
           </div>
@@ -364,7 +366,7 @@
               v-if="!phoneNumberSend"
               class="disabled-btn rounded mt-3 p-3 text-capitalize"
             >
-              send
+              {{ $t("send") }}
             </button>
             <ButtonCard
               v-else
@@ -526,9 +528,9 @@ const sendTransferPoints = async () => {
 
 let step = ref(0);
 const title = computed(() => {
-  if (step.value === 0) return "earned";
-  if (step.value === 1) return "redeem";
-  if (step.value === 2) return "expired";
+  if (step.value === 0) return $t("earned");
+  if (step.value === 1) return $t("redeem");
+  if (step.value === 2) return $t("expired");
   return;
 });
 

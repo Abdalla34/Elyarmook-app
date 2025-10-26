@@ -4,18 +4,9 @@
       class="container p-2 d-flex justify-content-between align-items-center pt-3"
     >
       <div class="logo d-flex align-items-center gap-3 position-relative">
-        <div class="image-logo" @click="navigateTo('/')">
+        <div class="image-logo" @click="navigateTo(localePath('/'))">
           <img class="width-image" src="/Yarmook Logo.png" alt="Logo" />
         </div>
-
-        <!-- <div class="search position-relative">
-          <input
-            type="text"
-            placeholder="search"
-            class="text-capitalize focus-input fw-600 input-search border-radius-36px"
-          />
-          <PuplicIconSearch class="icon-search position-absolute" />
-        </div> -->
       </div>
 
       <div class="profile-ds">
@@ -24,20 +15,20 @@
         >
           <div
             class="background-color-cart position-relative d-flex align-items-center justify-content-center"
-            @click="navigateTo('/cart')"
+            @click="navigateTo($localePath('/cart'))"
           >
             <button class="buttons">
               <PuplicIconCartIcon />
             </button>
-          <span v-if="cartCount > 0" class="span-length">
-          {{ cartCount }}
-        </span>
+            <span v-if="cartCount > 0" class="span-length">
+              {{ cartCount }}
+            </span>
           </div>
 
           <div>
             <div
               class="background-color-cart d-flex align-items-center justify-content-center"
-              @click="navigateTo('/my-cars')"
+              @click="navigateTo($localePath('/my-cars'))"
             >
               <button v-if="token" class="buttons">
                 <img
@@ -54,7 +45,7 @@
 
           <div class="position-relative">
             <div
-              @click="navigateTo('/profile')"
+              @click="navigateTo($localePath('/profile'))"
               v-if="!token"
               class="icon-user login"
               style="cursor: pointer"
@@ -82,6 +73,7 @@
 </template>
 
 <script setup>
+const localePath = useLocalePath();
 const token = useCookie("token");
 const { defaultCar, fetchMyCars } = useMyCars();
 
@@ -95,8 +87,7 @@ watch(
     fetchMyCars();
   }
 );
-const cartCount = useState("cartCount", () => 0)
-
+const cartCount = useState("cartCount", () => 0);
 </script>
 
 <style scoped>

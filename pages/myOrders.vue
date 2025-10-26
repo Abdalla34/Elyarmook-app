@@ -120,11 +120,11 @@ let isloading = ref(false);
 let token = useCookie("token");
 
 const orders = ref([]);
+const localePath = useLocalePath();
 
 async function toOrderStatus(orderId) {
-  navigateTo(`orderdetails/${orderId.id}`);
+  navigateTo(localePath(`/orderdetails/${orderId.id}`));
 }
-
 let statusorder = ref(null);
 let responseStatus = await useApi().getStatusorders();
 statusorder.value = responseStatus?.data;

@@ -8,7 +8,7 @@
             v-for="value in allMemberShip"
             :key="value.id"
             style="cursor: pointer"
-            @click="navigateTo(`/membership-details/${value.id}`)"
+             @click="navigateTo(localePath(`/membership-details/${value.id}`))"
           >
             <img
               :src="value.image"
@@ -46,6 +46,7 @@
 const allMemberShip = ref([]);
 const response = await useApi().memberShips();
 allMemberShip.value = response?.data;
+const localePath = useLocalePath();
 </script>
 
 <style scoped>

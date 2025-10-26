@@ -26,7 +26,7 @@
                   class="d-flex align-items-center gap-2 justify-conent-center"
                 >
                   <p class="price">{{ allData?.balance }}</p>
-                  <span class="text-uppercase span">sar</span>
+                  <span class="text-uppercase span">{{ $t("sar") }}</span>
                 </div>
               </div>
             </div>
@@ -43,7 +43,7 @@
                   <div class="icon">
                     <div class="icon">
                       <div
-                        v-if="item.type === $t('deposit')"
+                        v-if="item.type === 'deposit'"
                         class="background-plus radius-padding"
                       >
                         <svg
@@ -60,7 +60,7 @@
                         </svg>
                       </div>
                       <div
-                        v-else-if="item.type === $t('withdraw')"
+                        v-else-if="item.type === 'withdraw'"
                         class="background radius-padding"
                       >
                         <svg
@@ -79,7 +79,7 @@
                     </div>
                   </div>
                   <div class="name-wallet">
-                    <h5>{{ item.type }}</h5>
+                    <h5>{{ item.type_value }}</h5>
                     <p class="p-color-fs">
                       {{ dayjs(item.created_at).format("dddd, MMM D, YYYY") }}
                       <span>{{
@@ -206,7 +206,7 @@
 </template>
 
 <script setup>
-const { getCashbackWalletReq } = useApi();
+const { getCashbackWalletReq, getWallet } = useApi();
 let dayjs = useDayjs();
 let wallets = ref([]);
 let allData = ref(null);
@@ -219,7 +219,7 @@ const isLoading = ref(true);
 let getDataWallet = async (page = 1) => {
   isLoading.value = true;
   try {
-    let resWallet = await useApi().getWallet(page);
+    let resWallet = await getWallet(page);
     allData.value = resWallet?.data || null;
     wallets.value = resWallet?.data?.transactions?.items || [];
   } finally {
