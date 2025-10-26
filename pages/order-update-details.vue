@@ -145,7 +145,8 @@
 </template>
 
 <script setup>
-const { getMycars, getBranches, getAvailableTimes ,updateCartDetails  } = useApi();
+const { getMycars, getBranches, getAvailableTimes, updateCartDetails } =
+  useApi();
 const carValue = useState("carValue", () => {});
 const branchValue = useState("branchValue", () => "");
 const dateValue = useState("dateValue", () => {});
@@ -187,6 +188,7 @@ function handleImageUpload(event) {
   }
 }
 
+const localePath = useLocalePath();
 const onSubmit = async () => {
   isLoadingOtp.value = true;
   try {
@@ -210,7 +212,7 @@ const onSubmit = async () => {
 
     await updateCartDetails(idRoute, formData);
     router.push({
-      path: "/cart-update-details",
+      path: localePath("/cart-update-details"),
       query: { id: idRoute },
     });
   } catch (err) {

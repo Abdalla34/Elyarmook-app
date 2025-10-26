@@ -391,11 +391,13 @@ async function updateQty(type, orderId, cart_item_id, newQty, action) {
 }
 
 let isLoadingOtp = ref(false);
-let router = useRouter();
+const router = useRouter();
+const localePath = useLocalePath(); 
+
 function toContinue() {
   isLoadingOtp.value = true;
   router.push({
-    path: $t(`/order-update-details`),
+    path: localePath('/order-update-details'), 
     query: {
       id: order_id.value,
     },
