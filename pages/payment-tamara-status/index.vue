@@ -1,6 +1,6 @@
 <template>
   <div class="text-green-600 text-3xl font-bold mb-4 text-center fs-3">
-    جاري التحقق من حالة الدفع...
+    {{ $t("loading check status Payment") }}
   </div>
   <div class="load">
     <loading-spinner :is-loading-otp="loading" />
@@ -8,6 +8,7 @@
 </template>
 
 <script setup>
+const { getHyperpayStatus } = useApi();
 let isChecking = false;
 let route = useRoute();
 let router = useRouter();
@@ -27,7 +28,7 @@ onMounted(async () => {
   }
 
   try {
-    const res = await useApi().getHyperpayStatus(rawId);
+    const res = await getHyperpayStatus(rawId);
     if (res?.status === true || res?.status === "true") {
       if (paymentType === "wallet") {
         router.push("/wallet");

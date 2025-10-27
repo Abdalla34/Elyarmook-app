@@ -8,7 +8,7 @@
         @click="navigateTo('/createaccount')"
         class="btn-create mt-3 text-capitalize"
       >
-        create account
+        {{ $t("create account") }}
       </button>
     </div>
   </div>

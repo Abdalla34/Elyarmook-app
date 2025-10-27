@@ -3,12 +3,16 @@
     <div class="create-acc text-center">
       <div class="logo">
         <img src="/newLogo.png" />
-        <h1 class="text-capitalize">Continue with phone</h1>
-        <p>Kindly fill in your details below to create an account</p>
+        <h1 class="text-capitalize">{{ $t("Continue with phone") }}</h1>
+        <p>
+          {{ $t("Kindly fill in your details below to create an account") }}
+        </p>
       </div>
 
       <div class="phone-number d-flex flex-column">
-        <label class="label" for="phone-number">Phone Number</label>
+        <label class="label" for="phone-number text-uppercasr">{{
+          $t("phone Number")
+        }}</label>
         <input
           class="input"
           type="text"
@@ -28,12 +32,14 @@
             showDialCodeInSelection: true,
           }"
         /> -->
-        <span v-if="errors.phone" class="text-danger mt-2">{{ errors.phone }}</span>
+        <span v-if="errors.phone" class="text-danger mt-2">{{
+          errors.phone
+        }}</span>
       </div>
 
       <div class="btn-continue w-100 enter">
         <ButtonCard
-          :textButton="loading ? 'Loading...' : 'continue'"
+          :textButton="loading ? $t('Loading...') : $t('continue')"
           @click="onSubmit"
           :disabled="loading"
         />
@@ -42,11 +48,13 @@
       <div class="position-relative or-divider">
         <span
           class="position-absolute top-50 start-50 translate-middle span-position text-capitalize"
-          >or</span
+          >{{ $t("or") }}</span
         >
       </div>
 
-      <div class="parent-boxes d-flex flex-column flex-md-row justify-content-between gap-3">
+      <div
+        class="parent-boxes d-flex flex-column flex-md-row justify-content-between gap-3"
+      >
         <div
           @click="navigateTo('/services')"
           class="visit-box box-soon d-flex align-items-center justify-content-center gap-2"
@@ -55,9 +63,11 @@
             <PuplicIconFastOrder />
           </div>
           <div class="box-text">
-            <h1>Fast Scheduling Order</h1>
+            <h1>{{ $t("Fast Scheduling Order") }}</h1>
           </div>
-          <span class="position-absolute text-capitalize">soon</span>
+          <span class="position-absolute text-capitalize">{{
+            $t("Soon")
+          }}</span>
         </div>
 
         <div
@@ -66,14 +76,16 @@
         >
           <div class="icon"><ProfileIcon /></div>
           <div class="box-text">
-            <h1>Enter as a visitor</h1>
+            <h1>{{ $t("Enter as a visitor") }}</h1>
           </div>
         </div>
       </div>
 
       <div>
-        <p class="using">By using this website means your acceptance of</p>
-        <p class="policy">Policy and Terms of use</p>
+        <p class="using">
+          {{ $t("By using this website means your acceptance of") }}
+        </p>
+        <p class="policy">{{ $t("Policy and Terms of use") }}</p>
       </div>
     </div>
     <LoadingSpinner :isLoadingOtp="isLodaing" />
@@ -94,7 +106,10 @@ const schema = yup.object({
   phone: yup
     .string()
     .required("Phone number is required")
-    .matches(/^\+?\d{7,15}$/, "Phone number must be 7–15 digits and not contain letters"),
+    .matches(
+      /^\+?\d{7,15}$/,
+      "Phone number must be 7–15 digits and not contain letters"
+    ),
 });
 
 const { handleSubmit, errors } = useForm({
@@ -171,11 +186,11 @@ const onSubmit = handleSubmit(async (values) => {
     width: 100%;
     min-height: 80px;
   }
-  
+
   .box-text h1 {
     font-size: 0.9rem;
   }
-  
+
   .icon {
     transform: scale(0.9);
   }
@@ -185,11 +200,11 @@ const onSubmit = handleSubmit(async (values) => {
   .parent-boxes {
     gap: 1rem !important;
   }
-  
+
   .visit-box {
     padding: 0.75rem;
   }
-  
+
   .box-text h1 {
     font-size: 0.8rem;
   }

@@ -9,7 +9,7 @@
 
         <div class="col-8 col-padding">
           <h1 data-v-8bcd5751 class="text-capitalize text title-pages">
-            order Details
+            {{ $t("Order Details") }}
           </h1>
 
           <div class="order">
@@ -23,7 +23,7 @@
               v-if="mycars.length > 0"
               class="input-user position-relative d-flex flex-column"
             >
-              <label for="" class="label">my car</label>
+              <label for="" class="label">{{ $t("my cars") }}</label>
               <select v-model="carValue" class="input-style">
                 <option disabled value="">Ex : {{ user.name }}</option>
                 <option v-for="car in mycars" :key="car.id" :value="car.id">
@@ -41,9 +41,9 @@
               <div
                 class="input-barnch position-relative fix d-flex flex-column"
               >
-                <label for="" class="label">branch</label>
+                <label for="" class="label">{{ $t("branch") }}</label>
                 <select v-model="branchValue" class="input-style">
-                  <option disabled value="">Select Branch</option>
+                  <option disabled value="">{{ $t("Select Branch") }}</option>
                   <option v-for="br in branches" :key="br.id" :value="br.id">
                     {{ br.title }}
                   </option>
@@ -56,9 +56,11 @@
               <div
                 class="input-barnch position-relative fix d-flex flex-column"
               >
-                <label for="" class="label">date</label>
+                <label for="" class="label">{{ $t("date") }}</label>
                 <select v-model="dateValue" class="input-style">
-                  <option disabled value="">Select Date & Time</option>
+                  <option disabled value="">
+                    {{ $t("Select Date & Time") }}
+                  </option>
                   <template
                     v-for="dateObj in availableDates"
                     :key="dateObj.date"
@@ -79,18 +81,18 @@
             </div>
 
             <div class="details-issues d-flex flex-column">
-              <label for="" class="label">details</label>
+              <label for="" class="label">{{ $t("details") }}</label>
               <textarea
                 name=""
                 id=""
                 class="textarea"
-                placeholder="issues details"
+                :placeholder="$t('issues details')"
                 v-model="note"
               ></textarea>
             </div>
 
             <div class="problem-photo">
-              <label class="label">problem photo</label>
+              <label class="label">{{ $t("problem photo") }}</label>
               <div
                 class="upload-box d-flex justify-content-center gap-5 align-items-center"
               >
@@ -108,7 +110,7 @@
                     for="problem-photo"
                     class="upload-trigger d-flex justify-content-center"
                   >
-                    <div class="">Upload from your device</div>
+                    <div class="">{{ $t("Upload from your device") }}</div>
                     <div class="file-name">{{ fileName }}</div>
                   </label>
                 </div>
@@ -124,14 +126,14 @@
                 class="additems text-capitalize label"
               >
                 <i class="fa-solid fa-plus"></i>
-                add another items
+                {{ $t("add another items") }}
               </button>
               <button
                 type="submit"
                 class="continue text-capitalize label button"
                 :disabled="!carValue || !branchValue || !dateValue"
               >
-                continue
+                {{ $t("continue") }}
               </button>
             </form>
           </div>

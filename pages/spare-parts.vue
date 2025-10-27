@@ -110,31 +110,9 @@ const { getSpareParts } = useApi();
 let showOtpModal = ref(false);
 let showDialCode = ref(false);
 
-const endTimeCache = 60 * 60 * 1000; // 1 ساعة
+const endTimeCache = 12 * 60 * 60 * 1000; // 1 ساعة
+const localePaht = useLocalePath();
 
-// async function isCach() {
-//   const getCache = localStorage.getItem("sparePartsCache");
-//   const currentTime = Date.now();
-
-//   if (getCache) {
-//     const parsedData = JSON.parse(getCache);
-
-//     if (currentTime - parsedData.timestamp < endTimeCache) {
-//       spareParts.value = parsedData.spareParts;
-//     }
-//   }
-
-//   const responseSpare = await getSpareParts();
-//   spareParts.value = responseSpare?.data?.items || [];
-
-//   localStorage.setItem(
-//     "sparePartsCache",
-//     JSON.stringify({
-//       spareParts: spareParts.value,
-//       timestamp: currentTime,
-//     })
-//   );
-// }
 async function isCach() {
   const getCache = localStorage.getItem("sparePartsCache");
   const currentTime = Date.now();
@@ -149,7 +127,7 @@ async function isCach() {
     spareParts.value = []; // Prevent flicker
   }
 
-  const responseSpare = await useApi().getSpareParts();
+  const responseSpare = await getSpareParts();
   if (responseSpare?.data?.items) {
     spareParts.value = responseSpare.data.items;
 
@@ -173,7 +151,7 @@ function BtnShooping() {
 }
 
 function handleOtpSuccess() {
-  navigateTo("/order-update-details");
+  navigateTo(localePaht("/order-update-details"));
 }
 </script>
 

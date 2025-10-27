@@ -20,7 +20,9 @@
         >
           <div>
             <img src="/Vector.png" alt="" />
-            <h3 class="text-capitalize create">your cart is empty</h3>
+            <h3 class="text-capitalize create">
+              {{ $t("your cart is empty") }}
+            </h3>
             <div class="btn-items">
               <button @click="navigateTo('/services')">
                 <svg
@@ -45,7 +47,7 @@
                     stroke-linejoin="round"
                   />
                 </svg>
-                Add Items
+                {{ $t("Add Items") }}
               </button>
             </div>
           </div>
@@ -56,7 +58,7 @@
           class="col-12 col-md-12 col-lg-6 col-md-6"
           v-if="(token && items.length > 0) || offers.length > 0"
         >
-          <h4 class="mb-4 fw-bold">Order Details</h4>
+          <h4 class="mb-4 fw-bold">{{ $t("Order Details") }}</h4>
           <!-- services items -->
           <div
             class="cart d-flex justify-content-between align-items-center border-radius-36px mb-3"
@@ -71,7 +73,9 @@
                 <h4 class="item-name item-left">{{ order.title }}</h4>
                 <p class="price">
                   {{ order.price }}
-                  <span class="p-color-fs span">SAR</span>
+                  <span class="p-color-fs span text-uppercasr">{{
+                    $t("sar")
+                  }}</span>
                 </p>
                 <div class="qty-controls d-flex align-items-center mt-2">
                   <button
@@ -93,9 +97,9 @@
                   >
                     +
                   </button>
-                  <span v-if="loadingQty[order.id]" class="ms-2"
-                    >Loading...</span
-                  >
+                  <span v-if="loadingQty[order.id]" class="ms-2">{{
+                    $t("loading...")
+                  }}</span>
                   <div
                     v-if="msgErrorQty[order.id]"
                     class="text-danger label mt-2"
@@ -107,7 +111,7 @@
             </div>
             <div class="delete-icon" @click="deletedOrder(order.id, 'service')">
               <Trash />
-              <span v-if="loadingDelete[order.id]">Loading...</span>
+              <span v-if="loadingDelete[order.id]">{{ $t("loading...") }}</span>
             </div>
           </div>
           <!-- offers items -->
@@ -124,13 +128,23 @@
                 <h4 class="item-name item-left">{{ order.title }}</h4>
                 <p class="price">
                   {{ order.price }}
-                  <span class="p-color-fs span">SAR</span>
+                  <span class="p-color-fs span text-uppercasr">{{
+                    $t("sar")
+                  }}</span>
                 </p>
                 <div class="qty-controls d-flex align-items-center mt-2">
                   <button
                     class="qty-btn"
                     :disabled="loadingQty[order.id] || order.qty <= 1"
-                    @click="updateQty('offer', order_id, order, order.qty - 1 , 'minus')"
+                    @click="
+                      updateQty(
+                        'offer',
+                        order_id,
+                        order,
+                        order.qty - 1,
+                        'minus'
+                      )
+                    "
                   >
                     -
                   </button>
@@ -138,13 +152,15 @@
                   <button
                     class="qty-btn"
                     :disabled="loadingQty[order.id]"
-                    @click="updateQty('offer', order_id, order, order.qty + 1 , 'plus')"
+                    @click="
+                      updateQty('offer', order_id, order, order.qty + 1, 'plus')
+                    "
                   >
                     +
                   </button>
-                  <span v-if="loadingQty[order.id]" class="ms-2"
-                    >Loading...</span
-                  >
+                  <span v-if="loadingQty[order.id]" class="ms-2">{{
+                    $t("loading...")
+                  }}</span>
                   <div
                     v-if="msgErrorQty[order.id]"
                     class="text-danger label mt-2"
@@ -159,7 +175,9 @@
               @click="deletedOrder(order.offer_id, 'offer')"
             >
               <Trash />
-              <span v-if="loadingDelete[order.offer_id]">Loading...</span>
+              <span v-if="loadingDelete[order.offer_id]"
+                >{{ $t("loading...") }}.</span
+              >
             </div>
           </div>
           <!-- spare parts items -->
@@ -176,7 +194,9 @@
                 <h4 class="item-name item-left">{{ sparepart.title }}</h4>
                 <p class="price">
                   {{ sparepart.price }}
-                  <span class="p-color-fs span">SAR</span>
+                  <span class="p-color-fs span text-uppercase">{{
+                    $t("sar")
+                  }}</span>
                 </p>
                 <div class="qty-controls d-flex align-items-center mt-2">
                   <button
@@ -210,9 +230,9 @@
                   >
                     +
                   </button>
-                  <span v-if="loadingQty[sparepart.id]" class="ms-2"
-                    >Loading...</span
-                  >
+                  <span v-if="loadingQty[sparepart.id]" class="ms-2">{{
+                    $t("loading...")
+                  }}</span>
                 </div>
               </div>
             </div>
@@ -221,7 +241,9 @@
               @click="deletedOrder(sparepart.id, 'spare_part')"
             >
               <trash />
-              <span v-if="loadingDelete[sparepart.id]">Loading...</span>
+              <span v-if="loadingDelete[sparepart.id]">{{
+                $t("loading...")
+              }}</span>
             </div>
           </div>
         </div>
@@ -233,7 +255,7 @@
         >
           <div class="h-100">
             <h1 class="text-capitalize fs-6 updated-details">
-              order details updated
+              {{ $t("order details updated") }}
             </h1>
             <!-- price details -->
             <div class="">
@@ -251,13 +273,13 @@
             </div>
 
             <div class="">
-              <h6 class="fw-bold">Cost Details</h6>
+              <h6 class="fw-bold text-capitalize">{{ $t("cost Details") }}</h6>
               <!-- details -->
               <div class="box-design">
                 <div
                   class="total-order d-flex justify-content-between align-items-center"
                 >
-                  <h4 class="label">sub total</h4>
+                  <h4 class="label">{{ $t("sub total") }}</h4>
                   <p class="text-capitalize">
                     {{ itemsUpdates?.data?.sub_total }}
                   </p>
@@ -266,7 +288,7 @@
                 <div
                   class="vat d-flex justify-content-between align-items-center"
                 >
-                  <h4 class="label">vat</h4>
+                  <h4 class="label">{{ $t("vat") }}</h4>
                   <p class="text-capitalize">
                     {{ itemsUpdates?.data?.vat_amount }}
                   </p>
@@ -275,10 +297,12 @@
                 <div
                   class="final-amount d-flex justify-content-between align-items-center"
                 >
-                  <h4 class="label">Final Amount</h4>
+                  <h4 class="label">{{ $t("Final Amount") }}</h4>
                   <p class="text-capitalize">
                     {{ amountToPay }}
-                    <span class="p-color-fs span">SAR</span>
+                    <span class="p-color-fs span text-uppercase">{{
+                      $t("sar")
+                    }}</span>
                   </p>
                 </div>
               </div>
@@ -305,10 +329,6 @@
                     </h1>
                   </div>
                 </div>
-
-                <!-- <p class="p-color-fs mt-2">
-                  {{ itemsUpdates.data.pro_warranty.description }}
-                </p> -->
 
                 <p class="p-color-fs mt-2">
                   {{ itemsUpdates.data.pro_warranty.message_when_warranty_pro }}
@@ -349,7 +369,9 @@
                     class="apply-btn apply position-absolute"
                     @click="voucherDeleted"
                   >
-                    <span class="text-capitalize me-2 spanbutton">delete</span>
+                    <span class="text-capitalize me-2 spanbutton">{{
+                      $t("delete")
+                    }}</span>
                     <iconsOrder-applyCode />
                   </button>
                   <p class="text-success">{{ msg }}</p>
@@ -361,7 +383,9 @@
                     @click="voucherApply"
                     :disabled="!voucherCode"
                   >
-                    <span class="text-capitalize me-2 spanbutton">apply</span>
+                    <span class="text-capitalize me-2 spanbutton">{{
+                      $t("apply")
+                    }}</span>
                     <iconsOrder-applyCode />
                   </button>
                   <p class="error">{{ msg }}</p>
@@ -372,9 +396,12 @@
               <div
                 class="total-amount d-flex align-items-center justify-content-between"
               >
-                <h1 class="amount text-capitalize">total amount</h1>
+                <h1 class="amount text-capitalize">{{ $t("total amount") }}</h1>
                 <p>
-                  {{ amountToPay }} <span class="p-color-fs span">SAR</span>
+                  {{ amountToPay }}
+                  <span class="p-color-fs span text-uppercase">{{
+                    $t("sar")
+                  }}</span>
                 </p>
               </div>
 
@@ -383,11 +410,14 @@
                 v-if="itemsUpdates?.data?.user_balance > 0"
                 class="wallet-box mt-3 d-flex align-items-center justify-content-between bg-light p-3 rounded-3 shadow-sm"
               >
-                <label for="usewallet" class="form-label mb-0 fw-semibold"
-                  >Use Wallet Balance
+                <label
+                  for="usewallet"
+                  class="form-label mb-0 fw-semibold text-capitalize"
+                  >{{ $t("Use Wallet balance") }}
                   <p class="p-color-fs">
-                    you have {{ balance }} <span class="sar">SAR</span> in
-                    wallet
+                    {{ $t("you have") }} {{ balance }}
+                    <span class="sar text-uppercase">{{ $t("sar") }}</span>
+                    {{ $t("in wallet") }}
                   </p></label
                 >
 
@@ -397,14 +427,14 @@
                     type="checkbox"
                     role="switch"
                     id="usewallet"
-                    @change="toggleUseWallet"
+                    @change="toggleUseWalletFn"
                     v-model="useWalletActive"
                   />
                 </div>
               </div>
 
               <div class="buttion-confirm" @click="toContinue()">
-                <ButtonCard textButton="continue" />
+                <ButtonCard :textButton="$t('continue')" />
               </div>
             </div>
           </div>
@@ -417,13 +447,15 @@
           style="cursor: pointer"
           @click="msgDoneUseWallet = false"
         ></i>
-        <p class="text-success">order successfully!</p>
+        <p class="text-success">{{ $t("order successfully!") }}</p>
         <button-card
           class="width-btn w-50 m-auto mt-2"
           @click="
-            navigateTo(`/orderdetails/${order_id}?from=cart-update-details`)
+            navigateTo(
+              $localePath(`/orderdetails/${order_id}?from=cart-update-details`)
+            )
           "
-          text-button="view my orders"
+          :text-button="$t('view my orders')"
         >
         </button-card>
       </div>
@@ -437,13 +469,22 @@
 
 <script setup>
 let dayjs = useDayjs();
-const { deleteItemFromCart, updateCartItemQuantity } = useApi();
+const {
+  getSingleOrder,
+  deleteItemFromCart,
+  updateCartItemQuantity,
+  applyVoucherToCart,
+  deleteVoucherFromCart,
+  toggleUseWallet,
+  changeCartToOrder,
+  ToggleWarranty,
+} = useApi();
 // const { triggerCartUpdate } = useCartUpdate();
 const loadingDelete = ref({});
 const loadingQty = ref({});
 let route = useRoute();
 let order_id = route.query.id;
-const itemsUpdates = await useApi().getSingleOrder(order_id);
+const itemsUpdates = await getSingleOrder(order_id);
 const items = ref([]);
 let token = useCookie("token").value;
 let offers = ref([]);
@@ -526,10 +567,7 @@ let voucherCode = ref(null);
 let hasVoucher = ref(false);
 let voucherApply = async () => {
   try {
-    let resVoucher = await useApi().applyVoucherToCart(
-      order_id,
-      voucherCode.value
-    );
+    let resVoucher = await applyVoucherToCart(order_id, voucherCode.value);
 
     if (resVoucher?.status === false) {
       msg.value = resVoucher?.message;
@@ -544,7 +582,7 @@ let voucherApply = async () => {
 };
 let voucherDeleted = async () => {
   try {
-    let res = await useApi().deleteVoucherFromCart(order_id);
+    let res = await deleteVoucherFromCart(order_id);
     itemsUpdates.value = res;
     msg.value = res?.message || "Voucher deleted successfully";
     hasVoucher.value = false;
@@ -571,9 +609,9 @@ onMounted(() => {
 let balance = ref(null);
 let amountToPay = ref(null);
 
-let toggleUseWallet = async () => {
+let toggleUseWalletFn = async () => {
   try {
-    let resWallet = await useApi().toggleUseWallet(order_id, "cart_type");
+    let resWallet = await toggleUseWallet(order_id, "cart_type");
 
     if (resWallet?.status === true) {
       useWalletActive.value = resWallet?.data?.use_wallet;
@@ -581,7 +619,7 @@ let toggleUseWallet = async () => {
       amountToPay.value = resWallet?.data?.amount_to_pay;
 
       if (Number(resWallet?.data?.amount_to_pay) === 0) {
-        let resChange = await useApi().changeCartToOrder(order_id);
+        let resChange = await changeCartToOrder(order_id);
       }
     } else {
       useWalletActive.value = resWallet?.data?.use_wallet;
@@ -611,10 +649,7 @@ const isloading = ref(false);
 const toogleWarranty = async () => {
   isloading.value = true;
   try {
-    const responseWarranty = await useApi().ToggleWarranty(
-      order_id,
-      "cart_type"
-    );
+    const responseWarranty = await ToggleWarranty(order_id, "cart_type");
 
     if (responseWarranty?.pro_warranty) {
       itemsUpdates = {

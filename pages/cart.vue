@@ -46,7 +46,7 @@
                 <p class="price">
                   {{ service.price }}
                   <span class="p-color-fs span text-uppercase">{{
-                    "sar"
+                    $t("sar")
                   }}</span>
                 </p>
                 <div class="qty-controls d-flex align-items-center mt-2">
@@ -249,7 +249,7 @@
                 <div
                   class="vat d-flex justify-content-between align-items-center"
                 >
-                  <h4 class="label">vat</h4>
+                  <h4 class="label">{{ $t("vat") }}</h4>
                   <p class="text-capitalize">{{ cartRes?.vat_amount }}</p>
                 </div>
 
@@ -392,12 +392,12 @@ async function updateQty(type, orderId, cart_item_id, newQty, action) {
 
 let isLoadingOtp = ref(false);
 const router = useRouter();
-const localePath = useLocalePath(); 
+const localePath = useLocalePath();
 
 function toContinue() {
   isLoadingOtp.value = true;
   router.push({
-    path: localePath('/order-update-details'), 
+    path: localePath("/order-update-details"),
     query: {
       id: order_id.value,
     },

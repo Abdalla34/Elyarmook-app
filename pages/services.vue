@@ -84,7 +84,7 @@ let services = ref([]);
 let showOtpModal = ref(false);
 let showDialCode = ref(false);
 
-const timeEndCach = 60 * 60 * 1000;
+const timeEndCach = 12 * 60 * 60 * 1000;
 
 async function isCacheValid() {
   const cachData = localStorage.getItem("servicesCache");
@@ -131,7 +131,7 @@ const router = useRouter();
 async function handleOtpSuccess() {
   const getCartId = await useApi().getMyCart();
   if (getCartId?.data?.id) {
-    navigateTo(`/order-update-details?id=${getCartId.data.id}`);
+    navigateTo(useLocalePath(`/order-update-details?id=${getCartId.data.id}`));
   }
 }
 </script>

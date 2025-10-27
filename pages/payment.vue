@@ -8,7 +8,7 @@
             data-v-8bcd5751
             class="text-capitalize text title-pages"
           >
-            chose payment method
+            {{ $t("chose payment method") }}
           </h1>
           <!-- message if user have a membership -->
           <div v-if="msg" class="modal-overlay" @click.self="msg = ''">
@@ -39,7 +39,9 @@
               class="box-method border-radius-36px p-color-fs text-center mb-4 position-relative box-hover-bg"
             >
               <div class="position-absolute bg-hover"></div>
-              <div class="name text-capitalize fw-bold">Pay with visa</div>
+              <div class="name text-capitalize fw-bold">
+                {{ $t("Pay with visa") }}
+              </div>
             </div>
             <!-- mada -->
             <div
@@ -47,7 +49,9 @@
               class="box-method d-flex gap-4 justify-content-center border-radius-36px p-color-fs align-items-center mb-4 position-relative box-hover-bg"
             >
               <div class="position-absolute bg-hover"></div>
-              <div class="name text-capitalize fw-bold">pay whith mada</div>
+              <div class="name text-capitalize fw-bold">
+                {{ $t("Pay whith mada") }}
+              </div>
             </div>
             <!-- apple pay -->
             <div
@@ -56,7 +60,9 @@
               class="box-method d-flex gap-4 justify-content-center border-radius-36px p-color-fs align-items-center mb-4 position-relative box-hover-bg"
             >
               <div class="position-absolute bg-hover"></div>
-              <div class="name text-capitalize fw-bold">apple pay</div>
+              <div class="name text-capitalize fw-bold">
+                {{ $t("apple pay") }}
+              </div>
 
               <div class="icon-pay">
                 <img src="/paymentImg.png" alt="" />
@@ -69,7 +75,7 @@
               class="box-method d-flex gap-4 justify-content-center border-radius-36px p-color-fs align-items-center mb-4 position-relative box-hover-bg"
             >
               <div class="position-absolute bg-hover"></div>
-              <div class="name text-capitalize fw-bold">master</div>
+              <div class="name text-capitalize fw-bold">{{ $t("master") }}</div>
             </div>
             <!-- tamara -->
             <div
@@ -78,7 +84,7 @@
               class="box-method d-flex gap-4 justify-content-center border-radius-36px p-color-fs align-items-center mb-4 position-relative box-hover-bg"
             >
               <div class="position-absolute bg-hover"></div>
-              <div class="name text-capitalize fw-bold">tamara</div>
+              <div class="name text-capitalize fw-bold">{{ $t("tamara") }}</div>
             </div>
             <!-- tabby -->
             <div
@@ -87,16 +93,18 @@
               class="box-method d-flex gap-4 justify-content-center border-radius-36px p-color-fs align-items-center mb-4 position-relative box-hover-bg"
             >
               <div class="position-absolute bg-hover"></div>
-              <div class="name text-capitalize fw-bold">tabby</div>
+              <div class="name text-capitalize fw-bold">{{ $t("tabby") }}</div>
             </div>
             <!-- cach on delivery -->
             <div
               v-if="orderDetails?.open_cash"
-              @click="chachOnDelivery"
+              @click="chachOnDeliveryFn"
               class="box-method d-flex gap-4 justify-content-center border-radius-36px p-color-fs align-items-center mb-4 position-relative box-hover-bg"
             >
               <div class="position-absolute bg-hover"></div>
-              <div class="name text-capitalize fw-bold">cach on delivery</div>
+              <div class="name text-capitalize fw-bold">
+                {{ $t("cach on delivery") }}
+              </div>
             </div>
           </div>
 
@@ -121,71 +129,80 @@
                 <div
                   class="total-order d-flex justify-content-between align-items-center"
                 >
-                  <h4 class="label">sub total</h4>
+                  <h4 class="label">{{ $t("sub total") }}</h4>
                   <p class="text-capitalize">
                     {{ orderDetails?.sub_total }}
-                    <span class="p-color-fs span">SAR</span>
+                    <span class="p-color-fs span text-uppercase">{{
+                      $t("sar")
+                    }}</span>
                   </p>
                 </div>
 
                 <div
                   class="vat d-flex justify-content-between align-items-center"
                 >
-                  <h4 class="label">vat</h4>
+                  <h4 class="label">{{ $t("vat") }}</h4>
                   <p class="text-capitalize">
                     {{ orderDetails?.vat_amount }}
-                    <span class="p-color-fs span">SAR</span>
+                    <span class="p-color-fs span text-uppercase">{{
+                      $t("sar")
+                    }}</span>
                   </p>
                 </div>
 
                 <div
                   class="final-amount d-flex justify-content-between align-items-center"
                 >
-                  <h4 class="label">Final Amount</h4>
+                  <h4 class="label">{{ $t("Final Amount") }}</h4>
                   <p class="text-capitalize">
                     {{ orderDetails?.amount_to_pay }}
-                    <span class="p-color-fs span">SAR</span>
+                    <span class="p-color-fs span text-uppercase">{{
+                      $t("sar")
+                    }}</span>
                   </p>
                 </div>
               </div>
 
-              <div @click="navigateTo('/point')" class="points">
+              <div @click="navigateTo($localePath('/point'))" class="points">
                 <div class="d-flex align-items-center justify-content-between">
                   <div class="point-img">
                     <img src="/pointsFrame.png" alt="points" />
                   </div>
                   <div>
                     <h1 class="point-text fw-bold fs-6 text-end">
-                      you will get a reward
-                      {{ orderDetails.points_will_earn }} point !
+                      {{ $t("you will get a reward") }}
+                      {{ orderDetails.points_will_earn }} {{ $t("point") }} !
                     </h1>
                     <p class="p-color-fs">
-                      dont forget to use it next time to save more money in your
-                      order
+                      {{
+                        $t(
+                          "dont forget to use it next time to save more money in your order"
+                        )
+                      }}
                     </p>
                   </div>
                 </div>
                 <div
-                  @click="navigateTo('/point')"
+                  @click="navigateTo($localePath('/point'))"
                   class="show-point text-end mt-4 text-danger text-capitalize"
                   style="cursor: pointer"
                 >
-                  show points
+                  {{ $t("show points") }}
                 </div>
               </div>
 
-              <div class="button" @click="navigateTo('/myorders')">
+              <div class="button" @click="navigateTo($localePath('/myorders'))">
                 <button class="details text-capitalize label button">
-                  details
+                  {{ $t("details") }}
                 </button>
               </div>
               <div class="btn-profile mt-3">
                 <button
                   type="button"
                   class="btn btn-secondary w-100 rounded-pill"
-                  @click="navigateTo('/profile')"
+                  @click="navigateTo($localePath('/profile'))"
                 >
-                  continue profile
+                  {{ $t("continue profile") }}
                 </button>
               </div>
             </div>
@@ -200,6 +217,15 @@
 </template>
 
 <script setup>
+const {
+  usePayment,
+  usePaymentMembership,
+  usePaymentToChargeWallet,
+  tamaraPayment,
+  tabyPayment,
+  chachOnDelivery,
+  getSingleOrder,
+} = useApi();
 let orderDetails = ref({});
 
 const isLoading = ref(false);
@@ -226,6 +252,7 @@ watch(checkoutId, async (val) => {
 
 const formAction = ref("");
 const msg = ref("");
+
 const walletChargeMsg = ref("");
 
 let paymentWithHyperPay = async () => {
@@ -235,14 +262,14 @@ let paymentWithHyperPay = async () => {
     isLoading.value = true;
 
     if (membershipId) {
-      res = await useApi().usePaymentMembership(membershipId, brand.value);
+      res = await usePaymentMembership(membershipId, brand.value);
       formAction.value = `${window.location.origin}/payment-tamara-status?type=order`;
       msg.value = res?.message;
     } else if (id) {
-      res = await useApi().usePayment(id, brand.value);
+      res = await usePayment(id, brand.value);
       formAction.value = `${window.location.origin}/payment-tamara-status?type=order`;
     } else {
-      res = await useApi().usePaymentToChargeWallet(amountTonum, brand.value);
+      res = await usePaymentToChargeWallet(amountTonum, brand.value);
       formAction.value = `${window.location.origin}/payment-tamara-status?type=wallet`;
     }
 
@@ -294,30 +321,33 @@ let paywithTamara = async () => {
     const walletToNum = Number(walletAmount.value);
     isLoading.value = true;
     if (id) {
-      let res = await useApi().tamaraPayment({
+      let res = await tamaraPayment({
         order_id: id,
         success_url: `${domain}/payment-tamara-status/success`,
         failure_url: `${domain}/payment-tamara-status/failed`,
         cancel_url: `${domain}/payment-tamara-status/cancel`,
       });
+      if (!res?.status) {
+        msg.value = res?.message;
+      }
       if (res?.data?.checkout_url) {
         window.location.href = res.data.checkout_url;
       }
     } else if (membershipId) {
-      let res = await useApi().tamaraPayment({
+      let res = await tamaraPayment({
         membership_id: membershipId,
         success_url: `${domain}/payment-tamara-status/success`,
         failure_url: `${domain}/payment-tamara-status/failed`,
         cancel_url: `${domain}/payment-tamara-status/cancel`,
       });
-      if (res?.data?.checkout_url) {
-        window.location.href = res.data.checkout_url;
-      }
       if (!res?.status) {
         msg.value = res?.message;
       }
+      if (res?.data?.checkout_url) {
+        window.location.href = res.data.checkout_url;
+      }
     } else {
-      let res = await useApi().tamaraPayment({
+      let res = await tamaraPayment({
         wallet_amount: walletToNum,
         success_url: `${domain}/wallet`,
         failure_url: `${domain}/wallet`,
@@ -329,12 +359,14 @@ let paywithTamara = async () => {
       if (res?.data?.checkout_url) {
         window.location.href = res.data.checkout_url;
       }
-      if (!res?.status) {
-        msg.value = res?.message;
-      }
+      // if (!res?.status) {
+      //   msg.value = res?.message;
+      // }
     }
   } catch (err) {
     walletChargeMsg.value = "Something went wrong!";
+    msg.value = err?.response?.message;
+    console.log(msg.value);
   } finally {
     isLoading.value = false;
   }
@@ -344,7 +376,7 @@ let paymentWihtTbby = async () => {
   try {
     isLoading.value = true;
     if (id) {
-      let res = await useApi().tabyPayment({
+      let res = await tabyPayment({
         order_id: id,
         success_url: `${domain}/payment-tamara-status/success`,
         failure_url: `${domain}/payment-tamara-status/failed`,
@@ -354,7 +386,7 @@ let paymentWihtTbby = async () => {
         window.location.href = res?.data?.checkout_url;
       }
     } else if (membershipId) {
-      let res = await useApi().tabyPayment({
+      let res = await tabyPayment({
         membership_id: membershipId,
         success_url: `${domain}/payment-tamara-status/success`,
         failure_url: `${domain}/payment-tamara-status/failed`,
@@ -367,7 +399,7 @@ let paymentWihtTbby = async () => {
         msg.value = res?.message;
       }
     } else {
-      let res = await useApi().tabyPayment({
+      let res = await tabyPayment({
         wallet_amount: walletAmount.value,
         success_url: `${domain}/wallet`,
         failure_url: `${domain}/wallet`,
@@ -375,6 +407,7 @@ let paymentWihtTbby = async () => {
       });
       if (!res.status) {
         walletChargeMsg.value = res?.message;
+        msg.value = res?.message;
       }
       if (res && res?.data?.checkout_url) {
         window.location.href = res?.data?.checkout_url;
@@ -386,6 +419,7 @@ let paymentWihtTbby = async () => {
   } catch (err) {
     console.log("err", err);
     walletChargeMsg.value = err?.response?.message;
+    msg.value = err?.response?.message;
   } finally {
     isLoading.value = false;
   }
@@ -393,14 +427,13 @@ let paymentWihtTbby = async () => {
 
 const cachLayout = ref(false);
 const orderPoints = ref(null);
-let chachOnDelivery = async () => {
+let chachOnDeliveryFn = async () => {
   isLoading.value = true;
   try {
-    let res = await useApi().chachOnDelivery(id);
+    let res = await chachOnDelivery(id);
     if (res?.status) {
-      triggerCartUpdate();
       cachLayout.value = true;
-      const res = await useApi().getSingleOrder(id);
+      const res = await getSingleOrder(id);
       orderPoints.value = res?.data;
     }
     if (cachLayout.value) {
@@ -414,7 +447,7 @@ let chachOnDelivery = async () => {
     isLoading.value = false;
   }
 };
-
+console.log("test", msg.value);
 const router = useRouter();
 </script>
 

@@ -15,8 +15,12 @@
     >
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-          <div class="modal-header">
-            <h3 class="mb-0" id="phoneModalLabel">Enter your phone number</h3>
+          <div
+            class="modal-header d-flex align-items-center justify-content-between"
+          >
+            <h3 class="mb-0" id="phoneModalLabel">
+              {{ $t("Enter your phone number") }}
+            </h3>
             <button
               type="button"
               class="btn-close"
@@ -50,13 +54,13 @@
                 :disabled="!isValidPhone"
                 class="btn btn-outline-warning w-100"
               >
-                Continue
+                {{ $t("continue") }}
               </button>
               <button
                 class="btn btn-outline-danger mt-2 w-100"
                 @click="$emit('close-dial-code')"
               >
-                Cancel
+                {{ $t("Cancel") }}
               </button>
             </form>
           </div>
@@ -82,7 +86,7 @@
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content text-center">
           <div class="modal-header">
-            <h3 class="mb-0" id="otpModalLabel">Enter OTP Code</h3>
+            <h3 class="mb-0" id="otpModalLabel">{{ $t("Enter OTP Code") }}</h3>
             <button
               type="button"
               class="btn-close"
@@ -92,7 +96,9 @@
           </div>
           <div class="modal-body">
             <p class="p-color-fs mb-2">
-              Please check your phone to see the verification code 📨
+              {{
+                $t(" Please check your phone to see the verification code 📨")
+              }}
             </p>
             <div class="otp-wrapper">
               <v-otp-input
@@ -149,7 +155,7 @@ const props = defineProps({
 });
 
 let phone = ref(null);
-let phoneError = ref('');
+let phoneError = ref("");
 let codeOtp = ref("");
 let showResendOtp = ref(false);
 let codecorrect = ref(null);
@@ -228,10 +234,12 @@ function startCountdown() {
 
 const isValidPhone = computed(() => {
   const phoneVal = phone.value;
-  return phoneVal && 
-         phoneVal.length >= 8 && 
-         phoneVal.length <= 11 && 
-         !phoneError.value;
+  return (
+    phoneVal &&
+    phoneVal.length >= 8 &&
+    phoneVal.length <= 11 &&
+    !phoneError.value
+  );
 });
 
 async function handleSendOtp(event) {
@@ -250,8 +258,8 @@ async function handleSendOtp(event) {
       startCountdown();
     }
   } catch (error) {
-    console.error('Failed to send OTP:', error);
-    phoneError.value = 'Failed to send OTP. Please try again.';
+    console.error("Failed to send OTP:", error);
+    phoneError.value = "Failed to send OTP. Please try again.";
   }
 }
 
@@ -260,12 +268,12 @@ watch(phone, (newVal) => {
     const cleanNumber = newVal.replace(/\s+/g, "");
     // Check phone length
     if (cleanNumber.length > 11) {
-      phoneError.value = 'Phone number cannot be longer than 11 digits';
+      phoneError.value = $t("phone invalid length max");
       phone.value = cleanNumber.slice(0, 11);
     } else if (cleanNumber.length < 8) {
-      phoneError.value = 'Phone number must be at least 8 digits';
+      phoneError.value = $t("phone invalid length min");
     } else {
-      phoneError.value = '';
+      phoneError.value = "";
     }
     phone.value = cleanNumber;
   }
@@ -281,12 +289,12 @@ const emit = defineEmits([
 <style scoped>
 .otp-input {
   width: 70px !important;
-  height: 70px; 
+  height: 70px;
   text-align: center;
-  font-size: 24px; 
+  font-size: 24px;
   border: 1px solid #ccc;
   border-radius: 8px;
-  margin: 0 5px; 
+  margin: 0 5px;
 }
 .is-invalid {
   border-color: #dc3545;
@@ -296,5 +304,8 @@ const emit = defineEmits([
   color: #dc3545;
   font-size: 0.875em;
   margin-top: 0.25rem;
+}
+.btn-close {
+  margin-left: 0px !important;
 }
 </style>

@@ -187,7 +187,7 @@
                 class="to-pay mt-3"
                 @click="
                   navigateTo({
-                    path: '/payment',
+                    path: $localePath('/payment'),
                     query: { totalAmountWall: walletAmount },
                   })
                 "

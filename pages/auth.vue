@@ -3,16 +3,17 @@
     <div class="otp text-center">
       <div class="img">
         <img src="/newLogo.png" />
-        <h1>OTP Verification</h1>
-        <p>Please check your phone to see the verification code 📨</p>
+        <h1>{{ $t("OTP Verification") }}</h1>
+        <p>{{ $t("Please check your phone to see the verification code") }}</p>
 
         <div class="input-otp">
           <div class="mt-60px">
-            <h6 class="text-start h6">insert code</h6>
+            <h6 class="text-start h6">{{ $t("insert code") }}</h6>
 
             <div class="d-flex justify-content-center gap-4 mb-32px">
               <v-otp-input
                 v-model:value="code"
+                :class="$i18n.locale === 'ar' ? 'rtl-otp' : 'ltr-otp'"
                 :num-inputs="4"
                 input-classes="input-style-otp"
                 :should-auto-focus="true"
@@ -25,8 +26,9 @@
             </div>
             <div class="text-center mt-3 mb-3">
               <p v-if="!showResendOtp" class="p-color-fs text-capitalize">
-                resend code after<span class="text-danger ps-2">
-                  {{ counter }} second
+                {{ $t("resend code after")
+                }}<span class="text-danger ps-2">
+                  {{ counter }} {{ $t("second") }}
                 </span>
               </p>
               <p
@@ -35,7 +37,7 @@
                 style="cursor: pointer"
                 @click="sendOtpFn"
               >
-                resend code
+                {{ $t("resend code") }}
               </p>
             </div>
             <ButtonCard
@@ -60,7 +62,7 @@ import VOtpInput from "vue3-otp-input";
 
 const route = useRoute();
 const router = useRouter();
-const { checkOTP, loginOrRegister } = useApi();
+const { checkOTP, loginOrRegister, sendOTP, getToken, getMyCart } = useApi();
 
 onMounted(() => {
   startCountdown();
@@ -93,7 +95,7 @@ function startCountdown() {
   }, 1000);
 }
 async function sendOtpFn() {
-  await useApi().sendOTP(phone.value);
+  await sendOTP(phone.value);
   if (phone.value) {
     showResendOtp.value = false;
     startCountdown();
@@ -101,6 +103,7 @@ async function sendOtpFn() {
 }
 
 const cartCount = useState("cartCount", () => 0);
+const localePath = useLocalePath();
 
 const handleCheckOTP = async (otpValue) => {
   const otp = otpValue || code.value;
@@ -131,11 +134,10 @@ const handleCheckOTP = async (otpValue) => {
           user.value = JSON.stringify(loginRes.data.user);
 
           cartCount.value = 0;
-          await useApi().getToken(loginRes.data.token);
-          let resCart = await useApi().getMyCart();
+          await getToken(loginRes.data.token);
+          let resCart = await getMyCart();
 
           if (resCart?.status) {
-            // Calculate total cart length including quantities
             const services = resCart.data?.services || [];
             // const offers = resCart.data?.offers || [];
             const spareParts = resCart.data?.spare_parts || [];
@@ -152,17 +154,16 @@ const handleCheckOTP = async (otpValue) => {
             // Offers typically don't have quantities, so count each as 1
             // const offersCount = offers.reduce((total, item) => total + (item.qty || 1), 0);
 
-            const totalCartLength =
-              servicesCount + sparePartsCount ;
+            const totalCartLength = servicesCount + sparePartsCount;
 
             cartCount.value = totalCartLength;
           }
         }
 
-        router.push("/services");
+        router.push(localePath("/services"));
       } else {
         router.push({
-          path: "/register",
+          path: localePath("/register"),
           query: {
             phone: phone.value,
             registered: registered.value,
@@ -245,6 +246,24 @@ const handleCheckOTP = async (otpValue) => {
 }
 .mt-32px {
   margin-top: 32px;
+}
+
+.ltr-otp {
+  direction: ltr !important;
+}
+
+.rtl-otp {
+  direction: rtl !important;
+}
+
+.rtl-otp .v-otp-input__input {
+  direction: rtl !important;
+  text-align: center !important;
+}
+
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button {
+  margin: 0;
 }
 
 @media (max-width: 768px) {

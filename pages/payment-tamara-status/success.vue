@@ -6,19 +6,19 @@
         <h1 class="text-green-600 text-3xl font-bold mb-4">
           {{ message }}
         </h1>
-        <!-- <p class="label">
-          Lorem ipsum dolor sit amet,Lorem Lorem ipsum dolor sit amet,Lorem
-          Lorem ipsum dolor sit amet sit amet,Lorem
-        </p> -->
       </div>
     </div>
 
-    <button-card @click="navigateTo('/myorders')" text-button="view my orders">
+    <button-card
+      @click="navigateTo($localePath('/myorders'))"
+      :text-button="$t('view my orders')"
+    >
     </button-card>
   </div>
 </template>
 
 <script setup>
+const { tabbyStatusSuccess } = useApi();
 const message = ref("");
 const route = useRoute();
 const router = useRouter();
@@ -33,7 +33,7 @@ try {
   }
 
   if (paymentId) {
-    const res = await useApi().tabbyStatusSuccess(paymentId);
+    const res = await tabbyStatusSuccess(paymentId);
     if (res?.status === true || res?.status === "true") {
       message.value = res?.message || "تمت عملية الدفع بنجاح";
       router.replace("/");

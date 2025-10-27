@@ -8,7 +8,7 @@
   "WhatsApp": "WhatsApp",
   "we accept": "we accept",
   "With Tabby": "With Tabby",
-  "We're sorry, but your order has been canceled." :"We're sorry, but your order has been canceled.",
+  "We're sorry, but your order has been canceled.": "We're sorry, but your order has been canceled.",
 
   "Home": "Home",
   "How it works": "How it works",
@@ -23,6 +23,9 @@
   "There are no cars added currently": "There are no cars added currently. 🚗",
   "ther a not points yet": "ther a not points yet",
   "there as not found vouchers yet": "there as not found vouchers yet",
+  "tabby": "tabby",
+  "tamara": "tamara",
+  "this operation cacelled": "this operation cacelled",
 
   "offers": "offers",
   "Order Now": "Order Now",
@@ -30,6 +33,10 @@
   "offer Details": "offer Details",
   "offer features": "offer features",
   "Order Details": "Order Details",
+  "order successfully!": "order successfully!",
+  "order details updated": "order details updated",
+  "or": "or",
+  "OTP Verification": "OTP Verification",
 
   "my orders": "my orders",
   "membership": "membership",
@@ -38,7 +45,8 @@
   "Manufacture Year:": "Manufacture Year:",
   "more": "more",
   "maintenance": "maintenance",
-  "Mention reason" :"Mention reason",
+  "Mention reason": "Mention reason",
+  "master": "master",
 
   "not Information you must create account": "not Information you must create account",
   "not found orders yet": "not found orders yet",
@@ -54,6 +62,9 @@
   "Download our app": "Download our app",
   "default": "default",
   "details amount": "details amount",
+  "date": "date",
+  "details": "details",
+  "dont forget to use it next time to save more money in your order": "dont forget to use it next time to save more money in your order",
 
   "added to cart": " added to cart",
   "add another items": "add another items",
@@ -68,6 +79,7 @@
   "Add Items": "Add Items",
   "Add your car to display here": "Add your car to display here.",
   "Are you sure you want to cancel this order?": "Are you sure you want to cancel this order?",
+  "apple pay": "apple pay",
 
   "loading...": "loading...",
   "log out": "log out",
@@ -75,6 +87,7 @@
   "Links": "Links",
   "learn more": "learn more",
   "language": "language",
+  "loading check status Payment": "loading check status Payment",
 
   "services": "services",
   "sar": "sar",
@@ -93,7 +106,11 @@
   "show order": "show order",
   "send points": "send points",
   "send": "send",
+  "Select Branch": "Select Branch",
+  "Select Date & Time": "Select Date & Time",
   "show in maps": "show in maps",
+  "second": "second",
+  "show points": "show points",
 
   "Expenses": "Expenses",
   "edit profile": "edit profile",
@@ -102,6 +119,10 @@
   "earned": "earned",
   "expired": "expired",
   "expired at": "expired at",
+  "Ex :": "Ex :",
+  "Enter your phone number": "Enter your phone number",
+  "Enter OTP Code": "Enter OTP Code",
+  "Enter as a visitor": "Enter as a visitor",
 
   "continue shopping": "continue shopping",
   "Cash back": "Cash back",
@@ -124,6 +145,12 @@
   "completed": "completed",
   "car is fine": "car is fine",
   "Canceled": "Canceled",
+  "cost Details": "cost Details",
+  "cach on delivery": "cach on delivery",
+  "chose payment method": "chose payment method",
+  "continue profile": "continue profile",
+  "create account": "create account",
+  "Continue with phone": "Continue with phone",
 
   "Next": "Next",
   "Prev": "Prev",
@@ -139,10 +166,21 @@
   "profile": "profile",
   "point": "point",
   "booked": "booked",
+  "branch": "branch",
+  "problem photo": "problem photo",
+  "Pay with visa": "Pay with visa",
+  "Pay whith mada": "Pay with Mada",
+  "back to home": "back to home",
+  "Please check your phone to see the verification code": "Please check your phone to see the verification code 📨",
+  "phone invalid length max": "Phone number cannot be longer than 11 digits",
+  "phone invalid length min": "Phone number must be at least 8 digits",
+  "By using this website means your acceptance of": "By using this website means your acceptance of",
+  "Policy and Terms of use": "Policy and Terms of use",
 
   "first name": "first name",
   "Find now": "Find now",
   "faq": "faq",
+  "Fast Scheduling Order": "Fast Scheduling Order",
 
   "Important Note": "Important Note",
   "4 Interest-free payments of": "Interest-free payments of",
@@ -161,6 +199,11 @@
   "cart is Empty you must create account": "cart is Empty you must create account",
   "your cars Empty you must create account ": "your cars Empty you must create account",
   "Yes, Cancel Order": "Yes, Cancel Order",
+  "you have": "you have",
+  "you will get a reward": "you will get a reward",
+
+  "Upload from your device": "Upload from your device",
+  "Use Wallet balance": "Use Wallet Balance",
 
   "Final Amount": "Final Amount",
   "Fill a Form": "Fill a Form",
@@ -172,15 +215,22 @@
   "ready": "ready",
   "reuested": "reuested",
   "report": "report",
+  "resend code after": "resend code after",
 
   "items": "items",
   "items order": "items order",
   "inspection": "inspection",
+  "issues details": "issues details",
+  "in wallet": "in wallet",
+  "insert code": "insert code",
 
   "vouchers": "vouchers",
   "Visit Your Nearest Branch": "Visit Your Nearest Branch",
   "vat": "vat",
   "View Invoice": "View Invoice",
+  "view my orders": "view my orders",
+
+  "Kindly fill in your details below to create an account": "Kindly fill in your details below to create an account",
 
   "used": "used"
 }

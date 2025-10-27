@@ -263,6 +263,19 @@
 </template>
 
 <script setup>
+const {
+  logout,
+  resetToken,
+  getCountries,
+  getAreasByCountry,
+  getCitiesByArea,
+  updateUserProfile,
+  getDeactivatedReasons,
+  deleteaccount,
+} = useApi();
+const localePaht = useLocalePath();
+
+const { initCartFromLocalStorage } = useAddToCart();
 const isLoading = ref(false);
 const test = ref(true);
 let router = useRouter();
@@ -273,20 +286,20 @@ let user = ref(cookie.value);
 
 let editDone = ref(false);
 let profileImg = ref(false);
-function ChangeProfile() {
-  profileImg.value = !profileImg.value;
-}
+// function ChangeProfile() {
+//   profileImg.value = !profileImg.value;
+// }
 
 const showmodalsignOut = ref(false);
 let logOut = async () => {
   try {
     isLoading.value = true;
-    await useApi().logout();
+    await logout();
     token.value = null;
     cookie.value = null;
-    await useApi().resetToken();
-    await useAddToCart().initCartFromLocalStorage();
-    router.push("/");
+    await resetToken();
+    await initCartFromLocalStorage();
+    router.push(localePaht("/"));
   } catch (err) {
     console.error(err);
   } finally {
@@ -302,17 +315,17 @@ let cityId = ref(null);
 
 async function toEdit() {
   editDone.value = true;
-  let countries = await useApi().getCountries();
+  let countries = await getCountries();
   countryId.value = countries?.data?.[0]?.id;
 
-  let responseArea = await useApi().getAreasByCountry(countryId.value);
+  let responseArea = await getAreasByCountry(countryId.value);
   allAreas.value = responseArea?.data;
   areaId.value = allAreas.value?.[0]?.id;
 }
 
 watch(areaId, async (newAreaId) => {
   if (newAreaId) {
-    let responseCity = await useApi().getCitiesByArea(areaId.value);
+    let responseCity = await getCitiesByArea(areaId.value);
     allCities.value = responseCity?.data;
     cityId.value = allCities.value?.[0]?.id;
   }
@@ -320,7 +333,7 @@ watch(areaId, async (newAreaId) => {
 
 let editProfile = async () => {
   try {
-    let res = await useApi().updateUserProfile({
+    let res = await updateUserProfile({
       first_name: user.value.first_name,
       last_name: user.value.last_name,
       phone: user.value.phone,
@@ -330,7 +343,7 @@ let editProfile = async () => {
     });
 
     if (res && res.status === false && res.message === "Unauthenticated") {
-      return navigateTo("/createaccount");
+      return navigateTo(localePaht("/createaccount"));
     }
 
     cookie.value = res.data.user;
@@ -345,7 +358,7 @@ let editProfile = async () => {
   }
 };
 
-const resDeactivated = await useApi().getDeactivatedReasons();
+const resDeactivated = await getDeactivatedReasons();
 
 const showDeactivateModal = ref(false);
 const selectedReason = ref(null);
@@ -357,19 +370,19 @@ const deleteAccount = async () => {
 const confirmDelete = async () => {
   try {
     if (!selectedReason.value) return;
-    const res = await useApi().deleteaccount(selectedReason.value, "web");
+    const res = await deleteaccount(selectedReason.value, "web");
     if (res?.status === false) {
       if (res.message === "Unauthenticated") {
         token.value = null;
         cookie.value = null;
-        return navigateTo("/createaccount");
+        return navigateTo(localePaht("/createaccount"));
       }
     }
     token.value = null;
     cookie.value = null;
     user.value = null;
     showDeactivateModal.value = false;
-    router.push("/");
+    router.push(localePaht("/"));
   } catch (err) {
     console.error("Error deleting account:", err);
   }
