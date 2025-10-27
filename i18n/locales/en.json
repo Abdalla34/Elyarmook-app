@@ -111,6 +111,7 @@
   "show in maps": "show in maps",
   "second": "second",
   "show points": "show points",
+  "save": "save",
 
   "Expenses": "Expenses",
   "edit profile": "edit profile",
@@ -151,6 +152,7 @@
   "continue profile": "continue profile",
   "create account": "create account",
   "Continue with phone": "Continue with phone",
+  "code not true": "code not true",
 
   "Next": "Next",
   "Prev": "Prev",
@@ -216,6 +218,7 @@
   "reuested": "reuested",
   "report": "report",
   "resend code after": "resend code after",
+  "register information": "register information",
 
   "items": "items",
   "items order": "items order",
@@ -229,6 +232,8 @@
   "vat": "vat",
   "View Invoice": "View Invoice",
   "view my orders": "view my orders",
+  "verify": "verify",
+  "Verifying...": "Verifying...",
 
   "Kindly fill in your details below to create an account": "Kindly fill in your details below to create an account",
 

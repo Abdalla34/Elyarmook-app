@@ -7,7 +7,7 @@
             class="profiel-img d-flex justify-content-between align-items-center margin-bottom-24px"
           >
             <h1 class="margin-bottom-24px text-capitalize personal mb-0">
-              register information
+              {{ $t("register information") }}
             </h1>
             <div class="box-img position-relative text-center">
               <img
@@ -25,7 +25,7 @@
             <div class="inputs">
               <div class="row-inputs">
                 <div class="input d-flex flex-column">
-                  <label class="label">first name</label>
+                  <label class="label">{{ $t("first name") }}</label>
                   <input
                     type="text"
                     placeholder="your name"
@@ -40,7 +40,7 @@
                 </div>
 
                 <div class="input d-flex flex-column">
-                  <label class="label">last name</label>
+                  <label class="label">{{ $t("last name") }}</label>
                   <input
                     type="text"
                     placeholder="your name"
@@ -57,7 +57,7 @@
 
               <div class="row-inputs">
                 <div class="input d-flex flex-column">
-                  <label class="label">phone Number</label>
+                  <label class="label">{{ $t("phone Number") }}</label>
                   <input
                     type="text"
                     :placeholder="phone"
@@ -69,9 +69,9 @@
 
               <div class="row-inputs">
                 <div class="input d-flex flex-column">
-                  <label class="label" for="area">area</label>
+                  <label class="label" for="area">{{ $t("area") }}</label>
                   <select id="area" class="select" v-model="area">
-                    <option value="" disabled>Select area</option>
+                    <option value="" disabled>{{ $t("Select area") }}</option>
                     <option
                       v-for="areaItem in allAreas"
                       :key="areaItem.id"
@@ -91,7 +91,7 @@
                 <div class="input d-flex flex-column">
                   <label class="label" for="city">city</label>
                   <select id="city" class="select" v-model="city">
-                    <option value="" disabled>Select city</option>
+                    <option value="" disabled>{{ $t("Select city") }}</option>
                     <option
                       v-for="cityItem in allCities"
                       :key="cityItem.id"
@@ -113,7 +113,7 @@
               class="text-capitalize margin-bottom text-center btn-register button border-radius-36px d-flex justify-content-center"
               type="submit"
             >
-              save
+              {{ $t("save") }}
             </button>
           </form>
         </div>

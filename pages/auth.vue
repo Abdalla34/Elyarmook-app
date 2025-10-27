@@ -41,13 +41,13 @@
               </p>
             </div>
             <ButtonCard
-              :textButton="loading ? 'Verifying...' : 'Verify'"
+              :textButton="loading ? $t('Verifying...') : $t('verify')"
               :disabled="loading || code.length !== 4"
             />
 
             <div class="code-true mt-3" v-if="codeNoteTrue">
               <p class="text-danger fs-4 text-center text-uppercase">
-                code not true
+                {{ $t("code not true") }}
               </p>
             </div>
           </div>

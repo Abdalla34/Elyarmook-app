@@ -110,6 +110,7 @@
   "show in maps": "عرض على الخرائط",
   "show points": "اظهار النقاط",
   "second": "ثانية",
+  "save": "حفظ",
 
   "Expenses": "المصروفات",
   "edit profile": "تعديل الملف الشخصي",
@@ -148,6 +149,7 @@
   "chose payment method": "اختر طريقة الدفع",
   "create account": "انشاء حساب",
   "Continue with phone": "متابعه برقم الهاتف",
+  "code not true": "الكود غير صحيح",
 
   "Next": "التالي",
   "Prev": "السابق",
@@ -213,6 +215,7 @@
   "reuested": "تم الطلب",
   "report": "تقرير",
   "resend code after": "إعادة إرسال الرمز بعد",
+  "register information": "تسجيل المعلومات",
 
   "items": "العناصر",
   "items order": "عنصر في الطلب",
@@ -226,6 +229,8 @@
   "vat": "ضريبة القيمة المضافة",
   "View Invoice": "عرض الفاتورة",
   "view my orders": "عرض الطلب",
+  "verify": "تأكيد",
+  "Verifying...": "التحقق...",
 
   "Kindly fill in your details below to create an account": "يرجى ملء التفاصيل الخاصة بك أدناه لإنشاء حساب",
 
