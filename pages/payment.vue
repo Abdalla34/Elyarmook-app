@@ -217,6 +217,7 @@
 </template>
 
 <script setup>
+const cartCount = useState("cartCount", () => 0);
 const {
   usePayment,
   usePaymentMembership,
@@ -435,6 +436,7 @@ let chachOnDeliveryFn = async () => {
       cachLayout.value = true;
       const res = await getSingleOrder(id);
       orderPoints.value = res?.data;
+      cartCount.value = 0;
     }
     if (cachLayout.value) {
       router.replace({
