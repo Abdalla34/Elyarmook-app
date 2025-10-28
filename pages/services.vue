@@ -68,7 +68,7 @@
           @otp-success="handleOtpSuccess"
         />
         <div class="isEmpty"></div>
-        <div v-if="btnShooping" class="btn-shooping position-fixed bottom-0">
+        <div v-if="btnShooping && !token" class="btn-shooping position-fixed bottom-0">
           <ButtonCard
             @click="BtnShooping"
             :textButton="$t('continue shopping')"
@@ -83,7 +83,7 @@
 let services = ref([]);
 let showOtpModal = ref(false);
 let showDialCode = ref(false);
-
+const token = useCookie("token");
 const timeEndCach = 12 * 60 * 60 * 1000;
 
 async function isCacheValid() {

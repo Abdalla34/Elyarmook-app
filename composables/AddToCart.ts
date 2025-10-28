@@ -41,6 +41,7 @@ export function useAddToCart() {
     }
 
     if (token.value) {
+      btnShooping.value = false;
       loadingAddToCart.value[service.id] = true;
       try {
         const res: any = await addToCart(type, service.id, 1);
