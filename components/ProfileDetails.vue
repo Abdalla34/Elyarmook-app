@@ -5,7 +5,7 @@
         <div class="col-10">
           <div class="pages mb-4 border-radius-36px profile-scroll-container">
             <ul class="links d-flex justify-content-center align-items-end ul">
-              <li class="">
+              <li v-if="token" class="">
                 <NuxtLink
                   :to="$localePath('/profile')"
                   exact-active-class="active"
@@ -15,7 +15,7 @@
                   <h6 class="text-capitalize link-sm">{{ $t("profile") }}</h6>
                 </NuxtLink>
               </li>
-              <li class="border-radius-36px">
+              <li v-if="token" class="border-radius-36px">
                 <NuxtLink
                   :to="$localePath('/my-cars')"
                   exact-active-class="active"
@@ -25,7 +25,7 @@
                   <h6 class="text-capitalize link-sm">{{ $t("my cars") }}</h6>
                 </NuxtLink>
               </li>
-              <li class="">
+              <li v-if="token" class="">
                 <NuxtLink
                   :to="$localePath('/wallet')"
                   exact-active-class="active"
@@ -46,7 +46,8 @@
                 </NuxtLink>
               </li>
 
-              <li class="">
+              <li v-if="token"
+               class="">
                 <NuxtLink
                   :to="$localePath('/point')"
                   exact-active-class="active"
@@ -58,7 +59,7 @@
                 </NuxtLink>
               </li>
 
-              <li class="">
+              <li v-if="token" class="">
                 <NuxtLink
                   :to="$localePath('/vouchers')"
                   exact-active-class="active"
@@ -87,6 +88,7 @@
   </div>
 </template>
 <script setup>
+const token = useCookie("token");
 const localePath = useLocalePath();
 </script>
 

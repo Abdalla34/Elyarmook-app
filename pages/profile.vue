@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ProfileDetails v-if="user" />
+    <ProfileDetails />
     <div class="personal-information">
       <div class="container">
         <NotRegister
