@@ -7,14 +7,13 @@
           :message="$t('cart is Empty you must create account')"
         />
 
-           <div
+        <div
           class="empty-cart text-center"
           v-if="
             token &&
             services.length === 0 &&
             offers.length === 0 &&
-            spareParts.length === 0 &&
-            cartRes?.id
+            spareParts.length === 0
           "
         >
           <div>
@@ -55,7 +54,11 @@
         <!-- left section -->
         <div
           class="col-12 col-md-12 col-lg-6 col-md-6"
-          v-if="token && cartRes?.id"
+          v-if="
+            (token && cartRes?.id && services.length > 0) ||
+            offers.length > 0 ||
+            spareParts.length > 0
+          "
         >
           <h4 class="mb-4 fw-bold">{{ $t("Order Details") }}</h4>
 
@@ -258,7 +261,11 @@
         <!-- right section -->
         <div
           class="col-12 col-md-12 col-lg-4 col-test"
-          v-if="token && cartRes?.id"
+          v-if="
+            (token && cartRes?.id && token && services.length > 0) ||
+            offers.length > 0 ||
+            spareParts.length > 0
+          "
         >
           <div class="h-100">
             <div class=""></div>
@@ -329,7 +336,7 @@
 <script setup>
 import dayjs from "#build/dayjs.imports.mjs";
 
-const { deleteItemFromCart, updateCartItemQuantity,getMyCart } = useApi();
+const { deleteItemFromCart, updateCartItemQuantity, getMyCart } = useApi();
 const services = ref([]);
 const loadingDelete = ref({});
 const loadingQty = ref({});

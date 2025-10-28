@@ -21,6 +21,7 @@
 const { tabbyStatusSuccess } = useApi();
 const message = ref("");
 const route = useRoute();
+const cartCount = useState("cartCount", () => 0);
 const router = useRouter();
 try {
   let paymentId = route.query.payment_id;
@@ -28,6 +29,7 @@ try {
 
   if (hyperSucess === "success") {
     setTimeout(() => {
+      cartCount.value = 0;
       router.replace("/");
     }, 2000);
   }
@@ -36,6 +38,7 @@ try {
     const res = await tabbyStatusSuccess(paymentId);
     if (res?.status === true || res?.status === "true") {
       message.value = res?.message || "تمت عملية الدفع بنجاح";
+      cartCount.value = 0;
       router.replace("/");
     } else {
       router.replace("/payment-tamara-status/failed");

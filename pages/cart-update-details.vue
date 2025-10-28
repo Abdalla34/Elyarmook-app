@@ -56,7 +56,11 @@
         <!-- left section -->
         <div
           class="col-12 col-md-12 col-lg-6 col-md-6"
-          v-if="token && items.length > 0 || offers.length > 0 || spareParts.length > 0"
+          v-if="
+            (token && items.length > 0) ||
+            offers.length > 0 ||
+            spareParts.length > 0
+          "
         >
           <h4 class="mb-4 fw-bold">{{ $t("Order Details") }}</h4>
           <!-- services items -->
@@ -251,7 +255,11 @@
         <!-- right section -->
         <div
           class="col-12 col-md-12 col-lg-4 col-test"
-          v-if="token && items.length > 0 || offers.length > 0 || spareParts.length > 0"
+          v-if="
+            (token && items.length > 0) ||
+            offers.length > 0 ||
+            spareParts.length > 0
+          "
         >
           <div class="h-100">
             <h1 class="text-capitalize fs-6 updated-details">
@@ -629,21 +637,30 @@ let toggleUseWalletFn = async () => {
     console.log("Error response:", error?.response);
   }
 };
+const localePath = useLocalePath();
 
 let msgDoneUseWallet = ref(false);
 let router = useRouter();
 function toContinue() {
-  if (amountToPay.value > 0) {
-    router.push({
-      path: `/payment`,
-      query: {
-        id: order_id,
-      },
-    });
-  } else {
-    msgDoneUseWallet.value = true;
-  }
+  router.push({
+    path: localePath(`/payment`),
+    query: {
+      id: order_id,
+    },
+  });
 }
+// function toContinue() {
+//   if (amountToPay.value > 0) {
+//     router.push({
+//       path: localePath(`/payment`),
+//       query: {
+//         id: order_id,
+//       },
+//     });
+//   } else {
+//     msgDoneUseWallet.value = true;
+//   }
+// }
 const isloading = ref(false);
 
 const toogleWarranty = async () => {
@@ -666,6 +683,7 @@ const toogleWarranty = async () => {
     isloading.value = false;
   }
 };
+console.log(amountToPay.value)
 </script>
 
 <style scoped>
