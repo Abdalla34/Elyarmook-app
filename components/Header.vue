@@ -54,7 +54,7 @@
             </div>
             <div
               v-if="token"
-              @click="navigateTo('/profile')"
+              @click="navigateTo($localePath('/profile'))"
               class="background-color-cart d-flex align-items-center justify-content-center position-relative"
             >
               <button class="buttons">

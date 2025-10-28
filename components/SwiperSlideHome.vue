@@ -5,6 +5,7 @@
       :slides-per-view="1"
       :loop="images.length > 1"
       :pagination="{ clickable: true }"
+      :dir="currentDir"
       navigation
       class="mySwiper p-2 mt-4"
     >
@@ -36,6 +37,12 @@ let images = ref([]);
 let res = await useApi().gethome();
 images.value = res?.data?.sliders;
 
+const { locale } = useI18n()
+
+const currentDir = computed(() => {
+  return locale.value === 'ar' ? 'rtl' : 'ltr'
+})
+
 // const time = 60 * 60 * 1000;
 // async function cachedData() {
 //   const cached = localStorage.getItem("homeData");
@@ -62,4 +69,22 @@ images.value = res?.data?.sliders;
 
 <style scoped>
 @import "@/assets/css/slidershome.css";
+.mySwiper[dir="rtl"] :deep(.swiper-button-prev) {
+  right: 68px;
+  left: auto;
+}
+
+.mySwiper[dir="rtl"] :deep(.swiper-button-next) {
+  left: 68px;
+  right: auto;
+}
+
+/* ✅ عشان الأسهم تتعكس */
+.mySwiper[dir="rtl"] :deep(.swiper-button-prev)::after {
+  content: "→";
+}
+
+.mySwiper[dir="rtl"] :deep(.swiper-button-next)::after {
+  content: "←";
+}
 </style>

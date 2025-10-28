@@ -28,7 +28,11 @@
                   </p>
                 </div>
                 <div
-                  @click="navigateTo(`/car-update-details/${carDetails.id}`)"
+                  @click="
+                    navigateTo(
+                      localePath(`/car-update-details/${carDetails.id}`)
+                    )
+                  "
                   class="edit-car-details"
                   style="cursor: pointer"
                 >
@@ -64,7 +68,7 @@
 
             <!-- last-order -->
             <div class="last-order">
-              <h1 class="label">last orders</h1>
+              <h1 class="label">{{ $t("last orders") }}</h1>
               <div class="orders" v-for="item in carDetails.latest_orders">
                 <div class="details-order p-3 rounded mb-3">
                   <!-- details date -->
@@ -94,7 +98,7 @@
                   <hr />
                   <div
                     class="show-order"
-                    @click="navigateTo(`/orderdetails/${item.id}`)"
+                    @click="navigateTo(localePath(`/orderdetails/${item.id}`))"
                   >
                     <div
                       class="show-details d-flex align-items-center justify-content-between"
@@ -136,9 +140,11 @@
 const carDetails = ref({});
 const route = useRoute();
 const idCar = route.params.id;
+const { getDetailsCar } = useApi();
+const localePath = useLocalePath();
 
 try {
-  const responseCarDetails = await useApi().getDetailsCar(idCar);
+  const responseCarDetails = await getDetailsCar(idCar);
   carDetails.value = responseCarDetails?.data || {};
 } catch (err) {
   console.error("❌ حصل خطأ:", err);

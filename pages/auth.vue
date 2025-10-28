@@ -13,13 +13,12 @@
             <div class="d-flex justify-content-center gap-4 mb-32px">
               <v-otp-input
                 v-model:value="code"
-                :class="$i18n.locale === 'ar' ? 'rtl-otp' : 'ltr-otp'"
                 :num-inputs="4"
                 input-classes="input-style-otp"
                 :should-auto-focus="true"
                 :should-focus-order="true"
                 input-type="number"
-                @on-complete="handleCheckOTP"
+                @on-complete="handleCheckOTP($event)"
                 :is-disabled="loading"
                 :placeholder="['-', '-', '-', '-']"
               />
@@ -46,7 +45,7 @@
             />
 
             <div class="code-true mt-3" v-if="codeNoteTrue">
-              <p class="text-danger fs-4 text-center text-uppercase">
+              <p class="text-danger fs-4 text-center text-capitalize">
                 {{ $t("code not true") }}
               </p>
             </div>
@@ -62,7 +61,7 @@ import VOtpInput from "vue3-otp-input";
 
 const route = useRoute();
 const router = useRouter();
-const { checkOTP, loginOrRegister, sendOTP, getToken, getMyCart } = useApi();
+const { checkOTP, loginOrRegister, sendOTP, getMyCart ,getToken} = useApi();
 
 onMounted(() => {
   startCountdown();
@@ -104,7 +103,6 @@ async function sendOtpFn() {
 
 const cartCount = useState("cartCount", () => 0);
 const localePath = useLocalePath();
-
 const handleCheckOTP = async (otpValue) => {
   const otp = otpValue || code.value;
   if (!phone.value || !otp) return;
@@ -112,55 +110,47 @@ const handleCheckOTP = async (otpValue) => {
   loading.value = true;
   try {
     const res = await checkOTP(phone.value, otp);
-    if (res && res.status && res.message === "Code Is Correct") {
+    console.log("OTP response:", res);
+
+    if (res?.status === true && res?.message === "Code Is Correct") {
       if (registered.value) {
-        const loginRes = await loginOrRegister({
-          phone: phone.value,
-          otp_code: otp,
-          registered: registered.value,
-        });
+        try {
+          const loginRes = await loginOrRegister({
+            phone: phone.value,
+            otp_code: otp,
+            registered: registered.value,
+          });
 
-        if (
-          loginRes &&
-          loginRes.status &&
-          loginRes.data &&
-          loginRes.data.token &&
-          loginRes.data.user
-        ) {
-          const token = useCookie("token");
-          const user = useCookie("user", { maxAge: 365 * 24 * 60 * 60 });
+          if (loginRes?.status && loginRes.data?.token && loginRes.data?.user) {
+            const token = useCookie("token");
+            const user = useCookie("user", { maxAge: 365 * 24 * 60 * 60 });
 
-          token.value = loginRes.data.token;
-          user.value = JSON.stringify(loginRes.data.user);
+            token.value = loginRes.data.token;
+            user.value = JSON.stringify(loginRes.data.user);
 
-          cartCount.value = 0;
-          await getToken(loginRes.data.token);
-          let resCart = await getMyCart();
+            cartCount.value = 0;
+            await getToken(token.value);
 
-          if (resCart?.status) {
-            const services = resCart.data?.services || [];
-            // const offers = resCart.data?.offers || [];
-            const spareParts = resCart.data?.spare_parts || [];
+            // 🧠 حط try/catch هنا مخصوص لـ cart عشان ما تقطعش باقي العملية
+            try {
+              const resCart = await getMyCart();
+              if (resCart?.status) {
+                const services = resCart.data?.services || [];
+                const spareParts = resCart.data?.spare_parts || [];
+                const totalCartLength =
+                  services.reduce((t, i) => t + (i.qty || 1), 0) +
+                  spareParts.reduce((t, i) => t + (i.qty || 1), 0);
+                cartCount.value = totalCartLength;
+              }
+            } catch (cartError) {
+              console.warn("Cart fetch failed (ignored):", cartError);
+            }
 
-            // Sum up quantities for services and spare parts
-            const servicesCount = services.reduce(
-              (total, item) => total + (item.qty || 1),
-              0
-            );
-            const sparePartsCount = spareParts.reduce(
-              (total, item) => total + (item.qty || 1),
-              0
-            );
-            // Offers typically don't have quantities, so count each as 1
-            // const offersCount = offers.reduce((total, item) => total + (item.qty || 1), 0);
-
-            const totalCartLength = servicesCount + sparePartsCount;
-
-            cartCount.value = totalCartLength;
+            router.push(localePath("/services"));
           }
+        } catch (loginError) {
+          console.error("Login failed:", loginError);
         }
-
-        router.push(localePath("/services"));
       } else {
         router.push({
           path: localePath("/register"),
@@ -174,12 +164,14 @@ const handleCheckOTP = async (otpValue) => {
     } else {
       codeNoteTrue.value = true;
     }
-  } catch (e) {
+  } catch (otpError) {
+    console.error("OTP check failed:", otpError);
     codeNoteTrue.value = true;
   } finally {
     loading.value = false;
   }
 };
+
 </script>
 
 <style>

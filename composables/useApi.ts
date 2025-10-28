@@ -13,6 +13,9 @@ export const useApi = () => {
     "Access-Control-Allow-Origin": "*",
     "accept-language": locale.value,
   };
+  watch(token, (newToken) => {
+    headers.Authorization = newToken ? `Bearer ${newToken}` : "";
+  });
   // done
   const resetToken = async () => {
     token.value = null;
@@ -26,7 +29,7 @@ export const useApi = () => {
     return await $fetch(`${baseURL}/auth/send-otp`, {
       method: "POST",
       body: { phone },
-      headers
+      headers,
     });
   };
   // done
@@ -34,7 +37,7 @@ export const useApi = () => {
     return await $fetch(`${baseURL}/auth/check-code`, {
       method: "POST",
       body: { phone, code },
-      headers
+      headers,
     });
   };
   // done

@@ -47,6 +47,7 @@
   "maintenance": "maintenance",
   "Mention reason": "Mention reason",
   "master": "master",
+  "Menu": "Menu",
 
   "not Information you must create account": "not Information you must create account",
   "not found orders yet": "not found orders yet",
@@ -66,6 +67,7 @@
   "details": "details",
   "dont forget to use it next time to save more money in your order": "dont forget to use it next time to save more money in your order",
 
+  "Arabic": "Arabic",
   "added to cart": " added to cart",
   "add another items": "add another items",
   "add new car": "add new car +",
@@ -80,6 +82,8 @@
   "Add your car to display here": "Add your car to display here.",
   "Are you sure you want to cancel this order?": "Are you sure you want to cancel this order?",
   "apple pay": "apple pay",
+  "Are you Sure to Change Language to English?": "Are you Sure to Change Language to English?",
+  "Are you Sure to Change Language to Arabic?": "Are you Sure to Change Language to Arabic?",
 
   "loading...": "loading...",
   "log out": "log out",
@@ -88,6 +92,7 @@
   "learn more": "learn more",
   "language": "language",
   "loading check status Payment": "loading check status Payment",
+  "last orders": "last orders",
 
   "services": "services",
   "sar": "sar",
@@ -113,6 +118,8 @@
   "show points": "show points",
   "save": "save",
 
+  
+  "English": "English",
   "Expenses": "Expenses",
   "edit profile": "edit profile",
   "Everyday": "Everyday",
@@ -153,6 +160,8 @@
   "create account": "create account",
   "Continue with phone": "Continue with phone",
   "code not true": "code not true",
+  "Change Language to English": "Change Language to English",
+  "Change Language to Arabic": "Change Language to Arabic",
 
   "Next": "Next",
   "Prev": "Prev",
@@ -203,6 +212,7 @@
   "Yes, Cancel Order": "Yes, Cancel Order",
   "you have": "you have",
   "you will get a reward": "you will get a reward",
+  "yes,change": "yes,change",
 
   "Upload from your device": "Upload from your device",
   "Use Wallet balance": "Use Wallet Balance",

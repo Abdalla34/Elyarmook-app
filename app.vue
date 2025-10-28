@@ -1,6 +1,5 @@
 <template>
   <div class="app-wrapper">
-    <Switch />
     <!-- Global Mobile Menu - Available on all pages -->
     <MobileMenu />
     <Header v-if="showLayout" />

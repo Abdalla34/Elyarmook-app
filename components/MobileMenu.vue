@@ -1,6 +1,6 @@
 <template>
   <!-- Enhanced Burger Menu Icon -->
-  <div class="mobile-menu-wrapper">
+  <div class="mobile-menu-wrapper" :class="currentDir">
     <!-- Cart Icon -->
     <div class="cart-icon-wrapper" @click="navigateTo('/cart')">
       <div class="cart-icon-inner">
@@ -19,13 +19,18 @@
     </div>
 
     <!-- Mobile Menu Overlay -->
-    <div v-if="isMenuOpen" class="menu-overlay" @click="toggleMenu"></div>
+    <div
+      v-if="isMenuOpen"
+      class="menu-overlay"
+      @click="toggleMenu"
+      :dir="currentDir"
+    ></div>
 
     <!-- Enhanced Mobile Menu -->
     <transition name="slide-menu">
-      <div v-if="isMenuOpen" class="box-phone">
+      <div v-if="isMenuOpen" class="box-phone" :dir="currentDir">
         <div class="menu-header">
-          <h3 class="menu-title">Menu</h3>
+          <h3 class="menu-title">{{ $t("Menu") }}</h3>
           <button class="close-btn" @click="toggleMenu">×</button>
         </div>
 
@@ -114,6 +119,12 @@ watch(
     isMenuOpen.value = false;
   }
 );
+
+const { locale } = useI18n();
+
+const currentDir = computed(() => {
+  return locale.value === "ar" ? "rtl" : "ltr";
+});
 </script>
 
 <style scoped>
@@ -420,6 +431,52 @@ watch(
   opacity: 1;
 }
 
+/* ✅ لما اللغة تكون RTL (عربي) */
+.box-phone[dir="rtl"] {
+  right: auto;
+  left: 0;
+  border-left: none;
+  border-right: 1px solid rgba(255, 230, 84, 0.3);
+  box-shadow: 10px 0 30px rgba(0, 0, 0, 0.2);
+}
+
+.slide-menu-enter-from[dir="rtl"],
+.slide-menu-leave-to[dir="rtl"] {
+  transform: translateX(-100%);
+}
+
+.slide-menu-enter-to[dir="rtl"],
+.slide-menu-leave-from[dir="rtl"] {
+  transform: translateX(0);
+}
+
+/* ✅ لما اللغة تكون LTR (إنجليزي) */
+.box-phone[dir="ltr"] {
+  right: 0;
+  left: auto;
+  border-left: 1px solid rgba(255, 230, 84, 0.3);
+  border-right: none;
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.2);
+}
+
+.slide-menu-enter-from[dir="ltr"],
+.slide-menu-leave-to[dir="ltr"] {
+  transform: translateX(100%);
+}
+
+/* ✅ لما اللغة تكون LTR (إنجليزي) */
+.mobile-menu-wrapper.ltr {
+  right: 20px;
+  left: auto;
+  flex-direction: row;
+}
+
+/* ✅ لما اللغة تكون RTL (عربي) */
+.mobile-menu-wrapper.rtl {
+  left: 20px;
+  right: auto;
+  flex-direction: row-reverse;
+}
 /* Responsive Design */
 
 /* Mobile Devices (≤768px) */

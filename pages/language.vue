@@ -16,13 +16,13 @@
                 >
                   <div class="d-flex align-items-center gap-2">
                     <PuplicIconSoudiaIcon />
-                    <h5 class="arabic">Arabic</h5>
+                    <h5 class="arabic">{{ $t("Arabic") }}</h5>
                   </div>
                   <div class="input-check">
                     <input
                       class="inpuy-border"
                       type="checkbox"
-                      :checked="isArabic"
+                      :checked="checkedAr"
                       @change="isArabic = true"
                       :disabled="isConfirmationOpen"
                       :class="{ 'opacity-input-1': isConfirmationOpen }"
@@ -42,13 +42,13 @@
                 >
                   <div class="d-flex align-items-center gap-2">
                     <PuplicIconUSA />
-                    <h5 class="english">English</h5>
+                    <h5 class="english">{{ $t("English") }}</h5>
                   </div>
                   <div class="input-check">
                     <input
                       class="inpuy-border"
                       type="checkbox"
-                      :checked="isEnglish"
+                      :checked="checkedEn"
                       @change="isEnglish = true"
                       :disabled="isConfirmationOpen"
                       :class="{ 'opacity-input-1': isConfirmationOpen }"
@@ -64,8 +64,8 @@
             >
               <div class="isarabic transition">
                 <PuplicIconSoudiaIcon />
-                <h6>Change Language to Arabic</h6>
-                <p>Are you Sure to Change Language to Arabic?</p>
+                <h6>{{ $t("Change Language to Arabic") }}</h6>
+                <p>{{ $t("Are you Sure to Change Language to Arabic?") }}</p>
                 <div
                   class="done margin-60px d-flex align-items-center justify-content-center gap-2"
                 >
@@ -75,8 +75,11 @@
                   >
                     cancel
                   </div>
-                  <div class="yes-change box-button text-capitalize">
-                    yes,change
+                  <div
+                    class="yes-change box-button text-capitalize"
+                    @click="ChangeToAr"
+                  >
+                    {{ $t("yes,change") }}
                   </div>
                 </div>
               </div>
@@ -89,8 +92,8 @@
             >
               <div class="isenglish transition">
                 <PuplicIconUSA />
-                <h6>Change Language to English</h6>
-                <p>Are you Sure to Change Language to English?</p>
+                <h6>{{ $t("Change Language to English") }}</h6>
+                <p>{{ $t("Are you Sure to Change Language to English?") }}</p>
                 <div
                   class="done margin-60px d-flex align-items-center justify-content-center gap-2"
                 >
@@ -100,8 +103,11 @@
                   >
                     cancel
                   </div>
-                  <div class="yes-change box-button text-capitalize">
-                    yes,change
+                  <div
+                    class="yes-change box-button text-capitalize"
+                    @click="ChangeToEn"
+                  >
+                    {{ $t("yes,change") }}
                   </div>
                 </div>
               </div>
@@ -115,11 +121,17 @@
 </template>
 
 <script setup>
+import { set } from "date-fns";
+
 let isArabic = ref(false);
 let isEnglish = ref(false);
-const { setLocale } = useI18n()
-// setLocale('en');
+const { locale, setLocale } = useI18n();
+
 const isConfirmationOpen = computed(() => isArabic.value || isEnglish.value);
+const checkedAr = computed(() => locale.value === "ar");
+const checkedEn = computed(() => locale.value === "en");
+
+
 
 function cancelArabic() {
   isArabic.value = false;
@@ -127,10 +139,16 @@ function cancelArabic() {
 function cancelEnglish() {
   isEnglish.value = false;
 }
+function ChangeToAr() {
+  setLocale("ar");
+  isArabic.value = false;
+}
+function ChangeToEn() {
+  setLocale("en");
+  isEnglish.value = false;
+}
 </script>
 
 <style scoped>
 @import "@/assets/css/language.css";
-
-
 </style>

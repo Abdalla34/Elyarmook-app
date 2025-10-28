@@ -102,6 +102,7 @@
             </p>
             <div class="otp-wrapper">
               <v-otp-input
+                :class="$i18n.locale === 'ar' ? 'rtl-otp' : 'ltr-otp'"
                 v-model:value="codeOtp"
                 :num-inputs="4"
                 input-type="number"
@@ -117,8 +118,9 @@
             </div>
             <div class="text-center mt-3">
               <p v-if="!showResendOtp" class="p-color-fs text-capitalize">
-                resend code after<span class="text-danger ps-2">
-                  {{ counter }} second
+                {{ $t("resend code after")
+                }}<span class="text-danger ps-2">
+                  {{ counter }} {{ $t("second") }}
                 </span>
               </p>
               <p
@@ -127,14 +129,14 @@
                 style="cursor: pointer"
                 @click="handleSendOtp"
               >
-                resend code
+                {{ $t("resend code") }}
               </p>
             </div>
             <button
               class="btn btn-outline-danger mt-2 w-100"
               @click="$emit('close-otp-modal')"
             >
-              Cancel
+              {{ $t("Cancel") }}
             </button>
           </div>
         </div>
@@ -148,6 +150,8 @@
 import { VueTelInput } from "vue-tel-input";
 import "vue-tel-input/vue-tel-input.css";
 import VOtpInput from "vue3-otp-input";
+
+const { checkOTP, sendOTP, loginOrRegister, addToCartMulti } = useApi();
 
 const props = defineProps({
   showDialCode: Boolean,
@@ -169,12 +173,12 @@ async function handleCheckOtp(otpValue) {
   try {
     let otp = otpValue.value || codeOtp.value;
     isLoadingOtp.value = true;
-    let res = await useApi().checkOTP(phone.value, otp);
+    let res = await checkOTP(phone.value, otp);
     if (res?.status) {
       // props.showOtpModal = false;
       emit("close-otp-modal");
       codecorrect.value = false;
-      let responseRigsetr = await useApi().loginOrRegister({
+      let responseRigsetr = await loginOrRegister({
         phone: phone.value,
         otp_code: otp,
       });
@@ -191,10 +195,7 @@ async function handleCheckOtp(otpValue) {
             qty: 1,
           }));
 
-          let resMultiCart = await useApi().addToCartMulti(
-            { items },
-            token.value
-          );
+          let resMultiCart = await addToCartMulti({ items }, token.value);
 
           if (resMultiCart?.status) {
             localStorage.removeItem("cartGuest");
@@ -248,7 +249,7 @@ async function handleSendOtp(event) {
 
   try {
     const phoneToSend = phone.value || lastPhone.value;
-    let res = await useApi().sendOTP(phoneToSend);
+    let res = await sendOTP(phoneToSend);
     if (res?.status) {
       lastPhone.value = phoneToSend;
       emit("open-otp-modal");
@@ -307,5 +308,23 @@ const emit = defineEmits([
 }
 .btn-close {
   margin-left: 0px !important;
+}
+
+.ltr-otp {
+  direction: ltr !important;
+}
+
+.rtl-otp {
+  direction: rtl !important;
+}
+
+.rtl-otp .v-otp-input__input {
+  direction: rtl !important;
+  text-align: center !important;
+}
+
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button {
+  margin: 0;
 }
 </style>

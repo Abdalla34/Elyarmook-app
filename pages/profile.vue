@@ -289,7 +289,7 @@ let profileImg = ref(false);
 // function ChangeProfile() {
 //   profileImg.value = !profileImg.value;
 // }
-
+const cartCount = useState("cartCount", () => 0);
 const showmodalsignOut = ref(false);
 let logOut = async () => {
   try {
@@ -298,6 +298,7 @@ let logOut = async () => {
     token.value = null;
     cookie.value = null;
     await resetToken();
+    cartCount.value = 0;
     await initCartFromLocalStorage();
     router.push(localePaht("/"));
   } catch (err) {

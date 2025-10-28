@@ -302,7 +302,7 @@
 <script setup>
 import dayjs from "#build/dayjs.imports.mjs";
 
-const { deleteItemFromCart, updateCartItemQuantity } = useApi();
+const { deleteItemFromCart, updateCartItemQuantity,getMyCart } = useApi();
 const services = ref([]);
 const loadingDelete = ref({});
 const loadingQty = ref({});
@@ -318,7 +318,7 @@ try {
   if (!token) {
     notRegister.value = true;
   }
-  let res = await useApi().getMyCart();
+  let res = await getMyCart();
   cartRes.value = res?.data;
   services.value = cartRes.value?.services || [];
   offers.value = cartRes.value?.offers || [];

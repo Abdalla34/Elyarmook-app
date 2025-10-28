@@ -47,6 +47,7 @@
   "maintenance": "الصيانة",
   "Mention reason": "اذكر السبب",
   "master": "ماستر كارد",
+  "Menu": "القائمه",
 
   "not Information you must create account": "لا توجد بيانات، يجب إنشاء حساب",
   "not found orders yet": "لا توجد طلبات بعد",
@@ -65,6 +66,7 @@
   "date": "التاريخ",
   "details": "التفاصيل",
 
+  "Arabic": "العربية",
   "added to cart": "تمت الإضافة إلى السلة",
   "add another items": "أضف عناصر أخرى",
   "add new car": "إضافة سيارة جديدة +",
@@ -79,6 +81,8 @@
   "Add your car to display here": "أضف سيارتك لتظهر هنا",
   "Are you sure you want to cancel this order?": "هل أنت متأكد من إلغاء هذا الطلب؟",
   "apple pay": "أبل باي",
+  "Are you Sure to Change Language to English?": "هل أنت متأكد من تغيير اللغة إلى الإنجليزية؟",
+  "Are you Sure to Change Language to Arabic?": "هل أنت متأكد من تغيير اللغة إلى العربية؟",
 
   "loading...": "جارٍ التحميل...",
   "log out": "تسجيل خروج",
@@ -87,6 +91,7 @@
   "learn more": "اعرف أكثر",
   "language": "اللغة",
   "loading check status Payment": "جاري التحقق من حالة الدفع",
+  "last orders": "أحدث الاوردرات",
 
   "services": "الخدمات",
   "sar": "ر.س",
@@ -112,6 +117,7 @@
   "second": "ثانية",
   "save": "حفظ",
 
+  "English": "الإنجليزية",
   "Expenses": "المصروفات",
   "edit profile": "تعديل الملف الشخصي",
   "Everyday": "يوميًا",
@@ -129,13 +135,13 @@
   "Cancel": "إلغاء",
   "Confirm Delete": "تأكيد الحذف",
   "current balance": "الرصيد الحالي",
-  "Comfortable Service": "خدمة مريحة",
+  "Comfortable Service": "خدمة مرتاح",
   "Contact Us": "اتصل بنا",
   "Cost Details": "تفاصيل التكلفة",
   "continue": "متابعة",
   "car details": "تفاصيل السيارة",
   "car model": "موديل السيارة",
-  "chassis Number:": "رقم الشاصيه:",
+  "chassis Number:": "رقم الشاسيه:",
   "current point": "النقاط الحالية",
   "copy": "نسخ",
   "call us": "اتصل بنا",
@@ -150,6 +156,8 @@
   "create account": "انشاء حساب",
   "Continue with phone": "متابعه برقم الهاتف",
   "code not true": "الكود غير صحيح",
+  "Change Language to English": "تغيير الي اللغه الانجليزيه",
+  "Change Language to Arabic": "تغيير الي اللغه العربيه",
 
   "Next": "التالي",
   "Prev": "السابق",
@@ -200,6 +208,7 @@
   "Yes, Cancel Order": "نعم، إلغاء الطلب",
   "you have": "انت تملك",
   "you will get a reward": "سوف تحصل على مكافأة",
+  "yes,change": "نعم,تغيير",
 
   "Upload from your device": "تحميل من جهازك",
   "Use Wallet balance": "استخدم رصيد المحفظة",
