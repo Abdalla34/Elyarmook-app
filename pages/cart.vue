@@ -11,7 +11,7 @@
           class="empty-cart text-center"
           v-if="
             token &&
-            items.length === 0 &&
+            services.length === 0 &&
             offers.length === 0 &&
             spareParts.length === 0 &&
             cartRes?.id
@@ -51,24 +51,6 @@
             </div>
           </div>
         </div>
-
-        <!-- <div class="empty-cart text-center" v-if="token && !cartRes?.id">
-          <div>
-            <img src="/Vector.png" alt="" />
-            <h3 class="text-capitalize create">
-              {{ $t("your cart is empty") }}
-            </h3>
-            <div class="btn-items">
-              <button
-                @click="navigateTo('/services')"
-                class="d-flex align-items-center gap-2"
-              >
-                <PuplicIconPlusIcon />
-                <span>{{ $t("Add Items") }}</span>
-              </button>
-            </div>
-          </div>
-        </div> -->
 
         <!-- left section -->
         <div
