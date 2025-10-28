@@ -251,7 +251,7 @@
         <!-- right section -->
         <div
           class="col-12 col-md-12 col-lg-4 col-test"
-          v-if="token && (items.length || offers.length)"
+          v-if="token && items.length > 0 || offers.length > 0 || spareParts.length > 0"
         >
           <div class="h-100">
             <h1 class="text-capitalize fs-6 updated-details">

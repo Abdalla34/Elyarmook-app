@@ -7,7 +7,52 @@
           :message="$t('cart is Empty you must create account')"
         />
 
-        <div class="empty-cart text-center" v-if="token && !cartRes?.id">
+           <div
+          class="empty-cart text-center"
+          v-if="
+            token &&
+            items.length === 0 &&
+            offers.length === 0 &&
+            spareParts.length === 0 &&
+            order_id
+          "
+        >
+          <div>
+            <img src="/Vector.png" alt="" />
+            <h3 class="text-capitalize create">
+              {{ $t("your cart is empty") }}
+            </h3>
+            <div class="btn-items">
+              <button @click="navigateTo(localePath('/services'))">
+                <svg
+                  width="25"
+                  height="25"
+                  viewBox="0 0 25 25"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M6.5 12.5H18.5"
+                    stroke="#040505"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M12.5 18.5V6.5"
+                    stroke="#040505"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+                {{ $t("Add Items") }}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- <div class="empty-cart text-center" v-if="token && !cartRes?.id">
           <div>
             <img src="/Vector.png" alt="" />
             <h3 class="text-capitalize create">
@@ -23,7 +68,7 @@
               </button>
             </div>
           </div>
-        </div>
+        </div> -->
 
         <!-- left section -->
         <div
