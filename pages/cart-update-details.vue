@@ -56,7 +56,7 @@
         <!-- left section -->
         <div
           class="col-12 col-md-12 col-lg-6 col-md-6"
-          v-if="(token && items.length > 0) || offers.length > 0 || spareParts > 0"
+          v-if="token && items.length > 0 || offers.length > 0 || spareParts.length > 0"
         >
           <h4 class="mb-4 fw-bold">{{ $t("Order Details") }}</h4>
           <!-- services items -->
