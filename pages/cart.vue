@@ -14,7 +14,7 @@
             items.length === 0 &&
             offers.length === 0 &&
             spareParts.length === 0 &&
-            order_id
+            cartRes?.id
           "
         >
           <div>

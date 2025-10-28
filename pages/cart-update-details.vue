@@ -5,7 +5,7 @@
         <!-- if not register -->
         <NotRegister
           :IsNotRegitser="notRegister"
-          message="cart is Empty you must create account "
+          :message="$t('cart is Empty you must create account')"
         />
         <!-- if cart empty -->
         <div
