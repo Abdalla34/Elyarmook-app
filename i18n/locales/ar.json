@@ -36,7 +36,8 @@
   "order successfully!": "الطلب نجح!",
   "order details updated": "تم تحديث تفاصيل الطلب",
   "or": "أو",
-  "OTP Verification": "OTP Verification",
+  "OTP Verification": "OTP تأكيد",
+  "optional": "اختياري",
 
   "my orders": "طلباتي",
   "membership": "العضوية",
@@ -116,6 +117,8 @@
   "show points": "اظهار النقاط",
   "second": "ثانية",
   "save": "حفظ",
+  "Search for car brand": "البحث عن ماركة السيارة",
+  "Search for car model": "البحث عن موديل السيارة",
 
   "English": "الإنجليزية",
   "Expenses": "المصروفات",

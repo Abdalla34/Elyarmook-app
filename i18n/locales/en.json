@@ -37,6 +37,7 @@
   "order details updated": "order details updated",
   "or": "or",
   "OTP Verification": "OTP Verification",
+  "optional": "optional",
 
   "my orders": "my orders",
   "membership": "membership",
@@ -117,8 +118,9 @@
   "second": "second",
   "show points": "show points",
   "save": "save",
+  "Search for car brand": "Search for car brand",
+  "Search for car model": "Search for car model",
 
-  
   "English": "English",
   "Expenses": "Expenses",
   "edit profile": "edit profile",

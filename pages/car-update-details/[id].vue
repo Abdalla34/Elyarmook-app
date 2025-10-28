@@ -33,7 +33,7 @@
                   >
                     <input
                       type="text"
-                      placeholder="manfacture years"
+                      :placeholder="$t('Manufacture Year:')"
                       class="form-control border-0 shadow-none"
                       style="flex: 1"
                       v-model="carForm.manufacture_year"
@@ -54,13 +54,13 @@
                   >
                     <input
                       type="text"
-                      placeholder="Chassis number"
+                      :placeholder="$t('chassis Number:')"
                       class="form-control border-0 shadow-none"
                       style="flex: 1"
                       v-model="carForm.chassis_number"
                     />
                     <div class="ms-2">
-                      <span class="p-color-fs">optional</span>
+                      <span class="p-color-fs">{{ $t("optional") }}</span>
                     </div>
                   </div>
                 </div>
@@ -72,12 +72,13 @@
                       @click="showYears = false"
                     ></button>
 
-                    <h1 class="label mb-3">manfacture years</h1>
+                    <h1 class="label mb-3">{{ $t("Manufacture Year:") }}</h1>
                     <div class="all-years">
                       <div
                         v-for="year in years"
                         @click="selecteYears(year)"
                         class="box-year mb-2 rounded ps-2 pe-2 pt-1 pb-1"
+                        style="cursor: pointer;"
                       >
                         {{ year }}
                       </div>
@@ -91,7 +92,7 @@
                   @click="sendDataCar"
                   class="btn-continue mt-4"
                 >
-                  <button-card text-button="continue" />
+                  <button-card :text-button="$t('continue')" />
                 </div>
               </div>
             </div>
@@ -106,7 +107,7 @@
 import { useForm, useField } from "vee-validate";
 import * as yup from "yup";
 
-const {getDetailsCar , getCarTypes, editCar}  = useApi()
+const { getDetailsCar, getCarTypes, editCar } = useApi();
 let startYear = 1900;
 let endYear = new Date().getFullYear();
 let years = Array.from(
@@ -188,5 +189,4 @@ const sendDataCar = handleSubmit(async (values) => {
 .years {
   background-color: var(--color-secound-main);
 }
-
 </style>

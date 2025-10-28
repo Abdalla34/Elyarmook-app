@@ -5,7 +5,7 @@
         <div class="text-center search d-block mb-4">
           <input
             type="search"
-            placeholder="Search for car brand"
+            :placeholder="$t('Search for car brand')"
             class="form-control search-input"
             v-model="searchInBrands"
           />
@@ -31,7 +31,7 @@
         <div class="text-center search d-block mb-4">
           <input
             type="search"
-            placeholder="Search for car model"
+            :placeholder="$t('Search for car model')"
             class="form-control search-input"
             v-model="searchInTypes"
           />
@@ -55,24 +55,11 @@
         </div>
       </div>
 
-      <!-- <div class="row justify-content-center" v-if="step == 2">
-        <div
-          class="col-lg-7 col-md-6 parent-types"
-          v-for="year in years"
-          :key="year"
-          @click="selecteYears(year)"
-        >
-          <div class="d-flex align-items-center gap-3 box-hover">
-            <div class="title-car">{{ year }}</div>
-          </div>
-        </div>
-      </div> -->
-
       <div class="chassis" v-if="step == 2">
         <form @submit.prevent="SendData" class="chassis-form">
           <!-- choose year -->
           <label class="chassis-label text-capitalize" for="">
-            manufacture year
+            {{$t("Manufacture Year:")}}
           </label>
           <!-- input years -->
           <div
@@ -83,7 +70,7 @@
             <input
               id="amnufactureYaer"
               type="text"
-              placeholder="manfacture years"
+              :placeholder="$t('Manfacture Year')"
               class="form-control border-0 shadow-none"
               style="flex: 1; cursor: pointer"
               v-model="carForm.manufacture_year"
@@ -93,12 +80,12 @@
           </div>
 
           <label class="chassis-label text-capitalize" for="chassisNumber">
-            chassis number
+            {{ $t("chassis number:") }}
           </label>
           <input
             id="chassisNumber"
             type="text"
-            placeholder="write chassis Number"
+            :placeholder="$t('chassis Number:')"
             class="chassis-input"
             v-model="carForm.chassis_number"
             @input="chassisError = ''"
@@ -122,7 +109,7 @@
             @click.self="showYears = false"
           ></button>
 
-          <h1 class="label mb-3">manfacture years</h1>
+          <h1 class="label mb-3">{{ "Manfacture Year" }}</h1>
           <div class="all-years">
             <div
               style="cursor: pointer"
@@ -141,6 +128,7 @@
 </template>
 
 <script setup>
+const { getMycars, createCar, getCarBrands, cartypes } = useApi();
 let startYear = 2000;
 let endYear = new Date().getFullYear();
 let years = Array.from(
@@ -153,7 +141,7 @@ const isloadCar = ref(false);
 
 let step = ref(0);
 let carBrands = ref([]);
-let resBrands = await useApi().getCarBrands();
+let resBrands = await getCarBrands();
 carBrands.value = resBrands?.data?.items;
 
 let searchInBrands = ref("");
@@ -178,7 +166,7 @@ let searchInTypes = ref("");
 let carModels = ref([]);
 let carTypes = async (barnd) => {
   carForm.brand_id = barnd.id;
-  let res = await useApi().cartypes(barnd.id);
+  let res = await cartypes(barnd.id);
   carModels.value = res?.data?.items;
   step.value = 1;
   console.log(`car brand id ${carForm.brand_id}`);
@@ -203,15 +191,15 @@ let selecteYears = async (year) => {
 };
 
 const { addCar, fetchMyCars } = useMyCars();
-
+const localePaht = useLocalePath();
 async function SendData() {
   try {
     isloadCar.value = true;
     isAddCar.value = true;
-    let resAllCar = await useApi().getMycars();
+    let resAllCar = await getMycars();
     let isFirst = resAllCar?.data.length === 0;
 
-    let res = await useApi().createCar({
+    let res = await createCar({
       brand_id: carForm.brand_id,
       car_type_id: carForm.car_type_id,
       manufacture_year: carForm.manufacture_year,
@@ -223,10 +211,10 @@ async function SendData() {
     addCar(carForm.value);
     addCar(res?.data);
 
-    navigateTo("/my-cars");
+    navigateTo(localePaht("/my-cars"));
   } catch (err) {
     if (err?.response?.status === 401) {
-      return navigateTo("/createaccount");
+      return navigateTo(localePaht("/createaccount"));
     } else {
       console.log("send data", err);
     }
@@ -236,13 +224,6 @@ async function SendData() {
 }
 
 let chassisError = ref("");
-// const validateAndSend = async () => {
-//   if (!carForm.chassis_number || carForm.chassis_number.trim() === "") {
-//     chassisError.value = "Please enter chassis number";
-//     return;
-//   }
-//   await SendData();
-// };
 </script>
 
 <style scoped>
