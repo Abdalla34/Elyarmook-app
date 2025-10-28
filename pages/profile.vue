@@ -382,6 +382,7 @@ const confirmDelete = async () => {
     token.value = null;
     cookie.value = null;
     user.value = null;
+    cartCount.value = 0;
     showDeactivateModal.value = false;
     router.push(localePaht("/"));
   } catch (err) {
