@@ -56,7 +56,7 @@
         class="parent-boxes d-flex flex-column flex-md-row justify-content-between gap-3"
       >
         <div
-          @click="navigateTo('/services')"
+          @click="navigateTo(localePath('/services'))"
           class="visit-box box-soon d-flex align-items-center justify-content-center gap-2"
         >
           <div class="icon">
@@ -71,7 +71,7 @@
         </div>
 
         <div
-          @click="navigateTo('/')"
+          @click="navigateTo(localePath('/'))"
           class="visit-box d-flex align-items-center justify-content-center gap-2"
         >
           <div class="icon"><ProfileIcon /></div>
@@ -121,14 +121,17 @@ const { value: phone } = useField("phone");
 watch(phone, (newVal) => {
   phone.value = newVal.replace(/\s+/g, "");
 });
+
+const localePath = useLocalePath();
+
 const onSubmit = handleSubmit(async (values) => {
   loading.value = true;
   isLodaing.value = true;
   try {
     const res = await sendOTP(values.phone);
     if (res && res.data && typeof res.data.registered !== "undefined") {
-      router.push({
-        path: "/auth",
+      await navigateTo({
+        path: localePath("/auth"),
         query: {
           phone: values.phone,
           registered: res.data.registered.toString(),
