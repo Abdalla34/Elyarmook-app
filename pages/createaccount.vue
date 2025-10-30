@@ -14,7 +14,7 @@
           $t("phone Number")
         }}</label>
         <input
-          class="input"
+          class="input ltr-opt"
           type="text"
           placeholder="+966 xx xxx xxxx"
           v-model="phone"
@@ -179,6 +179,10 @@ const onSubmit = handleSubmit(async (values) => {
   font-size: 1rem;
   margin: 0;
   white-space: nowrap;
+}
+
+.ltr-opt {
+  direction: ltr !important;
 }
 
 @media (max-width: 768px) {

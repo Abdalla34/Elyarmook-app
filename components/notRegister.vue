@@ -5,7 +5,7 @@
         {{ message }}
       </h1>
       <button
-        @click="navigateTo('/createaccount')"
+        @click="navigateTo($localePath('/createaccount'))"
         class="btn-create mt-3 text-capitalize"
       >
         {{ $t("create account") }}

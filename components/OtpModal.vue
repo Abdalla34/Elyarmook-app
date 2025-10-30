@@ -43,7 +43,7 @@
                     showDialCodeInSelection: true,
                   }"
                   :class="{ 'is-invalid': phoneError }"
-                  class="phone-input"
+                  class="phone-input ltr-otp"
                 />
                 <div v-if="phoneError" class="invalid-feedback d-block">
                   {{ phoneError }}
@@ -97,7 +97,7 @@
           <div class="modal-body">
             <p class="p-color-fs mb-2">
               {{
-                $t(" Please check your phone to see the verification code 📨")
+                $t("Please check your phone to see the verification code")
               }}
             </p>
             <div class="otp-wrapper">
@@ -260,7 +260,7 @@ async function handleSendOtp(event) {
     }
   } catch (error) {
     console.error("Failed to send OTP:", error);
-    phoneError.value = "Failed to send OTP. Please try again.";
+    phoneError.value = $t("Failed to send OTP. Please try again.");
   }
 }
 
@@ -287,6 +287,7 @@ const emit = defineEmits([
   "open-otp-modal",
 ]);
 </script>
+
 <style scoped>
 .otp-input {
   width: 70px !important;

@@ -5,7 +5,7 @@
       <div class="container">
         <NotRegister
           :IsNotRegitser="!user"
-          message="not Information you must create account"
+          :message="$t('not Information you must create account')"
         />
         <div class="row">
           <div class="col-8 col-padding">
@@ -220,7 +220,7 @@
       </div>
       <div v-if="showDeactivateModal" class="modal-overlay">
         <div class="modal-content">
-          <h3 class="mb-4">Why are you leaving us?</h3>
+          <h3 class="mb-4">{{$t('Why are you leaving us')}}?</h3>
           <form @submit.prevent="confirmDelete">
             <div class="deactivate-reasons">
               <div

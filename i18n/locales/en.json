@@ -186,7 +186,7 @@
   "back to home": "back to home",
   "Please check your phone to see the verification code": "Please check your phone to see the verification code 📨",
   "phone invalid length max": "Phone number cannot be longer than 11 digits",
-  "phone invalid length min": "Phone number must be at least 8 digits",
+  "phone invalid length min": "Phone number must be at least 8 digits and start",
   "By using this website means your acceptance of": "By using this website means your acceptance of",
   "Policy and Terms of use": "Policy and Terms of use",
 
@@ -221,6 +221,7 @@
 
   "Final Amount": "Final Amount",
   "Fill a Form": "Fill a Form",
+  "Failed to send OTP. Please try again.": "Failed to send OTP. Please try again.",
 
   "redeem points": "redeem points",
   "redeem": "redeem",
