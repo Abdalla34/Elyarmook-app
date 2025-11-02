@@ -1,14 +1,20 @@
 <template>
   <div class="offer-selected">
     <div class="container">
-      <div class="row offer-details">
+      <!-- Skeleton -->
+      <div v-if="isSkeleton">
+        <Skeletons-OffersDetails />
+      </div>
+
+      <!-- Offer details -->
+      <div v-else-if="offerId?.data?.offer" class="row offer-details">
         <div class="col-12 col-lg-7 col-padding">
-          <div class="offer-box margin-bottom-24px" v-if="offerId?.data?.offer">
+          <div class="offer-box margin-bottom-24px">
             <GoPageArrow :title="$t('offer Details')" backPath="/offers" />
 
             <!-- Image Section -->
             <div class="img-offer-card position-relative margin-bottom-24px">
-              <img :src="offerId?.data?.offer.image" alt="Offer Image" />
+              <img :src="offerId.data.offer.image" alt="Offer Image" />
               <span class="offers-sale position-absolute sale-offer">
                 {{ Math.trunc(offerId.data.offer.discount_percentage) }}%
                 {{ $t("OFF") }}
@@ -22,17 +28,17 @@
               <h1 class="item-name">{{ offerId.data.offer.title }}</h1>
               <p class="price-value size-font color mb-0">
                 {{ offerId.data.offer.price_after_discount }}
-                <span class="font-size-currency text-uppercase color">{{
-                  $t("sar")
-                }}</span>
+                <span class="font-size-currency text-uppercase color">
+                  {{ $t("sar") }}
+                </span>
               </p>
             </div>
 
             <!-- End Date -->
             <div class="date-end d-flex justify-content-between mt-3 flex-wrap">
               <div>
-                <span class="text-capitalize date color-gray"
-                  >{{ $t("end date") }}:
+                <span class="text-capitalize date color-gray">
+                  {{ $t("end date") }}:
                 </span>
                 <span class="text-capitalize date-end">
                   {{
@@ -61,9 +67,9 @@
                 />
                 <p class="tabby-text mb-0 text-break flex-grow-1">
                   {{ $t("4 Interest-free payments of") }}
-                  <span class="sar-currency fw-bold text-uppercase"
-                    >22.41 {{ $t("sar") }}</span
-                  >
+                  <span class="sar-currency fw-bold text-uppercase">
+                    22.41 {{ $t("sar") }}
+                  </span>
                   {{ $t("With Tabby") }}
                 </p>
               </div>
@@ -134,6 +140,7 @@
         </div>
       </div>
 
+      <!-- Continue shopping -->
       <div v-if="btnShooping" class="btn-shooping position-fixed bottom-0">
         <ButtonCard
           @click="BtnShooping"
@@ -149,7 +156,6 @@ import { useAddToCart } from "@/composables/AddToCart";
 import Trash from "@/components/trash.vue";
 import PuplicIconBtnCartAdded from "@/components/Puplic-Icon/BtnCartAdded.vue";
 
-// Cart composable
 const {
   loadingAddToCart,
   inCart,
@@ -159,29 +165,51 @@ const {
   initCartFromLocalStorage,
 } = useAddToCart();
 
-// Modal state
-let showOtpModal = ref(false);
-let showDialCode = ref(false);
-
-// Route and data
-let route = useRoute();
-let idParams = route.params.id;
+const showOtpModal = ref(false);
+const showDialCode = ref(false);
+const route = useRoute();
+const idParams = route.params.id;
 const dayjs = useDayjs();
-let offerId = ref(null);
 
-// Get offer data
-offerId.value = await useApi().getOfferSingle(idParams);
+const offerId = ref(null);
+const isSkeleton = ref(true);
+const timeEndCach = 12 * 60 * 60 * 1000;
 
-let extract = (textstep) => {
-  if (!textstep) return [];
-  return textstep.match(/(\d+\.\s?.+?)(?=\d+\.\s?|$)/gs) || [];
-};
+async function isCacheValid() {
+  const currentTime = Date.now();
+  const cacheKey = `offer_${idParams}`;
+  const cachedData = localStorage.getItem(cacheKey);
+  if (cachedData) {
+    const parsed = JSON.parse(cachedData);
+    if (currentTime - parsed.timestamp < timeEndCach) {
+      offerId.value = parsed.offerId;
+      isSkeleton.value = false;
+      return;
+    }
+  }
 
-let steps = computed(() => {
-  return extract(offerId.value?.data?.offer.description);
+  // Fetch from API
+  const res = await useApi().getOfferSingle(idParams);
+  offerId.value = res; // خليها زي ما بترجع بالظبط من الـ API
+  isSkeleton.value = false;
+
+  localStorage.setItem(
+    "offerId",
+    JSON.stringify({
+      offerId: res,
+      timestamp: currentTime,
+    })
+  );
+}
+
+const extract = (text) =>
+  text ? text.match(/(\d+\.\s?.+?)(?=\d+\.\s?|$)/gs) || [] : [];
+
+const steps = computed(() => {
+  return extract(offerId.value?.data?.offer?.description);
 });
 
-// Check if current offer is in cart
+// Check if offer is in cart
 const isOfferInCart = computed(() => {
   const offer = offerId.value?.data?.offer;
   return offer && (offer.in_cart || inCart.value[offer.id]);
@@ -190,14 +218,12 @@ const isOfferInCart = computed(() => {
 const handleAddToCart = async () => {
   const offer = offerId.value?.data?.offer;
   if (!offer) return;
-
   await handleAdd(offer, "offer");
 };
 
 const handleRemoveFromCart = () => {
   const offer = offerId.value?.data?.offer;
   if (!offer) return;
-
   removeFromlocal(offer);
 };
 
@@ -205,12 +231,21 @@ function BtnShooping() {
   showDialCode.value = true;
 }
 
-onMounted(() => {
-  initCartFromLocalStorage();
-});
 function handleOtpSuccess() {
   navigateTo("/order-update-details");
 }
+
+onMounted(() => {
+  offerId.value = null; 
+  isSkeleton.value = true;
+  isCacheValid();
+  initCartFromLocalStorage();
+});
+
+// onMounted(() => {
+//   isCacheValid();
+//   initCartFromLocalStorage();
+// });
 </script>
 
 <style scoped>

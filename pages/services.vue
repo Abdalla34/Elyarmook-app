@@ -1,7 +1,10 @@
 <template>
   <div class="services-parent">
     <div class="container cards-wrapper margin-bottom-section">
-      <div class="row">
+      <div v-if="isSkeleton">
+        <Skeletons-Skeleton-Services-SparePart-Card />
+      </div>
+      <div v-else class="row">
         <div
           class="col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center"
           v-for="service in services"
@@ -68,7 +71,10 @@
           @otp-success="handleOtpSuccess"
         />
         <div class="isEmpty"></div>
-        <div v-if="btnShooping && !token" class="btn-shooping position-fixed bottom-0">
+        <div
+          v-if="btnShooping && !token"
+          class="btn-shooping position-fixed bottom-0"
+        >
           <ButtonCard
             @click="BtnShooping"
             :textButton="$t('continue shopping')"
@@ -85,6 +91,7 @@ let showOtpModal = ref(false);
 let showDialCode = ref(false);
 const token = useCookie("token");
 const timeEndCach = 12 * 60 * 60 * 1000;
+const isSkeleton = ref(true);
 
 async function isCacheValid() {
   const cachData = localStorage.getItem("servicesCache");
@@ -94,11 +101,13 @@ async function isCacheValid() {
 
     if (currentTime - parseData.timestamp < timeEndCach) {
       services.value = parseData.services;
+      isSkeleton.value = false;
     }
   }
 
   let res = await useApi().getServices();
   services.value = res?.data?.items || [];
+  isSkeleton.value = false;
 
   localStorage.setItem(
     "servicesCache",
@@ -119,8 +128,8 @@ const {
   initCartFromLocalStorage,
 } = useAddToCart();
 
-onMounted(async () => {
-  await isCacheValid();
+onMounted(() => {
+  isCacheValid();
   initCartFromLocalStorage();
 });
 

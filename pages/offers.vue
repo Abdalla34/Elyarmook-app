@@ -3,10 +3,13 @@
     <div class="offers margin-bottom-section">
       <div class="offers-page">
         <div class="container">
-          <div class="row">
+          <div v-if="isSkeleton">
+            <Skeletons-OffersSkeleton />
+          </div>
+          <div v-else class="row">
             <div
               class="col-lg-6 col-md-12 col-sm-12"
-              v-for="item in offers.data.items"
+              v-for="item in offers"
               :key="item.id"
             >
               <div class="offer-card margin-bottom-24px" @click="toBox(item)">
@@ -63,8 +66,34 @@
 
 <script setup>
 let dayjs = useDayjs();
+const isSkeleton = ref(true);
+let offers = ref([]);
 
-let offers = await useApi().getOffers();
+const timeEndCach = 12 * 60 * 60 * 1000;
+async function isCacheValid() {
+  const cachData = localStorage.getItem("offers");
+  const currentTime = Date.now();
+  if (cachData) {
+    const parseData = JSON.parse(cachData);
+
+    if (currentTime - parseData.timestamp < timeEndCach) {
+      offers.value = parseData.offers;
+      isSkeleton.value = false;
+    }
+  }
+
+  let res = await useApi().getOffers();
+  offers.value = res?.data?.items || null;
+  isSkeleton.value = false;
+
+  localStorage.setItem(
+    "offers",
+    JSON.stringify({
+      offers: offers.value,
+      timestamp: currentTime,
+    })
+  );
+}
 
 let router = useRouter();
 const localePath = useLocalePath();
@@ -74,7 +103,8 @@ function toBox(item) {
 
 let isNotOffers = ref(false);
 onMounted(() => {
-  if (offers.data.items.length === 0) {
+  isCacheValid();
+  if (offers.value.length === 0) {
     isNotOffers.value = true;
   } else {
     isNotOffers.value = false;

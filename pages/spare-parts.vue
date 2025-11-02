@@ -1,6 +1,9 @@
 <template>
   <div class="services-parent">
     <div class="container cards-wrapper margin-bottom-section">
+      <div v-if="isSkeleton">
+        <Skeletons-Skeleton-Services-SparePart-Card />
+      </div>
       <div class="row">
         <div
           class="col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center"
@@ -95,6 +98,7 @@
 
 <script setup>
 const spareParts = ref([]);
+const isSkeleton = ref(true);
 
 const {
   loadingAddToCart,
@@ -122,6 +126,7 @@ async function isCach() {
 
     if (currentTime - parsedData.timestamp < endTimeCache) {
       spareParts.value = parsedData.spareParts;
+      isSkeleton.value = false;
     }
   } else {
     spareParts.value = []; // Prevent flicker
@@ -130,6 +135,7 @@ async function isCach() {
   const responseSpare = await getSpareParts();
   if (responseSpare?.data?.items) {
     spareParts.value = responseSpare.data.items;
+    isSkeleton.value = false;
 
     localStorage.setItem(
       "sparePartsCache",
@@ -141,8 +147,8 @@ async function isCach() {
   }
 }
 
-onMounted(async () => {
-  await isCach();
+onMounted(() => {
+  isCach();
   initCartFromLocalStorage();
 });
 
