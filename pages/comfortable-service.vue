@@ -218,8 +218,29 @@
             class="branch-date type-delivery d-flex align-items-center justify-content-between gap-3"
           >
             <div class="input-barnch position-relative fix d-flex flex-column">
+              <label class="label">{{ $t("type delivery") }}</label>
+              <select
+                v-model="typeDelivery"
+                class="input-style"
+                @change="handleDeliveryChange"
+              >
+                <option disabled value="">
+                  {{ $t("Select type delivery") }}
+                </option>
+                <option value="oneWay">{{ $t("oneWay") }}</option>
+                <option value="twoWay">{{ $t("twoWay") }}</option>
+              </select>
+              <div class="icon-shape position-absolute">
+                <PuplicIconArrowBottom />
+              </div>
+            </div>
+          </div>
+          <!-- <div
+            class="branch-date type-delivery d-flex align-items-center justify-content-between gap-3"
+          >
+            <div class="input-barnch position-relative fix d-flex flex-column">
               <label for="" class="label">{{ $t("type delivery") }}</label>
-              <select v-model="typeDelivery" class="input-style">
+              <select v-model="typeDelivery" class="input-style" @change="handleDeliveryChange">
                 <option disabled value="">
                   {{ $t("Select type delivery") }}
                 </option>
@@ -230,12 +251,14 @@
                 <PuplicIconArrowBottom />
               </div>
             </div>
-          </div>
+          </div> -->
 
           <!-- location to return   -->
           <div
             v-if="
-              addressReturn && !showMapReturn && typeDelivery === $t('twoWay')
+              addressReturn &&
+              !showMapReturn &&
+              (typeDelivery === 'twoWay' || typeDelivery === 'two_way')
             "
             class="box-car mt-3 d-flex align-items-center justify-content-between mb-3 pt-1 pb-1 pe-3 ps-3"
           >
@@ -256,7 +279,9 @@
 
           <div
             v-if="
-              !addressReturn && typeDelivery === $t('twoWay') && !showMapReturn
+              !addressReturn &&
+              !showMapReturn &&
+              (typeDelivery === 'twoWay' || typeDelivery === 'two_way')
             "
           >
             <div
@@ -416,6 +441,7 @@ import * as yup from "yup";
 const { getAvailableTimes, getAvailableBrnchesTime, getBranches, getProblems } =
   useApi();
 const { createWenchOrder, updateWenchOrder } = useWenchServices();
+const localePath = useLocalePath();
 
 const schema = yup.object({
   branchValue: yup.string().required("you should select a branch"),
@@ -435,7 +461,7 @@ const addressError = useState("addressError", () => "");
 const dayjs = useDayjs();
 const branches = ref([]);
 
-const typeDelivery = useState("typeDelivery", () => "standard");
+const typeDelivery = useState("typeDelivery", () => "oneWay");
 const mycars = ref([]);
 
 const reservationTime = useState("reservationTime", () => null);
@@ -697,18 +723,36 @@ function handleImageUpload(event) {
 }
 const messageShowErr = ref("");
 
+const handleDeliveryChange = (event) => {
+  // لو المستخدم اختار oneWay أو twoWay من الترجمة
+  const value = event.target.value;
+  if (value === "oneWay") typeDelivery.value = "oneWay";
+  else if (value === "twoWay") typeDelivery.value = "twoWay";
+};
+
 async function createOrderWench() {
   try {
     isLoading.value = true;
     const rawPayload = payload.value;
 
+    // if (!rawPayload.reservation_time) {
+    //   isBookingNow.value = true;
+    //   reservationTime.value = dayjs()
+    //     .add(2, "hour")
+    //     .format("YYYY-MM-DD HH:mm:ss");
+    // } else {
+    //   isBookingNow.value = false;
+    // }
     if (!rawPayload.reservation_time) {
       isBookingNow.value = true;
       reservationTime.value = dayjs()
         .add(2, "hour")
         .format("YYYY-MM-DD HH:mm:ss");
     } else {
-      isBookingNow.value = false;
+      const nowPlus2Hours = dayjs().add(2, "hour");
+      if (dayjs(rawPayload.reservation_time).isBefore(nowPlus2Hours)) {
+        reservationTime.value = nowPlus2Hours.format("YYYY-MM-DD HH:mm:ss");
+      }
     }
 
     const cleanedPayload = Object.fromEntries(
@@ -718,7 +762,7 @@ async function createOrderWench() {
     const res = await createWenchOrder(cleanedPayload, "wench");
 
     if (res && res.status) {
-      navigateTo(useLocalePath(`/cart-comfortable-service/${res?.data?.id}`));
+      navigateTo(localePath(`/cart-comfortable-service/${res?.data?.id}`));
       updateOrderId.value = res?.data?.id;
     } else {
       messageShowErr.value = res?.message || "حدث خطأ أثناء إنشاء الطلب";
