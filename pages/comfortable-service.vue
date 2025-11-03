@@ -441,7 +441,7 @@ import * as yup from "yup";
 const { getAvailableTimes, getAvailableBrnchesTime, getBranches, getProblems } =
   useApi();
 const { createWenchOrder, updateWenchOrder } = useWenchServices();
-const localePath = useLocalePath();
+// const localePath = useLocalePath();
 
 const schema = yup.object({
   branchValue: yup.string().required("you should select a branch"),
@@ -760,7 +760,7 @@ async function createOrderWench() {
     );
 
     const res = await createWenchOrder(cleanedPayload, "wench");
-
+    const localePath = useLocalePath();
     if (res && res.status) {
       navigateTo(localePath(`/cart-comfortable-service/${res?.data?.id}`));
       updateOrderId.value = res?.data?.id;
