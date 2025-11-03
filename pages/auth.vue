@@ -61,7 +61,7 @@ import VOtpInput from "vue3-otp-input";
 
 const route = useRoute();
 const router = useRouter();
-const { checkOTP, loginOrRegister, sendOTP, getMyCart ,getToken} = useApi();
+const { checkOTP, loginOrRegister, sendOTP, getMyCart, getToken } = useApi();
 
 onMounted(() => {
   startCountdown();
@@ -108,11 +108,13 @@ const handleCheckOTP = async (otpValue) => {
   if (!phone.value || !otp) return;
 
   loading.value = true;
+  codeNoteTrue.value = false;
+  
   try {
     const res = await checkOTP(phone.value, otp);
     console.log("OTP response:", res);
 
-    if (res?.status === true && res?.message === "Code Is Correct") {
+    if (res?.status === true) {
       if (registered.value) {
         try {
           const loginRes = await loginOrRegister({
@@ -130,8 +132,7 @@ const handleCheckOTP = async (otpValue) => {
 
             cartCount.value = 0;
             await getToken(token.value);
-
-            // 🧠 حط try/catch هنا مخصوص لـ cart عشان ما تقطعش باقي العملية
+            // get cart
             try {
               const resCart = await getMyCart();
               if (resCart?.status) {
@@ -171,7 +172,6 @@ const handleCheckOTP = async (otpValue) => {
     loading.value = false;
   }
 };
-
 </script>
 
 <style>

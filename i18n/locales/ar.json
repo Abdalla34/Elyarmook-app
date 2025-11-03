@@ -26,6 +26,10 @@
   "tabby": "تابي",
   "tamara": "تمارا",
   "this operation cacelled": "تم الغاء هذه العمليه",
+  "type problem": "نوع المشكلة",
+  "twoWay": "ذهاب وعوده",
+  "type delivery": "نوع التوصيل",
+  "time works from": "اوقات العمل من",
 
   "offers": "العروض",
   "Order Now": "اطلب الآن",
@@ -38,6 +42,8 @@
   "or": "أو",
   "OTP Verification": "OTP تأكيد",
   "optional": "اختياري",
+  "oneWay": "ذهاب فقط",
+  "o'clock 1": "1 ساعه",
 
   "my orders": "طلباتي",
   "membership": "العضوية",
@@ -49,12 +55,15 @@
   "Mention reason": "اذكر السبب",
   "master": "ماستر كارد",
   "Menu": "القائمه",
+  "more details": "التفاصيل",
 
   "not Information you must create account": "لا توجد بيانات، يجب إنشاء حساب",
   "not found orders yet": "لا توجد طلبات بعد",
   "number order..": "رقم الطلب..",
   "NOTES: Minimum points = 1000 points": "ملاحظة: الحد الأدنى للنقاط = 1000 نقطة",
   "NOTES: please you shouled this number used in yarmook app": "ملاحظة: يجب استخدام هذا الرقم في تطبيق اليرموك",
+  "Note: Choosing express shipping will increase the shipping price.": "ملاحظه عند اختيار مستعجل سوف يرتفع سعر النقل الي 20 %",
+  "normal": "عادي",
 
   "delete": "حذف",
   "deposit money": "إيداع رصيد",
@@ -84,6 +93,8 @@
   "apple pay": "أبل باي",
   "Are you Sure to Change Language to English?": "هل أنت متأكد من تغيير اللغة إلى الإنجليزية؟",
   "Are you Sure to Change Language to Arabic?": "هل أنت متأكد من تغيير اللغة إلى العربية؟",
+  "added your car": "ضيف سيارتك",
+  "alyarmook takes a nap to service you better": "alyarmook يأخذ قيلولة ليقدم لك خدمة أفضل",
 
   "loading...": "جارٍ التحميل...",
   "log out": "تسجيل خروج",
@@ -93,6 +104,8 @@
   "language": "اللغة",
   "loading check status Payment": "جاري التحقق من حالة الدفع",
   "last orders": "أحدث الاوردرات",
+  "location to return car": "مكان عودة السيارة",
+  "location to receive car": "مكان استلام السيارة",
 
   "services": "الخدمات",
   "sar": "ر.س",
@@ -119,6 +132,10 @@
   "save": "حفظ",
   "Search for car brand": "البحث عن ماركة السيارة",
   "Search for car model": "البحث عن موديل السيارة",
+  "Select type problem": "اختر نوع المشكله",
+  "Select type delivery": "اختر نوع التسليم",
+  "services comfortable": "خدمة مرتاح",
+  "Select an available schedule. Appointments can only be made during this month": "ختر جدولًا متاحًا. لا يمكن حجز المواعيد إلا خلال هذا الشهر.",
 
   "English": "الإنجليزية",
   "Expenses": "المصروفات",
@@ -161,6 +178,10 @@
   "code not true": "الكود غير صحيح",
   "Change Language to English": "تغيير الي اللغه الانجليزيه",
   "Change Language to Arabic": "تغيير الي اللغه العربيه",
+  "change": "تغيير",
+  "Confirm Location": "تأكيد الموقع",
+  "choosing time details": "اختيار تفاصيل الوقت",
+   "Close": "اغلاق",
 
   "Next": "التالي",
   "Prev": "السابق",
@@ -215,6 +236,8 @@
 
   "Upload from your device": "تحميل من جهازك",
   "Use Wallet balance": "استخدم رصيد المحفظة",
+  "used": "مستخدم",
+  "urgent": "مستعجل",
 
   "Final Amount": "المبلغ النهائي",
   "Fill a Form": "املأ النموذج",
@@ -246,7 +269,5 @@
   "verify": "تأكيد",
   "Verifying...": "التحقق...",
 
-  "Kindly fill in your details below to create an account": "يرجى ملء التفاصيل الخاصة بك أدناه لإنشاء حساب",
-
-  "used": "مستخدم"
+  "Kindly fill in your details below to create an account": "يرجى ملء التفاصيل الخاصة بك أدناه لإنشاء حساب"
 }

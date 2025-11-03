@@ -1,6 +1,10 @@
 <template>
   <div class="d-flex align-items-center gap-2 margin-bottom-24px">
-    <div class="icon-width" v-if="showIcon" @click="navigateTo(backPath)">
+    <div
+      class="icon-width"
+      v-if="showIcon"
+      @click="navigateTo(localePath(backPath))"
+    >
       <i class="fa-solid fa-arrow-left-long"></i>
     </div>
     <h1 class="text-capitalize text title-pages">{{ title }}</h1>
@@ -8,7 +12,7 @@
 </template>
 
 <script setup>
-
+const localePath = useLocalePath();
 defineProps({
   title: String,
 
@@ -17,11 +21,10 @@ defineProps({
     default: true,
   },
 
-   backPath: {
+  backPath: {
     type: String,
-    default: '',
+    default: "",
   },
-
 });
 </script>
 

@@ -26,6 +26,10 @@
   "tabby": "tabby",
   "tamara": "tamara",
   "this operation cacelled": "this operation cacelled",
+  "type problem": "type problem",
+  "twoWay": "twoWay",
+  "type delivery": "type delivery",
+  "time works from": " time works from",
 
   "offers": "offers",
   "Order Now": "Order Now",
@@ -38,6 +42,8 @@
   "or": "or",
   "OTP Verification": "OTP Verification",
   "optional": "optional",
+  "oneWay": "oneWay",
+  "o'clock 1": "o'clock 1",
 
   "my orders": "my orders",
   "membership": "membership",
@@ -49,12 +55,15 @@
   "Mention reason": "Mention reason",
   "master": "master",
   "Menu": "Menu",
+  "more details": "more details",
 
   "not Information you must create account": "not Information you must create account",
   "not found orders yet": "not found orders yet",
   "number order..": "number order..",
   "NOTES: Minimum points = 1000 points": "NOTES: Minimum points = 1000 points",
   "NOTES: please you shouled this number used in yarmook app": "NOTES: please you shouled this number used in yarmook app",
+  "normal": "normal",
+  "Note: Choosing express shipping will increase the shipping price.": "Note: Choosing express shipping will increase the shipping price.",
 
   "delete": "delete",
   "deposit money": "deposit money",
@@ -85,6 +94,8 @@
   "apple pay": "apple pay",
   "Are you Sure to Change Language to English?": "Are you Sure to Change Language to English?",
   "Are you Sure to Change Language to Arabic?": "Are you Sure to Change Language to Arabic?",
+  "added your car": "added your car",
+  "alyarmook takes a nap to service you better": "alyarmook takes a nap to service you better",
 
   "loading...": "loading...",
   "log out": "log out",
@@ -94,6 +105,8 @@
   "language": "language",
   "loading check status Payment": "loading check status Payment",
   "last orders": "last orders",
+  "location to return car": "location to return car",
+  "location to receive car": "location to receive car",
 
   "services": "services",
   "sar": "sar",
@@ -120,6 +133,10 @@
   "save": "save",
   "Search for car brand": "Search for car brand",
   "Search for car model": "Search for car model",
+  "Select type problem": "Select type problem",
+  "Select type delivery": "Select type delivery",
+  "services comfortable": "services comfortable",
+  "Select an available schedule. Appointments can only be made during this month": "Select an available schedule. Appointments can only be made during this month",
 
   "English": "English",
   "Expenses": "Expenses",
@@ -164,6 +181,10 @@
   "code not true": "code not true",
   "Change Language to English": "Change Language to English",
   "Change Language to Arabic": "Change Language to Arabic",
+  "change": "change",
+  "Confirm Location": "Confirm Location",
+  "choosing time details": "choosing time details",
+  "Close": "Close",
 
   "Next": "Next",
   "Prev": "Prev",
@@ -218,6 +239,8 @@
 
   "Upload from your device": "Upload from your device",
   "Use Wallet balance": "Use Wallet Balance",
+  "urgent": "urgent",
+  "used": "used",
 
   "Final Amount": "Final Amount",
   "Fill a Form": "Fill a Form",
@@ -249,7 +272,5 @@
   "verify": "verify",
   "Verifying...": "Verifying...",
 
-  "Kindly fill in your details below to create an account": "Kindly fill in your details below to create an account",
-
-  "used": "used"
+  "Kindly fill in your details below to create an account": "Kindly fill in your details below to create an account"
 }

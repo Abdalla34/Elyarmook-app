@@ -3,7 +3,7 @@
     <div class="services-container container position-relative">
       <div class="services-grid">
         <!-- services -->
-        <div class="service-box" @click="navigateTo('/services')">
+        <div class="service-box" @click="navigateTo($localePath('/services'))">
           <img class="img" src="/car-fix.png" alt="service.title" />
           <h3 class="service-title text-capitalize mb-2">
             {{ $t("services") }}
@@ -12,14 +12,17 @@
         </div>
 
         <!-- offers -->
-        <div class="service-box" @click="navigateTo('/offers')">
+        <div class="service-box" @click="navigateTo($localePath('/offers'))">
           <img class="img" src="/Discount Gift.png" alt="service.title" />
           <h3 class="service-title text-capitalize mb-2">{{ $t("offers") }}</h3>
           <p class="p-color-fs text-capitalize">{{ $t("Find now") }}</p>
         </div>
 
         <!-- spare Parts -->
-        <div class="service-box" @click="navigateTo('/spare-parts')">
+        <div
+          class="service-box"
+          @click="navigateTo($localePath('/spare-parts'))"
+        >
           <div class="services-header position-relative">
             <span
               class="soon-badge text-capitalize ps-3 pe-3 pt-1 pb-1 position-absolute border-radius-20px"

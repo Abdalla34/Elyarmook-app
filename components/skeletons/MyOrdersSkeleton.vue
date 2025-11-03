@@ -3,7 +3,7 @@
     <div class="col-lg-7 col-md-10 col-sm-12">
       <!-- نعرض 5 عناصر كهيكل تحميل -->
       <div
-        v-for="n in 5"
+        v-for="n in 10"
         :key="n"
         class="box-orders border rounded-4 d-flex align-items-center justify-content-between position-relative mb-3 p-3 placeholder-glow bg-white shadow-sm"
       >

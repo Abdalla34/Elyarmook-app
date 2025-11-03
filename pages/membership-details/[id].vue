@@ -1,7 +1,10 @@
 <template>
   <div class="details-member">
     <div class="container py-5">
-      <div class="row justify-content-center">
+      <div v-if="isSkeleton" class="row justify-content-center">
+        <SkeletonsMemberShipsSkeleId />
+      </div>
+      <div v-else class="row justify-content-center">
         <div class="col-lg-8 col-md-6 col-sm-12">
           <div class="parent" v-if="memmberDetails">
             <div class="image-details">
@@ -100,17 +103,17 @@
 const route = useRoute();
 const idMember = route.params.id;
 const memmberDetails = ref({});
-const isloading = ref(false);
+const isSkeleton = ref(false);
 
 onMounted(async () => {
   try {
-    isloading.value = true;
+    isSkeleton.value = true;
     const res = await useApi().memberShipDetails(idMember);
     memmberDetails.value = res?.data;
   } catch (err) {
     console.log(err);
   } finally {
-    isloading.value = false;
+    isSkeleton.value = false;
   }
 });
 </script>

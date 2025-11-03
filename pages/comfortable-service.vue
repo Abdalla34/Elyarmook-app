@@ -3,14 +3,22 @@
     <div class="container">
       <div class="row">
         <div class="col-8 col-padding">
+          <div v-if="showModal" class="modal-overlay">
+            <div class="modal-box">
+              <p class="fs-5 mb-3">{{ messageShowErr }}</p>
+              <button class="btn btn-primary" @click="showModal = false">
+                {{ $t("Close") }}
+              </button>
+            </div>
+          </div>
           <h1 data-v-8bcd5751 class="text-capitalize text title-pages">
-            services comfortable
+            {{ $t("services comfortable") }}
           </h1>
 
           <ButtonCard
             @click="navigateTo('/car-brand')"
             v-if="mycars.length <= 0"
-            text-button="added your car"
+            :text-button="$t('added your car')"
           />
           <div
             v-if="mycars.length >= 1"
@@ -25,7 +33,9 @@
               {{ defaultCar.brand?.title }} - {{ defaultCar.car_type?.title }}
             </div>
             <div class="btn-change" @click="navigateTo('/my-cars')">
-              <button type="button" class="btn btn-secondary">change</button>
+              <button type="button" class="btn btn-secondary">
+                {{ $t("change") }}
+              </button>
             </div>
           </div>
 
@@ -45,7 +55,7 @@
               style="cursor: pointer"
               @click="openMap(false)"
             >
-              change
+              {{ $t("change") }}
             </div>
           </div>
 
@@ -55,7 +65,7 @@
               style="cursor: pointer"
               @click="openMap(false)"
             >
-              location to receive car
+              {{ $t("location to receive car") }}
             </div>
             <span class="text-danger">{{ addressError }}</span>
           </div>
@@ -74,7 +84,7 @@
               class="btn-confirm-location text-capitalize button position-absolute bottom-0 start-50 translate-middle-x mb-3 ps-3 pe-3 pt-1 pb-1"
               style="cursor: pointer"
             >
-              Confirm Location
+              {{ $t("Confirm Location") }}
             </button>
           </div>
 
@@ -83,9 +93,9 @@
             class="branch-date mt-3 d-flex align-items-center justify-content-between gap-3"
           >
             <div class="input-barnch position-relative fix d-flex flex-column">
-              <label for="" class="label">branch</label>
+              <label for="" class="label">{{ $t("branch") }}</label>
               <select v-model="branchValue" class="input-style">
-                <option disabled value="">Select Branch</option>
+                <option disabled value="">{{ $t("Select Branch") }}</option>
                 <option v-for="br in branches" :key="br.id" :value="br.id">
                   {{ br.title }}
                 </option>
@@ -99,7 +109,7 @@
 
           <!-- select details time -->
           <div class="select-details-time mt-3 box-car p-3">
-            <h5 class="label mb-3">اختر تفاصيل الوقت</h5>
+            <h5 class="label mb-3">{{ $t("choosing time details") }}</h5>
 
             <div class="time-options mt-3">
               <div class="time-option-group">
@@ -116,17 +126,21 @@
                       v-model="typeService"
                       class="custom-radio"
                     />
-                    <span class="option-text">urgent</span>
+                    <span class="option-text">{{ $t("urgent") }}</span>
                   </div>
                   <!-- ساعة 1 تبقى Tag -->
                   <div class="urgent-tag px-3 py-1 rounded-pill">
                     <i class="fa-solid fa-clock me-1"></i>
-                    o'clock 1
+                    {{ $t("o'clock 1") }}
                   </div>
                 </label>
 
                 <div class="urgent-note text-warning mb-2 text-end">
-                  %ملاحظة: عند اختيار مستعجل سوف يرتفع سعر النقل 20
+                  <{{
+                    $t(
+                      "Note: Choosing express shipping will increase the shipping price."
+                    )
+                  }}
                   <i class="fa-solid fa-circle-info me-1"></i>
                 </div>
 
@@ -147,7 +161,7 @@
                     class="custom-radio"
                     :disabled="branchValue === ''"
                   />
-                  <span class="option-text">normal</span>
+                  <span class="option-text">{{ $t("normal") }}</span>
                 </label>
               </div>
             </div>
@@ -157,8 +171,11 @@
               v-if="typeService === 'normal' && branchValue !== ''"
             >
               <p class="p-color-fs">
-                Select an available schedule. Appointments can only be made
-                during this month.
+                {{
+                  $t(
+                    "Select an available schedule. Appointments can only be made during this month"
+                  )
+                }}.
               </p>
               <div class="time-available gap-3 mt-3 d-flex">
                 <div class="d-flex gap-3 mt-3">
@@ -201,11 +218,13 @@
             class="branch-date type-delivery d-flex align-items-center justify-content-between gap-3"
           >
             <div class="input-barnch position-relative fix d-flex flex-column">
-              <label for="" class="label">type delivery</label>
+              <label for="" class="label">{{ $t("type delivery") }}</label>
               <select v-model="typeDelivery" class="input-style">
-                <option disabled value="">Select type delivery</option>
-                <option>oneWay</option>
-                <option>twoWay</option>
+                <option disabled value="">
+                  {{ $t("Select type delivery") }}
+                </option>
+                <option>{{ $t("oneWay") }}</option>
+                <option>{{ $t("twoWay") }}</option>
               </select>
               <div class="icon-shape position-absolute">
                 <PuplicIconArrowBottom />
@@ -215,7 +234,9 @@
 
           <!-- location to return   -->
           <div
-            v-if="addressReturn && !showMapReturn && typeDelivery === 'twoWay'"
+            v-if="
+              addressReturn && !showMapReturn && typeDelivery === $t('twoWay')
+            "
             class="box-car mt-3 d-flex align-items-center justify-content-between mb-3 pt-1 pb-1 pe-3 ps-3"
           >
             <div
@@ -229,19 +250,21 @@
               style="cursor: pointer"
               @click="openMap(true)"
             >
-              change
+              {{ $t("change") }}
             </div>
           </div>
 
           <div
-            v-if="!addressReturn && typeDelivery === 'twoWay' && !showMapReturn"
+            v-if="
+              !addressReturn && typeDelivery === $t('twoWay') && !showMapReturn
+            "
           >
             <div
               class="location-receive-car mt-2 mb-2 d-flex align-items-center justify-content-center text-capitalize"
               style="cursor: pointer"
               @click="openMap(true)"
             >
-              location to return car
+              {{ $t("location to return car") }}
             </div>
           </div>
 
@@ -259,7 +282,7 @@
               class="btn-confirm-location text-capitalize button position-absolute bottom-0 start-50 translate-middle-x mb-3 ps-3 pe-3 pt-1 pb-1"
               style="cursor: pointer"
             >
-              Confirm Location
+              {{ $t("Confirm Location") }}
             </button>
           </div>
 
@@ -268,9 +291,11 @@
             class="branch-date d-flex align-items-center justify-content-between gap-3"
           >
             <div class="input-barnch position-relative fix d-flex flex-column">
-              <label for="" class="label">type problem</label>
+              <label for="" class="label">{{ $t("type problem") }}</label>
               <select v-model="problem" class="input-style">
-                <option disabled value="">Select type problem</option>
+                <option disabled value="">
+                  {{ $t("Select type problem") }}
+                </option>
                 <option
                   v-for="value in getProblemss"
                   :key="value.id"
@@ -291,10 +316,10 @@
             class="branch-date d-flex align-items-center justify-content-between gap-3"
           >
             <div class="input-barnch position-relative fix d-flex flex-column">
-              <label for="" class="label">more details</label>
+              <label for="" class="label">{{ $t("more details") }}</label>
               <textarea
                 name="description"
-                placeholder="more details"
+                :placeholder="$t('more details')"
                 id=""
               ></textarea>
             </div>
@@ -302,7 +327,7 @@
 
           <!-- input upload file -->
           <div class="problem-photo">
-            <label class="label">problem photo</label>
+            <label class="label">{{ $t("problem photo") }}</label>
             <div
               class="upload-box d-flex justify-content-center gap-5 align-items-center"
             >
@@ -310,13 +335,19 @@
                 <PuplicIconUploadIcon />
               </div>
               <div>
-                <input id="problem-photo" type="file" accept="image/*" />
+                <!-- <input id="problem-photo" type="file" accept="image/*" /> -->
+                <input
+                  id="problem-photo"
+                  type="file"
+                  accept="image/*"
+                  @change="handleImageUpload"
+                />
                 <label
                   for="problem-photo"
                   class="upload-trigger d-flex justify-content-center"
                 >
-                  <div class="">Upload from your device</div>
-                  <div class="file-name"></div>
+                  <div class="">{{ $t("Upload from your device") }}</div>
+                  <div class="file-name">{{ fileName }}</div>
                 </label>
               </div>
             </div>
@@ -346,10 +377,11 @@
               </div>
 
               <h3 class="label mb-2">
-                alyarmook takes a nap to service you better
+                {{ $t("alyarmook takes a nap to service you better") }}
               </h3>
               <p class="p-color-fs text-capitalize">
-                time works from {{ getAvailableTimeBranch?.start_time }} to
+                {{ $t("time works from") }}
+                {{ getAvailableTimeBranch?.start_time }} {{ $t("to") }}
                 {{ getAvailableTimeBranch?.end_time }}
               </p>
             </div>
@@ -365,7 +397,7 @@
               class="continue text-capitalize label"
               :disabled="!isBranchAvailable"
             >
-              continue
+              {{ $t("continue") }}
             </button>
           </form>
         </div>
@@ -377,12 +409,13 @@
 </template>
 
 <script setup>
+import { tr } from "date-fns/locale";
 import { useForm, useField } from "vee-validate";
 import * as yup from "yup";
 
-
-const { getAvailableTimes, getAvailableBrnchesTime, getBranches  , getProblems} = useApi();
-const { createWenchOrder ,updateWenchOrder } = useWenchServices();
+const { getAvailableTimes, getAvailableBrnchesTime, getBranches, getProblems } =
+  useApi();
+const { createWenchOrder, updateWenchOrder } = useWenchServices();
 
 const schema = yup.object({
   branchValue: yup.string().required("you should select a branch"),
@@ -390,6 +423,7 @@ const schema = yup.object({
   address: yup.string().required("address is required"),
 });
 
+const showModal = ref(false);
 const branchValue = useState("branchValue", () => "");
 const problem = useState("problem", () => "");
 const address = useState("address", () => "");
@@ -405,6 +439,7 @@ const typeDelivery = useState("typeDelivery", () => "standard");
 const mycars = ref([]);
 
 const reservationTime = useState("reservationTime", () => null);
+const problemPhoto = useState("problemPhoto", () => null);
 const rescar = await useApi().getMycars();
 mycars.value = rescar?.data || [];
 const getProblemss = ref([]);
@@ -629,6 +664,8 @@ const confirmLocation = (returnMode = false) => {
 const isBookingNow = useState("isBookingNow", () => null);
 const service_id = useState("service_id", () => []);
 const spare_part_id = useState("spare_part_id", () => []);
+const fileName = useState("fileName", () => "");
+
 const payload = computed(() => ({
   branch_id: branchValue.value || null,
   delivery_direction: typeDelivery.value || null,
@@ -645,10 +682,20 @@ const payload = computed(() => ({
   in_cart: true,
   service_id: service_id.value || null,
   spare_part_id: spare_part_id.value || null,
+  problems: problemPhoto.value || "",
 }));
 
 const isLoading = ref(false);
 const updateOrderId = useState("updateOrderId", () => null);
+
+function handleImageUpload(event) {
+  const file = event.target.files[0];
+  if (file) {
+    problemPhoto.value = file;
+    fileName.value = file.name;
+  }
+}
+const messageShowErr = ref("");
 
 async function createOrderWench() {
   try {
@@ -668,21 +715,28 @@ async function createOrderWench() {
       Object.entries(payload.value).filter(([_, v]) => v !== null && v !== "")
     );
 
-    const res = await createWenchOrder(
-      cleanedPayload,
-      "wench"
-    );
+    const res = await createWenchOrder(cleanedPayload, "wench");
+
     if (res && res.status) {
-      navigateTo(`/cart-comfortable-service/${res?.data?.id}`);
+      navigateTo(useLocalePath(`/cart-comfortable-service/${res?.data?.id}`));
       updateOrderId.value = res?.data?.id;
     } else {
-      console.log(
-        "Failed to create order: " + (res?.message || "Unknown error")
-      );
+      messageShowErr.value = res?.message || "حدث خطأ أثناء إنشاء الطلب";
     }
   } catch (error) {
-    console.error("Error creating order:", error);
-    alert("An error occurred while creating the order. Please try again.");
+    const data = error?.data || error?.response?.data;
+    if (data?.message) {
+      messageShowErr.value = data.message;
+      showModal.value = true;
+    } else if (data?.errors) {
+      const firstError =
+        Object.values(data.errors)?.[0]?.[0] || "حدث خطأ أثناء إنشاء الطلب";
+      messageShowErr.value = firstError;
+      showModal.value = true;
+    } else {
+      messageShowErr.value = error?.message || "حدث خطأ أثناء إنشاء الطلب";
+      showModal.value = true;
+    }
   } finally {
     isLoading.value = false;
   }
@@ -695,10 +749,7 @@ const onSubmit = async () => {
     address: address.value,
   });
   if (updateOrderId.value) {
-    let res = await updateWenchOrder(
-      updateOrderId.value,
-      payload.value
-    );
+    let res = await updateWenchOrder(updateOrderId.value, payload.value);
     if (res && res.status) {
       navigateTo(`/cart-comfortable-service/${res?.data?.id}`);
     }

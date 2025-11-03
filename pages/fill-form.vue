@@ -82,32 +82,6 @@
               </button>
             </div>
           </div>
-          <!-- <Modal v-if="showModal" @close="showModal = false">
-            <template #header>
-              <div class="d-flex justify-content-between align-items-center">
-                <h5 class="modal-title mb-0">{{ modalTitle }}</h5>
-                <i
-                  class="fa-solid fa-xmark cursor-pointer"
-                  @click="showModal = false"
-                ></i>
-              </div>
-            </template>
-            <template #body>
-              <div class="text-center py-4">
-                <i
-                  :class="[
-                    'fa-solid',
-                    'fs-1',
-                    'mb-3',
-                    isSuccess
-                      ? 'fa-circle-check text-success'
-                      : 'fa-circle-xmark text-danger',
-                  ]"
-                ></i>
-                <p class="fs-5 mb-0">{{ modalMessage }}</p>
-              </div>
-            </template>
-          </Modal> -->
           <div v-if="showModal" class="modal-backdrop fade show"></div>
         </div>
       </div>

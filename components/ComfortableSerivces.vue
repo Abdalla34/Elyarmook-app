@@ -84,7 +84,7 @@
             {{ $t("Dont show next time") }}
           </button>
           <button
-            @click="navigateTo('/comfortable-service')"
+            @click="navigateTo($localePath('/comfortable-service'))"
             class="btn-order w-100"
           >
             {{ $t("Order Now") }}

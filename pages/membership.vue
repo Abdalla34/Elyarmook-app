@@ -1,6 +1,9 @@
 <template>
   <div class="membership">
     <div class="container">
+      <div v-if="isSkele" class="row justify-content-center">
+        <skeletons-member-ships />
+      </div>
       <div class="row justify-content-center">
         <div class="col-lg-8 col-md-5 col-sm-12">
           <div
@@ -8,7 +11,7 @@
             v-for="value in allMemberShip"
             :key="value.id"
             style="cursor: pointer"
-             @click="navigateTo(localePath(`/membership-details/${value.id}`))"
+            @click="navigateTo(localePath(`/membership-details/${value.id}`))"
           >
             <img
               :src="value.image"
@@ -43,10 +46,44 @@
 </template>
 
 <script setup>
+import { tr } from "date-fns/locale";
+
+const isSkele = ref(true);
 const allMemberShip = ref([]);
-const response = await useApi().memberShips();
-allMemberShip.value = response?.data;
 const localePath = useLocalePath();
+const { memberShips } = useApi();
+const endTimeCach = 12 * 60 * 60 * 1000;
+async function cachMemebr() {
+  try {
+    const getLocal = localStorage.getItem("memberShips");
+    const currentDate = Date.now();
+    if (getLocal) {
+      const Parse = JSON.parse(getLocal);
+      if (currentDate - Parse.timestamp < endTimeCach) {
+        allMemberShip.value = Parse.memberShips;
+        isSkele.value = false;
+      }
+    }
+    const response = await memberShips();
+    allMemberShip.value = response?.data;
+    isSkele.value = false;
+    localStorage.setItem(
+      "memberShips",
+      JSON.stringify({
+        memberShips: allMemberShip.value,
+        timestamp: currentDate,
+      })
+    );
+  } catch (err) {
+    console.log(err);
+  } finally {
+    isSkele.value = false;
+  }
+}
+
+onMounted(async () => {
+  cachMemebr();
+});
 </script>
 
 <style scoped>

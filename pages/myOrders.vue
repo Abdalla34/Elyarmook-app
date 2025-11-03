@@ -4,7 +4,7 @@
       <div v-if="loading">
         <Skeletons-MyOrdersSkeleton />
       </div>
-      <!-- الحالة 2: المستخدم غير مسجل -->
+      <!-- status 2:   usere not register -->
       <div v-else-if="msgError">
         <NotRegister
           :IsNotRegitser="true"
@@ -87,10 +87,7 @@
         </div>
       </div>
       <!-- pagination -->
-      <div
-        v-if="token && orders.length >= 10"
-        class="d-flex justify-content-center gap-3 mt-4"
-      >
+      <div v-if="token" class="d-flex justify-content-center gap-3 mt-4">
         <button @click="handlePrev" class="btn" :disabled="currentpage <= 1">
           {{ $t("Prev") }}
         </button>
@@ -112,6 +109,107 @@
 </template>
 
 <script setup>
+import customParseFormat from "dayjs/plugin/customParseFormat";
+const dayjs = useDayjs();
+dayjs.extend(customParseFormat);
+
+const { getStatusorders, getMyOrders } = useApi();
+const localePath = useLocalePath();
+const token = useCookie("token");
+
+const msgError = ref(false);
+const loading = ref(true);
+const orders = ref([]);
+const pagination = ref({});
+const currentpage = ref(1);
+const statusorder = ref(null);
+
+//  time cach
+const cacheDuration = 12 * 60 * 60 * 1000;
+
+//   get data status
+const responseStatus = await getStatusorders();
+statusorder.value = responseStatus?.data;
+
+// to order details
+function toOrderStatus(orderId) {
+  navigateTo(localePath(`/orderdetails/${orderId.id}`));
+}
+
+// --- get data ---
+async function getOrders(page = 1) {
+  const cacheKey = `orders_page_${page}`;
+  const cachedData = localStorage.getItem(cacheKey);
+  const currentTime = Date.now();
+
+  // if cach data not ended
+  if (cachedData) {
+    const parsed = JSON.parse(cachedData);
+    if (
+      currentTime - parsed.timestamp < cacheDuration &&
+      parsed.orders?.length
+    ) {
+      orders.value = parsed.orders;
+      pagination.value = parsed.pagination;
+      loading.value = false;
+      msgError.value = false;
+    }
+  }
+
+  // new request
+  try {
+    // loading.value = true;
+    const res = await getMyOrders(page);
+
+    if (res?.status === false && res?.message === "Unauthenticated") {
+      msgError.value = true;
+      orders.value = [];
+    } else if (token.value) {
+      orders.value = res?.data?.items ?? [];
+      pagination.value = res?.data?.paginate ?? {};
+      msgError.value = false;
+
+      // ✅ نخزن البيانات في الكاش
+      localStorage.setItem(
+        cacheKey,
+        JSON.stringify({
+          timestamp: currentTime,
+          orders: orders.value,
+          pagination: pagination.value,
+        })
+      );
+    }
+  } catch (err) {
+    console.error("Error fetching orders:", err);
+    msgError.value = true;
+  } finally {
+    loading.value = false;
+  }
+}
+
+// --- control pages---
+async function handleNext() {
+  if (currentpage.value < (pagination.value?.total_pages || 1)) {
+    currentpage.value++;
+    await getOrders(currentpage.value);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+}
+
+async function handlePrev() {
+  if (currentpage.value > 1) {
+    currentpage.value--;
+    await getOrders(currentpage.value);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+}
+
+onMounted(() => {
+  getOrders(currentpage.value);
+});
+</script>
+
+<!-- <script setup>
 import customParseFormat from "dayjs/plugin/customParseFormat";
 const dayjs = useDayjs();
 dayjs.extend(customParseFormat);
@@ -242,7 +340,7 @@ onMounted(() => {
 // onMounted(() => {
 //   getOrders(currentpage.value);
 // });
-</script>
+</script> -->
 
 <style scoped>
 @import "@/assets/css/myorders.css";

@@ -27,6 +27,7 @@
   <div v-if="cancelOrder">
     <div class="popup">
       <div class="reasons">
+        <!-- metion reason -->
         <div class="d-flex justify-content-between">
           <div class="Mention-reason reason-title mb-5 mt-2">
             {{ $t("Mention reason") }}
@@ -51,9 +52,12 @@
       </div>
     </div>
   </div>
-
+  <!-- order details -->
   <div class="order-steps">
     <div class="container position-relative">
+      <!-- <div v-if="skeleton" class="row justify-content-center mt-3">
+        <Skeletons-OrderIdDetails />
+      </div> -->
       <div class="row justify-content-center mt-3">
         <div class="col-7 pb-4 mt-2 mb-4 background">
           <div v-if="orderSelected">
@@ -71,7 +75,7 @@
                 <div class="title">
                   <h1 class="h1 text-capitalize">{{ orderSelected.type }}</h1>
                   <p class="price">
-                    {{ Math.trunc(orderSelected.total_amount) }}
+                    {{ orderSelected.total_amount }}
                     <span class="span text-uppercase">{{ $t("sar") }}</span>
                   </p>
                 </div>
@@ -296,11 +300,14 @@
             </div>
             <!-- https://yarmok.co/invoice/1 -->
             <!-- items details -->
-            <div
+            <!-- <div
               v-if="
-                orderSelected?.services.length ||
-                orderSelected?.spare_parts.length ||
-                orderSelected?.offers.length
+                orderSelected &&
+                ((orderSelected.services &&
+                  orderSelected.services.length > 0) ||
+                  (orderSelected.spare_parts &&
+                    orderSelected.spare_parts.length > 0) ||
+                  (orderSelected.offers && orderSelected.offers.length > 0))
               "
               class="parent-items"
             >
@@ -333,7 +340,7 @@
                   </button>
                 </div>
               </div>
-            </div>
+            </div> -->
 
             <!-- modal items show -->
             <div
@@ -523,7 +530,7 @@
         </template>
       </div>
     </div>
-    <LoadingSpinner :is-loading-otp="isLoadingOtp" />
+    <LoadingSpinner :is-loading-otp="isLoading" />
   </div>
 </template>
 
@@ -531,6 +538,14 @@
 import dayjs from "#build/dayjs.imports.mjs";
 import { id } from "date-fns/locale";
 
+const {
+  getSingleOrder,
+  changeOrderStatus,
+  reversationTime,
+  getCancelReasons,
+  getAvailableTimes,
+} = useApi();
+// const skeleton = ref(true);
 const openInMaps = (branch) => {
   if (!branch?.lat || !branch?.lng) return;
   const url = `https://www.google.com/maps/search/?api=1&query=${branch.lat},${branch.lng}`;
@@ -548,13 +563,15 @@ const isLoading = ref(false);
 
 onMounted(async () => {
   try {
-    isLoadingOtp.value = true;
-    let res = await useApi().getSingleOrder(order_id);
+    isLoading.value = true;
+    let res = await getSingleOrder(order_id);
     orderSelected.value = res?.data ?? {};
+    skeleton.value = false;
   } catch (err) {
     console.log(err);
   } finally {
-    isLoadingOtp.value = false;
+    // skeleton.value = false;
+    isLoading.value = false;
   }
 });
 
@@ -572,7 +589,7 @@ const openInvoice = () => {
 const getReasons = ref([]);
 let cancelOrder = ref(false);
 try {
-  let resReasons = await useApi().getCancelReasons();
+  let resReasons = await getCancelReasons();
   getReasons.value = resReasons?.data || [];
 } catch (error) {
   console.error(error);
@@ -581,8 +598,8 @@ try {
 let sureCancel = ref(false);
 let changeStatusOrder = async (order_status, cancel_Reason_id) => {
   try {
-    isLoadingOtp.value = true;
-    const response = await useApi().changeOrderStatus(
+    isLoading.value = true;
+    const response = changeOrderStatus(
       order_id,
       order_status,
       cancel_Reason_id
@@ -599,28 +616,28 @@ let changeStatusOrder = async (order_status, cancel_Reason_id) => {
     sureCancel.value = false;
   } catch (error) {
     console.error("Error changing order status:", error);
-  } finally {
-    isLoadingOtp.value = false;
+  }finally{
+    isLoading.value = false;
   }
 };
 
 let availableDates = ref([]);
 let times = ref(false);
 let rescheduleOrder = async (branch_id) => {
-  let resTimeAvailable = await useApi().getAvailableTimes(branch_id);
+  let resTimeAvailable = await getAvailableTimes(branch_id);
   availableDates.value = resTimeAvailable?.available_times;
   times.value = true;
 };
 
 let messageTimeChange = ref("");
 let messageClass = ref("");
-let isLoadingOtp = ref(false);
+
 
 let rescheduleTime = async ({ date, time }) => {
-  isLoadingOtp.value = true;
+  isLoading.value = true;
   try {
     let dateTime = dayjs(`${date} ${time}`, "YYYY-MM-DD HH:mm");
-    let res = await useApi().reversationTime(
+    let res = await reversationTime(
       order_id,
       dateTime.format("YYYY-MM-DD HH:mm:ss")
     );
@@ -646,7 +663,7 @@ let rescheduleTime = async ({ date, time }) => {
       messageClass.value = "text-danger";
     }
   } finally {
-    isLoadingOtp.value = false;
+    isLoading.value = false;
     times.value = false;
   }
 };
