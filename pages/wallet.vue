@@ -4,7 +4,7 @@
     <div class="wallet-information wallet-margin">
       <div class="container">
         <div class="row">
-          <div class="col-8 col-padding">
+          <div class="col-md-8 col-padding">
             <div
               class="wllet-title d-flex align-items-center justify-content-between"
             >

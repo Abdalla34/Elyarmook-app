@@ -50,7 +50,7 @@
             ></div>
             <div class="text flex-grow-1">
               <h4 class="placeholder-glow mb-2">
-                <span class="placeholder col-8"></span>
+                <span class="placeholder col-md-8"></span>
               </h4>
               <p class="placeholder-glow mb-0">
                 <span class="placeholder col-4"></span>

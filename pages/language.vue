@@ -4,7 +4,7 @@
     <div class="language position-relative">
       <div class="container">
         <div class="row">
-          <div class="col-8 col-padding position-relative">
+          <div class="col-md-8 col-padding position-relative">
             <GoPageArrow title="language" :showIcon="false" />
 
             <!-- lang Arabic -->

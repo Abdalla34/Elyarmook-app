@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="col-8 col-padding">
+    <div class="col-md-8 col-padding">
       <!-- title -->
       <div class="placeholder-wave mb-4">
         <span class="placeholder col-3" style="height:25px;"></span>

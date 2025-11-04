@@ -543,9 +543,9 @@ textarea {
 .continue {
   width: 100%;
   border-radius: 36px;
-  padding: 16px 0px;
   border: 1px solid #d4d4d4;
   color: #040505;
+  margin-top: 30px;
 }
 @media (max-width: 576px) {
   .additems,

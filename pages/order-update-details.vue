@@ -10,7 +10,7 @@
           message="your orders is Empty you must create account"
         />
 
-        <div class="col-8 col-padding">
+        <div class="col-md-8 col-padding">
           <h1 data-v-8bcd5751 class="text-capitalize text title-pages">
             {{ $t("Order Details") }}
           </h1>

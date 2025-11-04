@@ -1,6 +1,6 @@
 <template>
   <div class="row justify-content-center">
-    <div class="col-8 col-padding">
+    <div class="col-md-8 col-padding">
       <!-- title -->
       <div class="current-point d-flex align-items-center justify-content-between mb-3">
         <div class="point-num text-center w-50">
@@ -30,7 +30,7 @@
       <div v-for="n in 3" :key="n" class="coupon-box p-2 mb-3 border rounded">
         <div class="d-flex justify-content-between align-items-start mb-2 placeholder-wave">
           <div class="w-75">
-            <h6><span class="placeholder col-8"></span></h6>
+            <h6><span class="placeholder col-md-8"></span></h6>
             <p><span class="placeholder col-10"></span></p>
           </div>
         </div>

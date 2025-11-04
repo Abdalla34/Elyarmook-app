@@ -2,7 +2,7 @@
   <div class="order-details">
     <div class="container">
       <div class="row">
-        <div class="col-8 col-padding">
+        <div class="col-md-8 col-padding">
           <div v-if="showModal" class="modal-overlay">
             <div class="modal-box">
               <p class="fs-5 mb-3">{{ messageShowErr }}</p>

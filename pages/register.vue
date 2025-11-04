@@ -2,7 +2,7 @@
   <div class="personal-information">
     <div class="container">
       <div class="row">
-        <div class="col-8 col-padding">
+        <div class="col-md-8 col-padding">
           <div
             class="profiel-img d-flex justify-content-between align-items-center margin-bottom-24px"
           >
@@ -20,7 +20,7 @@
           </div>
         </div>
 
-        <div class="col-8 col-padding margin-bottom-24px">
+        <div class="col-md-8 col-padding margin-bottom-24px">
           <form @submit.prevent="onSubmit">
             <div class="inputs">
               <div class="row-inputs">

@@ -2,7 +2,7 @@
   <div class="car-details">
     <div class="container">
       <div class="row">
-        <div class="col-8 col-padding">
+        <div class="col-md-8 col-padding">
           <div class="parent">
             <!-- car-details -->
             <div class="car-model rounded mb-5 border">

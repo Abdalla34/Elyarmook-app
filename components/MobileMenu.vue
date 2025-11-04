@@ -83,14 +83,14 @@
           </li>
           <li class="menu-item">
             <NuxtLink
-              :to="$localePath('/spareParts')"
+              :to="$localePath('/spare-parts')"
               exact-active-class="active"
               class="menu-link"
               @click="toggleMenu"
             >
               <PuplicIconSparePart class="menu-icon-svg" />
               <span class="menu-text text-uppercase">{{
-                $t("spare Parts")
+                $t("spare-parts")
               }}</span>
             </NuxtLink>
           </li>

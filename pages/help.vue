@@ -5,7 +5,7 @@
       <div class="help margin-280px">
         <div class="container">
           <div class="row">
-            <div class="col-8 col-padding">
+            <div class="col-md-8  col-padding">
               <h1 class="margin-bottom-24px text-capitalize title-pages">
                 {{ $t("Help") }}
               </h1>

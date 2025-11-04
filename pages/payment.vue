@@ -2,7 +2,7 @@
   <div class="order-details">
     <div class="container">
       <div class="row">
-        <div class="col-8 col-padding">
+        <div class="col-md-8 col-padding">
           <h1
             v-if="!checkoutId && !cachLayout"
             data-v-8bcd5751

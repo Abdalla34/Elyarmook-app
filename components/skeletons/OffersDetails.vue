@@ -44,7 +44,7 @@
     <div class="d-flex justify-content-between flex-wrap mb-4">
       <div class="col-6">
         <div
-          class="placeholder-wave bg-secondary bg-opacity-25 rounded col-8 mb-2"
+          class="placeholder-wave bg-secondary bg-opacity-25 rounded col-md-8 mb-2"
           style="height: 16px"
         ></div>
         <div
@@ -73,7 +73,7 @@
             style="height: 14px"
           ></div>
           <div
-            class="placeholder-wave bg-secondary bg-opacity-25 rounded col-8"
+            class="placeholder-wave bg-secondary bg-opacity-25 rounded col-md-8"
             style="height: 14px"
           ></div>
         </div>
@@ -97,7 +97,7 @@
           style="height: 16px"
         ></div>
         <div
-          class="placeholder-wave bg-secondary bg-opacity-25 rounded col-8"
+          class="placeholder-wave bg-secondary bg-opacity-25 rounded col-md-8"
           style="height: 16px"
         ></div>
       </div>

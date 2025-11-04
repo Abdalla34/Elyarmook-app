@@ -46,6 +46,7 @@ defineProps({
   .padding-button {
     padding: 12px 16px;
     font-size: 14px;
+    margin-top: 30px;
   }
 
   .button-text {

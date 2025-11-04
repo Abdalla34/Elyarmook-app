@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="col-8 col-padding">
+    <div class="col-md-8 col-padding">
       <!-- Title -->
       <h1 class="placeholder-wave mb-4">
         <span class="placeholder-wave col-6"></span>
@@ -75,7 +75,7 @@
       <!-- Upload -->
       <div class="card mb-4 p-3 placeholder-wave">
         <span class="placeholder-wave col-6 mb-3"></span>
-        <span class="placeholder-wave col-8" style="height: 60px"></span>
+        <span class="placeholder-wave col-md-8" style="height: 60px"></span>
       </div>
 
       <!-- Continue Button -->

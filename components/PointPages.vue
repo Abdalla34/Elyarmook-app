@@ -1,6 +1,6 @@
 <template>
   <div class="row justify-content-center">
-    <div class="col-8 col-padding">
+    <div class="col-md-8 col-padding">
       <div
         class="current-point d-flex align-items-center justify-content-between"
       >

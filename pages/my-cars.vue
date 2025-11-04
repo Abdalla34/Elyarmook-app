@@ -11,7 +11,7 @@
           <SkeletonsCarSkeleton />
         </div>
         <div v-else class="row">
-          <div class="col-8 col-padding">
+          <div class="col-md-8 col-padding">
             <GoPageArrow
               title="my cars"
               :showIcon="false"

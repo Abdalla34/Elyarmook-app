@@ -41,7 +41,7 @@
               style="height: 16px; display: block"
             ></span>
             <span
-              class="placeholder-wave bg-secondary bg-opacity-25 rounded col-8"
+              class="placeholder-wave bg-secondary bg-opacity-25 rounded col-md-8"
               style="height: 18px; display: block"
             ></span>
           </div>

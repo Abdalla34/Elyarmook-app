@@ -4,7 +4,7 @@
     <div class="branches-information">
       <div class="container">
         <div class="row">
-          <div class="col-8 col-padding">
+          <div class="col-md-8 col-padding">
             <GoPageArrow
               title="help > our branches"
               :showIcon="true"

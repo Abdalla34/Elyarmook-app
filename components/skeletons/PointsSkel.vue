@@ -1,5 +1,5 @@
 <template>
-  <div class="col-8 col-padding">
+  <div class="col-md-8 col-padding">
     <div class="placeholder-wave">
       <!-- العنوان -->
       <div class="placeholder col-6 mb-3"></div>
@@ -10,7 +10,7 @@
           <div class="d-flex justify-content-between align-items-center">
             <div>
               <span class="placeholder col-4 mb-2"></span>
-              <span class="placeholder col-8 mb-1"></span>
+              <span class="placeholder col-md-8 mb-1"></span>
               <span class="placeholder col-6"></span>
             </div>
             <div class="placeholder col-2"></div>
