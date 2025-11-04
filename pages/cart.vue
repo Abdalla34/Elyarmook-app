@@ -1,7 +1,10 @@
 <template>
   <div class="cart-parent mt-5">
     <div class="container">
-      <div class="row justify-content-center">
+      <div class="row justify-content-center" v-if="isSkeleton">
+        <SkeletonsCartComfortableService />
+      </div>
+      <div v-else class="row justify-content-center">
         <NotRegister
           :IsNotRegitser="notRegister"
           :message="$t('cart is Empty you must create account')"
@@ -328,7 +331,7 @@
           </div>
         </div>
       </div>
-      <LoadingSpinner :is-loading-otp="isLoadingOtp" />
+      <!-- <LoadingSpinner :is-loading-otp="isLoadingOtp" /> -->
     </div>
   </div>
 </template>
@@ -347,22 +350,27 @@ let token = useCookie("token").value;
 let offers = ref([]);
 let spareParts = ref([]);
 const cartCount = useState("cartCount", () => 0);
+const isSkeleton = ref(true);
 
-try {
-  if (!token) {
-    notRegister.value = true;
+onMounted(async () => {
+  try {
+    if (!token) {
+      notRegister.value = true;
+    }
+    let res = await getMyCart();
+    cartRes.value = res?.data;
+    services.value = cartRes.value?.services || [];
+    offers.value = cartRes.value?.offers || [];
+    spareParts.value = cartRes.value?.spare_parts || [];
+    order_id.value = res?.data?.id;
+  } catch (err) {
+    if (err?.response.status === 401) {
+      console.log(err);
+    }
+  } finally {
+    isSkeleton.value = false;
   }
-  let res = await getMyCart();
-  cartRes.value = res?.data;
-  services.value = cartRes.value?.services || [];
-  offers.value = cartRes.value?.offers || [];
-  spareParts.value = cartRes.value?.spare_parts || [];
-  order_id.value = res?.data?.id;
-} catch (err) {
-  if (err?.response.status === 401) {
-    console.log(err);
-  }
-}
+});
 
 async function deletedOrder(id, type, quantity) {
   if (type === "service") {

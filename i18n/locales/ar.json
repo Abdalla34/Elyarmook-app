@@ -8,6 +8,7 @@
   "WhatsApp": "واتساب",
   "we accept": "نقبل",
   "With Tabby": "مع تابي",
+  "wench details": "تفاصيل الونش",
   "We're sorry, but your order has been canceled.": "نأسف، لقد تم إلغاء طلبك.",
 
   "Home": "الرئيسية",
@@ -63,6 +64,7 @@
   "NOTES: Minimum points = 1000 points": "ملاحظة: الحد الأدنى للنقاط = 1000 نقطة",
   "NOTES: please you shouled this number used in yarmook app": "ملاحظة: يجب استخدام هذا الرقم في تطبيق اليرموك",
   "Note: Choosing express shipping will increase the shipping price.": "ملاحظه عند اختيار مستعجل سوف يرتفع سعر النقل الي 20 %",
+  "not found vouchers yet . . !": "لم يتم العثور على القسائم بعد . . !",
   "normal": "عادي",
 
   "delete": "حذف",
@@ -181,7 +183,9 @@
   "change": "تغيير",
   "Confirm Location": "تأكيد الموقع",
   "choosing time details": "اختيار تفاصيل الوقت",
-   "Close": "اغلاق",
+  "Close": "اغلاق",
+  "created_at": "تم إنشاؤها في",
+  "continue profile" :"متابعة حسابك",
 
   "Next": "التالي",
   "Prev": "السابق",
@@ -223,6 +227,7 @@
 
   "Google Play": "جوجل بلاي",
   "get this actully i have one": "لدي واحدة بالفعل",
+  "get this membership": "أحصل علي العضويه",
 
   "your orders is empty": "طلباتك فارغة",
   "your cart is empty": "سلتك فارغة",

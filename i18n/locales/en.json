@@ -8,6 +8,7 @@
   "WhatsApp": "WhatsApp",
   "we accept": "we accept",
   "With Tabby": "With Tabby",
+  "wench details": "wench details",
   "We're sorry, but your order has been canceled.": "We're sorry, but your order has been canceled.",
 
   "Home": "Home",
@@ -64,6 +65,7 @@
   "NOTES: please you shouled this number used in yarmook app": "NOTES: please you shouled this number used in yarmook app",
   "normal": "normal",
   "Note: Choosing express shipping will increase the shipping price.": "Note: Choosing express shipping will increase the shipping price.",
+  "not found vouchers yet . . !": "not found vouchers yet . . !",
 
   "delete": "delete",
   "deposit money": "deposit money",
@@ -175,7 +177,7 @@
   "cost Details": "cost Details",
   "cach on delivery": "cach on delivery",
   "chose payment method": "chose payment method",
-  "continue profile": "continue profile",
+  "continue profile": "continue your profile",
   "create account": "create account",
   "Continue with phone": "Continue with phone",
   "code not true": "code not true",
@@ -185,6 +187,7 @@
   "Confirm Location": "Confirm Location",
   "choosing time details": "choosing time details",
   "Close": "Close",
+  "created_at": "created_at",
 
   "Next": "Next",
   "Prev": "Prev",
@@ -226,6 +229,7 @@
 
   "Google Play": "Google Play",
   "get this actully i have one": " get this actully i have one",
+  "get this membership": "get this membership",
 
   "your orders is empty": "your orders is empty",
   "your cart is empty": "your cart is empty",

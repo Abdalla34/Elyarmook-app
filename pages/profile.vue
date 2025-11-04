@@ -7,6 +7,7 @@
           :IsNotRegitser="!user"
           :message="$t('not Information you must create account')"
         />
+
         <div class="row">
           <div class="col-8 col-padding">
             <div
@@ -209,18 +210,29 @@
             class="button-delete border-radius-36px width-height d-flex justify-content-center margin-bottom-90px"
           >
             <button
-              @click="deleteAccount(user)"
+              @click="deleteAccount"
               class="text-capitalize color-but d-flex align-items-center gap-3"
+              :disabled="buttonLoad"
             >
-              <Trash />
-              <span>{{ $t("delete my account") }}</span>
+              <template v-if="buttonLoad">
+                <span>{{ $t("loading...") }}</span>
+                <div
+                  class="spinner-border spinner-border-sm text-light"
+                  role="status"
+                ></div>
+              </template>
+
+              <template v-else>
+                <Trash />
+                <span>{{ $t("delete my account") }}</span>
+              </template>
             </button>
           </div>
         </div>
       </div>
       <div v-if="showDeactivateModal" class="modal-overlay">
         <div class="modal-content">
-          <h3 class="mb-4">{{$t('Why are you leaving us')}}?</h3>
+          <h3 class="mb-4">{{ $t("Why are you leaving us") }}</h3>
           <form @submit.prevent="confirmDelete">
             <div class="deactivate-reasons">
               <div
@@ -258,11 +270,11 @@
         </div>
       </div>
     </div>
-    <LoadingSpinner :is-loading-otp="isLoading" />
   </div>
 </template>
 
 <script setup>
+// const skeleton = ref(true);
 const {
   logout,
   resetToken,
@@ -275,6 +287,8 @@ const {
 } = useApi();
 const localePaht = useLocalePath();
 
+const resDeactivated = ref(null);
+
 const { initCartFromLocalStorage } = useAddToCart();
 const isLoading = ref(false);
 const test = ref(true);
@@ -284,11 +298,14 @@ let token = useCookie("token", { maxAge: 365 * 24 * 60 * 60 });
 const cookie = useCookie("user", { maxAge: 365 * 24 * 60 * 60 });
 let user = ref(cookie.value);
 
+// onMounted(async () => {
+
+//   skeleton.value = false;
+// });
+
 let editDone = ref(false);
 let profileImg = ref(false);
-// function ChangeProfile() {
-//   profileImg.value = !profileImg.value;
-// }
+
 const cartCount = useState("cartCount", () => 0);
 const showmodalsignOut = ref(false);
 let logOut = async () => {
@@ -359,13 +376,21 @@ let editProfile = async () => {
   }
 };
 
-const resDeactivated = await getDeactivatedReasons();
-
 const showDeactivateModal = ref(false);
 const selectedReason = ref(null);
 
+const buttonLoad = ref(false);
 const deleteAccount = async () => {
-  showDeactivateModal.value = true;
+  try {
+    buttonLoad.value = true;
+    const res = await getDeactivatedReasons();
+    resDeactivated.value = res;
+    showDeactivateModal.value = true;
+  } catch (err) {
+    console.error(err);
+  } finally {
+    buttonLoad.value = false;
+  }
 };
 
 const confirmDelete = async () => {

@@ -82,20 +82,20 @@
             <div
               @click="
                 navigateTo({
-                  path: '/payment',
+                  path: $localePath('/payment'),
                   query: { membership: idMember },
                 })
               "
               class="btn-get"
               v-if="!memmberDetails.has_active_subscription"
             >
-              <ButtonCard text-button="get this membership" />
+              <ButtonCard :text-button="$t('get this membership')" />
             </div>
           </div>
         </div>
       </div>
     </div>
-    <LoadingSpinner :is-loading-otp="isloading" />
+    <!-- <LoadingSpinner :is-loading-otp="isloading" /> -->
   </div>
 </template>
 

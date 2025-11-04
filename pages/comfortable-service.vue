@@ -32,7 +32,7 @@
 
               {{ defaultCar.brand?.title }} - {{ defaultCar.car_type?.title }}
             </div>
-            <div class="btn-change" @click="navigateTo('/my-cars')">
+            <div class="btn-change" @click="navigateTo(LocalePath('/my-cars'))">
               <button type="button" class="btn btn-secondary">
                 {{ $t("change") }}
               </button>
@@ -441,7 +441,7 @@ import * as yup from "yup";
 const { getAvailableTimes, getAvailableBrnchesTime, getBranches, getProblems } =
   useApi();
 const { createWenchOrder, updateWenchOrder } = useWenchServices();
-// const localePath = useLocalePath();
+const LocalePath = useLocalePath();
 
 const schema = yup.object({
   branchValue: yup.string().required("you should select a branch"),
@@ -795,7 +795,8 @@ const onSubmit = async () => {
   if (updateOrderId.value) {
     let res = await updateWenchOrder(updateOrderId.value, payload.value);
     if (res && res.status) {
-      navigateTo(`/cart-comfortable-service/${res?.data?.id}`);
+      // navigateTo(`/cart-comfortable-service/${res?.data?.id}`);
+      navigateTo(LocalePath(`/cart-comfortable-service/${res?.data?.id}`));
     }
   } else {
     await createOrderWench();

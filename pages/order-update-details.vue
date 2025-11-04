@@ -1,6 +1,9 @@
 <template>
   <div class="order-details">
     <div class="container">
+      <!-- <div class="row justify-content-center" v-if="isSkeleton">
+       
+      </div> -->
       <div class="row">
         <NotRegister
           :IsNotRegitser="msgError"
@@ -153,6 +156,7 @@ const carValue = useState("carValue", () => {});
 const branchValue = useState("branchValue", () => "");
 const dateValue = useState("dateValue", () => {});
 const note = useState("note", () => "");
+const isLoadingOtp = ref(true);
 
 const dayjs = useDayjs();
 const user = useCookie("user").value;
@@ -161,12 +165,8 @@ const idRoute = route.query.id;
 const msgError = ref(false);
 
 const mycars = ref([]);
-const res = await getMycars();
-mycars.value = res?.data || [];
 
 const branches = ref([]);
-const resBranshes = await getBranches();
-branches.value = resBranshes?.data?.items;
 
 const availableDates = ref([]);
 watch(branchValue, async (newId) => {
@@ -176,7 +176,6 @@ watch(branchValue, async (newId) => {
   }
 });
 
-const isLoadingOtp = ref(false);
 const router = useRouter();
 
 const fileName = useState("fileName", () => "");
@@ -225,6 +224,11 @@ const onSubmit = async () => {
 };
 
 onMounted(async () => {
+  const res = await getMycars();
+  mycars.value = res?.data || [];
+  const resBranshes = await getBranches();
+  branches.value = resBranshes?.data?.items;
+  isLoadingOtp.value = false;
   if (branchValue.value) {
     let resDate = await getAvailableTimes(branchValue.value);
     availableDates.value = resDate?.available_times;

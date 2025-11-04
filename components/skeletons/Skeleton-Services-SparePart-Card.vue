@@ -10,25 +10,25 @@
       >
         <div class="service-icon-wrapper mb-3 d-flex justify-content-center">
           <div
-            class="rounded-circle bg-secondary bg-opacity-25 placeholder"
+            class="rounded-circle bg-secondary bg-opacity-25 placeholder-wave"
             style="width: 80px; height: 80px"
           ></div>
         </div>
 
         <div class="service-content d-flex flex-column align-items-center">
           <span
-            class="placeholder col-6 mb-2 rounded bg-secondary bg-opacity-25"
+            class="placeholder-wave col-6 mb-2 rounded bg-secondary bg-opacity-25"
             style="height: 18px"
           ></span>
           <span
-            class="placeholder col-4 mb-3 rounded bg-secondary bg-opacity-25"
+            class="placeholder-wave col-4 mb-3 rounded bg-secondary bg-opacity-25"
             style="height: 14px"
           ></span>
         </div>
 
         <div class="div-button mt-3 d-flex justify-content-center">
           <span
-            class="placeholder col-6 rounded-pill bg-secondary bg-opacity-25"
+            class="placeholder-wave col-6 rounded-pill bg-secondary bg-opacity-25"
             style="height: 34px"
           ></span>
         </div>

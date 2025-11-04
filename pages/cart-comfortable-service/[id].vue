@@ -1,10 +1,13 @@
 <template>
   <div class="cart-parent mt-5">
     <div class="container">
+      <!-- <div class="row justify-content-center" v-if="skeleton">
+        <SkeletonsCartComfortableService />
+      </div> -->
       <div class="row justify-content-center">
         <!-- left section -->
         <div class="col-12 col-md-12 col-lg-6 col-md-6">
-          <h4 class="mb-4 fw-bold">Order Details</h4>
+          <h4 class="mb-4 fw-bold">{{ $t("Order Details") }}</h4>
 
           <div
             class="cart d-flex justify-content-between align-items-center border-radius-36px mb-3"
@@ -28,12 +31,14 @@
         <div class="col-12 col-md-12 col-lg-4 col-test">
           <div class="h-100">
             <div class="">
-              <h6 class="fw-bold">Wench Details</h6>
+              <h6 class="fw-bold text-capitalize">{{ $t("wench details") }}</h6>
               <div class="box-design">
                 <div
                   class="total-order d-flex justify-content-between align-items-center"
                 >
-                  <h4 class="label">Type Delivery</h4>
+                  <h4 class="label text-capitalize">
+                    {{ $t("type delivery") }}
+                  </h4>
                   <p class="text-capitalize">
                     {{ wenchOrder?.delivery_direction }}
                   </p>
@@ -42,7 +47,7 @@
                 <div
                   class="final-amount d-flex justify-content-between align-items-center"
                 >
-                  <h4 class="label">branch</h4>
+                  <h4 class="label">{{ $t("branch") }}</h4>
                   <p class="text-capitalize">
                     {{ wenchOrder?.branch?.title }}
                   </p>
@@ -51,7 +56,7 @@
                 <div
                   class="final-amount d-flex justify-content-between align-items-center"
                 >
-                  <h4 class="label">created_at</h4>
+                  <h4 class="label">{{ $t("created_at") }}</h4>
                   <p class="text-capitalize">
                     {{ wenchOrder?.created_at }}
                   </p>
@@ -61,15 +66,15 @@
               <div
                 class="total-amount d-flex align-items-center justify-content-between"
               >
-                <h1 class="amount text-capitalize">total amount</h1>
+                <h1 class="amount text-capitalize">{{ $t("total amount") }}</h1>
                 <p>{{ wenchOrder?.total_amount }}</p>
               </div>
 
               <div
                 class="buttion-confirm"
-                @click="navigateTo(`/payment?id=${order_id}`)"
+                @click="navigateTo($localePath(`/payment?id=${order_id}`))"
               >
-                <ButtonCard textButton="continue" />
+                <ButtonCard :textButton="$t('continue')" />
               </div>
             </div>
           </div>
@@ -85,7 +90,7 @@ const route = useRoute();
 const order_id = route.params.id;
 const wenchOrder = ref(null);
 const isLoading = ref(true);
-
+const skeleton = ref(true);
 onMounted(async () => {
   try {
     const response = await useWenchServices().getWenchInCart();

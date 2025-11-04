@@ -1,13 +1,16 @@
 <template>
   <div>
-    <ProfileDetails v-if="!IsNotRegitser" />
+    <ProfileDetails v-if="!IsNotRegister" />
     <div class="mycars-information">
       <div class="container">
         <NotRegister
-          :IsNotRegitser="IsNotRegitser"
+          :IsNotRegitser="IsNotRegister"
           :message="$t('your cars Empty you must create account')"
         />
-        <div class="row">
+        <div class="row" v-if="skeleton">
+          <SkeletonsCarSkeleton />
+        </div>
+        <div v-else class="row">
           <div class="col-8 col-padding">
             <GoPageArrow
               title="my cars"
@@ -126,22 +129,49 @@
 </template>
 
 <script setup>
-let token = useCookie("token");
+const { getMycars } = useApi();
+const skeleton = ref(true);
+const token = useCookie("token");
 let myCars = ref([]);
-let IsNotRegitser = ref(false);
+let IsNotRegister = ref(false);
+const timeEndCach = 12 * 60 * 60 * 1000;
 
-if (!token.value) {
-  IsNotRegitser.value = true;
-} else {
-  let res = await useApi().getMycars();
-  myCars.value = res?.data;
-  if (res && res.status === false && res.message === "unauthenticated") {
-    IsNotRegitser.value = true;
+async function loadMyCars() {
+  const currentTime = Date.now();
+  if (!token.value) {
+    IsNotRegister.value = true;
   }
+
+  const cacheData = localStorage.getItem("myCarsCache");
+  if (cacheData) {
+    const parsedData = JSON.parse(cacheData);
+    if (currentTime - parsedData.timestamp < timeEndCach) {
+      myCars.value = parsedData.cars;
+      skeleton.value = false;
+    }
+  }
+
+  const res = await getMycars();
+  myCars.value = res?.data || [];
+  skeleton.value = false;
+
+  if (res && res.status === false && res.message === "unauthenticated") {
+    IsNotRegister.value = true;
+  }
+
+  localStorage.setItem(
+    "myCarsCache",
+    JSON.stringify({
+      cars: myCars.value,
+      timestamp: currentTime,
+    })
+  );
 }
+onMounted(() => {
+  loadMyCars();
+});
 
 let activeCarId = ref(null);
-
 function toggleEdit(carId) {
   activeCarId.value = activeCarId.value === carId ? null : carId;
 }
@@ -185,19 +215,6 @@ const localePath = useLocalePath();
 const getCarDetails = async (id) => {
   router.push(localePath(`/car-details/${id}`));
 };
-// function handleClickOutside(e) {
-//   if (!e.target.closest(".car-box")) {
-//     activeCarId.value = null;
-//   }
-// }
-
-// onMounted(() => {
-//   document.addEventListener("click", handleClickOutside);
-// });
-
-// onBeforeUnmount(() => {
-//   document.removeEventListener("click", handleClickOutside);
-// });
 </script>
 
 <style scoped>

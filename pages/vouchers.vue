@@ -2,7 +2,10 @@
   <ProfileDetails />
   <div class="point">
     <div class="container">
-      <div class="row justify-content-center">
+      <div v-if="skeleton" class="row justify-content-center">
+        <SkeletonsVouchersskeleton />
+      </div>
+      <div v-else class="row justify-content-center">
         <div class="col-8 col-padding">
           <!-- title -->
           <div
@@ -66,7 +69,9 @@
               <div
                 class="d-flex justify-content-between align-items-center mt-3"
               >
-                <button class="coupon-code">{{$t("copy")}} "{{ voucher.code }}"</button>
+                <button class="coupon-code">
+                  {{ $t("copy") }} "{{ voucher.code }}"
+                </button>
                 <div>
                   <span class="price-currency">{{ $t("expired at") }}</span>
                   <p class="text-muted">{{ voucher.expires_at }}</p>
@@ -161,17 +166,38 @@
 </template>
 
 <script setup>
+const { getAvailableVouchers, getUsedVouhcers, getExVouhcers } = useApi();
+const skeleton = ref(true);
 const availableVouchers = ref([]);
-const resAvailabel = await useApi().getAvailableVouchers();
-availableVouchers.value = resAvailabel?.data || [];
+const timeEndCach = 12 * 60 * 60 * 1000; // 12 ساعة
+
+async function loadAvailableVouchers() {
+  const cacheData = localStorage.getItem("availableVouchersCache");
+  const currentTime = Date.now();
+
+  if (cacheData) {
+    const parsedData = JSON.parse(cacheData);
+    if (currentTime - parsedData.timestamp < timeEndCach) {
+      availableVouchers.value = parsedData.vouchers;
+      skeleton.value = false;
+    }
+  }
+
+  const res = await getAvailableVouchers();
+  availableVouchers.value = res?.data || [];
+  skeleton.value = false;
+
+  localStorage.setItem(
+    "availableVouchersCache",
+    JSON.stringify({
+      vouchers: availableVouchers.value,
+      timestamp: currentTime,
+    })
+  );
+}
 
 const usedVouchers = ref([]);
-const resUsedVouchers = await useApi().getUsedVouhcers();
-usedVouchers.value = resUsedVouchers?.data || [];
-
 const ExVouchers = ref([]);
-const resExVouchers = await useApi().getExVouhcers();
-ExVouchers.value = resExVouchers?.data || [];
 
 const step = ref(0);
 const title = computed(() => {
@@ -211,6 +237,16 @@ function emptyMsg() {
     messageEmpty.value = false;
   }
 }
+
+onMounted(async () => {
+  loadAvailableVouchers();
+
+  const resUsedVouchers = await getUsedVouhcers();
+  usedVouchers.value = resUsedVouchers?.data || [];
+
+  const resExVouchers = await getExVouhcers();
+  ExVouchers.value = resExVouchers?.data || [];
+});
 </script>
 
 <style scoped>

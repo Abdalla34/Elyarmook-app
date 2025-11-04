@@ -2,7 +2,10 @@
   <ProfileDetails />
   <div class="point">
     <div class="container">
-      <div class="row justify-content-center">
+      <div v-if="skeleton" class="row justify-content-center">
+        <SkeletonsPointsSkel />
+      </div>
+      <div v-else class="row justify-content-center">
         <div class="col-8 col-padding">
           <div
             class="current-point d-flex align-items-center justify-content-between"
@@ -356,7 +359,11 @@
                 v-model="pointNum"
               />
               <p class="p-color-fs fs text-capitalize mt-2">
-                {{$t("NOTES: please you shouled this number used in yarmook app")}}
+                {{
+                  $t(
+                    "NOTES: please you shouled this number used in yarmook app"
+                  )
+                }}
               </p>
             </div>
           </div>
@@ -442,17 +449,46 @@ const handleTransferClick = () => {
   }
 };
 
-let Points = ref([]);
-let res = await useApi().getPoints();
-Points.value = res?.data;
+const Points = ref([]);
+const skeleton = ref(true);
+const timeEndCach = 12 * 60 * 60 * 1000;
+
+async function loadPoints() {
+  const currentTime = Date.now();
+  const cacheData = localStorage.getItem("pointsCache");
+
+  if (cacheData) {
+    const parsedData = JSON.parse(cacheData);
+    if (currentTime - parsedData.timestamp < timeEndCach) {
+      Points.value = parsedData.points;
+      skeleton.value = false;
+    }
+  }
+
+  const res = await useApi().getPoints();
+  Points.value = res?.data || [];
+  skeleton.value = false;
+
+  localStorage.setItem(
+    "pointsCache",
+    JSON.stringify({
+      points: Points.value,
+      timestamp: currentTime,
+    })
+  );
+}
+
+onMounted(() => {
+  loadPoints();
+});
 
 const current_points_int = ref(0);
 const example_rate = ref({ points: 1000, amount: 10 });
 const pointNum = ref(0);
 
-current_points_int.value = res.data.current_points_int;
-pointNum.value = res.data.current_points_int;
-example_rate.value = res.data.example_rate;
+current_points_int.value = Points.current_points_int;
+pointNum.value = Points.current_points_int;
+example_rate.value = Points.example_rate;
 
 const calculatedSar = computed(() => {
   if (!pointNum.value || pointNum.value <= 0) return 0;
