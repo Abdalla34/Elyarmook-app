@@ -55,11 +55,12 @@
   <!-- order details -->
   <div class="order-steps">
     <div class="container position-relative">
-      <div v-if="skeleton">
+      <d
+      iv v-if="skeleton">
         <div class="row justify-content-center mt-3">
           <SkeletonsOrderIdDetails />
         </div>
-      </div>
+      </d>
       <div v-else class="row justify-content-center mt-3">
         <div class="col-7 pb-4 mt-2 mb-4 background">
           <div v-if="orderSelected">
@@ -581,7 +582,7 @@ let sureCancel = ref(false);
 let changeStatusOrder = async (order_status, cancel_Reason_id) => {
   try {
     isLoading.value = true;
-    const response = changeOrderStatus(
+    const response = await changeOrderStatus(
       order_id,
       order_status,
       cancel_Reason_id
@@ -590,7 +591,7 @@ let changeStatusOrder = async (order_status, cancel_Reason_id) => {
       orderSelected.value = {
         ...orderSelected.value,
         status: order_status,
-        status_value: "Canceled",
+        status_value: $t("Canceled"),
         can_cancel: false,
       };
     }
