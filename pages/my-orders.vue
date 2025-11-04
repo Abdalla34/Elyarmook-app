@@ -64,18 +64,16 @@
                 <div class="time-order">
                   <p v-if="order.created_at" class="paragarph text-capitalize">
                     {{
-                      dayjs(
-                        order.created_at.replace("ص", "AM").replace("م", "PM"),
-                        "MMM D, YYYY hh:mm A"
-                      ).format("ddd, MMM D ,YYYY")
+                      dayjs(convertArabicDate(order.created_at)).format(
+                        "ddd, MMM D ,YYYY"
+                      )
                     }}
                   </p>
                   <p v-if="order.created_at" class="paragarph text-capitalize">
                     {{
-                      dayjs(
-                        order.created_at.replace("ص", "AM").replace("م", "PM"),
-                        "MMM D, YYYY hh:mm A"
-                      ).format("hh:mm A")
+                      dayjs(convertArabicDate(order.created_at)).format(
+                        "hh:mm A"
+                      )
                     }}
                   </p>
                 </div>
@@ -207,6 +205,23 @@ async function handlePrev() {
 onMounted(() => {
   getOrders(currentpage.value);
 });
+function convertArabicDate(arabicDate) {
+  return arabicDate
+    .replace("يناير", "January")
+    .replace("فبراير", "February")
+    .replace("مارس", "March")
+    .replace("أبريل", "April")
+    .replace("مايو", "May")
+    .replace("يونيو", "June")
+    .replace("يوليو", "July")
+    .replace("أغسطس", "August")
+    .replace("سبتمبر", "September")
+    .replace("أكتوبر", "October")
+    .replace("نوفمبر", "November")
+    .replace("ديسمبر", "December")
+    .replace("ص", "AM")
+    .replace("م", "PM");
+}
 </script>
 
 <!-- <script setup>

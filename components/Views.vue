@@ -22,11 +22,11 @@
                 <!-- orders -->
                 <li class="border-radius-36px">
                   <NuxtLink
-                    :to="$localePath('/myorders')"
+                    :to="$localePath('/my-orders')"
                     exact-active-class="active"
                     class="d-flex align-items-center gap-1 border-radius-36px p-color-fs"
                   >
-                    <PuplicIconBagTic :isActive="$route.path === 'myOrders'" />
+                    <PuplicIconBagTic :isActive="$route.path === 'my-0rders'" />
                     <h6 class="text-capitalize link-sm">
                       {{ $t("my orders") }}
                     </h6>
@@ -86,7 +86,7 @@
                       :isActive="$route.path === '/spare-parts'"
                     />
                     <h6 class="text-capitalize link-sm">
-                      {{ $t("spare Parts") }}
+                      {{ $t("spare-parts") }}
                     </h6>
                   </NuxtLink>
                 </li>

@@ -6,7 +6,7 @@
       <div>
         <div
           class="background-color-cart d-flex align-items-center justify-content-center"
-          @click="navigateTo('/my-cars')"
+          @click="navigateTo($localePath('/my-cars'))"
         >
           <button v-if="token" class="buttons">
             <img
@@ -23,7 +23,7 @@
 
       <div class="position-relative">
         <div
-          @click="navigateTo('/profile')"
+          @click="navigateTo($localePath('/profile'))"
           v-if="!token"
           class="icon-user login"
           style="cursor: pointer"
@@ -32,7 +32,7 @@
         </div>
         <div
           v-if="token"
-          @click="navigateTo('/profile')"
+          @click="navigateTo($localePath('/profile'))"
           class="background-color-cart d-flex align-items-center justify-content-center position-relative"
         >
           <button class="buttons">

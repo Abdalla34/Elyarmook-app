@@ -10,7 +10,7 @@
     </div>
 
     <button-card
-      @click="navigateTo($localePath('/myorders'))"
+      @click="navigateTo($localePath('/myo-rders'))"
       :text-button="$t('view my orders')"
     >
     </button-card>

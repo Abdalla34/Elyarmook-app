@@ -48,7 +48,7 @@
           </li>
           <li class="menu-item">
             <NuxtLink
-              :to="$localePath('/myOrders')"
+              :to="$localePath('/my-orders')"
               exact-active-class="active"
               class="menu-link"
               @click="toggleMenu"

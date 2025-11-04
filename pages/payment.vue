@@ -191,7 +191,7 @@
                 </div>
               </div>
 
-              <div class="button" @click="navigateTo($localePath('/myorders'))">
+              <div class="button" @click="navigateTo($localePath('/my-orders'))">
                 <button class="details text-capitalize label button">
                   {{ $t("details") }}
                 </button>

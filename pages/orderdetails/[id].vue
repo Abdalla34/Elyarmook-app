@@ -55,10 +55,12 @@
   <!-- order details -->
   <div class="order-steps">
     <div class="container position-relative">
-      <!-- <div v-if="skeleton" class="row justify-content-center mt-3">
-        <Skeletons-OrderIdDetails />
-      </div> -->
-      <div class="row justify-content-center mt-3">
+      <div v-if="skeleton">
+        <div class="row justify-content-center mt-3">
+          <SkeletonsOrderIdDetails />
+        </div>
+      </div>
+      <div v-else class="row justify-content-center mt-3">
         <div class="col-7 pb-4 mt-2 mb-4 background">
           <div v-if="orderSelected">
             <!-- order title -->
@@ -530,7 +532,7 @@
         </template>
       </div>
     </div>
-    <LoadingSpinner :is-loading-otp="isLoading" />
+    <!-- <LoadingSpinner :is-loading-otp="isLoading" /> -->
   </div>
 </template>
 
@@ -545,7 +547,7 @@ const {
   getCancelReasons,
   getAvailableTimes,
 } = useApi();
-// const skeleton = ref(true);
+const skeleton = ref(true);
 const openInMaps = (branch) => {
   if (!branch?.lat || !branch?.lng) return;
   const url = `https://www.google.com/maps/search/?api=1&query=${branch.lat},${branch.lng}`;
@@ -561,20 +563,6 @@ let order_id = route.params.id;
 let orderSelected = ref(null);
 const isLoading = ref(false);
 
-onMounted(async () => {
-  try {
-    isLoading.value = true;
-    let res = await getSingleOrder(order_id);
-    orderSelected.value = res?.data ?? {};
-    skeleton.value = false;
-  } catch (err) {
-    console.log(err);
-  } finally {
-    // skeleton.value = false;
-    isLoading.value = false;
-  }
-});
-
 const openInvoice = () => {
   if (process.client) {
     // const invoiceUrl = `https://yarmok.co/invoice/${order_id}?inline=1#toolbar=0`;
@@ -588,12 +576,6 @@ const openInvoice = () => {
 
 const getReasons = ref([]);
 let cancelOrder = ref(false);
-try {
-  let resReasons = await getCancelReasons();
-  getReasons.value = resReasons?.data || [];
-} catch (error) {
-  console.error(error);
-}
 
 let sureCancel = ref(false);
 let changeStatusOrder = async (order_status, cancel_Reason_id) => {
@@ -616,7 +598,7 @@ let changeStatusOrder = async (order_status, cancel_Reason_id) => {
     sureCancel.value = false;
   } catch (error) {
     console.error("Error changing order status:", error);
-  }finally{
+  } finally {
     isLoading.value = false;
   }
 };
@@ -631,7 +613,6 @@ let rescheduleOrder = async (branch_id) => {
 
 let messageTimeChange = ref("");
 let messageClass = ref("");
-
 
 let rescheduleTime = async ({ date, time }) => {
   isLoading.value = true;
@@ -673,6 +654,25 @@ function toFalse() {
   sureCancel.value = false;
 }
 const popupItems = ref(false);
+
+onMounted(async () => {
+  try {
+    let res = await getSingleOrder(order_id);
+    orderSelected.value = res?.data ?? {};
+    skeleton.value = false;
+  } catch (err) {
+    console.log(err);
+  } finally {
+    skeleton.value = false;
+  }
+  try {
+    let resReasons = await getCancelReasons();
+    getReasons.value = resReasons?.data || [];
+    skeleton.value = false;
+  } catch (error) {
+    console.error(error);
+  }
+});
 </script>
 
 <style scoped>
