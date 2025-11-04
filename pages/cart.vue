@@ -115,7 +115,7 @@
                     +
                   </button>
                   <span v-if="loadingQty[service.id]" class="ms-2">{{
-                    $t("Loading...")
+                    $t("loading...")
                   }}</span>
                   <div v-if="msg[service.id]" class="text-danger label mt-2">
                     {{ msg[service.id] }}
@@ -176,7 +176,7 @@
                     +
                   </button>
                   <span v-if="loadingQty[offer.id]" class="ms-2">{{
-                    $t("Loading...")
+                    $t("loading...")
                   }}</span>
                 </div>
               </div>
@@ -187,7 +187,7 @@
             >
               <trash />
               <span v-if="loadingDelete[offer.offer_id]">
-                {{ $t("Loading...") }}</span
+                {{ $t("loading...") }}</span
               >
             </div>
           </div>
@@ -243,7 +243,7 @@
                     +
                   </button>
                   <span v-if="loadingQty[sparepart.id]" class="ms-2">{{
-                    $t("Loading...")
+                    $t("loading...")
                   }}</span>
                 </div>
               </div>
@@ -254,7 +254,7 @@
             >
               <trash />
               <span v-if="loadingDelete[sparepart.id]">{{
-                $t("Loading...")
+                $t("loading...")
               }}</span>
             </div>
           </div>
@@ -320,8 +320,8 @@
                     offers.length >= 1 ||
                     spareParts.length >= 1
                   "
-                  @click="navigateTo('/services')"
-                  class="additems text-capitalize label"
+                  @click="navigateTo($localePath('/services'))"
+                  class="additems text-capitalize label p-2"
                 >
                   <i class="fa-solid fa-plus"></i>
                   {{ $t("add another items") }}

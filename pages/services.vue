@@ -42,6 +42,7 @@
             <!-- btn add to cart -->
             <div class="div-button mt-3">
               <ButtonCard
+                class="testImport"
                 v-if="!service.in_cart && !inCart[service.id]"
                 :textButton="
                   loadingAddToCart[service.id]
@@ -147,4 +148,9 @@ async function handleOtpSuccess() {
 
 <style scoped>
 @import "@/assets/css/services.css";
+@media (max-width: 576px) {
+  .testImport {
+    padding: 0px !important;
+  }
+}
 </style>

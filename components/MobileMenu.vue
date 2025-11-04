@@ -2,7 +2,7 @@
   <!-- Enhanced Burger Menu Icon -->
   <div class="mobile-menu-wrapper" :class="currentDir">
     <!-- Cart Icon -->
-    <div class="cart-icon-wrapper" @click="navigateTo('/cart')">
+    <div class="cart-icon-wrapper" @click="navigateTo($localePath('/cart'))">
       <div class="cart-icon-inner">
         <PuplicIconCartIcon />
         <span v-if="cartCount > 0" class="cart-badge">{{ cartCount }}</span>
