@@ -9,7 +9,7 @@
         />
 
         <div class="row">
-          <div class="col-8 col-padding">
+          <div class="col-md-8 col-padding">
             <div
               v-if="user && !editDone"
               class="profiel-img d-flex justify-content-between align-items-center margin-bottom-24px"
@@ -20,7 +20,7 @@
             </div>
           </div>
 
-          <div class="col-8 col-padding margin-bottom-24px" v-if="!editDone">
+          <div class="col-md-8 col-padding margin-bottom-24px" v-if="!editDone">
             <div v-if="user" class="inputs">
               <div class="row-inputs">
                 <div class="input d-flex flex-column">
@@ -55,7 +55,7 @@
             </div>
           </div>
           <!-- edit image profile -->
-          <div class="col-8 col-padding">
+          <div class="col-md-8 col-padding">
             <div
               v-if="user && editDone"
               class="profiel-img d-flex justify-content-between align-items-center margin-bottom-24px"
@@ -88,7 +88,7 @@
             </div>
           </div>
 
-          <div class="col-8 col-padding margin-bottom-24px" v-if="editDone">
+          <div class="col-md-8 col-padding margin-bottom-24px" v-if="editDone">
             <div v-if="user" class="inputs">
               <div class="row-inputs">
                 <div class="input d-flex flex-column">
