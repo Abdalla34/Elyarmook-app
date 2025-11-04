@@ -2,8 +2,10 @@
   <div class="offer-selected">
     <div class="container">
       <!-- Skeleton -->
-      <div v-if="isSkeleton">
-        <Skeletons-OffersDetails />
+      <div class="row" v-if="isSkeleton">
+        <div class="col-12 col-lg-7 col-padding">
+          <Skeletons-OffersDetails />
+        </div>
       </div>
 
       <!-- Offer details -->
@@ -236,7 +238,7 @@ function handleOtpSuccess() {
 }
 
 onMounted(() => {
-  offerId.value = null; 
+  offerId.value = null;
   isSkeleton.value = true;
   isCacheValid();
   initCartFromLocalStorage();
