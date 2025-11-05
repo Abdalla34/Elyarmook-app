@@ -31,6 +31,43 @@
           <div class="modal-body">
             <form @submit.prevent="handleSendOtp">
               <div class="phone-input-container mb-4">
+                <div class="input-group">
+                  <!-- الكود الدولي ثابت -->
+                  <span class="input-group-text">+966</span>
+
+                  <!-- المستخدم يكتب من بعد رقم 5 -->
+                  <input
+                    type="tel"
+                    v-model="phone"
+                    @input="formatSaudiNumber"
+                    class="form-control ltr-otp"
+                    maxlength="9"
+                    placeholder="5xxxxxxxx"
+                    :class="{ 'is-invalid': phoneError }"
+                  />
+                </div>
+
+                <div v-if="phoneError" class="invalid-feedback d-block">
+                  {{ phoneError }}
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                :disabled="!isValidPhone"
+                class="btn btn-outline-warning w-100"
+              >
+                {{ $t("continue") }}
+              </button>
+              <button
+                class="btn btn-outline-danger mt-2 w-100"
+                @click="$emit('close-dial-code')"
+              >
+                {{ $t("Cancel") }}
+              </button>
+            </form>
+            <!-- <form @submit.prevent="handleSendOtp">
+              <div class="phone-input-container mb-4">
                 <VueTelInput
                   v-model="phone"
                   mode="international"
@@ -62,7 +99,7 @@
               >
                 {{ $t("Cancel") }}
               </button>
-            </form>
+            </form> -->
           </div>
         </div>
       </div>
@@ -96,9 +133,7 @@
           </div>
           <div class="modal-body">
             <p class="p-color-fs mb-2">
-              {{
-                $t("Please check your phone to see the verification code")
-              }}
+              {{ $t("Please check your phone to see the verification code") }}
             </p>
             <div class="otp-wrapper">
               <v-otp-input
@@ -235,21 +270,15 @@ function startCountdown() {
 
 const isValidPhone = computed(() => {
   const phoneVal = phone.value;
-  return (
-    phoneVal &&
-    phoneVal.length >= 8 &&
-    phoneVal.length <= 11 &&
-    !phoneError.value
-  );
+  return phoneVal && phoneVal.length === 9 && phoneVal.startsWith("5");
 });
-
 async function handleSendOtp(event) {
   event?.preventDefault();
   if (!isValidPhone.value) return;
 
   try {
     const phoneToSend = phone.value || lastPhone.value;
-    let res = await sendOTP(phoneToSend);
+    let res = await sendOTP(`+966${phoneToSend}`);
     if (res?.status) {
       lastPhone.value = phoneToSend;
       emit("open-otp-modal");
@@ -261,6 +290,31 @@ async function handleSendOtp(event) {
   } catch (error) {
     console.error("Failed to send OTP:", error);
     phoneError.value = $t("Failed to send OTP. Please try again.");
+  }
+}
+
+function formatSaudiNumber(event) {
+  let value = event.target.value.replace(/\D/g, ""); // يشيل أي حاجة غير أرقام
+
+  // لو أول رقم مش 5 نحطه غصب عنه
+  if (!value.startsWith("5")) {
+    value = "5" + value.replace(/^5*/, "");
+  }
+
+  // خليه مايزدش عن 9 أرقام بعد الـ5
+  if (value.length > 9) {
+    value = value.slice(0, 9);
+  }
+
+  phone.value = value;
+
+  // التحقق من الطول
+  if (value.length < 9) {
+    phoneError.value = $t("phone invalid length min");
+  } else if (value.length > 9) {
+    phoneError.value = $t("phone invalid length max");
+  } else {
+    phoneError.value = "";
   }
 }
 

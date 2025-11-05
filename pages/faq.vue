@@ -103,7 +103,7 @@
                   border: none;
                   cursor: pointer;
                 "
-                :disabled="cuurentPage >= (faqs.value.paginate?.total_pages || 1)"
+                :disabled="cuurentPage >= (faqs.paginate?.total_pages || 1)"
               >
                 {{ $t("Next") }}
               </button>

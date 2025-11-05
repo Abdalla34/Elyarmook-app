@@ -30,6 +30,24 @@
               class="background-color-cart d-flex align-items-center justify-content-center"
               @click="navigateTo($localePath('/my-cars'))"
             >
+              <button v-if="token && myCars?.length > 0" class="buttons">
+                <img
+                  class="bmw-img z-index-after"
+                  :src="defaultCar?.brand?.image"
+                  alt=""
+                />
+              </button>
+
+              <button v-else class="buttons">
+                <PuplicIconCarIcon />
+              </button>
+            </div>
+          </div>
+          <!-- <div>
+            <div
+              class="background-color-cart d-flex align-items-center justify-content-center"
+              @click="navigateTo($localePath('/my-cars'))"
+            >
               <button v-if="token" class="buttons">
                 <img
                   class="bmw-img z-index-after"
@@ -41,7 +59,7 @@
                 <PuplicIconCarIcon />
               </button>
             </div>
-          </div>
+          </div> -->
 
           <div class="position-relative">
             <div
@@ -58,11 +76,7 @@
               class="background-color-cart d-flex align-items-center justify-content-center position-relative"
             >
               <button class="buttons">
-                <img
-                  class="profile-img z-index-after"
-                  src="/public/img-icon.jpg"
-                  alt="imgProfile"
-                />
+              <i class="fa-solid fa-user-check fa-2x" style="color: #28a745;"></i>
               </button>
             </div>
           </div>
