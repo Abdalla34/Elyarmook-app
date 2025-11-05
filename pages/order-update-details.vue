@@ -17,9 +17,9 @@
 
           <div class="order">
             <ButtonCard
-              @click="navigateTo('/car-brand')"
+              @click="handleClick('/car-brand')"
               v-if="mycars.length <= 0"
-              text-button="added your car"
+              :text-button="isloadBtn ? $t('loading...') : $t('added your car')"
             />
             <!-- car -->
             <div
@@ -157,6 +157,8 @@ const branchValue = useState("branchValue", () => "");
 const dateValue = useState("dateValue", () => {});
 const note = useState("note", () => "");
 const isLoadingOtp = ref(true);
+
+const { handleClick, isloadBtn } = loadBtn();
 
 const dayjs = useDayjs();
 const user = useCookie("user").value;

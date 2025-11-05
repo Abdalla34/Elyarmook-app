@@ -66,40 +66,7 @@
                 {{ $t("Cancel") }}
               </button>
             </form>
-            <!-- <form @submit.prevent="handleSendOtp">
-              <div class="phone-input-container mb-4">
-                <VueTelInput
-                  v-model="phone"
-                  mode="international"
-                  autoDefaultCountry
-                  defaultCountry="SA"
-                  validCharactersOnly
-                  :inputOptions="{
-                    showDialCode: true,
-                    showFlags: true,
-                    showDialCodeInSelection: true,
-                  }"
-                  :class="{ 'is-invalid': phoneError }"
-                  class="phone-input ltr-otp"
-                />
-                <div v-if="phoneError" class="invalid-feedback d-block">
-                  {{ phoneError }}
-                </div>
-              </div>
-              <button
-                type="submit"
-                :disabled="!isValidPhone"
-                class="btn btn-outline-warning w-100"
-              >
-                {{ $t("continue") }}
-              </button>
-              <button
-                class="btn btn-outline-danger mt-2 w-100"
-                @click="$emit('close-dial-code')"
-              >
-                {{ $t("Cancel") }}
-              </button>
-            </form> -->
+          
           </div>
         </div>
       </div>

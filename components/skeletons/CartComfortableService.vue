@@ -1,7 +1,7 @@
 <template>
   <div class="row g-4">
     <!-- تفاصيل التكلفة -->
-    <div class="col-md-4">
+    <div class="col-md-8">
       <div class="card p-3 placeholder-wave">
         <div class="d-flex justify-content-between mb-2">
           <span class="placeholder-wave col-6"></span>

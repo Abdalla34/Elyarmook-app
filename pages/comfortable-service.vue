@@ -19,9 +19,9 @@
           </h1>
 
           <ButtonCard
-            @click="navigateTo('/car-brand')"
+            @click="handleClick('/car-brand')"
             v-if="mycars.length <= 0"
-            :text-button="$t('added your car')"
+            :text-button="isloadBtn ? $t('loading...') : $t('added your car')"
           />
           <div
             v-if="mycars.length >= 1"
@@ -559,7 +559,6 @@ onMounted(async () => {
       branches.value = resbranch.data?.items || [];
       getProblemss.value = resProblems.data?.items || [];
 
-    
       localStorage.setItem(CACHE_KEY_BRANCHES, JSON.stringify(branches.value));
       localStorage.setItem(
         CACHE_KEY_PROBLEMS,
@@ -573,6 +572,7 @@ onMounted(async () => {
     skeleton.value = false;
   }
 });
+const { handleClick, isloadBtn } = loadBtn();
 
 // Cleanup map instances when component is unmounted
 onUnmounted(() => {
