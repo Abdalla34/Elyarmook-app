@@ -6,13 +6,13 @@
           <div class="d-flex justify-content-between">
             <div
               class="icon-to-page d-flex justify-content-center align-items-center"
-              @click="navigateTo('help')"
+              @click="navigateTo($localePath('help'))"
             >
               <i class="fa-solid fa-xmark"></i>
             </div>
 
             <h1 class="margin-bottom-24px text-capitalize title-pages">
-              fill form
+              {{ $t("Fill a Form") }}
             </h1>
           </div>
 
@@ -22,7 +22,7 @@
                 <input
                   class="input-style"
                   type="text"
-                  v-bind:placeholder="user.name"
+                  :placeholder="user ? user.name : $t('full name')"
                   v-model="name"
                 />
               </div>
@@ -32,18 +32,17 @@
                 <input
                   class="input-style"
                   type="text"
-                  v-bind:placeholder="user.phone"
-                  v-model="phone"
+                  :placeholder="user ? user.phone : $t('phone')"
                 />
               </div>
             </div>
             <div class="input">
               <div class="input d-flex flex-column">
-                <label for="" class="label">address</label>
+                <label for="" class="label">{{ $t("address") }}</label>
                 <input
                   class="input-style"
                   type="text"
-                  v-model="address"
+                  :v-model="$t('address')"
                   :class="{ 'is-invalid': addressError }"
                 />
                 <span v-if="addressError" class="text-danger">{{
@@ -53,12 +52,12 @@
             </div>
             <div class="input">
               <div class="input d-flex flex-column">
-                <label for="" class="label">Message</label>
+                <label for="" class="label">{{ $t("Message") }}</label>
                 <textarea
                   class=""
                   type="text"
-                  placeholder="write your message"
-                  v-model="message"
+                  :placeholder="$t('write your message')"
+                  :v-model="$t('Message')"
                   :class="{ 'is-invalid': messageError }"
                 />
                 <span v-if="messageError" class="text-danger">{{
@@ -72,13 +71,13 @@
             @click="onSubmit"
             class="button-save border-radius-36px width-height width-100"
           >
-            <button class="text-capitalize fw-bold">send</button>
+            <button class="text-capitalize fw-bold">{{ $t("send") }}</button>
           </div>
           <div v-if="showModal" class="modal-overlay">
             <div class="modal-box">
               <p class="fs-5 mb-3">{{ modalMessage }}</p>
               <button class="btn btn-primary" @click="showModal = false">
-                Close
+                {{$t('Close')}}
               </button>
             </div>
           </div>
@@ -131,13 +130,13 @@ const onSubmit = handleSubmit(async (values) => {
       values.name = user.name;
       values.phone = user.phone;
     } else {
-      modalMessage.value = res?.message || "An error occurred";
+      modalMessage.value = res?.message;
       modalTitle.value = "Error";
       isSuccess.value = false;
       showModal.value = true;
     }
   } catch (error) {
-    modalMessage.value = error?.message || "An unexpected error occurred";
+    modalMessage.value = error?.message;
     showModal.value = true;
   }
 });

@@ -215,13 +215,35 @@ const otpModalAmount = ref(false);
 const walletAmount = ref(null);
 
 const isLoading = ref(true);
-
+const timeEndCach = 12 * 60 * 60 * 1000;
 let getDataWallet = async (page = 1) => {
   isLoading.value = true;
+  const cacheKey = `walletCache_page_${page}`;
+  const cacheData = localStorage.getItem(cacheKey);
+  const currentTime = Date.now();
+
   try {
+    if (cacheData) {
+      const parsedData = JSON.parse(cacheData);
+      if (currentTime - parsedData.timestamp < timeEndCach) {
+        allData.value = parsedData.allData;
+        wallets.value = parsedData.wallets;
+        isLoading.value = false;
+      }
+    }
+
     let resWallet = await getWallet(page);
     allData.value = resWallet?.data || null;
     wallets.value = resWallet?.data?.transactions?.items || [];
+
+    localStorage.setItem(
+      cacheKey,
+      JSON.stringify({
+        allData: allData.value,
+        wallets: wallets.value,
+        timestamp: currentTime,
+      })
+    );
   } finally {
     isLoading.value = false;
   }

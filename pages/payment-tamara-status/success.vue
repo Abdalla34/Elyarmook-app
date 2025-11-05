@@ -18,6 +18,7 @@
 </template>
 
 <script setup>
+const localePath = useLocalePath();
 const { tabbyStatusSuccess } = useApi();
 const message = ref("");
 const route = useRoute();
@@ -30,7 +31,7 @@ try {
   if (hyperSucess === "success") {
     setTimeout(() => {
       cartCount.value = 0;
-      router.replace("/");
+      router.replace(localePath("/"));
     }, 2000);
   }
 
@@ -39,9 +40,9 @@ try {
     if (res?.status === true || res?.status === "true") {
       message.value = res?.message || "تمت عملية الدفع بنجاح";
       cartCount.value = 0;
-      router.replace("/");
+      router.replace(localePath("/"));
     } else {
-      router.replace("/payment-tamara-status/failed");
+      router.replace(localePath("/payment-tamara-status/failed"));
       message.value = res?.message || "فشلت عملية الدفع";
     }
   }

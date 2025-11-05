@@ -55,8 +55,7 @@
   <!-- order details -->
   <div class="order-steps">
     <div class="container position-relative">
-      <d
-      iv v-if="skeleton">
+      <d iv v-if="skeleton">
         <div class="row justify-content-center mt-3">
           <SkeletonsOrderIdDetails />
         </div>
@@ -288,22 +287,16 @@
               </ul>
             </div>
             <!-- invoice -->
-            <div class="invoice-details">
-              <button @click="openInvoice" class="btn btn-primary">
-                {{ $t("View Invoice") }}
-              </button>
+            <div class="mt-3">
+              <!-- <a :href="openInvoice" target="_blank" rel="noopener noreferrer">{{
+                $t("View Invoice")
+              }}</a> -->
+              <!-- <div @click="openInvoice" target="_blank" rel="noopener noreferrer">{{
+                $t("View Invoice")
+              }}</div> -->
             </div>
-            <div>
-              <a
-                href="https://yarmok.co/invoice/1"
-                target="_blank"
-                rel="noopener noreferrer"
-                >{{ $t("View Invoice") }}</a
-              >
-            </div>
-            <!-- https://yarmok.co/invoice/1 -->
             <!-- items details -->
-            <!-- <div
+            <div
               v-if="
                 orderSelected &&
                 ((orderSelected.services &&
@@ -343,8 +336,7 @@
                   </button>
                 </div>
               </div>
-            </div> -->
-
+            </div>
             <!-- modal items show -->
             <div
               v-if="popupItems"
@@ -387,7 +379,7 @@
                     v-if="orderSelected.spare_parts.length"
                     class="spareparts"
                   >
-                    <h4 class="label">{{ $t("spare parts") }}</h4>
+                    <h4 class="label">{{ $t("spare-parts") }}</h4>
                     <div class="spare-list">
                       <div
                         class="order-amount transparent mb-3 border-box-item d-flex align-items-center gap-2"
@@ -449,6 +441,9 @@
                         <h4 class="label">{{ $t("vat") }}</h4>
                         <p class="text-capitalize">
                           {{ orderSelected?.vat_amount }}
+                          <span class="p-color-fs text-uppercase span">{{
+                            $t("sar")
+                          }}</span>
                         </p>
                       </div>
 
@@ -555,10 +550,6 @@ const openInMaps = (branch) => {
   window.open(url, "_blank");
 };
 
-// const openInvoice = () => {
-//   window.open("https://yarmok.co/invoice/1?inline=1#toolbar=0", "_blank");
-// };
-
 let route = useRoute();
 let order_id = route.params.id;
 let orderSelected = ref(null);
@@ -566,8 +557,7 @@ const isLoading = ref(false);
 
 const openInvoice = () => {
   if (process.client) {
-    // const invoiceUrl = `https://yarmok.co/invoice/${order_id}?inline=1#toolbar=0`;
-    const invoiceUrl = `https://yarmok.co/invoice/1`;
+    const invoiceUrl = `https://yarmok.co/invoice/${order_id}`;
     const viewerUrl = `https://docs.google.com/gview?embedded=true&url=${encodeURIComponent(
       invoiceUrl
     )}#file=Invoice`;

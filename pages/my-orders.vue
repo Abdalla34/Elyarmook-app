@@ -124,11 +124,6 @@ const statusorder = ref(null);
 
 //  time cach
 const cacheDuration = 12 * 60 * 60 * 1000;
-
-//   get data status
-const responseStatus = await getStatusorders();
-statusorder.value = responseStatus?.data;
-
 // to order details
 function toOrderStatus(orderId) {
   navigateTo(localePath(`/orderdetails/${orderId.id}`));
@@ -139,6 +134,12 @@ async function getOrders(page = 1) {
   const cacheKey = `orders_page_${page}`;
   const cachedData = localStorage.getItem(cacheKey);
   const currentTime = Date.now();
+  if (!token.value) {
+    loading.value = false;
+    msgError.value = true;
+    orders.value = [];
+    return;
+  }
 
   // if cach data not ended
   if (cachedData) {
@@ -153,10 +154,13 @@ async function getOrders(page = 1) {
       msgError.value = false;
     }
   }
-
   // new request
   try {
-    // loading.value = true;
+    loading.value = true;
+    // get data status
+
+    const responseStatus = await getStatusorders();
+    statusorder.value = responseStatus?.data;
     const res = await getMyOrders(page);
 
     if (res?.status === false && res?.message === "Unauthenticated") {
@@ -167,7 +171,6 @@ async function getOrders(page = 1) {
       pagination.value = res?.data?.paginate ?? {};
       msgError.value = false;
 
-      // ✅ نخزن البيانات في الكاش
       localStorage.setItem(
         cacheKey,
         JSON.stringify({
@@ -178,7 +181,6 @@ async function getOrders(page = 1) {
       );
     }
   } catch (err) {
-    console.error("Error fetching orders:", err);
     msgError.value = true;
   } finally {
     loading.value = false;

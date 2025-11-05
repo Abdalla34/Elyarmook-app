@@ -2,7 +2,7 @@
   <div class="parent">
     <div class="container">
       <SwiperSlideHome />
-      <ComfortableSerivces />
+      <ComfortableSerivcesLayOut />
       <Serv-Section-Card />
       <qr-code-slider />
     </div>
@@ -10,6 +10,7 @@
 </template>
 
 <script setup>
+import ComfortableSerivcesLayOut from "~/components/ComfortableSerivcesLayOut.vue";
 import ComfortableService from "./comfortable-service.vue";
 
 // Index page specific logic can go here

@@ -4,8 +4,11 @@
       <ProfileDetails />
       <div class="help margin-280px">
         <div class="container">
-          <div class="row">
-            <div class="col-md-8  col-padding">
+          <div v-if="skeleton" class="row">
+            <SkeletonsHelpPageSkel />
+          </div>
+          <div v-else class="row">
+            <div class="col-md-8 col-padding">
               <h1 class="margin-bottom-24px text-capitalize title-pages">
                 {{ $t("Help") }}
               </h1>
@@ -34,7 +37,7 @@
               <div class="help margin-bottom-24px box-pages">
                 <div
                   class="help-box"
-                  @click="navigateTo($localePath('faq-from-help'))"
+                  @click="navigateTo($localePath('faq'))"
                 >
                   <div
                     class="help-detalis d-flex justify-content-between align-items-center"
@@ -101,10 +104,40 @@
 </template>
 
 <script setup>
+const skeleton = ref(true);
 const getsettings = ref([]);
-const resSettings = await useApi().getSettings();
-getsettings.value = resSettings?.data?.settings;
+const timeEndCach = 12 * 60 * 60 * 1000;
 const localePath = useLocalePath();
+const { getSettings } = useApi();
+
+async function loadSettings() {
+  const currentTime = Date.now();
+  const cacheData = localStorage.getItem("settingsCache");
+
+  if (cacheData) {
+    const parsedData = JSON.parse(cacheData);
+    if (currentTime - parsedData.timestamp < timeEndCach) {
+      getsettings.value = parsedData.settings;
+      skeleton.value = false;
+    }
+  }
+
+  const resSettings = await getSettings();
+  getsettings.value = resSettings?.data?.settings || [];
+  skeleton.value = false;
+
+  localStorage.setItem(
+    "settingsCache",
+    JSON.stringify({
+      settings: getsettings.value,
+      timestamp: currentTime,
+    })
+  );
+}
+
+onMounted(() => {
+  loadSettings();
+});
 </script>
 
 <style scoped>

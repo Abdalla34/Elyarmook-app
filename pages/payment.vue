@@ -114,6 +114,7 @@
               :action="formAction"
               class="paymentWidgets"
               data-brands="VISA MASTER MADA"
+              :data-lang="locale === 'ar' ? 'ar' : 'en'"
             ></form>
           </div>
 
@@ -191,7 +192,10 @@
                 </div>
               </div>
 
-              <div class="button" @click="navigateTo($localePath('/my-orders'))">
+              <div
+                class="button"
+                @click="navigateTo($localePath('/my-orders'))"
+              >
                 <button class="details text-capitalize label button">
                   {{ $t("details") }}
                 </button>
@@ -256,6 +260,8 @@ const msg = ref("");
 
 const walletChargeMsg = ref("");
 
+const localePath = useLocalePath();
+const { locale } = useI18n();
 let paymentWithHyperPay = async () => {
   try {
     const amountTonum = Number(walletAmount.value);
@@ -264,14 +270,20 @@ let paymentWithHyperPay = async () => {
 
     if (membershipId) {
       res = await usePaymentMembership(membershipId, brand.value);
-      formAction.value = `${window.location.origin}/payment-tamara-status?type=order`;
+      formAction.value = `${window.location.origin}${localePath(
+        "/payment-tamara-status"
+      )}?type=order`;
       msg.value = res?.message;
     } else if (id) {
       res = await usePayment(id, brand.value);
-      formAction.value = `${window.location.origin}/payment-tamara-status?type=order`;
+      formAction.value = `${window.location.origin}${localePath(
+        "/payment-tamara-status"
+      )}?type=order`;
     } else {
       res = await usePaymentToChargeWallet(amountTonum, brand.value);
-      formAction.value = `${window.location.origin}/payment-tamara-status?type=wallet`;
+      formAction.value = `${window.location.origin}${localePath(
+        "/payment-tamara-status"
+      )}?type=wallet`;
     }
 
     if (res) {
@@ -284,10 +296,10 @@ let paymentWithHyperPay = async () => {
       if (oldScript) {
         oldScript.remove();
       }
-
+      const langParam = locale.value === "ar" ? "ar" : "en";
       let script = document.createElement("script");
       script.type = "text/javascript";
-      script.src = `https://test.oppwa.com/v1/paymentWidgets.js?checkoutId=${checkoutId.value}`;
+      script.src = `https://test.oppwa.com/v1/paymentWidgets.js?checkoutId=${checkoutId.value}&lang=${langParam}`;
       document.body.appendChild(script);
     }
   } catch (err) {

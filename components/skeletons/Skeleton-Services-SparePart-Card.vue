@@ -2,7 +2,7 @@
   <div class="row">
     <div
       class="col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center"
-      v-for="n in 6"
+      v-for="n in 9"
       :key="n"
     >
       <div

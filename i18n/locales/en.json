@@ -10,6 +10,7 @@
   "With Tabby": "With Tabby",
   "wench details": "wench details",
   "We're sorry, but your order has been canceled.": "We're sorry, but your order has been canceled.",
+  "write your message": "write your message",
 
   "Home": "Home",
   "How it works": "How it works",
@@ -57,6 +58,7 @@
   "master": "master",
   "Menu": "Menu",
   "more details": "more details",
+  "Message": "Message",
 
   "not Information you must create account": "not Information you must create account",
   "not found orders yet": "not found orders yet",
@@ -79,6 +81,7 @@
   "details": "details",
   "dont forget to use it next time to save more money in your order": "dont forget to use it next time to save more money in your order",
 
+  "address": "address",
   "Arabic": "Arabic",
   "added to cart": " added to cart",
   "add another items": "add another items",
@@ -235,7 +238,7 @@
   "your cart is empty": "your cart is empty",
   "your orders is Empty you must create account": "your orders is Empty you must create account",
   "cart is Empty you must create account": "cart is Empty you must create account",
-  "your cars Empty you must create account ": "your cars Empty you must create account",
+  "your cars Empty you must create account": "your cars Empty you must create account",
   "Yes, Cancel Order": "Yes, Cancel Order",
   "you have": "you have",
   "you will get a reward": "you will get a reward",
@@ -249,6 +252,7 @@
   "Final Amount": "Final Amount",
   "Fill a Form": "Fill a Form",
   "Failed to send OTP. Please try again.": "Failed to send OTP. Please try again.",
+  "full name": "full name",
 
   "redeem points": "redeem points",
   "redeem": "redeem",

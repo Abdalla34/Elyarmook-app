@@ -140,6 +140,8 @@ async function loadMyCars() {
   const currentTime = Date.now();
   if (!token.value) {
     IsNotRegister.value = true;
+    skeleton.value = false;
+    return;
   }
 
   const cacheData = localStorage.getItem("myCarsCache");

@@ -356,6 +356,7 @@ onMounted(async () => {
   try {
     if (!token) {
       notRegister.value = true;
+      return;
     }
     let res = await getMyCart();
     cartRes.value = res?.data;

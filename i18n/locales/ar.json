@@ -10,6 +10,7 @@
   "With Tabby": "مع تابي",
   "wench details": "تفاصيل الونش",
   "We're sorry, but your order has been canceled.": "نأسف، لقد تم إلغاء طلبك.",
+  "write your message": "اكتب رسالتك",
 
   "Home": "الرئيسية",
   "How it works": "كيف تعمل الخدمة",
@@ -57,6 +58,7 @@
   "master": "ماستر كارد",
   "Menu": "القائمه",
   "more details": "التفاصيل",
+  "Message": "الرساله",
 
   "not Information you must create account": "لا توجد بيانات، يجب إنشاء حساب",
   "not found orders yet": "لا توجد طلبات بعد",
@@ -78,6 +80,7 @@
   "date": "التاريخ",
   "details": "التفاصيل",
 
+  "address": "العنوان",
   "Arabic": "العربية",
   "added to cart": "تمت الإضافة إلى السلة",
   "add another items": "أضف عناصر أخرى",
@@ -185,7 +188,7 @@
   "choosing time details": "اختيار تفاصيل الوقت",
   "Close": "اغلاق",
   "created_at": "تم إنشاؤها في",
-  "continue profile" :"متابعة حسابك",
+  "continue profile": "متابعة حسابك",
 
   "Next": "التالي",
   "Prev": "السابق",
@@ -233,7 +236,7 @@
   "your cart is empty": "سلتك فارغة",
   "your orders is Empty you must create account": "طلباتك فارغة، يجب إنشاء حساب",
   "cart is Empty you must create account": "السلة فارغة، يجب إنشاء حساب",
-  "your cars Empty you must create account ": "لا توجد سيارات، يجب إنشاء حساب",
+  "your cars Empty you must create account": "لا توجد سيارات، يجب إنشاء حساب",
   "Yes, Cancel Order": "نعم، إلغاء الطلب",
   "you have": "انت تملك",
   "you will get a reward": "سوف تحصل على مكافأة",
@@ -247,6 +250,7 @@
   "Final Amount": "المبلغ النهائي",
   "Fill a Form": "املأ النموذج",
   "Failed to send OTP. Please try again.": "فشل إرسال كلمة المرور لمرة واحدة (OTP). يُرجى المحاولة مرة أخرى.",
+  "full name": "الاسم بالكامل",
 
   "redeem points": "استبدال النقاط",
   "redeem": "استبدال",

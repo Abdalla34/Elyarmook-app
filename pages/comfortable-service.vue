@@ -1,7 +1,10 @@
 <template>
   <div class="order-details">
     <div class="container">
-      <div class="row">
+      <div class="row" v-if="skeleton">
+        <skeletons-ComfortableSkel />
+      </div>
+      <div v-else class="row">
         <div class="col-md-8 col-padding">
           <div v-if="showModal" class="modal-overlay">
             <div class="modal-box">
@@ -438,6 +441,7 @@ import { tr } from "date-fns/locale";
 import { useForm, useField } from "vee-validate";
 import * as yup from "yup";
 
+const skeleton = ref(true);
 const { getAvailableTimes, getAvailableBrnchesTime, getBranches, getProblems } =
   useApi();
 const { createWenchOrder, updateWenchOrder } = useWenchServices();
@@ -468,6 +472,7 @@ const reservationTime = useState("reservationTime", () => null);
 const problemPhoto = useState("problemPhoto", () => null);
 const rescar = await useApi().getMycars();
 mycars.value = rescar?.data || [];
+
 const getProblemss = ref([]);
 
 const typeService = ref("urgent");
@@ -484,6 +489,7 @@ const showUnavailableModal = ref(false);
 const getAvailableTimeBranch = useState("getAvailableTimeBranch", () => null);
 
 watch(branchValue, async (newId) => {
+  if (!newId || skeleton.value) return;
   if (newId) {
     let resDate = await getAvailableTimes(newId);
     availableDates.value = resDate?.available_times;
@@ -524,13 +530,47 @@ watch(typeService, (newVal) => {
 });
 
 onMounted(async () => {
+  skeleton.value = true;
   try {
-    const resbranch = await getBranches();
-    branches.value = resbranch.data?.items || [];
-    const resProblems = await getProblems();
-    getProblemss.value = resProblems.data?.items || [];
+    const CACHE_KEY_BRANCHES = "branches";
+    const CACHE_KEY_PROBLEMS = "problems";
+    const CACHE_TIME_KEY = "cacheTime";
+    const CACHE_EXPIRY_HOURS = 12;
+
+    const lastCacheTime = localStorage.getItem(CACHE_TIME_KEY);
+    const isCacheValid =
+      lastCacheTime &&
+      dayjs().diff(dayjs(lastCacheTime), "hour") < CACHE_EXPIRY_HOURS;
+
+    if (isCacheValid) {
+      const cachedBranches = localStorage.getItem(CACHE_KEY_BRANCHES);
+      const cachedProblems = localStorage.getItem(CACHE_KEY_PROBLEMS);
+
+      if (cachedBranches && cachedProblems) {
+        branches.value = JSON.parse(cachedBranches);
+        getProblemss.value = JSON.parse(cachedProblems);
+      }
+    } else {
+      const [resbranch, resProblems] = await Promise.all([
+        getBranches(),
+        getProblems(),
+      ]);
+
+      branches.value = resbranch.data?.items || [];
+      getProblemss.value = resProblems.data?.items || [];
+
+    
+      localStorage.setItem(CACHE_KEY_BRANCHES, JSON.stringify(branches.value));
+      localStorage.setItem(
+        CACHE_KEY_PROBLEMS,
+        JSON.stringify(getProblemss.value)
+      );
+      localStorage.setItem(CACHE_TIME_KEY, dayjs().toISOString());
+    }
   } catch (e) {
-    console.error("Error fetching my cars:", e);
+    console.error("Error fetching data:", e);
+  } finally {
+    skeleton.value = false;
   }
 });
 
@@ -591,7 +631,24 @@ const openMap = (returnMode = false) => {
   });
 };
 
-const initializeMap = (returnMode = false) => {
+function loadGoogleMapsScript() {
+  return new Promise((resolve, reject) => {
+    if (document.getElementById("google-maps-script")) return resolve();
+
+    const script = document.createElement("script");
+    script.id = "google-maps-script";
+    script.src = `https://maps.googleapis.com/maps/api/js?key=YOUR_KEY`;
+    script.async = true;
+    script.onload = resolve;
+    script.onerror = reject;
+    document.head.appendChild(script);
+  });
+}
+
+const initializeMap = async (returnMode = false) => {
+  if (!window.google) {
+    await loadGoogleMapsScript();
+  }
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
       (pos) => {

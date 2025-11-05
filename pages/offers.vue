@@ -85,6 +85,7 @@ async function isCacheValid() {
   let res = await useApi().getOffers();
   offers.value = res?.data?.items || null;
   isSkeleton.value = false;
+  isNotOffers.value = offers.value.length === 0;
 
   localStorage.setItem(
     "offers",
@@ -104,11 +105,6 @@ function toBox(item) {
 let isNotOffers = ref(false);
 onMounted(() => {
   isCacheValid();
-  if (offers.value.length === 0) {
-    isNotOffers.value = true;
-  } else {
-    isNotOffers.value = false;
-  }
 });
 </script>
 

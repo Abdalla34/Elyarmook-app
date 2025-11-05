@@ -102,7 +102,7 @@
 
         <div class="col-lg-2 col-md-3 col-sm-12">
           <h6 class="text-capitalize mb-3 font-size-title">{{ $t("Help") }}</h6>
-          <p @click="navigateTo('/faq-from-help')" class="pt-1 font-size-16px">
+          <p @click="navigateTo('/faq')" class="pt-1 font-size-16px">
             FAQ
           </p>
           <p @click="navigateTo('/fill-form')" class="pt-1 font-size-16px">

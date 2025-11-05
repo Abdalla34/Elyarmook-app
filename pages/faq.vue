@@ -5,11 +5,14 @@
       <div class="container">
         <div class="row">
           <div class="col-md-8 col-padding">
-            <GoPageArrow title="help > FAQ" backPath="/help" />
+            <GoPageArrow
+              :title="$t('Help') + ' > ' + $t('faq')"
+              :backPath="$localePath('/help')"
+            />
 
             <div
               class="box-main padding-left-25px d-flex align-items-center justify-content-between box-hover-bg"
-              v-for="item in visibleItems"
+              v-for="item in faqs"
               :key="item.id"
               @click="toggleIcon(item.id)"
               :class="{ active: activeIndexes[item.id] }"
@@ -74,13 +77,35 @@
                 </div>
               </div>
             </div>
-            <div class="d-flex justify-content-center align-items-center">
+
+            <div class="d-flex justify-content-center gap-3 mt-4">
               <button
-                class="btn btn-primary"
-                @click="loadMore"
-                v-if="itemShow < faqs.length"
+                @click="handlePrev"
+                class="btn"
+                style="
+                  background-color: var(--main-color);
+                  border: none;
+                  cursor: pointer;
+                "
+                :disabled="cuurentPage <= 1"
               >
-                Learn more
+                {{ $t("Prev") }}
+              </button>
+              <span class="align-self-center"
+                >{{ $t("Page") }} {{ cuurentPage }}</span
+              >
+
+              <button
+                @click="handleNext"
+                class="btn"
+                style="
+                  background-color: var(--main-color);
+                  border: none;
+                  cursor: pointer;
+                "
+                :disabled="cuurentPage >= (faqs.value.paginate?.total_pages || 1)"
+              >
+                {{ $t("Next") }}
               </button>
             </div>
           </div>
@@ -91,31 +116,65 @@
 </template>
 
 <script setup>
+const cuurentPage = ref(1);
 let faqs = ref([]);
-let itemShow = ref(4);
+const { getFaqs } = useApi();
+
+const timeEndCach = 12 * 60 * 60 * 1000;
+
 const fetchFaq = async (page = 1) => {
-  let res = await useApi().getFaqs(page);
-  faqs.value = res?.data?.items;
+  const cacheKey = `faqCache_page_${page}`;
+  const cacheData = localStorage.getItem(cacheKey);
+  const currentTime = Date.now();
+
+  if (cacheData) {
+    const parsedData = JSON.parse(cacheData);
+    if (currentTime - parsedData.timestamp < timeEndCach) {
+      faqs.value = parsedData.items;
+    }
+  }
+
+  const res = await getFaqs(page);
+  faqs.value = res?.data?.items || [];
+
+  localStorage.setItem(
+    cacheKey,
+    JSON.stringify({
+      items: faqs.value,
+      timestamp: currentTime,
+    })
+  );
 };
 
-let visibleItems = computed(() => {
-  return faqs.value.slice(0, itemShow.value);
-});
-
-function loadMore() {
-  itemShow.value += 4;
+async function handlePrev() {
+  if (cuurentPage.value > 1) {
+    cuurentPage.value--;
+    let res = await getFaqs(cuurentPage);
+    faqs.value = res?.data?.items;
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
 }
-onMounted(() => {
-  fetchFaq();
-});
+async function handleNext() {
+  if ((cuurentPage.value >= 1) & faqs.paginate.total_pages) return;
+  cuurentPage.value++;
+  let res = await getFaqs(cuurentPage);
+  faqs.value = res?.data?.items;
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
 
 const activeIndexes = ref(faqs.value.map(() => false));
 
 function toggleIcon(id) {
   activeIndexes.value[id] = !activeIndexes.value[id];
 }
+onMounted(() => {
+  fetchFaq();
+});
 </script>
 
 <style scoped>
 @import "@/assets/css/faqfromhelp.css";
+.btn:disabled{
+  cursor: not-allowed;
+}
 </style>
