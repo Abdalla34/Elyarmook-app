@@ -85,7 +85,10 @@
         </div>
       </div>
       <!-- pagination -->
-      <div v-if="token" class="d-flex justify-content-center gap-3 mt-4">
+      <div
+        v-if="token && orders.length > 0"
+        class="d-flex justify-content-center gap-3 mt-4"
+      >
         <button @click="handlePrev" class="btn" :disabled="currentpage <= 1">
           {{ $t("Prev") }}
         </button>
