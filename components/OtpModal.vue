@@ -54,10 +54,14 @@
 
               <button
                 type="submit"
-                :disabled="!isValidPhone"
-                class="btn btn-outline-warning w-100"
+                :disabled="!isValidPhone || isSendingOtp"
+                class="btn btn-outline-warning w-100 d-flex justify-content-center align-items-center"
               >
-                {{ $t("continue") }}
+                <span v-if="!isSendingOtp">{{ $t("continue") }}</span>
+                <div
+                  v-else
+                  class="spinner-border spinner-border-sm text-success"
+                ></div>
               </button>
               <button
                 class="btn btn-outline-danger mt-2 w-100"
@@ -66,7 +70,6 @@
                 {{ $t("Cancel") }}
               </button>
             </form>
-          
           </div>
         </div>
       </div>
@@ -152,7 +155,7 @@
 import { VueTelInput } from "vue-tel-input";
 import "vue-tel-input/vue-tel-input.css";
 import VOtpInput from "vue3-otp-input";
-
+const isSendingOtp = ref(false);
 const { checkOTP, sendOTP, loginOrRegister, addToCartMulti } = useApi();
 
 const props = defineProps({
@@ -243,6 +246,8 @@ async function handleSendOtp(event) {
   event?.preventDefault();
   if (!isValidPhone.value) return;
 
+  isSendingOtp.value = true;
+
   try {
     const phoneToSend = phone.value || lastPhone.value;
     let res = await sendOTP(`+966${phoneToSend}`);
@@ -257,6 +262,8 @@ async function handleSendOtp(event) {
   } catch (error) {
     console.error("Failed to send OTP:", error);
     phoneError.value = $t("Failed to send OTP. Please try again.");
+  } finally {
+    isSendingOtp.value = false;
   }
 }
 
