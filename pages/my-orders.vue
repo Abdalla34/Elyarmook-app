@@ -14,7 +14,7 @@
       <!-- if empty orders -->
       <div
         v-else-if="token && orders.length === 0"
-        class="empty-cart d-flex justify-content-center align-items-center text-center min-vh-100"
+        class="empty-cart d-flex justify-content-center align-items-center text-center"
       >
         <div>
           <img src="/Vector.png" alt="" />
