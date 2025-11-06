@@ -14,7 +14,7 @@
       <!-- if empty orders -->
       <div
         v-else-if="token && orders.length === 0"
-        class="empty-cart d-flex justify-content-center align-items-center text-center"
+        class="empty-cart d-flex justify-content-center align-items-center text-center min-height"
       >
         <div>
           <img src="/Vector.png" alt="" />
@@ -233,5 +233,8 @@ function convertArabicDate(arabicDate) {
 .btn {
   background-color: var(--main-color);
   border: none;
+}
+.min-height{
+  min-height: 50vh;
 }
 </style>
