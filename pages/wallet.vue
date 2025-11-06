@@ -6,30 +6,37 @@
         <div class="row">
           <div class="col-md-8 col-padding">
             <div
-              class="wllet-title d-flex align-items-center justify-content-between"
+              class="wallet-section container my-4 p-3 border rounded shadow-sm bg-light"
             >
-              <div class="d-flex align-items-center gap-3">
-                <h1 class="margin-bottom-24px text-capitalize title-pages mb-0">
-                  {{ $t("wallet") }}
-                </h1>
-                <button
-                  @click="otpModalAmount = true"
-                  class="btn text-capitalize"
-                >
-                  {{ $t("deposit money") }}
-                </button>
-              </div>
+              <div
+                class="wllet-title d-flex flex-column flex-md-row align-items-center justify-content-between gap-3"
+              >
+                <!-- العنوان والزر -->
+                <div class="d-flex align-items-center gap-3 flex-wrap">
+                  <h1 class="text-capitalize mb-0">{{ $t("wallet") }}</h1>
+                  <button
+                    @click="otpModalAmount = true"
+                    class="btn btn-primary btn-sm text-capitalize"
+                  >
+                    {{ $t("deposit money") }}
+                  </button>
+                </div>
 
-              <div class="balance d-flex flex-column text-center">
-                <span class="p-color-fs fs">{{ $t("current balance") }}</span>
-                <div
-                  class="d-flex align-items-center gap-2 justify-conent-center"
-                >
-                  <p class="price">{{ allData?.balance }}</p>
-                  <span class="text-uppercase span">{{ $t("sar") }}</span>
+                <!-- الرصيد -->
+                <div class="balance d-flex flex-column text-center text-md-end">
+                  <span class="text-muted small">{{
+                    $t("current balance")
+                  }}</span>
+                  <div
+                    class="d-flex align-items-center gap-2 justify-content-center justify-content-md-end mt-1"
+                  >
+                    <p class="h5 mb-0">{{ allData?.balance }}</p>
+                    <span class="text-uppercase">{{ $t("sar") }}</span>
+                  </div>
                 </div>
               </div>
             </div>
+
             <!-- wallets  -->
             <div
               class="box-pages margin-bottom-24px col-padding"
