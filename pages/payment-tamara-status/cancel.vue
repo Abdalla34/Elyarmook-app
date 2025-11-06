@@ -23,7 +23,7 @@ try {
     const res = await tabbyStatusCancel(paymentId);
   }
 } catch (err) {
-  console.log(err);
+  console.log('Error fetching ');
 }
 </script>
 

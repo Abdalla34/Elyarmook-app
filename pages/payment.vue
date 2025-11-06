@@ -303,7 +303,7 @@ let paymentWithHyperPay = async () => {
       document.body.appendChild(script);
     }
   } catch (err) {
-    console.log(err);
+    console.log("Error fetching");
   } finally {
     isLoading.value = false;
   }
@@ -325,7 +325,7 @@ onMounted(async () => {
       orderDetails.value = responseOrder?.data || {};
     }
   } catch (e) {
-    console.error(e);
+    console.error("Error fetching");
   }
 });
 
@@ -379,7 +379,6 @@ let paywithTamara = async () => {
   } catch (err) {
     walletChargeMsg.value = "Something went wrong!";
     msg.value = err?.response?.message;
-    console.log(msg.value);
   } finally {
     isLoading.value = false;
   }
@@ -430,7 +429,7 @@ let paymentWihtTbby = async () => {
       }
     }
   } catch (err) {
-    console.log("err", err);
+    console.log("err");
     walletChargeMsg.value = err?.response?.message;
     msg.value = err?.response?.message;
   } finally {
@@ -456,12 +455,11 @@ let chachOnDeliveryFn = async () => {
       });
     }
   } catch (err) {
-    console.log(err);
+    console.log('Error fetching');
   } finally {
     isLoading.value = false;
   }
 };
-console.log("test", msg.value);
 const router = useRouter();
 </script>
 

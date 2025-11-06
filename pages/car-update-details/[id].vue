@@ -171,11 +171,7 @@ const sendDataCar = handleSubmit(async (values) => {
       navigateTo("/my-cars");
     }
   } catch (error) {
-    console.error("❌ Error sending car data:", error?.data || error);
-    // عشان تشوف الرسالة اللي جاية من السيرفر
-    if (error?.data?.errors) {
-      console.table(error.data.errors);
-    }
+    console.error("❌ Error sending car data:");
   }
 });
 </script>

@@ -516,7 +516,7 @@ watch([selectedDate, selectedTimeSlot], ([newDate, newSlot]) => {
     if (fullDateTime.isValid()) {
       reservationTime.value = fullDateTime.format("YYYY-MM-DD HH:mm:ss");
     } else {
-      console.error("Invalid Date:", newDate, newSlot);
+      console.error("Invalid Date:");
     }
   }
 });
@@ -567,7 +567,7 @@ onMounted(async () => {
       localStorage.setItem(CACHE_TIME_KEY, dayjs().toISOString());
     }
   } catch (e) {
-    console.error("Error fetching data:", e);
+    console.error("Error fetching data:");
   } finally {
     skeleton.value = false;
   }

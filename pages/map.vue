@@ -86,7 +86,7 @@ try {
   const res = await useApi().getBranches();
   branches.value = res.data?.items || [];
 } catch (err) {
-  console.error(err);
+  console.error('Error fetching');
 }
 
 

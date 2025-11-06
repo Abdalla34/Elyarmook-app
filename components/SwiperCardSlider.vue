@@ -16,39 +16,7 @@
               <div class="swiper-button-prev-custom">←</div>
               <div class="swiper-button-next-custom">→</div>
 
-              <!-- <div class="mini-box">
-                <Swiper
-                  :modules="[Navigation]"
-                  :slides-per-view="1"
-                  :loop="sliders.length > 1"
-                  :navigation="{
-                    nextEl: '.swiper-button-next-custom',
-                    prevEl: '.swiper-button-prev-custom',
-                  }"
-                  class="swper-card"
-                >
-                  <SwiperSlide v-for="item in sliders" :key="item.id">
-                    <div
-                      class="preview-slide d-flex align-items-center text-center flex-column"
-                    >
-                      <div class="img-card border-radius-36px">
-                        <img
-                          :src="item.image"
-                          alt="imageSlider"
-                          class="img-offer"
-                        />
-                      </div>
-
-                      <div class="width-button-component">
-                        <ButtonCard
-                          textButton="add to card"
-                          :isActive="activeIcon"
-                        />
-                      </div>
-                    </div>
-                  </SwiperSlide>
-                </Swiper>
-              </div> -->
+        
             </div>
           </div>
         </div>
@@ -57,20 +25,9 @@
   </div>
 </template>
 
-<script setup>
-import { Swiper, SwiperSlide } from "swiper/vue";
-import { Autoplay, Navigation } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/navigation";
+<!-- <script setup>
 
-// let sliders = ref([]);
-// // let type = ref("wench");
-// let responseSlider = await useApi().getSliders("wench");
-// sliders.value = responseSlider?.data;
-// console.log("slider get", responseSlider);
-// let activeIcon = ref(true);
-
-</script>
+</script> -->
 
 <style scoped>
 

@@ -20,18 +20,6 @@
           v-model="phone"
           id="phone-number"
         />
-        <!-- <VueTelInput
-          v-model="phone"
-          mode="international"
-          autoDefaultCountry
-          defaultCountry="EG"
-          validCharactersOnly
-          :inputOptions="{
-            showDialCode: true,
-            showFlags: true,
-            showDialCodeInSelection: true,
-          }"
-        /> -->
         <span v-if="errors.phone" class="text-danger mt-2">{{
           errors.phone
         }}</span>
@@ -138,7 +126,6 @@ const onSubmit = handleSubmit(async (values) => {
         },
       });
     } else {
-      // alert("Unexpected response from server");
       console.log("Unexpected response from server");
     }
   } catch (e) {

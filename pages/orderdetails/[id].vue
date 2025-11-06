@@ -528,7 +528,7 @@
         </template>
       </div>
     </div>
-    <!-- <LoadingSpinner :is-loading-otp="isLoading" /> -->
+    <LoadingSpinner :is-loading-otp="isLoading" />
   </div>
 </template>
 
@@ -588,7 +588,7 @@ let changeStatusOrder = async (order_status, cancel_Reason_id) => {
     cancelOrder.value = false;
     sureCancel.value = false;
   } catch (error) {
-    console.error("Error changing order status:", error);
+    console.error("Error changing order status:");
   } finally {
     isLoading.value = false;
   }
@@ -652,7 +652,7 @@ onMounted(async () => {
     orderSelected.value = res?.data ?? {};
     skeleton.value = false;
   } catch (err) {
-    console.log(err);
+    console.log('Error fetching ');
   } finally {
     skeleton.value = false;
   }
@@ -661,7 +661,7 @@ onMounted(async () => {
     getReasons.value = resReasons?.data || [];
     skeleton.value = false;
   } catch (error) {
-    console.error(error);
+    console.error('Error fetching ');
   }
 });
 </script>

@@ -13,6 +13,7 @@ let isChecking = false;
 let route = useRoute();
 let router = useRouter();
 const loading = ref(false);
+const localePath = useLocalePath()
 
 onMounted(async () => {
   if (isChecking) return;
@@ -23,7 +24,7 @@ onMounted(async () => {
   const paymentType = route.query.type;
 
   if (!rawId) {
-    router.replace("/payment-tamara-status/failed");
+    router.replace(localePath("/payment-tamara-status/failed"));
     return;
   }
 
@@ -39,36 +40,10 @@ onMounted(async () => {
       router.push("/payment-tamara-status/failed");
     }
   } catch (err) {
-    router.push("/payment-tamara-status/failed");
+    router.push(localePath("/payment-tamara-status/failed"));
   } finally {
     loading.value = false;
   }
 });
 
-// onMounted(async () => {
-//   if (isChecking) return;
-//   isChecking = true;
-//   loading.value = true;
-
-//   const rawId = route.query.id;
-//   if (!rawId) {
-//     router.replace("/payment-tamara-status/failed");
-//     return;
-//   }
-
-//   try {
-//     const res = await useApi().getHyperpayStatus(rawId);
-//     if(res?.statu && res?.message === 'payment')
-//     if (res?.status === true || res?.status === "true") {
-//       router.replace("/payment-tamara-status/success?hyper=success");
-//     } else {
-//       router.replace("/payment-tamara-status/failed");
-//     }
-//   } catch (err) {
-//     console.error(err);
-//     router.replace("/payment-tamara-status/failed");
-//   } finally {
-//     loading.value = false;
-//   }
-// });
 </script>

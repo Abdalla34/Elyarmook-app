@@ -147,7 +147,7 @@ try {
   const responseCarDetails = await getDetailsCar(idCar);
   carDetails.value = responseCarDetails?.data || {};
 } catch (err) {
-  console.error("❌ حصل خطأ:", err);
+  console.error("❌ حصل خطأ:",);
 }
 </script>
 

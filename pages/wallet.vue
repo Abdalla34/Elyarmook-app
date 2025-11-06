@@ -269,7 +269,6 @@ let getCashbackWallet = async (amount) => {
   try {
     let resWallet = await getCashbackWalletReq(walletAmount.value);
     cashback.value = resWallet?.data || null;
-    console.log(cashback.value);
   } finally {
     isLoading.value = false;
   }

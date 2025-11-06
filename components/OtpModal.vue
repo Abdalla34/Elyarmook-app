@@ -210,8 +210,6 @@ async function handleCheckOtp(otpValue) {
         isLoadingOtp.value = false;
         emit("otp-success");
       }
-
-      console.log(responseRigsetr);
     } else {
       codecorrect.value = true;
       msgRes.value = res?.message;

@@ -2,8 +2,8 @@
   <div class="offer-selected">
     <div class="container">
       <!-- Skeleton -->
-      <div class="row" v-if="isSkeleton">
-        <div class="col-12 col-lg-7 col-padding">
+      <div class="row offer-details" v-if="isSkeleton">
+        <div class="col-12 col-lg-12">
           <Skeletons-OffersDetails />
         </div>
       </div>
@@ -82,7 +82,10 @@
 
             <!-- Features -->
             <div class="offer-features margin-bottom-24px">
-              <h1 class="margin-bottom-24px features-size">
+              <h1
+                v-if="steps.length > 0"
+                class="margin-bottom-24px features-size"
+              >
                 {{ $t("offer features") }}
               </h1>
               <div
@@ -108,7 +111,7 @@
 
           <div class="cart-section margin-bottom-24px">
             <div
-              v-if="isOfferInCart"
+              v-if="isOfferInCart && !token"
               class="mb-3"
               @click="handleRemoveFromCart"
             >
@@ -157,7 +160,7 @@
 import { useAddToCart } from "@/composables/AddToCart";
 import Trash from "@/components/trash.vue";
 import PuplicIconBtnCartAdded from "@/components/Puplic-Icon/BtnCartAdded.vue";
-
+const token = useCookie("token");
 const {
   loadingAddToCart,
   inCart,
@@ -186,13 +189,12 @@ async function isCacheValid() {
     if (currentTime - parsed.timestamp < timeEndCach) {
       offerId.value = parsed.offerId;
       isSkeleton.value = false;
-      return;
     }
   }
 
   // Fetch from API
   const res = await useApi().getOfferSingle(idParams);
-  offerId.value = res; // خليها زي ما بترجع بالظبط من الـ API
+  offerId.value = res;
   isSkeleton.value = false;
 
   localStorage.setItem(
@@ -243,11 +245,6 @@ onMounted(() => {
   isCacheValid();
   initCartFromLocalStorage();
 });
-
-// onMounted(() => {
-//   isCacheValid();
-//   initCartFromLocalStorage();
-// });
 </script>
 
 <style scoped>

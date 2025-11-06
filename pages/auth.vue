@@ -112,8 +112,6 @@ const handleCheckOTP = async (otpValue) => {
   
   try {
     const res = await checkOTP(phone.value, otp);
-    console.log("OTP response:", res);
-
     if (res?.status === true) {
       if (registered.value) {
         try {
@@ -144,13 +142,13 @@ const handleCheckOTP = async (otpValue) => {
                 cartCount.value = totalCartLength;
               }
             } catch (cartError) {
-              console.warn("Cart fetch failed (ignored):", cartError);
+              console.warn("Cart fetch failed (ignored):");
             }
 
             router.push(localePath("/services"));
           }
         } catch (loginError) {
-          console.error("Login failed:", loginError);
+          console.error("Login failed:");
         }
       } else {
         router.push({
@@ -166,7 +164,7 @@ const handleCheckOTP = async (otpValue) => {
       codeNoteTrue.value = true;
     }
   } catch (otpError) {
-    console.error("OTP check failed:", otpError);
+    console.error("OTP check failed:");
     codeNoteTrue.value = true;
   } finally {
     loading.value = false;

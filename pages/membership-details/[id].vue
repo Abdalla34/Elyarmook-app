@@ -111,7 +111,7 @@ onMounted(async () => {
     const res = await useApi().memberShipDetails(idMember);
     memmberDetails.value = res?.data;
   } catch (err) {
-    console.log(err);
+    console.log('Error fetching ');
   } finally {
     isSkeleton.value = false;
   }

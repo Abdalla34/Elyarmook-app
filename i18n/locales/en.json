@@ -213,7 +213,7 @@
   "back to home": "back to home",
   "Please check your phone to see the verification code": "Please check your phone to see the verification code 📨",
   "phone invalid length max": "Phone number cannot be longer than 11 digits",
-  "phone invalid length min": "Phone number must be at least 8 digits and start",
+  "phone invalid length min": "Phone number must be at least 8 digits and start 5",
   "By using this website means your acceptance of": "By using this website means your acceptance of",
   "Policy and Terms of use": "Policy and Terms of use",
 
@@ -280,5 +280,6 @@
   "verify": "verify",
   "Verifying...": "Verifying...",
 
-  "Kindly fill in your details below to create an account": "Kindly fill in your details below to create an account"
+  "Kindly fill in your details below to create an account": "Kindly fill in your details below to create an account",
+  "20% oFF": "20% oFF!"
 }

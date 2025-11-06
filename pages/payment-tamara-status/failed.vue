@@ -25,7 +25,7 @@ try {
     message.value = res?.message || "فشلت عملية الدفع";
   }
 } catch (err) {
-  console.log(err);
+  console.log('Error fetching ');
 }
 </script>
 

@@ -53,7 +53,7 @@ try {
   //   const res = await useApi().tabbyStatusCancel(paymentId);
   // }
 } catch (err) {
-  console.log(err);
+  console.log('Error fetching');
 }
 </script>
 

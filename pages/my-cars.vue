@@ -195,7 +195,7 @@ async function deleted(id) {
       }
     }
   } catch (err) {
-    console.log(err);
+    console.log('Error fetching');
   }
 }
 
@@ -207,7 +207,7 @@ async function setDefault(carId) {
       myCars.value = updatedCars?.data || [];
     }
   } catch (err) {
-    console.error("فشل تعيين السيارة كافتراضية", err);
+    console.error("فشل تعيين السيارة كافتراضية");
   }
 }
 

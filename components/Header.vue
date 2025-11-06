@@ -43,24 +43,7 @@
               </button>
             </div>
           </div>
-          <!-- <div>
-            <div
-              class="background-color-cart d-flex align-items-center justify-content-center"
-              @click="navigateTo($localePath('/my-cars'))"
-            >
-              <button v-if="token" class="buttons">
-                <img
-                  class="bmw-img z-index-after"
-                  :src="defaultCar?.brand?.image"
-                  alt=""
-                />
-              </button>
-              <button v-if="!token" class="buttons">
-                <PuplicIconCarIcon />
-              </button>
-            </div>
-          </div> -->
-
+       
           <div class="position-relative">
             <div
               @click="navigateTo($localePath('/profile'))"

@@ -75,7 +75,7 @@ async function cachMemebr() {
       })
     );
   } catch (err) {
-    console.log(err);
+    console.log('Error fetching');
   } finally {
     isSkele.value = false;
   }

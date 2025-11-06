@@ -1,9 +1,6 @@
 <template>
   <div class="cart-parent mt-5">
     <div class="container">
-      <!-- <div class="row justify-content-center" v-if="skeleton">
-        <SkeletonsCartComfortableService />
-      </div> -->
       <div class="row justify-content-center">
         <!-- left section -->
         <div class="col-12 col-md-12 col-lg-6 col-md-6">
@@ -90,13 +87,12 @@ const route = useRoute();
 const order_id = route.params.id;
 const wenchOrder = ref(null);
 const isLoading = ref(true);
-const skeleton = ref(true);
 onMounted(async () => {
   try {
     const response = await useWenchServices().getWenchInCart();
     wenchOrder.value = response?.data;
   } catch (error) {
-    console.error("Error fetching wench order:", error);
+    console.error("Error fetching wench order");
   } finally {
     isLoading.value = false;
   }

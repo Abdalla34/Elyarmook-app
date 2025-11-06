@@ -319,7 +319,7 @@ let logOut = async () => {
     await initCartFromLocalStorage();
     router.push(localePaht("/"));
   } catch (err) {
-    console.error(err);
+    console.error('Error fetching');
   } finally {
     isLoading.value = false;
   }
@@ -372,7 +372,7 @@ let editProfile = async () => {
 
     editDone.value = false;
   } catch (err) {
-    console.error(err);
+    console.error('Error fetching');
   }
 };
 
@@ -387,7 +387,7 @@ const deleteAccount = async () => {
     resDeactivated.value = res;
     showDeactivateModal.value = true;
   } catch (err) {
-    console.error(err);
+    console.error('Error fetching');
   } finally {
     buttonLoad.value = false;
   }
@@ -411,7 +411,7 @@ const confirmDelete = async () => {
     showDeactivateModal.value = false;
     router.push(localePaht("/"));
   } catch (err) {
-    console.error("Error deleting account:", err);
+    console.error("Error deleting account:");
   }
 };
 </script>

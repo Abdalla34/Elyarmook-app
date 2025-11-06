@@ -366,7 +366,7 @@ onMounted(async () => {
     order_id.value = res?.data?.id;
   } catch (err) {
     if (err?.response.status === 401) {
-      console.log(err);
+      console.log('Error fetching');
     }
   } finally {
     isSkeleton.value = false;
@@ -391,7 +391,7 @@ async function deletedOrder(id, type, quantity) {
     await deleteItemFromCart(type, order_id.value, id);
     cartCount.value = cartCount.value - quantity;
   } catch (err) {
-    console.log("test", err);
+    console.log("test");
   }
 }
 

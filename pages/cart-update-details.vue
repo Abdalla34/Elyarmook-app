@@ -529,7 +529,7 @@ async function deletedOrder(id, type) {
     await deleteItemFromCart(type, order_id, id);
     cartCount.value = cartCount.value - 1;
   } catch (err) {
-    console.log("test", err);
+    console.log("test");
   }
 }
 
@@ -585,7 +585,7 @@ let voucherApply = async () => {
       hasVoucher.value = true;
     }
   } catch (error) {
-    console.error("Error applying voucher code:", error);
+    console.error("Error applying voucher code:");
   }
 };
 let voucherDeleted = async () => {
@@ -596,7 +596,7 @@ let voucherDeleted = async () => {
     hasVoucher.value = false;
     voucherCode.value = "";
   } catch (error) {
-    console.error("Error deleting voucher code:", error);
+    console.error("Error deleting voucher code:");
   }
 };
 
@@ -633,8 +633,8 @@ let toggleUseWalletFn = async () => {
       useWalletActive.value = resWallet?.data?.use_wallet;
     }
   } catch (error) {
-    console.log("Error happened:", error);
-    console.log("Error response:", error?.response);
+    console.log("Error happened:");
+    console.log("Error response:");
   }
 };
 const localePath = useLocalePath();
@@ -649,18 +649,6 @@ function toContinue() {
     },
   });
 }
-// function toContinue() {
-//   if (amountToPay.value > 0) {
-//     router.push({
-//       path: localePath(`/payment`),
-//       query: {
-//         id: order_id,
-//       },
-//     });
-//   } else {
-//     msgDoneUseWallet.value = true;
-//   }
-// }
 const isloading = ref(false);
 
 const toogleWarranty = async () => {
@@ -678,12 +666,12 @@ const toogleWarranty = async () => {
       };
     }
   } catch (err) {
-    console.log(err);
+    console.log('Error fetching');
   } finally {
     isloading.value = false;
   }
 };
-console.log(amountToPay.value)
+
 </script>
 
 <style scoped>

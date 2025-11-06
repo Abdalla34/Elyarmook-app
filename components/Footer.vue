@@ -34,7 +34,7 @@
                 class="text-capitalize span"
                 :href="getSettings?.ios_customer_app"
                 target="_blank"
-                >{{$t('App Store')}}</a
+                >{{ $t("App Store") }}</a
               >
             </div>
           </div>
@@ -63,8 +63,8 @@
             <li class="pt-1">
               <NuxtLink
                 class="font-product"
-                :to="$localePath('/Spare-parts')"
-                >{{ $t("spare Parts") }}</NuxtLink
+                :to="$localePath('/spare-parts')"
+                >{{ $t("spare-parts") }}</NuxtLink
               >
             </li>
             <li class="pt-1">
@@ -72,7 +72,7 @@
                 $t("offers")
               }}</NuxtLink>
             </li>
-            <li class="pt-1">
+            <li class="pt-1" v-if="token">
               <NuxtLink
                 class="font-size-16px"
                 :to="$localePath('/membership')"
@@ -102,10 +102,8 @@
 
         <div class="col-lg-2 col-md-3 col-sm-12">
           <h6 class="text-capitalize mb-3 font-size-title">{{ $t("Help") }}</h6>
-          <p @click="navigateTo('/faq')" class="pt-1 font-size-16px">
-            FAQ
-          </p>
-          <p @click="navigateTo('/fill-form')" class="pt-1 font-size-16px">
+          <p @click="navigateTo($localePath('/faq'))" class="pt-1 font-size-16px text-uppercase">{{$t('faq')}}</p>
+          <p @click="navigateTo($localePath('/fill-form'))" class="pt-1 font-size-16px">
             {{ $t("Contact Us") }}
           </p>
           <p class="pt-1 font-size-16px">{{ $t("WhatsApp") }}</p>
@@ -125,7 +123,7 @@
               class="box-hover-icons"
               :class="{ disabled: !getSettings?.instagram }"
               @click="
-                getSettings?.instagram && navigateTo(getSettings.instagram)
+                getSettings?.instagram && navigateToFn(getSettings.instagram)
               "
             >
               <PuplicIconInstagramIcon />
@@ -165,10 +163,11 @@
 </template>
 
 <script setup>
+const token = useCookie("token");
 const getSettings = ref({});
 const resSettings = await useApi().getSettings();
 getSettings.value = resSettings?.data?.settings || {};
-const navigateTo = (link) => {
+const navigateToFn = (link) => {
   if (!link) return;
   window.open(link, "_blank");
 };

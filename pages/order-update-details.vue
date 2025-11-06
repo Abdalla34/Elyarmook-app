@@ -219,7 +219,7 @@ const onSubmit = async () => {
       query: { id: idRoute },
     });
   } catch (err) {
-    console.log(err);
+    console.log('Error fetching');
   } finally {
     isLoadingOtp.value = false;
   }

@@ -9,7 +9,7 @@
             prevEl: '.swiper-button-prev-custom',
           }"
           :slides-per-view="1"
-          :loop="true"
+          :loop="offersCards.length > 1"
           class="swiper-hand d-flex align-items-center justify-content-center gap-5"
         >
           <SwiperSlide v-for="(item, index) in offersCards" :key="index">
@@ -17,10 +17,7 @@
               class="slide-content d-flex align-items-center justify-content-center gap-5 flex-wrap"
             >
               <div class="descount-offer">
-                <h1 class="font-title">{{ item.sale }}</h1>
-                <p class="font-p width-p">
-                  {{ item.des }}
-                </p>
+                <h1 class="font-title">{{ $t("20% oFF") }}</h1>
               </div>
               <div class="img-offer">
                 <img :src="item.img" alt="" />
@@ -54,14 +51,7 @@ import "swiper/css/navigation";
 
 let offersCards = ref([
   {
-    sale: "20% oFF!",
-    des: "Lorem ipsum dolor sit amet,Lorem ipsum dolor sit amet,  Lorem ipsum dolo",
     img: "/GroupPhone.png",
-  },
-  {
-    sale: "30% oFF!",
-    des: "Lorem ipsum dolor sit amet,Lorem ipsum dolor sit amet",
-    img: "/profile.jpg",
   },
 ]);
 </script>

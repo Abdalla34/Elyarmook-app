@@ -518,7 +518,7 @@ const sendRedeemPoints = async () => {
       popupRedeem.value = false;
     }
   } catch (err) {
-    console.log(err);
+    console.log('Error fetching');
   } finally {
     isLoading.value = false;
   }

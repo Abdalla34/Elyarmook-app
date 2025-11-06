@@ -169,7 +169,6 @@ let carTypes = async (barnd) => {
   let res = await cartypes(barnd.id);
   carModels.value = res?.data?.items;
   step.value = 1;
-  console.log(`car brand id ${carForm.brand_id}`);
 };
 let filterTypes = computed(() => {
   if (!searchInTypes.value) return carModels.value;
@@ -206,7 +205,7 @@ async function SendData() {
       chassis_number: carForm.chassis_number,
       is_default: isFirst ? true : false,
     });
-    console.log(carForm.value);
+
 
     addCar(carForm.value);
     addCar(res?.data);
@@ -216,7 +215,7 @@ async function SendData() {
     if (err?.response?.status === 401) {
       return navigateTo(localePaht("/createaccount"));
     } else {
-      console.log("send data", err);
+      console.log("Error fetching");
     }
     isAddCar.value = false;
   } finally {
