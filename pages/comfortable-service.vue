@@ -25,7 +25,7 @@
           />
           <div
             v-if="mycars.length >= 1"
-            class="box-car d-flex align-items-center justify-content-between mb-3 pt-1 pb-1 pe-3 ps-3"
+            class="box-car d-flex align-items-center gap-2 justify-content-between mb-3 pt-1 pb-1 pe-3 ps-3"
           >
             <div
               v-if="defaultCar"
@@ -422,7 +422,7 @@
           >
             <button
               type="submit"
-              class="continue text-capitalize label"
+              class="continue text-capitalize label p-3"
               :disabled="!isBranchAvailable"
             >
               {{ $t("continue") }}

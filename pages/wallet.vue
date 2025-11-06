@@ -16,7 +16,7 @@
                   <h1 class="text-capitalize mb-0">{{ $t("wallet") }}</h1>
                   <button
                     @click="otpModalAmount = true"
-                    class="btn btn-primary btn-sm text-capitalize"
+                    class="btn  btn-sm text-capitalize"
                   >
                     {{ $t("deposit money") }}
                   </button>

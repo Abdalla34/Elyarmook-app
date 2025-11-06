@@ -77,7 +77,7 @@
             <div class="modal-box">
               <p class="fs-5 mb-3">{{ modalMessage }}</p>
               <button class="btn btn-primary" @click="showModal = false">
-                {{$t('Close')}}
+                {{ $t("Close") }}
               </button>
             </div>
           </div>
@@ -179,9 +179,12 @@ const onSubmit = handleSubmit(async (values) => {
   width: 90%;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 576px) {
   .contact-us {
-    padding: 100px 0px;
+    padding: 0px;
+  }
+  .width-100 {
+    margin-top: 10px;
   }
 }
 </style>

@@ -33,11 +33,9 @@
 }
 
 .buttons-order {
-  margin-top: 92px;
-  margin-bottom: 193px;
+  margin-top: 50px;
+  margin-bottom: 50px;
 }
-
-
 
 .continue {
   background-color: var(--main-color);
@@ -55,9 +53,11 @@
   .continue {
     width: 100%;
   }
-  
-  .buttons-order{
+
+  .buttons-order {
     flex-direction: column;
+    margin-top: 20px;
+    margin-bottom: 20px;
   }
 }
 
@@ -76,8 +76,6 @@
     left: 24%;
   }
 }
-
-
 
 .icon-shape {
   right: 10px;

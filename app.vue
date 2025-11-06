@@ -151,6 +151,6 @@ html {
 }
 
 .margin-top {
-  margin-top: 100px;
+  margin-top: 50px;
 }
 </style>

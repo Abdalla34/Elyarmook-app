@@ -2,7 +2,7 @@
   <div>
     <div class="container">
       <div class="row justify-content-center">
-        <div class="col-8">
+        <div class="col-md-8">
           <!-- Header -->
           <div class="placeholder-wave mb-4">
             <h3 class="placeholder col-4"></h3>

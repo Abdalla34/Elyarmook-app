@@ -35,10 +35,7 @@
 
               <!-- fa1 -->
               <div class="help margin-bottom-24px box-pages">
-                <div
-                  class="help-box"
-                  @click="navigateTo($localePath('faq'))"
-                >
+                <div class="help-box" @click="navigateTo($localePath('faq'))">
                   <div
                     class="help-detalis d-flex justify-content-between align-items-center"
                   >
@@ -160,5 +157,10 @@ onMounted(() => {
 }
 .call-link:hover {
   opacity: 0.9;
+}
+@media (max-width: 576px) {
+  .margin-280px {
+    margin-bottom: 20px;
+  }
 }
 </style>

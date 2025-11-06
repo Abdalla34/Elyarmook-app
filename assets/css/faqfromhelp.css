@@ -26,7 +26,7 @@
   opacity: 0.9;
 }
 
-.z-index{
+.z-index {
   z-index: 1;
 }
 
@@ -43,7 +43,7 @@
 }
 
 .faq-help {
-  margin-bottom: 260px;
+  margin-bottom: 100px;
 }
 
 .display-paragraph {
@@ -75,5 +75,8 @@
 @media (max-width: 576px) {
   .padding-left {
     padding-left: 0px;
+  }
+  .faq-help {
+    margin-bottom: 20px;
   }
 }

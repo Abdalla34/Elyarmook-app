@@ -14,6 +14,7 @@
           class="profile-card d-flex justify-content-center align-items-center gap-2"
         >
           <div
+            v-if="token"
             class="background-color-cart position-relative d-flex align-items-center justify-content-center"
             @click="navigateTo($localePath('/cart'))"
           >
@@ -43,7 +44,7 @@
               </button>
             </div>
           </div>
-       
+
           <div class="position-relative">
             <div
               @click="navigateTo($localePath('/profile'))"
@@ -59,7 +60,10 @@
               class="background-color-cart d-flex align-items-center justify-content-center position-relative"
             >
               <button class="buttons">
-              <i class="fa-solid fa-user-check fa-2x" style="color: #28a745;"></i>
+                <i
+                  class="fa-solid fa-user-check fa-2x"
+                  style="color: #28a745"
+                ></i>
               </button>
             </div>
           </div>

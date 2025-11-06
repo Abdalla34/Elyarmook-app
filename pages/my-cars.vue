@@ -113,8 +113,8 @@
 
             <div
               v-if="token"
-              class="button-save border-radius-36px width-height margin-bottom-287px"
-              @click="navigateTo('car-brand')"
+              class="button-save border-radius-36px width-height"
+              @click="navigateTo(localePath('car-brand'))"
             >
               <button class="text-capitalize">
                 <!-- <i class="fa-solid fa-plus"></i> -->
@@ -195,7 +195,7 @@ async function deleted(id) {
       }
     }
   } catch (err) {
-    console.log('Error fetching');
+    console.log("Error fetching");
   }
 }
 

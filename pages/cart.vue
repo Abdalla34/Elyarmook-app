@@ -1,7 +1,7 @@
 <template>
   <div class="cart-parent mt-5">
     <div class="container">
-      <div class="row justify-content-center" v-if="isSkeleton">
+      <div :dir="$i18n.locale === 'ar' ? 'rtl' : 'ltr'" class="row justify-content-center" v-if="isSkeleton">
         <SkeletonsCartComfortableService />
       </div>
       <div v-else class="row justify-content-center">
@@ -259,8 +259,6 @@
             </div>
           </div>
         </div>
-        <!-- load component -->
-
         <!-- right section -->
         <div
           class="col-12 col-md-12 col-lg-4 col-test"

@@ -28,7 +28,7 @@
               />
 
               <div
-                v-if="inCart[service.id]"
+                v-if="inCart[service.id] && !token"
                 class="mt-2 mb-3"
                 @click="removeFromlocal(service)"
               >

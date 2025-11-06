@@ -126,14 +126,14 @@
             >
               <button
                 @click="navigateTo('/services')"
-                class="additems text-capitalize label"
+                class="additems text-capitalize label p-2"
               >
                 <i class="fa-solid fa-plus"></i>
                 {{ $t("add another items") }}
               </button>
               <button
                 type="submit"
-                class="continue text-capitalize label button"
+                class="continue text-capitalize label p-2 button"
                 :disabled="!carValue || !branchValue || !dateValue"
               >
                 {{ $t("continue") }}

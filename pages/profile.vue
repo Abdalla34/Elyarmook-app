@@ -54,40 +54,7 @@
               </div>
             </div>
           </div>
-          <!-- edit image profile -->
-          <div class="col-md-8 col-padding">
-            <div
-              v-if="user && editDone"
-              class="profiel-img d-flex justify-content-between align-items-center margin-bottom-24px"
-            >
-              <h1 class="margin-bottom-24px text-capitalize personal mb-0">
-                {{ $t("personal information") }}
-              </h1>
-              <div class="box-img position-relative text-center">
-                <div
-                  class="change-profile position-absolute"
-                  :class="{ 'd-block': profileImg }"
-                >
-                  <!-- <h6 class="h6 text-capitalize">profile picture</h6> -->
-                  <div
-                    class="change box-design d-flex gap-2 justify-content-center align-items-center"
-                  >
-                    <PresonalIconsChange />
-                  </div>
-                  <div
-                    class="delete box-design d-flex gap-2 justify-content-center align-items-center"
-                  >
-                    <PresonalIconsIconDeleted />
-
-                    <p class="mb-0 text-capitalize font-p color-delete">
-                      {{ $t("delete") }}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
+          <!-- to edit -->
           <div class="col-md-8 col-padding margin-bottom-24px" v-if="editDone">
             <div v-if="user" class="inputs">
               <div class="row-inputs">
@@ -319,7 +286,7 @@ let logOut = async () => {
     await initCartFromLocalStorage();
     router.push(localePaht("/"));
   } catch (err) {
-    console.error('Error fetching');
+    console.error("Error fetching");
   } finally {
     isLoading.value = false;
   }
@@ -372,7 +339,7 @@ let editProfile = async () => {
 
     editDone.value = false;
   } catch (err) {
-    console.error('Error fetching');
+    console.error("Error fetching");
   }
 };
 
@@ -387,7 +354,7 @@ const deleteAccount = async () => {
     resDeactivated.value = res;
     showDeactivateModal.value = true;
   } catch (err) {
-    console.error('Error fetching');
+    console.error("Error fetching");
   } finally {
     buttonLoad.value = false;
   }
@@ -418,4 +385,9 @@ const confirmDelete = async () => {
 
 <style>
 @import "@/assets/css/personalInformation.css";
+@media (max-width: 576px) {
+  .inputs {
+    margin-bottom: 0px !important;
+  }
+}
 </style>
