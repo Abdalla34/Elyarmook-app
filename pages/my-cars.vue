@@ -51,8 +51,17 @@
                   <div>
                     <PuplicIconDoted />
                   </div>
-                  <div @click.stop="getCarDetails(car.id)" class="btn-details">
-                    <p class="fs text-danger">{{ $t("car details") }}</p>
+
+                  <div class="btn-details" @click.stop="goToCarDetails(car.id)">
+                    <p v-if="loadingId !== car.id" class="fs text-danger">
+                      {{ $t("car details") }}
+                    </p>
+
+                    <span
+                      v-else
+                      class="spinner-border spinner-border-sm text-warning"
+                      role="status"
+                    ></span>
                   </div>
                 </div>
 
@@ -213,8 +222,9 @@ async function setDefault(carId) {
 
 const router = useRouter();
 const localePath = useLocalePath();
-
-const getCarDetails = async (id) => {
+const loadingId = ref(null);
+const goToCarDetails = (id) => {
+  loadingId.value = id;
   router.push(localePath(`/car-details/${id}`));
 };
 </script>

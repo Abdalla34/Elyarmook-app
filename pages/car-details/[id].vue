@@ -28,15 +28,19 @@
                   </p>
                 </div>
                 <div
-                  @click="
-                    navigateTo(
-                      localePath(`/car-update-details/${carDetails.id}`)
-                    )
-                  "
+                  @click="getIdCarToEdit"
                   class="edit-car-details"
                   style="cursor: pointer"
                 >
-                  <i class="fa-solid fa-pen-to-square color"></i>
+                  <i
+                    v-if="!isloadingBtn"
+                    class="fa-solid fa-pen-to-square color"
+                  ></i>
+                  <span
+                    v-else
+                    class="spinner-border spinner-border-sm text-warning"
+                    role="status"
+                  ></span>
                 </div>
               </div>
 
@@ -142,12 +146,17 @@ const route = useRoute();
 const idCar = route.params.id;
 const { getDetailsCar } = useApi();
 const localePath = useLocalePath();
-
+const isloadingBtn = ref(false);
 try {
   const responseCarDetails = await getDetailsCar(idCar);
   carDetails.value = responseCarDetails?.data || {};
 } catch (err) {
-  console.error("❌ حصل خطأ:",);
+  console.error("❌ حصل خطأ:", err);
+}
+
+function getIdCarToEdit() {
+  isloadingBtn.value = true;
+  navigateTo(localePath(`/car-update-details/${carDetails.value.id}`));
 }
 </script>
 

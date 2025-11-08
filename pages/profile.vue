@@ -123,7 +123,15 @@
               @click="editProfile"
               class="width-height border-radius-36px Edit"
             >
-              <button class="text-capitalize">{{ $t("continue") }}</button>
+              <button v-if="!isloadBtnEdit" class="text-capitalize">
+                {{ $t("continue") }}
+              </button>
+              <button v-else class="text-capitalize">
+                <span
+                  class="spinner-border spinner-border-sm text-success"
+                  role="status"
+                ></span>
+              </button>
             </div>
           </div>
         </div>
@@ -315,8 +323,9 @@ watch(areaId, async (newAreaId) => {
     cityId.value = allCities.value?.[0]?.id;
   }
 });
-
+const isloadBtnEdit = ref(false);
 let editProfile = async () => {
+  isloadBtnEdit.value = true;
   try {
     let res = await updateUserProfile({
       first_name: user.value.first_name,
@@ -340,6 +349,8 @@ let editProfile = async () => {
     editDone.value = false;
   } catch (err) {
     console.error("Error fetching");
+  } finally {
+    isloadBtnEdit.value = false;
   }
 };
 

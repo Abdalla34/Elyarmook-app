@@ -83,11 +83,9 @@
           <button type="button" class="btn btn-light w-100">
             {{ $t("Dont show next time") }}
           </button>
-          <button
-            @click="navigateTo($localePath('/comfortable-service'))"
-            class="btn-order w-100"
-          >
-            {{ $t("Order Now") }}
+          <button @click="navigaToteComfrotable" class="btn-order w-100">
+            <span v-if="!isLoadingBtn">{{ $t("Order Now") }}</span>
+            <span v-else class="spinner-border spinner-border-sm text-success"></span>
           </button>
         </div>
       </div>
@@ -121,7 +119,7 @@ function handleOtpSuccess() {
   showOtpModal.value = false;
   showServiceModal.value = true;
 }
-
+const localePath = useLocalePath();
 function conditionToken() {
   if (!token.value) {
     showComponentOtp.value = true;
@@ -129,6 +127,11 @@ function conditionToken() {
   } else {
     showServiceModal.value = true;
   }
+}
+const isLoadingBtn = ref(false);
+function navigaToteComfrotable() {
+  isLoadingBtn.value = true;
+  navigateTo(localePath("/comfortable-service"));
 }
 </script>
 

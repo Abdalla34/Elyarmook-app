@@ -113,7 +113,14 @@
               class="text-capitalize margin-bottom text-center btn-register button border-radius-36px d-flex justify-content-center"
               type="submit"
             >
-              {{ $t("save") }}
+              <span v-if="!isloading">
+                {{ $t("save") }}
+              </span>
+              <span
+                v-else
+                class="spinner-border spinner-border-sm text-success"
+                role="status"
+              ></span>
             </button>
           </form>
         </div>
@@ -126,6 +133,8 @@
 import { useForm, useField } from "vee-validate";
 import * as yup from "yup";
 
+
+
 let allAreas = ref([]);
 let countryId = ref(null);
 let allCities = ref([]);
@@ -133,11 +142,6 @@ let allCities = ref([]);
 const schema = yup.object({
   firstName: yup.string().required("please enter your name").min(3),
   lastName: yup.string().required("please enter your last name").min(3),
-  // phoneNumber: yup
-  //   .string()
-  //   .required("please enter your phone number")
-  //   .min(11)
-  //   .matches(/^\d+$/, "digits only"),
   city: yup.string().required("please enter your city"),
   area: yup.string().required("please enter your area"),
 });
@@ -151,20 +155,20 @@ const { value: lastName } = useField("lastName");
 // const { value: phoneNumber } = useField("phoneNumber");
 const { value: area } = useField("area");
 const { value: city } = useField("city");
-
+const {getCountries ,getAreasByCountry ,getCitiesByArea ,loginOrRegister } = useApi();
 onMounted(async () => {
-  let countries = await useApi().getCountries();
+  let countries = await getCountries();
   countryId.value = countries?.data?.[0]?.id;
 
   if (countryId.value) {
-    let res = await useApi().getAreasByCountry(countryId.value);
+    let res = await getAreasByCountry(countryId.value);
     allAreas.value = res?.data || [];
   }
 });
 
 watch(area, async (newAreaId) => {
   if (newAreaId) {
-    let res = await useApi().getCitiesByArea(newAreaId);
+    let res = await getCitiesByArea(newAreaId);
     allCities.value = res?.data || [];
   } else {
     allCities.value = [];
@@ -177,9 +181,11 @@ let phone = route.query.phone;
 const phonesliceDialcode = phone.slice(2);
 let registered = route.query.registered === "true";
 let otp = route.query.otp_code;
-
+const isloading = ref(false);
+const localePath = useLocalePath();
 let onSubmit = handleSubmit(async (values) => {
-  let res = await useApi().loginOrRegister({
+  isloading.value = true;
+  let res = await loginOrRegister({
     first_name: values.firstName,
     last_name: values.lastName,
     area_id: values.area,
@@ -195,7 +201,7 @@ let onSubmit = handleSubmit(async (values) => {
     token.value = res.data.token;
     user.value = JSON.stringify(res.data.user);
   }
-  router.push("/car-brand");
+  router.push(localePath("/car-brand"));
 });
 </script>
 
