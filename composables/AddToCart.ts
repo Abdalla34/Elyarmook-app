@@ -8,6 +8,12 @@ export function useAddToCart() {
   const token = useCookie("token", { maxAge: 365 * 24 * 60 * 60 });
   const cartCount = useState("cartCount", () => 0);
 
+  const CART_STORAGE_KEY = "yarmook-cart"; // نفس المفتاح بتاع صفحة الكارت
+
+  function saveToStorage(data: any) {
+    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(data));
+  }
+
   // Initialize cart state from localStorage
   async function initCartFromLocalStorage() {
     if (token.value) return;
@@ -48,6 +54,15 @@ export function useAddToCart() {
         if (res.status) {
           service.in_cart = true;
           cartCount.value = cartCount.value + 1;
+          const cartRes = await getMyCart();
+
+          saveToStorage({
+            services: cartRes.data?.services || [],
+            offers: cartRes.data?.offers || [],
+            spareParts: cartRes.data?.spare_parts || [],
+            cartRes: cartRes.data,
+          });
+
           // await getMyCart();
         }
       } catch (err: any) {

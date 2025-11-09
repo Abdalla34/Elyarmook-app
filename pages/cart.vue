@@ -29,7 +29,10 @@
               {{ $t("your cart is empty") }}
             </h3>
             <div class="btn-items">
-              <button class="d-flex justify-content-center" @click="navigateTo(localePath('/services'))">
+              <button
+                class="d-flex justify-content-center"
+                @click="navigateTo(localePath('/services'))"
+              >
                 <PuplicIconPlusIcon />
                 {{ $t("Add Items") }}
               </button>
@@ -414,7 +417,7 @@ onMounted(async () => {
 
 function calculateCartTotals() {
   let subTotal = 0;
-  
+
   // Calculate subtotal from all items
   services.value.forEach(
     (service) => (subTotal += service.price * service.qty)

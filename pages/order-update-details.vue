@@ -120,7 +120,24 @@
               </div>
             </div>
 
-            <form
+            <div class="buttons-order d-flex justify-content-center gap-2">
+              <button
+                @click="navigateTo(localePath('/services'))"
+                class="additems text-capitalize label p-2"
+              >
+                <i class="fa-solid fa-plus"></i>
+                {{ $t("add another items") }}
+              </button>
+
+              <button
+                @click="onSubmit"
+                :disabled="!carValue || !branchValue || !dateValue"
+                class="continue text-capitalize label p-2 button"
+              >
+                {{ $t("continue") }}
+              </button>
+            </div>
+            <!-- <form
               @submit.prevent="onSubmit"
               class="buttons-order d-flex justify-content-center gap-2"
             >
@@ -138,7 +155,7 @@
               >
                 {{ $t("continue") }}
               </button>
-            </form>
+            </form> -->
           </div>
         </div>
       </div>
@@ -212,14 +229,14 @@ const onSubmit = async () => {
     if (problemPhoto.value) {
       formData.append("images[]", problemPhoto.value);
     }
-
-    await updateCartDetails(idRoute, formData);
     router.push({
       path: localePath("/cart-update-details"),
       query: { id: idRoute },
     });
+
+    await updateCartDetails(idRoute, formData);
   } catch (err) {
-    console.log('Error fetching');
+    console.log("Error fetching");
   } finally {
     isLoadingOtp.value = false;
   }
