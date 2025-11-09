@@ -448,6 +448,7 @@ let chachOnDeliveryFn = async () => {
       const res = await getSingleOrder(id);
       orderPoints.value = res?.data;
       cartCount.value = 0;
+      localStorage.removeItem("yarmook-cart");
     }
     if (cachLayout.value) {
       router.replace({

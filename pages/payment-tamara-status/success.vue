@@ -31,6 +31,7 @@ try {
   if (hyperSucess === "success") {
     setTimeout(() => {
       cartCount.value = 0;
+      localStorage.removeItem("yarmook-cart");
       router.replace(localePath("/"));
     }, 2000);
   }
@@ -40,6 +41,7 @@ try {
     if (res?.status === true || res?.status === "true") {
       message.value = res?.message || "تمت عملية الدفع بنجاح";
       cartCount.value = 0;
+      localStorage.removeItem("yarmook-cart");
       router.replace(localePath("/"));
     } else {
       router.replace(localePath("/payment-tamara-status/failed"));
@@ -53,7 +55,7 @@ try {
   //   const res = await useApi().tabbyStatusCancel(paymentId);
   // }
 } catch (err) {
-  console.log('Error fetching');
+  console.log("Error fetching");
 }
 </script>
 

@@ -1,7 +1,11 @@
 <template>
   <div class="cart-parent mt-5">
     <div class="container">
-      <div :dir="$i18n.locale === 'ar' ? 'rtl' : 'ltr'" class="row justify-content-center" v-if="isSkeleton">
+      <div
+        :dir="$i18n.locale === 'ar' ? 'rtl' : 'ltr'"
+        class="row justify-content-center"
+        v-if="isSkeleton"
+      >
         <SkeletonsCartComfortableService />
       </div>
       <div v-else class="row justify-content-center">
@@ -25,29 +29,8 @@
               {{ $t("your cart is empty") }}
             </h3>
             <div class="btn-items">
-              <button @click="navigateTo(localePath('/services'))">
-                <svg
-                  width="25"
-                  height="25"
-                  viewBox="0 0 25 25"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M6.5 12.5H18.5"
-                    stroke="#040505"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                  <path
-                    d="M12.5 18.5V6.5"
-                    stroke="#040505"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
+              <button class="d-flex justify-content-center" @click="navigateTo(localePath('/services'))">
+                <PuplicIconPlusIcon />
                 {{ $t("Add Items") }}
               </button>
             </div>
@@ -278,22 +261,34 @@
                   class="total-order d-flex justify-content-between align-items-center"
                 >
                   <h4 class="label">{{ $t("sub total") }}</h4>
-                  <p class="text-capitalize">{{ cartRes?.sub_total }}</p>
+                  <p class="text-capitalize">
+                    {{ Number(cartRes?.sub_total).toFixed(2) }}
+                    <span class="p-color-fs span text-uppercase">{{
+                      $t("sar")
+                    }}</span>
+                  </p>
                 </div>
 
                 <div
                   class="vat d-flex justify-content-between align-items-center"
                 >
                   <h4 class="label">{{ $t("vat") }}</h4>
-                  <p class="text-capitalize">{{ cartRes?.vat_amount }}</p>
+                  <p class="text-capitalize">
+                    {{ Number(cartRes?.vat_amount).toFixed(2) }}
+                  </p>
                 </div>
 
                 <div
                   class="final-amount d-flex justify-content-between align-items-center"
                 >
-                  <h4 class="label">{{ $t("Final Amount") }}</h4>
+                  <h4 class="label">
+                    {{ $t("Final Amount") }}
+                    <span class="p-color-fs span text-uppercase">{{
+                      $t("sar")
+                    }}</span>
+                  </h4>
                   <p class="text-capitalize">
-                    {{ cartRes?.amount_to_pay }}
+                    {{ Number(cartRes?.amount_to_pay).toFixed(2) }}
                     <span class="p-color-fs span text-uppercase">{{
                       $t("sar")
                     }}</span>
@@ -305,7 +300,12 @@
                 class="total-amount d-flex align-items-center justify-content-between"
               >
                 <h1 class="amount text-capitalize">{{ $t("total amount") }}</h1>
-                <p>{{ cartRes?.total_amount }}</p>
+                <p>
+                  {{ Number(cartRes?.total_amount).toFixed(2) }}
+                  <span class="p-color-fs span text-uppercase">{{
+                    $t("sar")
+                  }}</span>
+                </p>
               </div>
 
               <div class="buttion-confirm" @click="toContinue">
@@ -350,26 +350,87 @@ let spareParts = ref([]);
 const cartCount = useState("cartCount", () => 0);
 const isSkeleton = ref(true);
 
+// Add localStorage
+const CART_STORAGE_KEY = "yarmook-cart";
+
+function saveToStorage(data) {
+  localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(data));
+}
+
+function loadFromStorage() {
+  const stored = localStorage.getItem(CART_STORAGE_KEY);
+  return stored ? JSON.parse(stored) : null;
+}
+
+// Add cache state
+const cachedCart = useState("cart-data", () => ({
+  services: [],
+  offers: [],
+  spareParts: [],
+  cartRes: null,
+}));
+
 onMounted(async () => {
   try {
     if (!token) {
       notRegister.value = true;
       return;
     }
+
+    // Load from localStorage first
+    const storedCart = loadFromStorage();
+    if (storedCart) {
+      services.value = storedCart.services;
+      offers.value = storedCart.offers;
+      spareParts.value = storedCart.spareParts;
+      cartRes.value = storedCart.cartRes;
+      order_id.value = storedCart.cartRes?.id;
+      isSkeleton.value = false;
+    }
+
+    // Fetch fresh data
     let res = await getMyCart();
     cartRes.value = res?.data;
     services.value = cartRes.value?.services || [];
     offers.value = cartRes.value?.offers || [];
     spareParts.value = cartRes.value?.spare_parts || [];
     order_id.value = res?.data?.id;
+
+    // Update localStorage
+    saveToStorage({
+      services: services.value,
+      offers: offers.value,
+      spareParts: spareParts.value,
+      cartRes: cartRes.value,
+    });
   } catch (err) {
     if (err?.response.status === 401) {
-      console.log('Error fetching');
+      console.log("Error fetching");
     }
   } finally {
     isSkeleton.value = false;
   }
 });
+
+function calculateCartTotals() {
+  let subTotal = 0;
+
+  // Calculate subtotal from all items
+  services.value.forEach(
+    (service) => (subTotal += service.price * service.qty)
+  );
+  offers.value.forEach((offer) => (subTotal += offer.price * offer.qty));
+  spareParts.value.forEach((part) => (subTotal += part.price * part.qty));
+
+  // Update cart response with new calculations and format to 2 decimal places
+  cartRes.value = {
+    ...cartRes.value,
+    sub_total: Number(subTotal).toFixed(2),
+    vat_amount: Number(subTotal * 0.15).toFixed(2),
+    amount_to_pay: Number(subTotal * 1.15).toFixed(2),
+    total_amount: Number(subTotal * 1.15).toFixed(2),
+  };
+}
 
 async function deletedOrder(id, type, quantity) {
   if (type === "service") {
@@ -388,6 +449,17 @@ async function deletedOrder(id, type, quantity) {
   try {
     await deleteItemFromCart(type, order_id.value, id);
     cartCount.value = cartCount.value - quantity;
+
+    // Calculate new totals after deletion
+    calculateCartTotals();
+
+    // Update localStorage with new totals
+    saveToStorage({
+      services: services.value,
+      offers: offers.value,
+      spareParts: spareParts.value,
+      cartRes: cartRes.value,
+    });
   } catch (err) {
     console.log("test");
   }
@@ -413,6 +485,17 @@ async function updateQty(type, orderId, cart_item_id, newQty, action) {
       } else if (action === "plus") {
         cartCount.value = cartCount.value + 1;
       }
+
+      // Calculate new totals immediately
+      calculateCartTotals();
+
+      // Update localStorage with new totals
+      saveToStorage({
+        services: services.value,
+        offers: offers.value,
+        spareParts: spareParts.value,
+        cartRes: cartRes.value,
+      });
     } else {
       if (res?.errors?.qty?.length) {
         msg.value[cart_item_id.id] = res.errors.qty[0];
