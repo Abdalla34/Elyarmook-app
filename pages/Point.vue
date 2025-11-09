@@ -424,6 +424,8 @@
 import dayjs from "#build/dayjs.imports.mjs";
 import { startOfSecond } from "date-fns";
 import { number } from "yup";
+const {getPoints, redeemPoints, pointTransfer} = useApi();
+
 
 const buttonsOpen = ref(false);
 const popupRedeem = ref(false);
@@ -436,39 +438,47 @@ const statusOperation = ref(false);
 const messageYourOperation = ref("");
 const phoneNumberSend = ref(null);
 
-const handleRedeemClick = () => {
-  if (current_points_int.value) {
-    popupRedeem.value = true;
-    buttonsOpen.value = false;
-  }
-};
-const handleTransferClick = () => {
-  if (current_points_int.value) {
-    popupTransfer.value = true;
-    buttonsOpen.value = false;
-  }
-};
-
-const Points = ref([]);
+const Points = ref({});
 const skeleton = ref(true);
-const timeEndCach = 12 * 60 * 60 * 1000;
+const timeEndCach = 12 * 60 * 60 * 1000; // 12 hours
+
+const current_points_int = ref(0);
+const example_rate = ref({ points: 1000, amount: 10 });
+const pointNum = ref(0);
 
 async function loadPoints() {
   const currentTime = Date.now();
   const cacheData = localStorage.getItem("pointsCache");
 
+  // ✅ check cached data first
   if (cacheData) {
     const parsedData = JSON.parse(cacheData);
     if (currentTime - parsedData.timestamp < timeEndCach) {
       Points.value = parsedData.points;
       skeleton.value = false;
+
+      current_points_int.value = Number(Points.value.current_points) || 0;
+      pointNum.value = current_points_int.value;
+      example_rate.value = Points.value.example_rate || {
+        points: 1000,
+        amount: 10,
+      };
     }
   }
 
-  const res = await useApi().getPoints();
-  Points.value = res?.data || [];
+  // ✅ otherwise, get from API
+  const res = await getPoints();
+  Points.value = res?.data || {};
   skeleton.value = false;
 
+  current_points_int.value = Number(Points.value.current_points) || 0;
+  pointNum.value = current_points_int.value;
+  example_rate.value = Points.value.example_rate || {
+    points: 1000,
+    amount: 10,
+  };
+
+  // ✅ save to cache
   localStorage.setItem(
     "pointsCache",
     JSON.stringify({
@@ -482,14 +492,21 @@ onMounted(() => {
   loadPoints();
 });
 
-const current_points_int = ref(0);
-const example_rate = ref({ points: 1000, amount: 10 });
-const pointNum = ref(0);
+// ✅ when clicking redeem or transfer
+const handleRedeemClick = () => {
+  if (current_points_int.value > 0) {
+    popupRedeem.value = true;
+    buttonsOpen.value = false;
+  }
+};
+const handleTransferClick = () => {
+  if (current_points_int.value > 0) {
+    popupTransfer.value = true;
+    buttonsOpen.value = false;
+  }
+};
 
-current_points_int.value = Points.current_points_int;
-pointNum.value = Points.current_points_int;
-example_rate.value = Points.example_rate;
-
+// ✅ computed for SAR value
 const calculatedSar = computed(() => {
   if (!pointNum.value || pointNum.value <= 0) return 0;
   const rate = example_rate.value;
@@ -497,19 +514,21 @@ const calculatedSar = computed(() => {
 });
 
 const pointToNumber = computed(() => Number(pointNum.value));
+
+// ✅ redeem points
 const sendRedeemPoints = async () => {
   isLoading.value = true;
   try {
-    const res = await useApi().redeemPoints(pointToNumber.value);
+    const res = await redeemPoints(pointToNumber.value);
     if (res?.status) {
       popupRedeem.value = false;
       messageYourOperation.value = res?.message || "";
       congrate.value = true;
       statusOperation.value = res?.status;
-      // Update current points immediately
+
+      // Update points immediately
       Points.value.current_points =
         Points.value.current_points - pointToNumber.value;
-      Points.value.current_points_int = Points.value.current_points;
       current_points_int.value = Points.value.current_points;
       pointNum.value = Points.value.current_points;
     } else {
@@ -518,43 +537,43 @@ const sendRedeemPoints = async () => {
       popupRedeem.value = false;
     }
   } catch (err) {
-    console.log('Error fetching');
+    console.log("Error fetching", err);
   } finally {
     isLoading.value = false;
   }
 };
 
+// ✅ transfer points
 const sendTransferPoints = async () => {
   try {
     isLoading.value = true;
-    const res = await useApi().pointTransfer(
-      pointNum.value,
-      phoneNumberSend.value
-    );
+    const res = await pointTransfer(pointNum.value, phoneNumberSend.value);
 
-    const data = res?._data;
+    const data = res?._data || res; 
 
     if (data?.status) {
-      // Update current points immediately
       Points.value.current_points =
         Points.value.current_points - pointNum.value;
-      Points.value.current_points_int = Points.value.current_points;
       current_points_int.value = Points.value.current_points;
       pointNum.value = Points.value.current_points;
 
       popupTransfer.value = false;
-      messageYourOperation.value = res?.message || "";
+      messageYourOperation.value =
+        data?.message || "Operation completed successfully ✅";
       congrate.value = true;
       statusOperation.value = data?.status;
     } else {
-      messageYourOperation.value = data?.message || data?.errors?.user?.[0];
+      messageYourOperation.value =
+        data?.message || data?.errors?.user?.[0] || "Something went wrong ❌";
       statusOperation.value = false;
       congrate.value = true;
       popupTransfer.value = false;
     }
   } catch (err) {
     messageYourOperation.value =
-      err?.response?._data?.message || err?.response?._data?.errors?.user?.[0];
+      err?.response?._data?.message ||
+      err?.response?._data?.errors?.user?.[0] ||
+      "Unexpected error ❌";
     congrate.value = true;
     popupTransfer.value = false;
   } finally {
@@ -562,6 +581,8 @@ const sendTransferPoints = async () => {
   }
 };
 
+
+// ✅ steps for tabs
 let step = ref(0);
 const title = computed(() => {
   if (step.value === 0) return $t("earned");

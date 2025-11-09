@@ -123,11 +123,12 @@
             <div
               v-if="token"
               class="button-save border-radius-36px width-height"
-              @click="navigateTo(localePath('car-brand'))"
+              @click="goToAddCar"
             >
               <button class="text-capitalize">
                 <!-- <i class="fa-solid fa-plus"></i> -->
-                {{ $t("add new car") }}
+                <span v-if="!loadingIdAddCar">{{ $t("add new car") }}</span>
+                <span v-else class="spinner-border spinner-border-sm text-success" role="status"></span>
               </button>
             </div>
           </div>
@@ -226,6 +227,11 @@ const loadingId = ref(null);
 const goToCarDetails = (id) => {
   loadingId.value = id;
   router.push(localePath(`/car-details/${id}`));
+};
+const loadingIdAddCar = ref(false);
+const goToAddCar = () => {
+  loadingIdAddCar.value = true;
+ navigateTo(localePath('car-brand'))
 };
 </script>
 

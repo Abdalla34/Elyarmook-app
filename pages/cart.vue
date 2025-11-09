@@ -414,7 +414,7 @@ onMounted(async () => {
 
 function calculateCartTotals() {
   let subTotal = 0;
-
+  
   // Calculate subtotal from all items
   services.value.forEach(
     (service) => (subTotal += service.price * service.qty)
