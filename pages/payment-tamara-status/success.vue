@@ -2,7 +2,7 @@
   <div class="container text-center py-10">
     <div class="text-center">
       <div>
-        <img src="/donePayment.png" alt="تم الدفع بنجاح" />
+        <img class="image-media" src="/donePayment.png" alt="تم الدفع بنجاح" />
         <h1 class="text-green-600 text-3xl font-bold mb-4">
           {{ message }}
         </h1>
@@ -63,5 +63,10 @@ try {
 .container {
   max-width: 700px;
   margin: auto;
+}
+@media (max-width: 768px) {
+  .image-media {
+    width: 200px;
+  }
 }
 </style>
