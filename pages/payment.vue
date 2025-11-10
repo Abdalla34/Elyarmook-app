@@ -121,7 +121,11 @@
           <div class="cach-layout text-center" v-if="cachLayout">
             <div class="voucher">
               <div>
-                <img src="/donePayment.png" alt="تم الدفع بنجاح" />
+                <img
+                  class="image-media"
+                  src="/donePayment.png"
+                  alt="تم الدفع بنجاح"
+                />
                 <h1 class="text-green-600 text-3xl font-bold mb-4">
                   {{ orderDetails?.status_value }}
                 </h1>
@@ -165,7 +169,9 @@
               </div>
 
               <div @click="navigateTo($localePath('/point'))" class="points">
-                <div class="d-flex align-items-center justify-content-between">
+                <div
+                  class="d-flex flex-column-media align-items-center justify-content-between"
+                >
                   <div class="point-img">
                     <img src="/pointsFrame.png" alt="points" />
                   </div>
@@ -456,7 +462,7 @@ let chachOnDeliveryFn = async () => {
       });
     }
   } catch (err) {
-    console.log('Error fetching');
+    console.log("Error fetching");
   } finally {
     isLoading.value = false;
   }
@@ -549,6 +555,14 @@ const router = useRouter();
   to {
     transform: translateY(0);
     opacity: 1;
+  }
+}
+@media (max-width: 768px) {
+  .image-media {
+    width: 200px;
+  }
+  .flex-column-media {
+    flex-direction: column;
   }
 }
 </style>

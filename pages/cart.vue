@@ -365,13 +365,13 @@ function loadFromStorage() {
   return stored ? JSON.parse(stored) : null;
 }
 
-// Add cache state
-const cachedCart = useState("cart-data", () => ({
-  services: [],
-  offers: [],
-  spareParts: [],
-  cartRes: null,
-}));
+// // Add cache state
+// const cachedCart = useState("cart-data", () => ({
+//   services: [],
+//   offers: [],
+//   spareParts: [],
+//   cartRes: null,
+// }));
 
 onMounted(async () => {
   try {
