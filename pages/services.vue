@@ -15,7 +15,7 @@
           >
             <div class="service-icon-wrapper">
               <div class="service-icon">
-                <img class="img" :src="service.image" :alt="service.title" />
+                <img class="img mb-2" :src="service.image" :alt="service.title" />
               </div>
             </div>
 
@@ -33,7 +33,7 @@
                 @click="removeFromlocal(service)"
               >
                 <button
-                  class="btn btn-outline-danger btn-sm d-flex gap-2 align-items-center"
+                  class="btn btn-outline-danger btn-sm d-flex gap-2 align-items-center mb-4"
                 >
                   {{ $t("delete") }} <Trash />
                 </button>

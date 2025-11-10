@@ -18,7 +18,7 @@
           <div
             class="modal-header d-flex align-items-center justify-content-between"
           >
-            <h3 class="mb-0" id="phoneModalLabel">
+            <h3 class="mb-0 label" id="phoneModalLabel">
               {{ $t("Enter your phone number") }}
             </h3>
             <button
@@ -51,20 +51,24 @@
                   {{ phoneError }}
                 </div>
               </div>
-
-              <button
+              <ButtonCard
                 type="submit"
+                :textButton="$t('continue')"
                 :disabled="!isValidPhone || isSendingOtp"
-                class="btn btn-outline-warning w-100 d-flex justify-content-center align-items-center"
+                v-if="!isSendingOtp"
+                :class="{ 'not-allowed': !isValidPhone || isSendingOtp }"
+              />
+              <button
+                style="background-color: var(--main-color)"
+                class="btn border-radius-36px w-100 mb-2"
+                v-else
               >
-                <span v-if="!isSendingOtp">{{ $t("continue") }}</span>
-                <div
-                  v-else
+                <span
                   class="spinner-border spinner-border-sm text-success"
-                ></div>
+                ></span>
               </button>
               <button
-                class="btn btn-outline-danger mt-2 w-100"
+                class="btn btn-outline-danger w-100"
                 @click="$emit('close-dial-code')"
               >
                 {{ $t("Cancel") }}
@@ -92,8 +96,10 @@
     >
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content text-center">
-          <div class="modal-header">
-            <h3 class="mb-0" id="otpModalLabel">{{ $t("Enter OTP Code") }}</h3>
+          <div class="modal-header d-flex justify-content-between">
+            <h3 class="mb-0 label" id="otpModalLabel">
+              {{ $t("Enter OTP Code") }}
+            </h3>
             <button
               type="button"
               class="btn-close"
@@ -102,10 +108,12 @@
             ></button>
           </div>
           <div class="modal-body">
+            <img src="/newLogo.png" />
+            <h1 class="label">{{ $t("OTP Verification") }}</h1>
             <p class="p-color-fs mb-2">
               {{ $t("Please check your phone to see the verification code") }}
             </p>
-            <div class="otp-wrapper">
+            <div class="otp-wrapper d-flex justify-content-center mt-3 mb-0">
               <v-otp-input
                 :class="$i18n.locale === 'ar' ? 'rtl-otp' : 'ltr-otp'"
                 v-model:value="codeOtp"
@@ -121,7 +129,7 @@
             <div :class="codecorrect ? 'text-danger' : 'text-success'">
               {{ msgRes }}
             </div>
-            <div class="text-center mt-3">
+            <div class="text-center mt-1">
               <p v-if="!showResendOtp" class="p-color-fs text-capitalize">
                 {{ $t("resend code after")
                 }}<span class="text-danger ps-2">
@@ -335,6 +343,11 @@ const emit = defineEmits([
 }
 .btn-close {
   margin-left: 0px !important;
+}
+
+.not-allowed {
+  cursor: not-allowed !important;
+  opacity: 0.6; 
 }
 
 .ltr-otp {

@@ -78,7 +78,7 @@
                         v-for="year in years"
                         @click="selecteYears(year)"
                         class="box-year mb-2 rounded ps-2 pe-2 pt-1 pb-1"
-                        style="cursor: pointer;"
+                        style="cursor: pointer"
                       >
                         {{ year }}
                       </div>
@@ -92,7 +92,19 @@
                   @click="sendDataCar"
                   class="btn-continue mt-4"
                 >
-                  <button-card :text-button="$t('continue')" />
+                  <button-card
+                    v-if="!isloadBtn"
+                    :text-button="$t('continue')"
+                  />
+                  <button
+                    style="background-color: var(--main-color)"
+                    class="btn border-radius-36px w-100 mb-2"
+                    v-else
+                  >
+                    <span
+                      class="spinner-border spinner-border-sm text-success"
+                    ></span>
+                  </button>
                 </div>
               </div>
             </div>
@@ -154,9 +166,10 @@ let selecteYears = (year) => {
   showYears.value = false;
   carForm.brand_id = getCar.data.brand.id;
 };
-
+const isloadBtn = ref(false);
 const sendDataCar = handleSubmit(async (values) => {
   try {
+    isloadBtn.value = true;
     const responseSendData = await editCar(
       {
         brand_id: carForm.brand_id,
@@ -172,6 +185,8 @@ const sendDataCar = handleSubmit(async (values) => {
     }
   } catch (error) {
     console.error("❌ Error sending car data:");
+  } finally {
+    isloadBtn.value = false;
   }
 });
 </script>

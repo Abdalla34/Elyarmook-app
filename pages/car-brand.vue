@@ -59,7 +59,7 @@
         <form @submit.prevent="SendData" class="chassis-form">
           <!-- choose year -->
           <label class="chassis-label text-capitalize" for="">
-            {{$t("Manufacture Year:")}}
+            {{ $t("Manufacture Year:") }}
           </label>
           <!-- input years -->
           <div
@@ -165,10 +165,15 @@ let carForm = reactive({
 let searchInTypes = ref("");
 let carModels = ref([]);
 let carTypes = async (barnd) => {
-  carForm.brand_id = barnd.id;
-  let res = await cartypes(barnd.id);
-  carModels.value = res?.data?.items;
-  step.value = 1;
+  try {
+    isAddCar.value = true;
+    carForm.brand_id = barnd.id;
+    let res = await cartypes(barnd.id);
+    carModels.value = res?.data?.items;
+    step.value = 1;
+  } finally {
+    isAddCar.value = false;
+  }
 };
 let filterTypes = computed(() => {
   if (!searchInTypes.value) return carModels.value;
@@ -205,7 +210,6 @@ async function SendData() {
       chassis_number: carForm.chassis_number,
       is_default: isFirst ? true : false,
     });
-
 
     addCar(carForm.value);
     addCar(res?.data);
@@ -246,7 +250,8 @@ let chassisError = ref("");
   border-color: #eb5757;
 }
 .chassis:deep(button):disabled {
-  background-color: #7e7e7e;
+  background-color: var(--main-color);
+  opacity: 0.4;
   cursor: not-allowed;
 }
 .years {
