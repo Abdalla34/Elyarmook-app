@@ -36,11 +36,7 @@
           class="background-color-cart d-flex align-items-center justify-content-center position-relative"
         >
           <button class="buttons">
-            <img
-              class="profile-img z-index-after"
-              src="/public/img-icon.jpg"
-              alt="imgProfile"
-            />
+            <i class="fa-solid fa-user-check fa-2x" style="color: #28a745"></i>
           </button>
         </div>
       </div>
@@ -50,7 +46,6 @@
 
 <script setup>
 const token = useCookie("token");
-const myCars = ref([]);
 const { defaultCar, fetchMyCars } = useMyCars();
 
 onMounted(() => {

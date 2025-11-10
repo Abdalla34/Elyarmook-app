@@ -31,14 +31,13 @@
               class="background-color-cart d-flex align-items-center justify-content-center"
               @click="navigateTo($localePath('/my-cars'))"
             >
-              <button v-if="token && myCars?.length > 0" class="buttons">
+              <button v-if="token && myCars?.length >= 0" class="buttons">
                 <img
                   class="bmw-img z-index-after"
                   :src="defaultCar?.brand?.image"
                   alt=""
                 />
               </button>
-
               <button v-else class="buttons">
                 <PuplicIconCarIcon />
               </button>
@@ -76,6 +75,7 @@
 <script setup>
 const localePath = useLocalePath();
 const token = useCookie("token");
+const myCars = ref([]);
 const { defaultCar, fetchMyCars } = useMyCars();
 
 onMounted(() => {
