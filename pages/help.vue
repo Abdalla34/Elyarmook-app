@@ -103,7 +103,7 @@
 <script setup>
 const skeleton = ref(true);
 const getsettings = ref([]);
-const timeEndCach = 12 * 60 * 60 * 1000;
+const timeEndCach = 7 * 24 * 60 * 60 * 1000;
 const localePath = useLocalePath();
 const { getSettings } = useApi();
 

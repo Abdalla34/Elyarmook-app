@@ -1,73 +1,59 @@
-.mySwiper {
+/* .mySwiper {
   width: 100%;
   height: 300px;
-  background-color: white;
-  box-shadow: 0 0px 8px rgba(0, 0, 0, 0.08);
   border-radius: 60px;
-}
+} */
 
-.slide-img {
-  width: 364px;
-  height: 270px;
-  object-fit: contain;
-  border-radius: 10px;
-  transition: all 0.4s ease;
-  cursor: pointer;
-}
-.slide-img:hover {
-  transform: scale(1.1) ;
-  filter: brightness(1.1) drop-shadow(0 8px 16px rgba(255, 230, 84, 0.3));
-}
-
-.mySwiper :deep(.swiper-button-prev),
-.mySwiper :deep(.swiper-button-next) {
-  width: 48px;
-  height: 48px;
-  background-color: #ebebeb;
-  color: #333;
-  border-radius: 50%;
-  transition: all 0.3s ease;
+.slide-content {
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  position: absolute;
+  overflow: hidden;
+  padding: 0px;
 }
 
-
-.mySwiper :deep(.swiper-button-prev) {
-  left: 68px;
-}
-.mySwiper :deep(.swiper-button-next) {
-  right: 68px;
-}
-
-.mySwiper :deep(.swiper-button-prev)::after {
-  font-size: 25px;
-  content: "←";
+.slide-img {
+  width: 100%;
+  max-height: 270px;
+  height: auto;
+  object-fit: cover;
+  border-radius: 60px;
+  transition: all 0.4s ease;
 }
 
-.mySwiper :deep(.swiper-button-next)::after {
-  font-size: 25px;
-  content: "→";
-}
-
-.mySwiper :deep(.swiper-button-prev:hover),
-.mySwiper :deep(.swiper-button-next:hover) {
-  color: black;
-  transform: scale(1.2);
-}
-
-.mySwiper :deep(.swiper-pagination-bullet) {
+/* .mySwiper :deep(.swiper-pagination-bullet) {
   background: #585858;
   opacity: 0.5;
   border-radius: 4px;
-  bottom: 22px;
-}
-
+} */
+/* 
 .mySwiper :deep(.swiper-pagination-bullet-active) {
   opacity: 1;
   width: 15px;
+} */
+/* .mySwiper :deep(.swiper-pagination) {
+  display: none; 
+} */
+
+.custom-pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+.custom-pagination :deep(.swiper-pagination-bullet) {
+  background: #585858;
+  opacity: 0.5;
+  border-radius: 4px;
+  width: 10px;
+  height: 8px;
+  transition: all 0.3s;
+}
+
+.custom-pagination :deep(.swiper-pagination-bullet-active) {
+  opacity: 1;
+  width: 16px;
 }
 
 .title-sec-main {
@@ -102,11 +88,11 @@
   .slide-content {
     flex-direction: column;
     text-align: center;
-    padding: 20px 16px;
+    padding: 0px;
   }
 
   .slide-img {
-    width: 90%;
+    width: 100%;
     height: auto;
     max-height: 160px;
     margin: 10px auto;
@@ -119,48 +105,6 @@
     padding-bottom: 40px;
     padding-inline: 10px;
     position: relative;
-  }
-
-  .mySwiper :deep(.swiper-button-prev),
-  .mySwiper :deep(.swiper-button-next) {
-    width: 36px;
-    height: 36px;
-    background-color: #ebebeb;
-    color: #333;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    top: 50%;
-    transform: translateY(-50%);
-    position: absolute;
-    z-index: 10;
-  }
-
-  .mySwiper :deep(.swiper-button-prev) {
-    left: 10px;
-  }
-
-  .mySwiper :deep(.swiper-button-next) {
-    right: 10px;
-  }
-
-  .mySwiper :deep(.swiper-button-prev)::after,
-  .mySwiper :deep(.swiper-button-next)::after {
-    font-size: 18px;
-  }
-
-  .mySwiper :deep(.swiper-pagination-bullet) {
-    width: 8px;
-    height: 8px;
-    margin: 0 3px;
-    background: #585858;
-    opacity: 0.5;
-  }
-
-  .mySwiper :deep(.swiper-pagination-bullet-active) {
-    width: 12px;
-    opacity: 1;
   }
 
   .title-sec-main {
@@ -182,18 +126,20 @@
     border-radius: 24px;
     margin-bottom: 15px;
   }
+  .custom-pagination :deep(.swiper-pagination-bullet) {
+    height: 5px;
+  }
 }
-
 
 @media (min-width: 768px) and (max-width: 992px) {
   .slide-content {
     flex-direction: column;
     text-align: center;
-    padding: 30px 20px; /* ← البادينج الجديد */
+    padding: 30px 20px;
   }
 
   .slide-img {
-    width: 320px;
+    width: 100%;
     height: auto;
     max-height: 200px;
     margin: 0 auto 20px;
@@ -227,37 +173,5 @@
     padding: 30px 20px 50px; /* ← بادينج داخلي للسوايبر */
     background-color: white;
     box-shadow: 0 0px 8px rgba(0, 0, 0, 0.08);
-  }
-
-  .mySwiper :deep(.swiper-button-prev),
-  .mySwiper :deep(.swiper-button-next) {
-    width: 42px;
-    height: 42px;
-    background-color: #ebebeb;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-
-  .mySwiper :deep(.swiper-button-prev) {
-    left: 10px;
-  }
-
-  .mySwiper :deep(.swiper-button-next) {
-    right: 10px;
-  }
-
-  .mySwiper :deep(.swiper-button-prev)::after,
-  .mySwiper :deep(.swiper-button-next)::after {
-    font-size: 20px;
-  }
-
-  .mySwiper :deep(.swiper-pagination-bullet) {
-    width: 9px;
-    height: 9px;
-    margin: 0 5px;
-  }
-
-  .mySwiper :deep(.swiper-pagination-bullet-active) {
-    width: 14px;
   }
 }

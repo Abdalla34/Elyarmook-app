@@ -259,6 +259,9 @@ button:hover {
     padding-left: 8px;
     padding-right: 8px;
   }
+  .margin-bottom-section {
+    margin-bottom: 20px;
+  }
 }
 
 @media (min-width: 769px) and (max-width: 992px) {

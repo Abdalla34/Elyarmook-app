@@ -441,10 +441,7 @@ export const useApi = () => {
   const gethome = async () => {
     return await $fetch(`${baseURL}/home`, {
       method: "GET",
-      params: {
-        slider_type: "website",
-      },
-    });
+      headers,});
   };
   // done
   const deleteaccount = async (deactivated_reason_id: any, fcm_type: any) => {

@@ -114,7 +114,7 @@ const { getSpareParts } = useApi();
 let showOtpModal = ref(false);
 let showDialCode = ref(false);
 
-const endTimeCache = 12 * 60 * 60 * 1000; // 1 ساعة
+const endTimeCache = 24 * 60 * 60 * 1000; // 1 ساعة
 const localePaht = useLocalePath();
 
 async function isCach() {

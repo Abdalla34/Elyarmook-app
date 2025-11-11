@@ -106,7 +106,7 @@ const token = useCookie("token");
 
 <style scoped>
 .ul {
-  gap: 24px;
+  gap: 12px;
   background-color: #ffffff;
   width: fit-content;
   margin: auto;
@@ -163,6 +163,9 @@ a svg path {
 @media (max-width: 768px) {
   .pages {
     display: none;
+  }
+  .ul {
+    gap: 12px;
   }
 }
 

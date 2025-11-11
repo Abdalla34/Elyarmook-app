@@ -27,7 +27,7 @@
             <div
               class="d-flex align-items-start justify-content-between flex-wrap"
             >
-              <h1 class="item-name">{{ offerId.data.offer.title }}</h1>
+              <h1 class="item-name text-start">{{ offerId.data.offer.title }}</h1>
               <p class="price-value size-font color mb-0">
                 {{ offerId.data.offer.price_after_discount }}
                 <span class="font-size-currency text-uppercase color">
@@ -81,7 +81,7 @@
             </div>
 
             <!-- Features -->
-            <div class="offer-features margin-bottom-24px">
+            <div class="offer-features margin-bottom-24px p-2">
               <h1
                 v-if="steps.length > 0"
                 class="margin-bottom-24px features-size"

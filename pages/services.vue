@@ -91,7 +91,7 @@ let services = ref([]);
 let showOtpModal = ref(false);
 let showDialCode = ref(false);
 const token = useCookie("token");
-const timeEndCach = 12 * 60 * 60 * 1000;
+const timeEndCach = 24 * 60 * 60 * 1000;
 const isSkeleton = ref(true);
 
 async function isCacheValid() {

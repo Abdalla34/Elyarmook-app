@@ -84,26 +84,35 @@
 
         <div class="col-lg-2 col-md-3 col-sm-12">
           <h6 class="text-capitalize mb-3 font-size-title">
-            {{ $t("Products") }}
+            {{ $t("About Us") }}
           </h6>
-          <p class="pt-1 font-size-16px font-size-16px">
-            {{ $t("Product 1") }}
-          </p>
-          <p class="pt-1 font-size-16px font-size-16px">
-            {{ $t("Product 2") }}
-          </p>
-          <p class="pt-1 font-size-16px font-size-16px">
-            {{ $t("Product 3") }}
-          </p>
-          <p class="pt-1 font-size-16px font-size-16px">
-            {{ $t("Product 4") }}
-          </p>
+
+          <span class="font-size-16px text-capitalize">
+            {{ $t("About Us DescriptioN Visit our information website") }}
+          </span>
+
+          <a
+            href="https://yarmok.co/ar"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="about-link"
+          >
+            https://yarmok.co
+          </a>
         </div>
 
         <div class="col-lg-2 col-md-3 col-sm-12">
           <h6 class="text-capitalize mb-3 font-size-title">{{ $t("Help") }}</h6>
-          <p @click="navigateTo($localePath('/faq'))" class="pt-1 font-size-16px text-uppercase">{{$t('faq')}}</p>
-          <p @click="navigateTo($localePath('/fill-form'))" class="pt-1 font-size-16px">
+          <p
+            @click="navigateTo($localePath('/faq'))"
+            class="pt-1 font-size-16px text-uppercase"
+          >
+            {{ $t("faq") }}
+          </p>
+          <p
+            @click="navigateTo($localePath('/fill-form'))"
+            class="pt-1 font-size-16px"
+          >
             {{ $t("Contact Us") }}
           </p>
           <p class="pt-1 font-size-16px">{{ $t("WhatsApp") }}</p>
@@ -238,8 +247,6 @@ p {
 }
 
 .box-style:hover {
-  background-color: var(--main-color);
-  border-color: var(--main-color);
   transform: scale(1.05) translateY(-2px);
   color: #040505;
 }
@@ -247,26 +254,6 @@ p {
 .box-style:hover .span {
   color: #040505;
   font-weight: 600;
-}
-
-.box-style::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.2),
-    transparent
-  );
-  transition: left 0.5s ease;
-}
-
-.box-style:hover::before {
-  left: 100%;
 }
 
 .icon {
@@ -394,5 +381,19 @@ ul li a:hover::after {
   .box-style {
     width: 150px;
   }
+}
+.about-link {
+  display: block;
+  margin-top: 5px;
+  color: var(--main-color);
+  font-size: 16px;
+  text-decoration: none;
+  transition: all 0.3s;
+  opacity: 0.6;
+}
+
+.about-link:hover {
+  text-decoration: underline;
+  opacity: 1;
 }
 </style>

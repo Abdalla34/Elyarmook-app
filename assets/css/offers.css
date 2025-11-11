@@ -171,21 +171,32 @@
     border-radius: 15px;
   }
 
+  .details-card {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
   .offers-sale {
     font-size: 0.75rem;
     padding: 4px 6px;
+    margin-right: 5px;
   }
 
-  .item-name {
-    font-size: 0.95rem;
+  .price-section {
+    display: flex;
+    align-items: center;
+    gap: 5px;
   }
 
   .price-section .price {
-    font-size: 0.9rem;
+    font-size: 20px !important;
   }
 
   .price-section .end-date {
-    font-size: 0.75rem;
+    font-size: 16px !important;
   }
 
   .date {
@@ -194,6 +205,12 @@
 
   .img-offer img {
     border-radius: 10px;
+  }
+  .price {
+    font-size: 20px;
+  }
+  .sar {
+    font-size: 12px;
   }
 }
 

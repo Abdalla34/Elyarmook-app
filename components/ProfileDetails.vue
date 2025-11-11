@@ -79,18 +79,6 @@
                   <h6 class="text-capitalize link-sm">{{ $t("Help") }}</h6>
                 </NuxtLink>
               </li>
-              <li class="">
-                <NuxtLink
-                  disabled
-                  exact-active-class="active"
-                  class="d-flex align-items-center gap-1 border-radius-36px p-color-fs"
-                >
-                  <i class="fa-solid fa-star-half-stroke"></i>
-                  <h6 class="text-capitalize link-sm">
-                    {{ $t("rate Application") }}
-                  </h6>
-                </NuxtLink>
-              </li>
             </ul>
           </div>
         </div>

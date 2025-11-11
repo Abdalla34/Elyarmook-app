@@ -20,7 +20,7 @@
                 <div
                   class="details-card d-flex justify-content-between margin-bottom-24px"
                 >
-                  <h1 class="item-name">{{ item.title }}</h1>
+                  <h1 class="item-name text-start">{{ item.title }}</h1>
                   <span
                     class="offers-sale d-flex align-items-center justify-content-center"
                     >{{ item.discount_percentage_text }} {{ $t("OFF") }}
@@ -33,11 +33,11 @@
                   <div class="price-section d-flex align-items-end gap-2">
                     <p class="price">
                       {{ item.price_after_discount }}
-                      <span class="sar text-capitalize">{{ $t("sar") }}</span>
+                      <span class="sar text-uppercase">{{ $t("sar") }}</span>
                     </p>
                     <p class="end-date">
                       {{ item.price_before_discount }}
-                      <span class="sar text-capitalize">{{ $t("sar") }}</span>
+                      <span class="sar text-uppercase">{{ $t("sar") }}</span>
                     </p>
                   </div>
                   <div class="date text-center">

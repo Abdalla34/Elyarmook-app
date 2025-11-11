@@ -64,7 +64,7 @@
                 class="total-amount d-flex align-items-center justify-content-between"
               >
                 <h1 class="amount text-capitalize">{{ $t("total amount") }}</h1>
-                <p>{{ wenchOrder?.total_amount }}</p>
+                <p>{{ wenchOrder?.total_amount }} <span class="p-color-fs text-uppercase">{{ $t("sar") }}</span></p>
               </div>
 
               <div

@@ -9,22 +9,28 @@
             <img
               src="/wenchcar.jpg"
               alt="wench car"
-              class="img-fluid rounded shadow-sm"
+              class="img-fluid rounded"
             />
           </div>
 
           <div class="order-now text-center text-md-start">
-            <h1 class="mb-3 fw-bold fs-4 fs-md-3">
+            <h1 class="mb-3 fw-bold">
               {{ $t("Comfortable Service") }}
             </h1>
-            <button class="btn-order">{{ $t("Order Now") }}</button>
+            <button class="btn-order orderbtn-text">
+              {{ $t("Order Now") }}
+            </button>
           </div>
         </div>
       </div>
     </div>
 
     <!-- Modal -->
-    <div v-if="showServiceModal" class="modal-overlay">
+    <div
+      v-if="showServiceModal"
+      class="modal-overlay"
+      @click.self="showServiceModal = false"
+    >
       <div class="modal-container">
         <div
           class="modal-header d-flex justify-content-between align-items-center"
@@ -44,10 +50,10 @@
           />
 
           <div class="service-info mt-4">
-            <h4 class="title text-capitalize">
+            <h4 class="title text-capitalize text-start">
               {{ $t("A comfortable service - that makes you comfortable") }}
             </h4>
-            <p class="service-description p-color-fs">
+            <p class="service-description p-color-fs text-start mt-1">
               {{
                 $t(
                   "We repair your car while you are there, without any industrial trips"
@@ -59,16 +65,18 @@
             </p>
 
             <div class="note-box mt-3 p-3 bg-light rounded">
-              <h5 class="text-capitalize text-danger mb-1">
+              <h5 class="text-capitalize text-danger mb-1 text-start">
                 {{ $t("Important Note") }}:
               </h5>
-              <p class="text-capitalize text-danger mb-0">
+              <p class="text-capitalize text-danger text-start mb-0">
                 {{ $t("Service comfortable availability in Riyadh only") }}.
               </p>
             </div>
 
             <div class="steps-container mt-4">
-              <h5 class="text-capitalize label">{{ $t("How it works") }}:</h5>
+              <h5 class="text-capitalize label text-start">
+                {{ $t("How it works") }}:
+              </h5>
               <div class="steps text-capitalize text-start">
                 <div class="step">{{ $t("1. Request service") }}</div>
                 <div class="step">{{ $t("2. Share location") }}</div>
@@ -85,7 +93,10 @@
           </button>
           <button @click="navigaToteComfrotable" class="btn-order w-100">
             <span v-if="!isLoadingBtn">{{ $t("Order Now") }}</span>
-            <span v-else class="spinner-border spinner-border-sm text-success"></span>
+            <span
+              v-else
+              class="spinner-border spinner-border-sm text-success"
+            ></span>
           </button>
         </div>
       </div>
@@ -155,5 +166,45 @@ function navigaToteComfrotable() {
   .wench-service {
     margin-bottom: 40px;
   }
+  .order-now h1 {
+    font-size: 13px !important;
+  }
+  .orderbtn-text {
+    font-size: 10px !important;
+  }
+}
+
+.modal-container {
+  position: relative;
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh; /* تخلي المودال ما يخرجش من الشاشة */
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-body {
+  flex: 1;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  padding: 1rem;
+}
+
+.img-modal {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: #fff;
+}
+
+.modal-footer {
+  position: sticky;
+  bottom: 0;
+  background: #fff;
+  z-index: 2;
+  padding: 1rem;
 }
 </style>
