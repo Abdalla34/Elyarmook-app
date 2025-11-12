@@ -460,24 +460,69 @@
         </div>
       </div>
       <!-- message done use wallet -->
-      <div class="msg-done-use-wallet" v-if="msgDoneUseWallet">
-        <i
-          class="fa-solid fa-xmark cursor-pointer"
-          style="cursor: pointer"
-          @click="msgDoneUseWallet = false"
-        ></i>
-        <p class="text-success">{{ $t("order successfully!") }}</p>
-        <button-card
-          class="width-btn w-50 m-auto mt-2"
-          @click="
-            navigateTo(
-              $localePath(`/orderdetails/${order_id}?from=cart-update-details`)
-            )
-          "
-          :text-button="$t('view my orders')"
-        >
-        </button-card>
+      <div v-if="msgDoneUseWallet" class="wallet-success-overlay">
+        <div class="wallet-success-box">
+          <i
+            class="fa-solid fa-xmark close-btn"
+            @click="msgDoneUseWallet = false"
+          ></i>
+
+          <p class="text-success title-success">
+            {{ $t("order successfully!") }}
+          </p>
+
+          <img
+            class="image-media"
+            src="/donePayment.png"
+            alt="تم الدفع بنجاح"
+          />
+
+          <div class="box-design mt-3">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <h4 class="label">{{ $t("sub total") }}</h4>
+              <p>
+                {{ itemsUpdates.sub_total }} <span>{{ $t("sar") }}</span>
+              </p>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <h4 class="label">{{ $t("vat") }}</h4>
+              <p>
+                {{ itemsUpdates.vat_amount }} <span>{{ $t("sar") }}</span>
+              </p>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <h4 class="label">{{ $t("pay from wallet") }}</h4>
+              <p>
+                -{{ itemsUpdates.sub_total }} <span>{{ $t("sar") }}</span>
+              </p>
+            </div>
+
+            <div
+              class="d-flex justify-content-between align-items-center final"
+            >
+              <h4 class="label">{{ $t("Final Amount") }}</h4>
+              <p>
+                {{ itemsUpdates.total_amount }} <span>{{ $t("sar") }}</span>
+              </p>
+            </div>
+          </div>
+
+          <button-card
+            class="width-btn w-75 m-auto mt-4"
+            @click="
+              navigateTo(
+                $localePath(
+                  `/orderdetails/${order_id}?from=cart-update-details`
+                )
+              )
+            "
+            :text-button="$t('view my orders')"
+          ></button-card>
+        </div>
       </div>
+
       <!-- over lay msg -->
       <div v-if="msgDoneUseWallet" class="over-lay"></div>
       <!-- load request -->
@@ -627,7 +672,7 @@ onMounted(() => {
 
 let balance = ref(null);
 let amountToPay = ref(null);
-let msgDoneUseWallet = ref(false);
+let msgDoneUseWallet = ref(true);
 const btnLoadUseWallet = ref(false);
 let toggleUseWalletFn = async () => {
   try {
@@ -697,4 +742,112 @@ async function toContinue() {
 
 <style scoped>
 @import "@/assets/css/cartorder.css";
+@media (max-width: 768px) {
+  .image-media {
+    width: 200px;
+  }
+}
+/* الخلفية الرمادية */
+.wallet-success-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  backdrop-filter: blur(3px);
+}
+
+/* الصندوق الأبيض */
+.wallet-success-box {
+  background: #fff;
+  border-radius: 20px;
+  padding: 30px 25px;
+  width: 90%;
+  max-width: 480px;
+  box-shadow: 0 5px 30px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  position: relative;
+  animation: popupShow 0.3s ease;
+}
+
+/* زر الإغلاق */
+.wallet-success-box .close-btn {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 20px;
+  color: #444;
+  cursor: pointer;
+}
+
+/* النص العلوي */
+.title-success {
+  font-size: 20px;
+  font-weight: 600;
+  margin-top: 5px;
+  color: #16a34a;
+}
+
+/* الصورة */
+.image-media {
+  width: 120px;
+  margin: 20px auto;
+  display: block;
+}
+
+/* تفاصيل الطلب */
+.box-design {
+  background: #f8f8f8;
+  border-radius: 15px;
+  padding: 15px 20px;
+  text-align: left;
+}
+
+.box-design .label {
+  font-weight: 500;
+  font-size: 15px;
+  color: #333;
+}
+
+.box-design p {
+  font-weight: 600;
+  font-size: 15px;
+  color: #111;
+  margin: 0;
+}
+
+.box-design span {
+  font-size: 13px;
+  color: #777;
+}
+
+.final {
+  border-top: 1px solid #ddd;
+  padding-top: 10px;
+  margin-top: 8px;
+}
+
+/* الزر */
+.width-btn {
+  display: block;
+  text-align: center;
+}
+
+/* أنيميشن ناعم */
+@keyframes popupShow {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 </style>
