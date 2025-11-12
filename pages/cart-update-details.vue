@@ -435,14 +435,25 @@
                     type="checkbox"
                     role="switch"
                     id="usewallet"
-                    @change="toggleUseWalletFn"
                     v-model="useWalletActive"
                   />
                 </div>
               </div>
 
               <div class="buttion-confirm" @click="toContinue()">
-                <ButtonCard :textButton="$t('continue')" />
+                <ButtonCard
+                  v-if="!btnLoadUseWallet"
+                  :textButton="$t('continue')"
+                />
+                <button
+                  style="background-color: var(--main-color)"
+                  class="btn border-radius-36px w-100 mb-2"
+                  v-else
+                >
+                  <span
+                    class="spinner-border spinner-border-sm text-success"
+                  ></span>
+                </button>
               </div>
             </div>
           </div>
@@ -616,15 +627,18 @@ onMounted(() => {
 
 let balance = ref(null);
 let amountToPay = ref(null);
-
+let msgDoneUseWallet = ref(false);
+const btnLoadUseWallet = ref(false);
 let toggleUseWalletFn = async () => {
   try {
+    btnLoadUseWallet.value = true;
     let resWallet = await toggleUseWallet(order_id, "cart_type");
 
     if (resWallet?.status === true) {
       useWalletActive.value = resWallet?.data?.use_wallet;
       balance.value = resWallet?.data?.user_balance;
       amountToPay.value = resWallet?.data?.amount_to_pay;
+      cartCount.value = 0;
 
       if (Number(resWallet?.data?.amount_to_pay) === 0) {
         let resChange = await changeCartToOrder(order_id);
@@ -635,20 +649,11 @@ let toggleUseWalletFn = async () => {
   } catch (error) {
     console.log("Error happened:");
     console.log("Error response:");
+  } finally {
+    btnLoadUseWallet.value = false;
   }
 };
 const localePath = useLocalePath();
-
-let msgDoneUseWallet = ref(false);
-let router = useRouter();
-function toContinue() {
-  router.push({
-    path: localePath(`/payment`),
-    query: {
-      id: order_id,
-    },
-  });
-}
 const isloading = ref(false);
 
 const toogleWarranty = async () => {
@@ -666,12 +671,28 @@ const toogleWarranty = async () => {
       };
     }
   } catch (err) {
-    console.log('Error fetching');
+    console.log("Error fetching");
   } finally {
     isloading.value = false;
   }
 };
 
+let router = useRouter();
+async function toContinue() {
+  if (useWalletActive.value) {
+    await toggleUseWalletFn();
+    if (Number(amountToPay.value) === 0) {
+      msgDoneUseWallet.value = true;
+      return;
+    }
+  }
+  router.push({
+    path: localePath(`/payment`),
+    query: {
+      id: order_id,
+    },
+  });
+}
 </script>
 
 <style scoped>

@@ -299,11 +299,10 @@
             <div
               v-if="
                 orderSelected &&
-                ((orderSelected.services &&
-                  orderSelected.services.length > 0) ||
-                  (orderSelected.spare_parts &&
-                    orderSelected.spare_parts.length > 0) ||
-                  (orderSelected.offers && orderSelected.offers.length > 0))
+                (orderSelected.services?.length || 0) +
+                  (orderSelected.spare_parts?.length || 0) +
+                  (orderSelected.offers?.length || 0) >
+                  0
               "
               class="parent-items"
             >
@@ -320,8 +319,13 @@
               <div class="items-order order-amount mt-3">
                 <div
                   class="title d-flex align-items-center justify-content-between"
-                  v-for="item in orderSelected?.services.slice(0, 1)"
-                  :key="item.id"
+                  v-for="item in (orderSelected?.services?.length
+                    ? orderSelected.services
+                    : orderSelected?.offers?.length
+                    ? orderSelected.offers
+                    : orderSelected?.spare_parts || []
+                  ).slice(0, 1)"
+                  :key="item.id || item.offer_id"
                 >
                   <div class="img-title d-flex align-items-center gap-2">
                     <img :src="item.image" class="image-width" alt="" />
@@ -356,7 +360,7 @@
                     ></i>
                   </div>
                   <!-- services -->
-                  <div v-if="orderSelected.services" class="services">
+                  <div v-if="orderSelected.services?.length" class="services">
                     <h4 class="label">{{ $t("services") }}</h4>
                     <div class="service-list">
                       <div
@@ -376,7 +380,7 @@
                   </div>
                   <!-- spare Parts -->
                   <div
-                    v-if="orderSelected.spare_parts.length"
+                    v-if="orderSelected.spare_parts?.length"
                     class="spareparts"
                   >
                     <h4 class="label">{{ $t("spare-parts") }}</h4>
@@ -402,7 +406,7 @@
                   </div>
 
                   <!-- offers -->
-                  <div v-if="orderSelected.offers.length" class="offers">
+                  <div v-if="orderSelected.offers?.length" class="offers">
                     <h4 class="label">{{ $t("offers") }}</h4>
                     <div class="offer-list">
                       <div
@@ -652,7 +656,7 @@ onMounted(async () => {
     orderSelected.value = res?.data ?? {};
     skeleton.value = false;
   } catch (err) {
-    console.log('Error fetching ');
+    console.log("Error fetching ");
   } finally {
     skeleton.value = false;
   }
@@ -661,7 +665,7 @@ onMounted(async () => {
     getReasons.value = resReasons?.data || [];
     skeleton.value = false;
   } catch (error) {
-    console.error('Error fetching ');
+    console.error("Error fetching ");
   }
 });
 </script>
