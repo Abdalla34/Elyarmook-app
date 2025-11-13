@@ -687,6 +687,7 @@ let toggleUseWalletFn = async () => {
       balance.value = resWallet?.data?.user_balance;
       amountToPay.value = resWallet?.data?.amount_to_pay;
       cartCount.value = 0;
+      localStorage.removeItem("yarmook-cart");
       detailsBackUsedWallet.value = resWallet?.data;
 
       if (Number(resWallet?.data?.amount_to_pay) === 0) {
