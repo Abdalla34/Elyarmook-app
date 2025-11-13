@@ -677,9 +677,12 @@ onMounted(async () => {
   width: 40px;
 }
 .popup-sure-cancel {
-  height: 12% !important;
   text-align: center;
+  height: auto; /* يخليه ياخد ارتفاع المحتوى تلقائي */
+  max-height: 20vh; /* أقصى ارتفاع 90% من الشاشة */ /* لو المحتوى زاد، يضيف سكرول داخلي */
 }
+
+
 .border-box-item {
   border: 1px solid #c71f45;
 }

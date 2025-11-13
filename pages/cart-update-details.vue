@@ -25,28 +25,7 @@
             </h3>
             <div class="btn-items">
               <button @click="navigateTo('/services')">
-                <svg
-                  width="25"
-                  height="25"
-                  viewBox="0 0 25 25"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M6.5 12.5H18.5"
-                    stroke="#040505"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                  <path
-                    d="M12.5 18.5V6.5"
-                    stroke="#040505"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
+                <PuplicIconPlusIcon />
                 {{ $t("Add Items") }}
               </button>
             </div>
@@ -262,9 +241,23 @@
           "
         >
           <div class="h-100">
-            <h1 class="text-capitalize fs-6 updated-details">
+            <!-- <h1 class="text-capitalize fs-6 updated-details">
               {{ $t("order details updated") }}
-            </h1>
+            </h1> -->
+            <transition name="slide-right">
+              <div
+                v-if="useWalletAlert"
+                class="success-msg-box d-flex align-items-center justify-content-between gap-5"
+              >
+                <i
+                  class="fa-solid fa-xmark close-icon"
+                  @click="useWalletAlert = false"
+                ></i>
+                <p class="text-success m-0 fs">
+                  {{ $t("Order details have been successfully updated") }}
+                </p>
+              </div>
+            </transition>
             <!-- price details -->
             <div class="">
               <div class="box-design">
@@ -467,35 +460,37 @@
             @click="msgDoneUseWallet = false"
           ></i>
 
-          <p class="text-success title-success">
-            {{ $t("order successfully!") }}
-          </p>
-
           <img
             class="image-media"
             src="/donePayment.png"
             alt="تم الدفع بنجاح"
           />
+          <p class="text-success title-success">
+            {{ $t("order successfully!") }}
+          </p>
 
           <div class="box-design mt-3">
             <div class="d-flex justify-content-between align-items-center mb-2">
               <h4 class="label">{{ $t("sub total") }}</h4>
               <p>
-                {{ itemsUpdates.sub_total }} <span>{{ $t("sar") }}</span>
+                {{ detailsBackUsedWallet.sub_total }}
+                <span>{{ $t("sar") }}</span>
               </p>
             </div>
 
             <div class="d-flex justify-content-between align-items-center mb-2">
               <h4 class="label">{{ $t("vat") }}</h4>
               <p>
-                {{ itemsUpdates.vat_amount }} <span>{{ $t("sar") }}</span>
+                {{ detailsBackUsedWallet.vat_amount }}
+                <span>{{ $t("sar") }}</span>
               </p>
             </div>
 
             <div class="d-flex justify-content-between align-items-center mb-2">
               <h4 class="label">{{ $t("pay from wallet") }}</h4>
               <p>
-                -{{ itemsUpdates.sub_total }} <span>{{ $t("sar") }}</span>
+                -{{ detailsBackUsedWallet.sub_total }}
+                <span>{{ $t("sar") }}</span>
               </p>
             </div>
 
@@ -504,7 +499,8 @@
             >
               <h4 class="label">{{ $t("Final Amount") }}</h4>
               <p>
-                {{ itemsUpdates.total_amount }} <span>{{ $t("sar") }}</span>
+                {{ detailsBackUsedWallet.total_amount }}
+                <span>{{ $t("sar") }}</span>
               </p>
             </div>
           </div>
@@ -543,7 +539,9 @@ const {
   changeCartToOrder,
   ToggleWarranty,
 } = useApi();
-// const { triggerCartUpdate } = useCartUpdate();
+
+const test = ref(false);
+
 const loadingDelete = ref({});
 const loadingQty = ref({});
 let route = useRoute();
@@ -657,6 +655,7 @@ let voucherDeleted = async () => {
 };
 
 let useWalletActive = ref(null);
+const useWalletAlert = ref(true);
 
 onMounted(() => {
   if (itemsUpdates?.data?.use_wallet !== undefined) {
@@ -668,12 +667,16 @@ onMounted(() => {
   if (itemsUpdates?.data?.amount_to_pay !== undefined) {
     amountToPay.value = itemsUpdates?.data?.amount_to_pay;
   }
+  setTimeout(() => {
+    useWalletAlert.value = false;
+  }, 2500);
 });
 
 let balance = ref(null);
 let amountToPay = ref(null);
-let msgDoneUseWallet = ref(true);
+let msgDoneUseWallet = ref(false);
 const btnLoadUseWallet = ref(false);
+const detailsBackUsedWallet = ref(null);
 let toggleUseWalletFn = async () => {
   try {
     btnLoadUseWallet.value = true;
@@ -684,6 +687,7 @@ let toggleUseWalletFn = async () => {
       balance.value = resWallet?.data?.user_balance;
       amountToPay.value = resWallet?.data?.amount_to_pay;
       cartCount.value = 0;
+      detailsBackUsedWallet.value = resWallet?.data;
 
       if (Number(resWallet?.data?.amount_to_pay) === 0) {
         let resChange = await changeCartToOrder(order_id);
@@ -728,6 +732,9 @@ async function toContinue() {
     await toggleUseWalletFn();
     if (Number(amountToPay.value) === 0) {
       msgDoneUseWallet.value = true;
+      setTimeout(() => {
+        router.push(localePath("/"));
+      }, 2000);
       return;
     }
   }
@@ -742,12 +749,55 @@ async function toContinue() {
 
 <style scoped>
 @import "@/assets/css/cartorder.css";
+.image-media {
+  width: 300px;
+}
+.success-msg-box {
+  background-color: #e6ffed;
+  color: #0f5132;
+  border: 1px solid #a3cfbb;
+  padding: 12px 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  z-index: 100;
+  min-width: 250px;
+}
+.success-msg-box p {
+  font-size: 16px;
+}
+
+.success-msg-box .close-icon {
+  cursor: pointer;
+  color: #0f5132;
+  font-size: 18px;
+  margin-left: 10px;
+}
+
+/* Animation */
+.slide-right-enter-active,
+.slide-right-leave-active {
+  transition: all 0.5s ease;
+}
+
+.slide-right-enter-from,
+.slide-right-leave-to {
+  transform: translateX(120%);
+  opacity: 0;
+}
+
 @media (max-width: 768px) {
   .image-media {
     width: 200px;
   }
+  /* .success-msg-box{
+    position: relative;
+    top: 10%;
+  } */
+  .success-msg-box p {
+    font-size: 14px;
+  }
 }
-/* الخلفية الرمادية */
+
 .wallet-success-overlay {
   position: fixed;
   top: 0;
@@ -762,7 +812,6 @@ async function toContinue() {
   backdrop-filter: blur(3px);
 }
 
-/* الصندوق الأبيض */
 .wallet-success-box {
   background: #fff;
   border-radius: 20px;
@@ -775,7 +824,6 @@ async function toContinue() {
   animation: popupShow 0.3s ease;
 }
 
-/* زر الإغلاق */
 .wallet-success-box .close-btn {
   position: absolute;
   top: 15px;
@@ -785,7 +833,6 @@ async function toContinue() {
   cursor: pointer;
 }
 
-/* النص العلوي */
 .title-success {
   font-size: 20px;
   font-weight: 600;
@@ -793,14 +840,12 @@ async function toContinue() {
   color: #16a34a;
 }
 
-/* الصورة */
 .image-media {
   width: 120px;
   margin: 20px auto;
   display: block;
 }
 
-/* تفاصيل الطلب */
 .box-design {
   background: #f8f8f8;
   border-radius: 15px;
@@ -832,13 +877,11 @@ async function toContinue() {
   margin-top: 8px;
 }
 
-/* الزر */
 .width-btn {
   display: block;
   text-align: center;
 }
 
-/* أنيميشن ناعم */
 @keyframes popupShow {
   from {
     opacity: 0;
@@ -849,5 +892,4 @@ async function toContinue() {
     transform: translateY(0) scale(1);
   }
 }
-
 </style>
