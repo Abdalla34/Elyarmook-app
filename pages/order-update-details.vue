@@ -25,6 +25,7 @@
             <div
               v-if="mycars.length > 0"
               class="input-user position-relative d-flex flex-column"
+              :dir="$i18n.locale === 'ar' ? 'rtl' : 'ltr'"
             >
               <label for="" class="label">{{ $t("my cars") }}</label>
               <select v-model="carValue" class="input-style">
@@ -33,13 +34,20 @@
                   {{ car.car_type.title }}
                 </option>
               </select>
-              <div class="icon-shape position-absolute">
+              <div
+                :style="{
+                  right: $i18n.locale === 'ar' ? 'auto' : '10px',
+                  left: $i18n.locale === 'ar' ? '10px' : 'auto',
+                }"
+                class="icon-shape position-absolute"
+              >
                 <icons-order-iconunion />
               </div>
             </div>
             <!-- bracnh && time -->
             <div
               class="branch-date d-flex align-items-center justify-content-between gap-3"
+              :dir="$i18n.locale === 'ar' ? 'rtl' : 'ltr'"
             >
               <div
                 class="input-barnch position-relative fix d-flex flex-column"
@@ -51,7 +59,13 @@
                     {{ br.title }}
                   </option>
                 </select>
-                <div class="icon-shape position-absolute">
+                <div
+                  class="icon-shape position-absolute"
+                  :style="{
+                    right: $i18n.locale === 'ar' ? 'auto' : '10px',
+                    left: $i18n.locale === 'ar' ? '10px' : 'auto',
+                  }"
+                >
                   <icons-order-iconunion />
                 </div>
               </div>
@@ -77,13 +91,22 @@
                     </option>
                   </template>
                 </select>
-                <div class="icon-shape position-absolute">
+                <div
+                  :style="{
+                    right: $i18n.locale === 'ar' ? 'auto' : '10px',
+                    left: $i18n.locale === 'ar' ? '10px' : 'auto',
+                  }"
+                  class="icon-shape position-absolute"
+                >
                   <icons-order-iconunion />
                 </div>
               </div>
             </div>
 
-            <div class="details-issues d-flex flex-column">
+            <div
+              class="details-issues d-flex flex-column"
+              :dir="$i18n.locale === 'ar' ? 'rtl' : 'ltr'"
+            >
               <label for="" class="label">{{ $t("details") }}</label>
               <textarea
                 name=""
@@ -94,7 +117,10 @@
               ></textarea>
             </div>
 
-            <div class="problem-photo">
+            <div
+              class="problem-photo"
+              :dir="$i18n.locale === 'ar' ? 'rtl' : 'ltr'"
+            >
               <label class="label">{{ $t("problem photo") }}</label>
               <div
                 class="upload-box d-flex justify-content-center gap-5 align-items-center"
@@ -137,25 +163,6 @@
                 {{ $t("continue") }}
               </button>
             </div>
-            <!-- <form
-              @submit.prevent="onSubmit"
-              class="buttons-order d-flex justify-content-center gap-2"
-            >
-              <button
-                @click="navigateTo('/services')"
-                class="additems text-capitalize label p-2"
-              >
-                <i class="fa-solid fa-plus"></i>
-                {{ $t("add another items") }}
-              </button>
-              <button
-                type="submit"
-                class="continue text-capitalize label p-2 button"
-                :disabled="!carValue || !branchValue || !dateValue"
-              >
-                {{ $t("continue") }}
-              </button>
-            </form> -->
           </div>
         </div>
       </div>

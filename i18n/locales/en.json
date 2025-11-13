@@ -46,7 +46,7 @@
   "optional": "optional",
   "oneWay": "oneWay",
   "o'clock 1": "o'clock 1",
-  "Order details have been successfully updated" :"Order details have been successfully updated",
+  "Order details have been successfully updated": "Order details have been successfully updated",
 
   "my orders": "my orders",
   "membership": "membership",
@@ -102,7 +102,8 @@
   "Are you Sure to Change Language to Arabic?": "Are you Sure to Change Language to Arabic?",
   "added your car": "added your car",
   "alyarmook takes a nap to service you better": "alyarmook takes a nap to service you better",
-  "About Us DescriptioN Visit our information website": "About Us DescriptioN Visit our information website", 
+  "About Us DescriptioN Visit our information website": "About Us DescriptioN Visit our information website",
+  "About Us": "About Us",
 
   "loading...": "loading...",
   "log out": "log out",
@@ -218,7 +219,7 @@
   "phone invalid length min": "Phone number must be at least 8 digits and start 5",
   "By using this website means your acceptance of": "By using this website means your acceptance of",
   "Policy and Terms of use": "Policy and Terms of use",
-  "pay from wallet" :"pay from wallet",
+  "pay from wallet": "pay from wallet",
 
   "first name": "first name",
   "Find now": "Find now",

@@ -103,7 +103,13 @@
                   {{ br.title }}
                 </option>
               </select>
-              <div class="icon-shape position-absolute">
+              <div
+                :style="{
+                  right: $i18n.locale === 'ar' ? 'auto' : '10px',
+                  left: $i18n.locale === 'ar' ? '10px' : 'auto',
+                }"
+                class="icon-shape position-absolute"
+              >
                 <PuplicIconArrowBottom />
               </div>
             </div>
@@ -233,7 +239,13 @@
                 <option value="oneWay">{{ $t("oneWay") }}</option>
                 <option value="twoWay">{{ $t("twoWay") }}</option>
               </select>
-              <div class="icon-shape position-absolute">
+              <div
+                :style="{
+                  right: $i18n.locale === 'ar' ? 'auto' : '10px',
+                  left: $i18n.locale === 'ar' ? '10px' : 'auto',
+                }"
+                class="icon-shape position-absolute"
+              >
                 <PuplicIconArrowBottom />
               </div>
             </div>
@@ -332,7 +344,13 @@
                   {{ value.title }}
                 </option>
               </select>
-              <div class="icon-shape position-absolute">
+              <div
+                :style="{
+                  right: $i18n.locale === 'ar' ? 'auto' : '10px',
+                  left: $i18n.locale === 'ar' ? '10px' : 'auto',
+                }"
+                class="icon-shape position-absolute"
+              >
                 <PuplicIconArrowBottom />
               </div>
             </div>
