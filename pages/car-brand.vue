@@ -70,7 +70,7 @@
             <input
               id="amnufactureYaer"
               type="text"
-              :placeholder="$t('Manfacture Year')"
+              :placeholder="$t('Manfacture Year:')"
               class="form-control border-0 shadow-none"
               style="flex: 1; cursor: pointer"
               v-model="carForm.manufacture_year"
@@ -80,7 +80,7 @@
           </div>
 
           <label class="chassis-label text-capitalize" for="chassisNumber">
-            {{ $t("chassis number:") }}
+            {{ $t("chassis Number:") }}
           </label>
           <input
             id="chassisNumber"
@@ -95,7 +95,7 @@
           }}</span>
           <button-card
             :disabled="!carForm.chassis_number || !carForm.manufacture_year"
-            :text-button="isloadCar ? 'loading...' : 'add car'"
+            :text-button="isloadCar ? $t('loading...') : $t('add car')"
             class="mt-4"
             type="submit"
           />
@@ -109,7 +109,7 @@
             @click.self="showYears = false"
           ></button>
 
-          <h1 class="label mb-3">{{ "Manfacture Year" }}</h1>
+          <h1 class="label mb-3">{{ "Manfacture Year:" }}</h1>
           <div class="all-years">
             <div
               style="cursor: pointer"
@@ -196,6 +196,9 @@ let selecteYears = async (year) => {
 
 const { addCar, fetchMyCars } = useMyCars();
 const localePaht = useLocalePath();
+
+const route = useRoute();
+const redirectTo = route.query.redirect || "/my-cars";
 async function SendData() {
   try {
     isloadCar.value = true;
@@ -214,7 +217,7 @@ async function SendData() {
     addCar(carForm.value);
     addCar(res?.data);
 
-    navigateTo(localePaht("/my-cars"));
+    navigateTo(redirectTo);
   } catch (err) {
     if (err?.response?.status === 401) {
       return navigateTo(localePaht("/createaccount"));

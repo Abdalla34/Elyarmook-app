@@ -19,7 +19,7 @@
           </h1>
 
           <ButtonCard
-            @click="handleClick('/car-brand')"
+            @click="goAddCar"
             v-if="mycars.length <= 0"
             :text-button="isloadBtn ? $t('loading...') : $t('added your car')"
           />
@@ -877,6 +877,10 @@ const onSubmit = async () => {
     await createOrderWench();
   }
 };
+const route = useRoute();
+function goAddCar() {
+  navigateTo(LocalePath(`/car-brand?redirect=${route.fullPath}`));
+}
 </script>
 
 <style scoped>

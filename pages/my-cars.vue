@@ -90,19 +90,35 @@
                       :for="`car-${car.id}`"
                       class="text-capitalize label-cursor"
                     >
-                      {{ $t("set as default") }}
+                      <span v-if="!loadBtnSpinnerSetDefault">
+                        {{ $t("set as default") }}</span
+                      >
+                      <span
+                        v-else
+                        class="spinner-border spinner-border-sm text-success"
+                        role="status"
+                      ></span>
                     </label>
                   </div>
 
                   <!-- delete -->
-                  <div
-                    @click.stop="deleted(car.id)"
-                    class="delete box-btn d-flex align-items-center gap-2 justify-content-center"
-                  >
-                    <div>
-                      <Trash class="trash-icon" />
+                  <div>
+                    <div
+                      v-if="!loadBtnSpinner"
+                      @click.stop="deleted(car.id)"
+                      class="delete box-btn d-flex align-items-center gap-2 justify-content-center"
+                    >
+                      <div>
+                        <Trash class="trash-icon" />
+                      </div>
+                      <h6 class="text-capitalize">{{ $t("delete") }}</h6>
                     </div>
-                    <h6 class="text-capitalize">{{ $t("delete") }}</h6>
+                    <div v-else>
+                      <span
+                        class="spinner-border spinner-border-sm text-success"
+                        role="status"
+                      ></span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -128,7 +144,11 @@
               <button class="text-capitalize">
                 <!-- <i class="fa-solid fa-plus"></i> -->
                 <span v-if="!loadingIdAddCar">{{ $t("add new car") }}</span>
-                <span v-else class="spinner-border spinner-border-sm text-success" role="status"></span>
+                <span
+                  v-else
+                  class="spinner-border spinner-border-sm text-success"
+                  role="status"
+                ></span>
               </button>
             </div>
           </div>
@@ -139,7 +159,7 @@
 </template>
 
 <script setup>
-const { getMycars } = useApi();
+const { getMycars, deleteCar, changeCarToDefault } = useApi();
 const skeleton = ref(true);
 const token = useCookie("token");
 let myCars = ref([]);
@@ -187,37 +207,43 @@ let activeCarId = ref(null);
 function toggleEdit(carId) {
   activeCarId.value = activeCarId.value === carId ? null : carId;
 }
-
+const loadBtnSpinner = ref(false);
 async function deleted(id) {
   try {
+    loadBtnSpinner.value = true;
     let carIsDefault = myCars.value.find((car) => car.id === id);
 
-    let resDeleted = await useApi().deleteCar(id);
+    let resDeleted = await deleteCar(id);
     if (resDeleted?.status) {
       myCars.value = myCars.value.filter((carid) => carid.id !== id);
       if (carIsDefault?.is_default && myCars.value.length > 0) {
         let newDefaultCar = myCars.value[0];
-        let resDefault = await useApi().changeCarToDefault(newDefaultCar.id);
+        let resDefault = await changeCarToDefault(newDefaultCar.id);
         if (resDefault?.status) {
-          let updatedCars = await useApi().getMycars();
+          let updatedCars = await getMycars();
           myCars.value = updatedCars?.data || [];
         }
       }
     }
   } catch (err) {
     console.log("Error fetching");
+  } finally {
+    loadBtnSpinner.value = false;
   }
 }
-
+const loadBtnSpinnerSetDefault = ref(false);
 async function setDefault(carId) {
   try {
-    let res = await useApi().changeCarToDefault(carId);
+    loadBtnSpinnerSetDefault.value = true;
+    let res = await changeCarToDefault(carId);
     if (res?.status) {
-      let updatedCars = await useApi().getMycars();
+      let updatedCars = await getMycars();
       myCars.value = updatedCars?.data || [];
     }
   } catch (err) {
     console.error("فشل تعيين السيارة كافتراضية");
+  } finally {
+    loadBtnSpinnerSetDefault.value = false;
   }
 }
 
@@ -231,7 +257,7 @@ const goToCarDetails = (id) => {
 const loadingIdAddCar = ref(false);
 const goToAddCar = () => {
   loadingIdAddCar.value = true;
- navigateTo(localePath('car-brand'))
+  navigateTo(localePath("car-brand"));
 };
 </script>
 

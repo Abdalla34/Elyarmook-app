@@ -2,7 +2,7 @@
   <div>
     <div v-if="isLoadingOtp" class="spinner-overlay">
       <div class="dashed-spinner"></div>
-      <p class="mt-2">{{("loading...")}}</p>
+      <p class="mt-2">{{$t("loading...")}}</p>
     </div>
   </div>
 </template>

@@ -17,7 +17,7 @@
 
           <div class="order">
             <ButtonCard
-              @click="handleClick('/car-brand')"
+              @click="goAddCar"
               v-if="mycars.length <= 0"
               :text-button="isloadBtn ? $t('loading...') : $t('added your car')"
             />
@@ -182,11 +182,17 @@ const dateValue = useState("dateValue", () => {});
 const note = useState("note", () => "");
 const isLoadingOtp = ref(true);
 
-const { handleClick, isloadBtn } = loadBtn();
+const getCarDefault = ref(null);
+
+const { isloadBtn } = loadBtn();
+const route = useRoute();
+
+function goAddCar() {
+  navigateTo(`/car-brand?redirect=${route.fullPath}`);
+}
 
 const dayjs = useDayjs();
 const user = useCookie("user").value;
-const route = useRoute();
 const idRoute = route.query.id;
 const msgError = ref(false);
 
@@ -252,6 +258,12 @@ const onSubmit = async () => {
 onMounted(async () => {
   const res = await getMycars();
   mycars.value = res?.data || [];
+  getCarDefault.value = mycars.value.find((car) => car.is_default)?.id || null;
+  const hasCarValue = carValue.value;
+
+  if (!hasCarValue && getCarDefault.value) {
+    carValue.value = getCarDefault.value;
+  }
   const resBranshes = await getBranches();
   branches.value = resBranshes?.data?.items;
   isLoadingOtp.value = false;
