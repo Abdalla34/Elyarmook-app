@@ -309,7 +309,7 @@
               </div>
               <!-- warranty -->
               <div class="warranty" v-if="itemsUpdates?.data?.pro_warranty">
-                <LoadingOtp :isLoadingOtp="isLoadingOtp" />
+                <!-- <LoadingOtp :isLoadingOtp="isloading" /> -->
                 <div
                   class="input-warranty d-flex align-items-center justify-content-between"
                 >

@@ -274,21 +274,19 @@ async function handleSendOtp(event) {
 }
 
 function formatSaudiNumber(event) {
-  let value = event.target.value.replace(/\D/g, ""); // يشيل أي حاجة غير أرقام
+  let value = event.target.value.replace(/\D/g, ""); 
 
-  // لو أول رقم مش 5 نحطه غصب عنه
   if (!value.startsWith("5")) {
     value = "5" + value.replace(/^5*/, "");
   }
 
-  // خليه مايزدش عن 9 أرقام بعد الـ5
   if (value.length > 9) {
     value = value.slice(0, 9);
   }
 
   phone.value = value;
 
-  // التحقق من الطول
+  
   if (value.length < 9) {
     phoneError.value = $t("phone invalid length min");
   } else if (value.length > 9) {

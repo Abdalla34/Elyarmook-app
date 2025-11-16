@@ -160,10 +160,6 @@ async function getOrders(page = 1) {
   // new request
   try {
     loading.value = true;
-    // get data status
-
-    const responseStatus = await getStatusorders();
-    statusorder.value = responseStatus?.data;
     const res = await getMyOrders(page);
 
     if (res?.status === false && res?.message === "Unauthenticated") {
@@ -207,8 +203,12 @@ async function handlePrev() {
   }
 }
 
-onMounted(() => {
+onMounted(async () => {
   getOrders(currentpage.value);
+  if (token.value) {
+    const responseStatus = await getStatusorders();
+    statusorder.value = responseStatus?.data;
+  }
 });
 function convertArabicDate(arabicDate) {
   return arabicDate
@@ -234,7 +234,7 @@ function convertArabicDate(arabicDate) {
   background-color: var(--main-color);
   border: none;
 }
-.min-height{
+.min-height {
   min-height: 50vh;
 }
 </style>

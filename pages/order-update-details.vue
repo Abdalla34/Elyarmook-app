@@ -188,7 +188,7 @@ const { isloadBtn } = loadBtn();
 const route = useRoute();
 
 function goAddCar() {
-  navigateTo(`/car-brand?redirect=${route.fullPath}`);
+  navigateTo(localePath(`/car-brand?redirect=${route.fullPath}`));
 }
 
 const dayjs = useDayjs();
