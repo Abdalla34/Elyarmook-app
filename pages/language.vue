@@ -5,7 +5,7 @@
       <div class="container">
         <div class="row">
           <div class="col-md-8 col-padding position-relative">
-            <GoPageArrow title="language" :showIcon="false" />
+            <GoPageArrow :title="$t('language')" :showIcon="false" />
 
             <!-- lang Arabic -->
             <div class="lang margin-bottom-24px box-pages">
