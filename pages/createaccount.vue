@@ -27,7 +27,7 @@
 
       <div class="btn-continue w-100 enter">
         <ButtonCard
-          :textButton="loading ? $t('Loading...') : $t('continue')"
+          :textButton="loading ? $t('loading...') : $t('continue')"
           @click="onSubmit"
           :disabled="loading"
         />
