@@ -47,6 +47,7 @@
   "oneWay": "oneWay",
   "o'clock 1": "o'clock 1",
   "Order details have been successfully updated": "Order details have been successfully updated",
+  "Orders retrieved Successfully": "Orders retrieved Successfully",
 
   "my orders": "my orders",
   "membership": "membership",
@@ -105,7 +106,8 @@
   "alyarmook takes a nap to service you better": "alyarmook takes a nap to service you better",
   "About Us DescriptioN Visit our information website": "About Us DescriptioN Visit our information website",
   "About Us": "About Us",
-  "add car" :"add car",
+  "add car": "add car",
+  "apply" :"apply",
 
   "loading...": "loading...",
   "log out": "log out",
@@ -196,7 +198,7 @@
   "choosing time details": "choosing time details",
   "Close": "Close",
   "created_at": "created_at",
-  "Copied successfully!" : "Copied successfully!",
+  "Copied successfully!": "Copied successfully!",
 
   "Next": "Next",
   "Prev": "Prev",

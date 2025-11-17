@@ -323,7 +323,8 @@
                         type="checkbox"
                         role="switch"
                         v-model="itemsUpdates.data.pro_warranty.is_pro_warranty"
-                        @change="toogleWarranty" style="cursor: pointer"
+                        @change="toogleWarranty"
+                        style="cursor: pointer"
                       />
                     </div>
                   </div>
@@ -338,7 +339,10 @@
                   {{ itemsUpdates.data.pro_warranty.message_when_warranty_pro }}
                 </p>
 
-                <p class="p-color-fs mt-2" v-if="itemsUpdates.data.pro_warranty.is_pro_warranty">
+                <p
+                  class="p-color-fs mt-2"
+                  v-if="itemsUpdates.data.pro_warranty.is_pro_warranty"
+                >
                   {{ itemsUpdates.data.pro_warranty.description }}
                 </p>
 
@@ -381,7 +385,8 @@
                     >
                     <span
                       v-else
-                      class="spinner-border spinner-border-sm text-danger me-3"
+                      class="spinner-border spinner-border-sm text-danger"
+                      style="margin: 0px 8px 0px"
                     ></span>
                     <iconsOrder-applyCode />
                   </button>
@@ -399,19 +404,17 @@
                     >
                     <span
                       v-else
-                      class="spinner-border spinner-border-sm text-success me-3"
+                      class="spinner-border spinner-border-sm text-success"
+                      style="margin: 0px 8px 0px"
                     ></span>
                     <iconsOrder-applyCode />
                   </button>
                 </div>
                 <p
-                  v-if="msg === 'Orders retrieved Successfully'"
-                  class="text-success"
+                  v-if="msg"
+                  :class="voucherMessageClass"
                   style="font-size: 14px"
                 >
-                  {{ msg }}
-                </p>
-                <p v-else class="text-danger" style="font-size: 14px">
                   {{ msg }}
                 </p>
               </div>
@@ -651,40 +654,59 @@ async function updateQty(type, order_id, cart_item_id, qty, action) {
 let msg = ref("");
 let voucherCode = ref(null);
 let hasVoucher = ref(false);
+
 let voucherApply = async () => {
   try {
     loadVoucherBtnApply.value = true;
     let resVoucher = await applyVoucherToCart(order_id, voucherCode.value);
 
-    if (resVoucher?.status === false) {
-      msg.value = resVoucher?.message;
+    if (!resVoucher?.status || !resVoucher?.data) {
+      msg.value = resVoucher?.message || "حدث خطأ أثناء تطبيق الكوبون";
+      hasVoucher.value = false;
     } else {
-      msg.value = resVoucher?.message;
-      itemsUpdates.value = resVoucher;
-      hasVoucher.value = true;
+      const voucher = resVoucher.data.voucher;
+      if (voucher && voucher.is_valid) {
+        msg.value = voucher.message;
+        hasVoucher.value = true;
+      } else {
+        msg.value = resVoucher.data.message || "الكوبون غير صالح";
+        hasVoucher.value = false;
+      }
+      itemsUpdates.value = resVoucher.data;
     }
   } catch (error) {
-    console.error("Error applying voucher code:");
+    console.error("Error applying voucher code:", error);
+    msg.value = "حدث خطأ أثناء تطبيق الكوبون";
   } finally {
     loadVoucherBtnApply.value = false;
   }
-  console.log("Voucher code applied:", voucherCode.value);
 };
 
 let voucherDeleted = async () => {
   try {
     loadVoucherBtnDel.value = true;
     let res = await deleteVoucherFromCart(order_id);
-    itemsUpdates.value = res;
-    msg.value = res?.message || "Voucher deleted successfully";
+
+    itemsUpdates.value = res.data || {};
     hasVoucher.value = false;
     voucherCode.value = "";
+    msg.value =
+      res.data?.voucher?.message || res.message || "تم حذف الكوبون بنجاح";
   } catch (error) {
-    console.error("Error deleting voucher code:");
+    console.error("Error deleting voucher code:", error);
+    msg.value = "حدث خطأ أثناء حذف الكوبون";
   } finally {
     loadVoucherBtnDel.value = false;
   }
 };
+const voucherMessageClass = computed(() => {
+  if (!msg.value) return "";
+  if (hasVoucher.value && itemsUpdates.value?.voucher?.is_valid) {
+    return "text-success";
+  } else {
+    return "text-danger";
+  }
+});
 
 let useWalletActive = ref(null);
 const useWalletAlert = ref(true);
