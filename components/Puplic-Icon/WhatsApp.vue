@@ -27,6 +27,7 @@
   cursor: pointer;
 }
 .hover:hover {
+  background-color: green;
   stroke: white;
   transform: scaleX(1.1);
 }</style>

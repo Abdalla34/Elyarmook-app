@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <div class="instagram-bg rounded inline-block">
     <svg
       width="32"
-      class="hover"
       height="32"
       viewBox="0 0 32 32"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      class="hover"
     >
       <path
         opacity="0.6"
@@ -25,16 +25,28 @@
   </div>
 </template>
 
-
-
 <style>
-
+.instagram-bg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.instagram-bg:hover {
+  background: radial-gradient(
+    circle at 30% 107%,
+    #fdf497 0%,
+    #fdf497 5%,
+    #fd5949 45%,
+    #d6249f 60%,
+    #285aeb 90%
+  );
+}
 .hover {
   transition: all 0.4s;
   cursor: pointer;
 }
+
 .hover:hover {
-  stroke: white;
-  transform: scaleX(1.1);
+  transform: scale(1.2);
 }
 </style>

@@ -125,10 +125,10 @@
             {{ $t("social Media") }}
           </h6>
           <div
-            class="d-flex gap-2 align-items-center justify-content-start gap-4"
+            class="d-flex gap-2 align-items-center justify-content-start"
           >
-            <div class="box-hover-icons">
-              <PuplicIconFacebook />
+            <div class="box-hover-icons" @click="navigateToFn(getSettings?.twitter)">
+              <PuplicIconTwitter />
             </div>
             <div
               class="box-hover-icons"
