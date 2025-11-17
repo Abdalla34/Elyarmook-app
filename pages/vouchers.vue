@@ -69,9 +69,16 @@
               <div
                 class="d-flex justify-content-between align-items-center mt-3"
               >
-                <button class="coupon-code">
+                <button class="coupon-code" @click="copyVoucher(voucher.code)">
                   {{ $t("copy") }} "{{ voucher.code }}"
                 </button>
+                <div
+                  v-if="copyMsg"
+                  class="position-fixed top-0 start-50 translate-middle-x p-2 px-4 mt-3 bg-success text-white rounded shadow"
+                  style="z-index: 9999"
+                >
+                  {{ copyMsg }}
+                </div>
                 <div>
                   <span class="price-currency">{{ $t("expired at") }}</span>
                   <p class="text-muted">{{ voucher.expires_at }}</p>
@@ -169,7 +176,7 @@
 const { getAvailableVouchers, getUsedVouhcers, getExVouhcers } = useApi();
 const skeleton = ref(true);
 const availableVouchers = ref([]);
-const timeEndCach = 12 * 60 * 60 * 1000; // 12 ساعة
+const timeEndCach = 2 * 24 * 60 * 60 * 1000;
 
 async function loadAvailableVouchers() {
   const cacheData = localStorage.getItem("availableVouchersCache");
@@ -237,6 +244,23 @@ function emptyMsg() {
     messageEmpty.value = false;
   }
 }
+const copyMsg = ref("");
+const copyVoucher = (code) => {
+  navigator.clipboard
+    .writeText(code)
+    .then(() => {
+      copyMsg.value = $t("Copied successfully!");
+      setTimeout(() => {
+        copyMsg.value = "";
+      }, 1500);
+    })
+    .catch(() => {
+      copyMsg.value = "Failed to copy!";
+      setTimeout(() => {
+        copyMsg.value = "";
+      }, 1500);
+    });
+};
 
 onMounted(async () => {
   loadAvailableVouchers();
@@ -247,6 +271,7 @@ onMounted(async () => {
   const resExVouchers = await getExVouhcers();
   ExVouchers.value = resExVouchers?.data || [];
 });
+// console.log('code', availableVouchers.value.code)
 </script>
 
 <style scoped>
@@ -277,3 +302,4 @@ onMounted(async () => {
   background-color: rgb(228, 228, 194);
 }
 </style>
+

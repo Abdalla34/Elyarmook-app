@@ -51,31 +51,33 @@
           </h6>
           <ul class="list-unstyled">
             <li class="pt-1">
-              <NuxtLink class="font-size-16px" :to="$localePath('/')">{{
+              <NuxtLink class="font-size-16px" :to="$localePath(`/?redirect=${route.fullPath}`)">{{
                 $t("Home")
               }}</NuxtLink>
             </li>
             <li class="pt-1">
-              <NuxtLink class="font-size-16px" :to="$localePath('services')">{{
-                $t("services")
-              }}</NuxtLink>
+              <NuxtLink
+                class="font-size-16px"
+                :to="$localePath(`services?redirect=${route.fullPath}`)"
+                >{{ $t("services") }}</NuxtLink
+              >
             </li>
             <li class="pt-1">
               <NuxtLink
                 class="font-product"
-                :to="$localePath('/spare-parts')"
+                :to="$localePath(`spare-parts?redirect=${route.fullPath}`)"
                 >{{ $t("spare-parts") }}</NuxtLink
               >
             </li>
             <li class="pt-1">
-              <NuxtLink class="font-size-16px" :to="$localePath('/offers')">{{
+              <NuxtLink class="font-size-16px" :to="$localePath(`offers?redirect=${route.fullPath}`)">{{
                 $t("offers")
               }}</NuxtLink>
             </li>
             <li class="pt-1" v-if="token">
               <NuxtLink
                 class="font-size-16px"
-                :to="$localePath('/membership')"
+                :to="$localePath(`membership?redirect=${route.fullPath}`)"
                 >{{ $t("membership") }}</NuxtLink
               >
             </li>
@@ -104,13 +106,13 @@
         <div class="col-lg-2 col-md-3 col-sm-12">
           <h6 class="text-capitalize mb-3 font-size-title">{{ $t("Help") }}</h6>
           <p
-            @click="navigateTo($localePath('/faq'))"
+            @click="navigateTo($localePath(`/faq?redirect=${route.fullPath}`))"
             class="pt-1 font-size-16px text-uppercase"
           >
             {{ $t("faq") }}
           </p>
           <p
-            @click="navigateTo($localePath('/fill-form'))"
+            @click="navigateTo($localePath(`/fill-form?redirect=${route.fullPath}`))"
             class="pt-1 font-size-16px"
           >
             {{ $t("Contact Us") }}
@@ -172,6 +174,7 @@
 </template>
 
 <script setup>
+const route = useRoute();
 const token = useCookie("token");
 const getSettings = ref({});
 const resSettings = await useApi().getSettings();

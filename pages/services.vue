@@ -15,7 +15,11 @@
           >
             <div class="service-icon-wrapper">
               <div class="service-icon">
-                <img class="img mb-2" :src="service.image" :alt="service.title" />
+                <img
+                  class="img mb-2"
+                  :src="service.image"
+                  :alt="service.title"
+                />
               </div>
             </div>
 
@@ -91,7 +95,7 @@ let services = ref([]);
 let showOtpModal = ref(false);
 let showDialCode = ref(false);
 const token = useCookie("token");
-const timeEndCach = 24 * 60 * 60 * 1000;
+const timeEndCach = 2 * 24 * 60 * 60 * 1000;
 const isSkeleton = ref(true);
 
 async function isCacheValid() {

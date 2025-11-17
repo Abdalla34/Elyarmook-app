@@ -15,8 +15,8 @@
         >
           <div
             v-if="token"
-            class="background-color-cart position-relative d-flex align-items-center justify-content-center"
-            @click="navigateTo($localePath('/cart'))"
+            class="background-color-cart cart position-relative d-flex align-items-center justify-content-center"
+            @click="navigateTo($localePath(`/cart?redirect=${route.fullPath}`))"
           >
             <button class="buttons">
               <PuplicIconCartIcon />
@@ -29,7 +29,9 @@
           <div>
             <div
               class="background-color-cart d-flex align-items-center justify-content-center"
-              @click="navigateTo($localePath('/my-cars'))"
+              @click="
+                navigateTo($localePath(`/my-cars?redirect=${route.fullPath}`))
+              "
             >
               <button v-if="token && myCars?.length >= 0" class="buttons">
                 <img
@@ -44,9 +46,11 @@
             </div>
           </div>
 
-          <div class="position-relative">
+          <div class="position-relative profile">
             <div
-              @click="navigateTo($localePath('/profile'))"
+              @click="
+                navigateTo($localePath(`/profile?redirect=${route.fullPath}`))
+              "
               v-if="!token"
               class="icon-user login"
               style="cursor: pointer"
@@ -55,7 +59,9 @@
             </div>
             <div
               v-if="token"
-              @click="navigateTo($localePath('/profile'))"
+              @click="
+                navigateTo($localePath(`/profile?redirect=${route.fullPath}`))
+              "
               class="background-color-cart d-flex align-items-center justify-content-center position-relative"
             >
               <button class="buttons">
@@ -77,6 +83,7 @@ const localePath = useLocalePath();
 const token = useCookie("token");
 const myCars = ref([]);
 const { defaultCar, fetchMyCars } = useMyCars();
+const route = useRoute();
 
 onMounted(() => {
   fetchMyCars();

@@ -241,9 +241,6 @@
           "
         >
           <div class="h-100">
-            <!-- <h1 class="text-capitalize fs-6 updated-details">
-              {{ $t("order details updated") }}
-            </h1> -->
             <transition name="slide-right">
               <div
                 v-if="useWalletAlert"
@@ -259,7 +256,7 @@
               </div>
             </transition>
             <!-- price details -->
-            <div class="">
+            <div class="branches-details">
               <div class="box-design">
                 <div
                   v-for="item in itemsUpdates?.data?.date_branch_attributes"
@@ -273,7 +270,7 @@
               </div>
             </div>
 
-            <div class="">
+            <div class="cost-details">
               <h6 class="fw-bold text-capitalize">{{ $t("cost Details") }}</h6>
               <!-- details -->
               <div class="box-design">
@@ -283,6 +280,9 @@
                   <h4 class="label">{{ $t("sub total") }}</h4>
                   <p class="text-capitalize">
                     {{ itemsUpdates?.data?.sub_total }}
+                    <span class="p-color-fs span text-uppercase">{{
+                      $t("sar")
+                    }}</span>
                   </p>
                 </div>
 
@@ -292,6 +292,9 @@
                   <h4 class="label">{{ $t("vat") }}</h4>
                   <p class="text-capitalize">
                     {{ itemsUpdates?.data?.vat_amount }}
+                    <span class="p-color-fs span text-uppercase">{{
+                      $t("sar")
+                    }}</span>
                   </p>
                 </div>
 
@@ -320,7 +323,7 @@
                         type="checkbox"
                         role="switch"
                         v-model="itemsUpdates.data.pro_warranty.is_pro_warranty"
-                        @change="toogleWarranty"
+                        @change="toogleWarranty" style="cursor: pointer"
                       />
                     </div>
                   </div>
@@ -333,6 +336,10 @@
 
                 <p class="p-color-fs mt-2">
                   {{ itemsUpdates.data.pro_warranty.message_when_warranty_pro }}
+                </p>
+
+                <p class="p-color-fs mt-2" v-if="itemsUpdates.data.pro_warranty.is_pro_warranty">
+                  {{ itemsUpdates.data.pro_warranty.description }}
                 </p>
 
                 <p
@@ -354,43 +361,59 @@
               </div>
 
               <!-- promo code -->
-              <div
-                class="input-code position-relative"
-                v-if="itemsUpdates?.can_show_promo_code"
-              >
-                <input
-                  v-model="voucherCode"
-                  type="text"
-                  class="w-100 input-with-apply text-capitalize"
-                  placeholder="promocode"
-                />
-
-                <div v-if="hasVoucher">
+              <div class="promo mt-3">
+                <div class="input-group mb-3">
+                  <input
+                    type="text"
+                    class="input form-control p-2"
+                    placeholder="Promo code"
+                    v-model="voucherCode"
+                  />
                   <button
-                    class="apply-btn apply position-absolute"
+                    v-if="hasVoucher"
+                    class="apply-btn"
                     @click="voucherDeleted"
                   >
-                    <span class="text-capitalize me-2 spanbutton">{{
-                      $t("delete")
-                    }}</span>
+                    <span
+                      v-if="!loadVoucherBtnDel"
+                      class="text-capitalize me-2 spanbutton"
+                      >{{ $t("delete") }}</span
+                    >
+                    <span
+                      v-else
+                      class="spinner-border spinner-border-sm text-danger me-3"
+                    ></span>
                     <iconsOrder-applyCode />
                   </button>
-                  <p class="text-success">{{ msg }}</p>
-                </div>
 
-                <div v-else>
                   <button
-                    class="apply-btn apply position-absolute"
+                    v-else
+                    class="apply-btn"
                     @click="voucherApply"
                     :disabled="!voucherCode"
                   >
-                    <span class="text-capitalize me-2 spanbutton">{{
-                      $t("apply")
-                    }}</span>
+                    <span
+                      v-if="!loadVoucherBtnApply"
+                      class="text-capitalize me-2 spanbutton"
+                      >{{ $t("apply") }}</span
+                    >
+                    <span
+                      v-else
+                      class="spinner-border spinner-border-sm text-success me-3"
+                    ></span>
                     <iconsOrder-applyCode />
                   </button>
-                  <p class="error">{{ msg }}</p>
                 </div>
+                <p
+                  v-if="msg === 'Orders retrieved Successfully'"
+                  class="text-success"
+                  style="font-size: 14px"
+                >
+                  {{ msg }}
+                </p>
+                <p v-else class="text-danger" style="font-size: 14px">
+                  {{ msg }}
+                </p>
               </div>
 
               <!-- amount to pay  -->
@@ -540,7 +563,8 @@ const {
   ToggleWarranty,
 } = useApi();
 
-const test = ref(false);
+const loadVoucherBtnDel = ref(false);
+const loadVoucherBtnApply = ref(false);
 
 const loadingDelete = ref({});
 const loadingQty = ref({});
@@ -629,6 +653,7 @@ let voucherCode = ref(null);
 let hasVoucher = ref(false);
 let voucherApply = async () => {
   try {
+    loadVoucherBtnApply.value = true;
     let resVoucher = await applyVoucherToCart(order_id, voucherCode.value);
 
     if (resVoucher?.status === false) {
@@ -640,10 +665,15 @@ let voucherApply = async () => {
     }
   } catch (error) {
     console.error("Error applying voucher code:");
+  } finally {
+    loadVoucherBtnApply.value = false;
   }
+  console.log("Voucher code applied:", voucherCode.value);
 };
+
 let voucherDeleted = async () => {
   try {
+    loadVoucherBtnDel.value = true;
     let res = await deleteVoucherFromCart(order_id);
     itemsUpdates.value = res;
     msg.value = res?.message || "Voucher deleted successfully";
@@ -651,6 +681,8 @@ let voucherDeleted = async () => {
     voucherCode.value = "";
   } catch (error) {
     console.error("Error deleting voucher code:");
+  } finally {
+    loadVoucherBtnDel.value = false;
   }
 };
 
@@ -892,5 +924,8 @@ async function toContinue() {
     opacity: 1;
     transform: translateY(0) scale(1);
   }
+}
+.form-control:focus {
+  outline: none;
 }
 </style>

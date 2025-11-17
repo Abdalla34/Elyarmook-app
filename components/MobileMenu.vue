@@ -2,7 +2,11 @@
   <!-- Enhanced Burger Menu Icon -->
   <div class="mobile-menu-wrapper" :class="currentDir">
     <!-- Cart Icon -->
-    <div v-if="token" class="cart-icon-wrapper" @click="navigateTo($localePath('/cart'))">
+    <div
+      v-if="token"
+      class="cart-icon-wrapper"
+      @click="navigateTo($localePath('/cart'))"
+    >
       <div class="cart-icon-inner">
         <PuplicIconCartIcon />
         <span v-if="cartCount > 0" class="cart-badge">{{ cartCount }}</span>
@@ -37,7 +41,7 @@
         <ul class="ul-phone">
           <li class="menu-item">
             <NuxtLink
-              :to="$localePath('/')"
+              :to="$localePath(`/?redirect=${route.fullPath}`)"
               exact-active-class="active"
               class="menu-link"
               @click="toggleMenu"
@@ -48,7 +52,7 @@
           </li>
           <li class="menu-item">
             <NuxtLink
-              :to="$localePath('/my-orders')"
+              :to="$localePath(`/my-orders?redirect=${route.fullPath}`)"
               exact-active-class="active"
               class="menu-link"
               @click="toggleMenu"
@@ -61,7 +65,7 @@
           </li>
           <li class="menu-item">
             <NuxtLink
-              :to="$localePath('/services')"
+              :to="$localePath(`/services?redirect=${route.fullPath}`)"
               exact-active-class="active"
               class="menu-link"
               @click="toggleMenu"
@@ -72,7 +76,7 @@
           </li>
           <li class="menu-item">
             <NuxtLink
-              :to="$localePath('/offers')"
+              :to="$localePath(`/offers?redirect=${route.fullPath}`)"
               exact-active-class="active"
               class="menu-link"
               @click="toggleMenu"
@@ -83,7 +87,7 @@
           </li>
           <li class="menu-item">
             <NuxtLink
-              :to="$localePath('/spare-parts')"
+              :to="$localePath(`/spare-parts?redirect=${route.fullPath}`)"
               exact-active-class="active"
               class="menu-link"
               @click="toggleMenu"

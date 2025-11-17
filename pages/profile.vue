@@ -274,7 +274,6 @@ const cookie = useCookie("user", { maxAge: 365 * 24 * 60 * 60 });
 let user = ref(cookie.value);
 
 // onMounted(async () => {
-
 //   skeleton.value = false;
 // });
 
