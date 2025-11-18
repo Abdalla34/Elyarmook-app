@@ -19,10 +19,11 @@
           </h1>
 
           <ButtonCard
-            @click="goAddCar"
+            @click="onGoAddCar"
             v-if="mycars.length <= 0"
             :text-button="isloadBtn ? $t('loading...') : $t('added your car')"
           />
+          <!-- get car default -->
           <div
             v-if="mycars.length >= 1"
             class="box-car d-flex align-items-center gap-2 justify-content-between mb-3 pt-1 pb-1 pe-3 ps-3"
@@ -97,12 +98,16 @@
           >
             <div class="input-barnch position-relative fix d-flex flex-column">
               <label for="" class="label">{{ $t("branch") }}</label>
-              <select v-model="branchValue" class="input-style">
-                <option disabled value="">{{ $t("Select Branch") }}</option>
-                <option v-for="br in branches" :key="br.id" :value="br.id">
-                  {{ br.title }}
-                </option>
-              </select>
+
+              <!-- replaced select with clickable span that opens popup -->
+              <span
+                class="input-style"
+                role="button"
+                @click="showBranchesPopup = true"
+              >
+                {{ selectedBranchTitle || $t("Select Branch") }}
+              </span>
+
               <div
                 :style="{
                   right: $i18n.locale === 'ar' ? 'auto' : '10px',
@@ -115,6 +120,27 @@
             </div>
           </div>
           <span class="text-danger">{{ branchError }}</span>
+
+          <!-- branches popup -->
+          <div
+            v-if="showBranchesPopup"
+            class="popup-overlay"
+            @click.self="showBranchesPopup = false"
+          >
+            <div class="popup-box">
+              <h4 class="label">{{ $t("Select Branch") }}</h4>
+              <div class="popup-content-scroll">
+                <div
+                  class="popup-option"
+                  v-for="br in branches"
+                  :key="br.id"
+                  @click="chooseBranch(br)"
+                >
+                  {{ br.title }}
+                </div>
+              </div>
+            </div>
+          </div>
 
           <!-- select details time -->
           <div class="select-details-time mt-3 box-car p-3">
@@ -226,19 +252,15 @@
           <div
             class="branch-date type-delivery d-flex align-items-center justify-content-between gap-3"
           >
-            <div class="input-barnch position-relative fix d-flex flex-column">
+            <div
+              class="input-barnch position-relative fix d-flex flex-column"
+              @click="showDeliveryTypePopUp = true"
+            >
               <label class="label">{{ $t("type delivery") }}</label>
-              <select
-                v-model="typeDelivery"
-                class="input-style"
-                @change="handleDeliveryChange"
-              >
-                <option disabled value="">
-                  {{ $t("Select type delivery") }}
-                </option>
-                <option value="oneWay">{{ $t("oneWay") }}</option>
-                <option value="twoWay">{{ $t("twoWay") }}</option>
-              </select>
+              <span class="input-style">{{
+                typeDelivery || $t("Select type delivery")
+              }}</span>
+
               <div
                 :style="{
                   right: $i18n.locale === 'ar' ? 'auto' : '10px',
@@ -250,23 +272,26 @@
               </div>
             </div>
           </div>
-          <!-- <div
-            class="branch-date type-delivery d-flex align-items-center justify-content-between gap-3"
+          <!-- popup delivery -->
+          <div
+            v-if="showDeliveryTypePopUp"
+            class="popup-overlay"
+            @click.self="showDeliveryTypePopUp = false"
           >
-            <div class="input-barnch position-relative fix d-flex flex-column">
-              <label for="" class="label">{{ $t("type delivery") }}</label>
-              <select v-model="typeDelivery" class="input-style" @change="handleDeliveryChange">
-                <option disabled value="">
-                  {{ $t("Select type delivery") }}
-                </option>
-                <option>{{ $t("oneWay") }}</option>
-                <option>{{ $t("twoWay") }}</option>
-              </select>
-              <div class="icon-shape position-absolute">
-                <PuplicIconArrowBottom />
+            <div class="popup-box">
+              <div class="popup-delivery-option p-3">
+                <div
+                  class="mb-2 children"
+                  @click="chosenDeliveryType('oneWay')"
+                >
+                  <p class="label p-5">{{ $t("oneWay") }}</p>
+                </div>
+                <div class="children" @click="chosenDeliveryType('twoWay')">
+                  <p class="label p-5">{{ $t("twoWay") }}</p>
+                </div>
               </div>
             </div>
-          </div> -->
+          </div>
 
           <!-- location to return   -->
           <div
@@ -330,28 +355,34 @@
           <div
             class="branch-date d-flex align-items-center justify-content-between gap-3"
           >
-            <div class="input-barnch position-relative fix d-flex flex-column">
+            <div
+              @click="showPopupProblems = true"
+              class="input-barnch position-relative fix d-flex flex-column"
+            >
               <label for="" class="label">{{ $t("type problem") }}</label>
-              <select v-model="problem" class="input-style">
-                <option disabled value="">
-                  {{ $t("Select type problem") }}
-                </option>
-                <option
+              <span class="input-style">{{
+                selectedProblemTitle || $t("Select type problem")
+              }}</span>
+            </div>
+          </div>
+          <!-- popup problems -->
+          <div
+            v-if="showPopupProblems"
+            class="popup-overlay"
+            @click.self="showPopupProblems = false"
+          >
+            <div class="popup-box">
+              <h4 class="label">{{ $t("Select type problem") }}</h4>
+
+              <div class="popup-content-scroll">
+                <div
+                  class="popup-option"
                   v-for="value in getProblemss"
                   :key="value.id"
-                  :value="value.id"
+                  @click="chooseProblem(value)"
                 >
                   {{ value.title }}
-                </option>
-              </select>
-              <div
-                :style="{
-                  right: $i18n.locale === 'ar' ? 'auto' : '10px',
-                  left: $i18n.locale === 'ar' ? '10px' : 'auto',
-                }"
-                class="icon-shape position-absolute"
-              >
-                <PuplicIconArrowBottom />
+                </div>
               </div>
             </div>
           </div>
@@ -592,6 +623,18 @@ onMounted(async () => {
 });
 const { handleClick, isloadBtn } = loadBtn();
 
+// Wrapper to trigger loading then navigate
+async function onGoAddCar() {
+  try {
+    if (typeof handleClick === "function") {
+      await handleClick();
+    }
+  } finally {
+    // existing navigation helper
+    goAddCar();
+  }
+}
+
 // Cleanup map instances when component is unmounted
 onUnmounted(() => {
   if (maps.pickup.value) {
@@ -810,14 +853,6 @@ async function createOrderWench() {
     isLoading.value = true;
     const rawPayload = payload.value;
 
-    // if (!rawPayload.reservation_time) {
-    //   isBookingNow.value = true;
-    //   reservationTime.value = dayjs()
-    //     .add(2, "hour")
-    //     .format("YYYY-MM-DD HH:mm:ss");
-    // } else {
-    //   isBookingNow.value = false;
-    // }
     if (!rawPayload.reservation_time) {
       isBookingNow.value = true;
       reservationTime.value = dayjs()
@@ -861,6 +896,32 @@ async function createOrderWench() {
   }
 }
 
+const showDeliveryTypePopUp = ref(false);
+function chosenDeliveryType(deliveryType) {
+  typeDelivery.value = deliveryType;
+  showDeliveryTypePopUp.value = false;
+}
+
+const showPopupProblems = ref(false);
+const selectedProblemTitle = ref(null);
+function chooseProblem(value) {
+  problem.value = value.id;
+  selectedProblemTitle.value = value.title;
+  showPopupProblems.value = false;
+}
+
+const showBranchesPopup = ref(false);
+
+const selectedBranchTitle = computed(() => {
+  const found = branches.value?.find((b) => b.id === branchValue.value);
+  return found ? found.title : "";
+});
+
+function chooseBranch(br) {
+  branchValue.value = br.id;
+  showBranchesPopup.value = false;
+}
+
 const onSubmit = async () => {
   const isValid = await schema.isValid({
     branchValue: branchValue.value,
@@ -870,7 +931,6 @@ const onSubmit = async () => {
   if (updateOrderId.value) {
     let res = await updateWenchOrder(updateOrderId.value, payload.value);
     if (res && res.status) {
-      // navigateTo(`/cart-comfortable-service/${res?.data?.id}`);
       navigateTo(LocalePath(`/cart-comfortable-service/${res?.data?.id}`));
     }
   } else {
@@ -933,5 +993,17 @@ function goAddCar() {
   opacity: 0.5;
   cursor: not-allowed;
   background-color: #ccc;
+}
+
+.popup-delivery-option {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+.children {
+  border-bottom: 1px solid #ececec;
+}
+.children:hover > * {
+  background: #f5f5f5;
 }
 </style>

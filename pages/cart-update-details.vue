@@ -789,7 +789,7 @@ async function toContinue() {
       msgDoneUseWallet.value = true;
       setTimeout(() => {
         router.push(localePath("/"));
-      }, 2000);
+      }, 4000);
       return;
     }
   }

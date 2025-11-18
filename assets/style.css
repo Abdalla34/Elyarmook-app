@@ -641,3 +641,72 @@ textarea {
     width: 90%;
   }
 }
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  overflow-y: auto;
+}
+
+.popup-box {
+  background: #fff;
+  width: 90%;
+  max-width: 400px;
+  padding: 20px;
+  border-radius: 12px;
+}
+.popup-content-scroll {
+  max-height: 60vh;
+  overflow-y: auto;
+  max-width: 320px;
+  padding-right: 4px;
+}
+
+.popup-option {
+  padding: 12px;
+  border-bottom: 1px solid #ececec;
+  cursor: pointer;
+}
+
+.popup-option:hover {
+  background: #f5f5f5;
+}
+
+.popup-option.child {
+  overflow-y: auto;
+  height: auto;
+}
+
+.date-title {
+  font-weight: bold;
+  margin-top: 10px;
+  margin-bottom: 6px;
+}
+@media (max-width: 576px) {
+  .popup-overlay {
+    align-items: flex-end; /* move box to bottom */
+  }
+
+  .popup-box {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 16px 16px 0 0; 
+    animation: slideUp 0.3s ease;
+  }
+
+  @keyframes slideUp {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+}

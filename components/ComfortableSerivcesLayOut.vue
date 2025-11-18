@@ -178,7 +178,7 @@ function navigaToteComfrotable() {
   position: relative;
   max-width: 500px;
   width: 90%;
-  max-height: 90vh; /* تخلي المودال ما يخرجش من الشاشة */
+  max-height: 90vh;
   background: #fff;
   border-radius: 12px;
   overflow: hidden;
@@ -206,5 +206,30 @@ function navigaToteComfrotable() {
   background: #fff;
   z-index: 2;
   padding: 1rem;
+}
+
+@media (max-width: 576px) {
+  .modal-overlay {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+  }
+
+  .modal-container {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 16px 16px 0 0;
+    animation: slideUp 0.3s ease-out;
+    max-height: 80vh;
+  }
+
+  @keyframes slideUp {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
 }
 </style>

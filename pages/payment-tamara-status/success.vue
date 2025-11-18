@@ -32,8 +32,8 @@ try {
     setTimeout(() => {
       cartCount.value = 0;
       localStorage.removeItem("yarmook-cart");
-      router.replace(localePath("/"));
-    }, 2000);
+      router.replace(localePath('index'));
+    }, 3000);
   }
 
   if (paymentId) {
@@ -42,7 +42,7 @@ try {
       message.value = res?.message || "تمت عملية الدفع بنجاح";
       cartCount.value = 0;
       localStorage.removeItem("yarmook-cart");
-      router.replace(localePath("/"));
+      router.replace(localePath('index'));
     } else {
       router.replace(localePath("/payment-tamara-status/failed"));
       message.value = res?.message || "فشلت عملية الدفع";

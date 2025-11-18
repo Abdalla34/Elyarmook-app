@@ -44,8 +44,100 @@
                 <icons-order-iconunion />
               </div>
             </div>
+
             <!-- bracnh && time -->
+            <div class="input-barnch" @click="showBranchPopup = true">
+              <label class="label">{{ $t("branch") }}</label>
+              <div
+                class="input-style d-flex justify-content-between align-items-center"
+              >
+                <span>{{ selectedBranch?.title || $t("Select Branch") }}</span>
+                <icons-order-iconunion />
+              </div>
+            </div>
+
+            <!-- Branch Popup -->
             <div
+              v-if="showBranchPopup"
+              class="popup-overlay"
+              @click.self="showBranchPopup = false"
+            >
+              <div class="popup-box">
+                <h4 class="label">{{ $t("Select Branch") }}</h4>
+
+                <div
+                  class="popup-option"
+                  v-for="br in branches"
+                  :key="br.id"
+                  @click="chooseBranch(br)"
+                >
+                  {{ br.title }}
+                </div>
+              </div>
+            </div>
+
+            <!-- Date & Time -->
+            <div class="input-barnch" @click="showTimePopup = true">
+              <label class="label">{{ $t("date") }}</label>
+              <div
+                class="input-style d-flex justify-content-between align-items-center"
+              >
+                <span>
+                  {{
+                    dateValue
+                      ? dateValue.date + " - " + dateValue.time
+                      : $t("Select Date & Time")
+                  }}
+                </span>
+                <icons-order-iconunion />
+              </div>
+            </div>
+            <!-- Time Popup -->
+            <div
+              v-if="showTimePopup"
+              class="popup-overlay"
+              @click.self="showTimePopup = false"
+            >
+              <div class="popup-box">
+                <h4 class="mb-3 label">{{ $t("Select Date & Time") }}</h4>
+
+                <!-- Scrollable area -->
+                <div class="popup-content-scroll">
+                  <div
+                    v-for="dateObj in availableDates"
+                    :key="dateObj.date"
+                    class="time-block mb-2"
+                  >
+                    <div class="date-title">{{ dateObj.date }}</div>
+
+                    <div
+                      class="popup-option child"
+                      v-for="slot in dateObj.time_slots"
+                      :key="slot.time"
+                      @click="chooseTime(dateObj.date, slot.time)"
+                    >
+                      {{ slot.time }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- problem photo -->
+            <div
+              class="details-issues d-flex flex-column"
+              :dir="$i18n.locale === 'ar' ? 'rtl' : 'ltr'"
+            >
+              <label for="" class="label">{{ $t("details") }}</label>
+              <textarea
+                name=""
+                id=""
+                class="textarea"
+                :placeholder="$t('issues details')"
+                v-model="note"
+              ></textarea>
+            </div>
+
+            <!-- <div
               class="branch-date d-flex align-items-center justify-content-between gap-3"
               :dir="$i18n.locale === 'ar' ? 'rtl' : 'ltr'"
             >
@@ -69,7 +161,7 @@
                   <icons-order-iconunion />
                 </div>
               </div>
-              <!-- time -->
+             
               <div
                 class="input-barnch position-relative fix d-flex flex-column"
               >
@@ -101,21 +193,7 @@
                   <icons-order-iconunion />
                 </div>
               </div>
-            </div>
-
-            <div
-              class="details-issues d-flex flex-column"
-              :dir="$i18n.locale === 'ar' ? 'rtl' : 'ltr'"
-            >
-              <label for="" class="label">{{ $t("details") }}</label>
-              <textarea
-                name=""
-                id=""
-                class="textarea"
-                :placeholder="$t('issues details')"
-                v-model="note"
-              ></textarea>
-            </div>
+            </div> -->
 
             <div
               class="problem-photo"
@@ -181,6 +259,26 @@ const branchValue = useState("branchValue", () => "");
 const dateValue = useState("dateValue", () => {});
 const note = useState("note", () => "");
 const isLoadingOtp = ref(true);
+
+// Popup Controls
+const showBranchPopup = ref(false);
+const showTimePopup = ref(false);
+
+// Selected Titles for UI only
+const selectedBranch = ref(null);
+
+// Choose Branch
+const chooseBranch = (br) => {
+  branchValue.value = br.id;
+  selectedBranch.value = br;
+  showBranchPopup.value = false;
+};
+
+// Choose Date + Time
+const chooseTime = (date, time) => {
+  dateValue.value = { date, time };
+  showTimePopup.value = false;
+};
 
 const getCarDefault = ref(null);
 
@@ -279,5 +377,12 @@ onMounted(async () => {
 .continue:disabled {
   cursor: not-allowed;
   opacity: 0.5;
+}
+.input-style {
+  border: 1px solid #ddd;
+  padding: 12px;
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
 }
 </style>

@@ -102,20 +102,19 @@
         </form>
       </div>
       <!-- popup -->
-      <div v-if="showYears" class="modal-overlay">
-        <div class="modal-box position-relative">
-          <button
-            class="btn-close position-absolute top-0 end-0 m-3"
-            @click.self="showYears = false"
-          ></button>
-
-          <h1 class="label mb-3">{{ "Manfacture Year:" }}</h1>
-          <div class="all-years">
+      <div
+        v-if="showYears"
+        class="popup-overlay"
+        @click.self="showYears = false"
+      >
+        <div class="popup-box">
+          <h4 class="label">{{ $t("Manufacture Year") }}</h4>
+          <div class="popup-content-scroll">
             <div
-              style="cursor: pointer"
+              class="popup-option"
               v-for="year in years"
+              :key="year"
               @click="selecteYears(year)"
-              class="box-year mb-2 rounded ps-2 pe-2 pt-1 pb-1"
             >
               {{ year }}
             </div>
