@@ -278,6 +278,9 @@
                   <h4 class="label">{{ $t("vat") }}</h4>
                   <p class="text-capitalize">
                     {{ Number(cartRes?.vat_amount).toFixed(2) }}
+                    <span class="p-color-fs span text-uppercase">{{
+                      $t("sar")
+                    }}</span>
                   </p>
                 </div>
 
@@ -286,9 +289,6 @@
                 >
                   <h4 class="label">
                     {{ $t("Final Amount") }}
-                    <span class="p-color-fs span text-uppercase">{{
-                      $t("sar")
-                    }}</span>
                   </h4>
                   <p class="text-capitalize">
                     {{ Number(cartRes?.amount_to_pay).toFixed(2) }}

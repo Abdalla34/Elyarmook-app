@@ -3,55 +3,49 @@
     v-if="cancelOrder || times || sureCancel"
     class="position-absolute over-lay"
   ></div>
-  <div v-if="sureCancel">
-    <div class="popup-sure-cancel">
-      <div class="d-flex justify-content-end">
-        <i
-          class="fa-solid fa-xmark cursor-pointer"
-          style="cursor: pointer"
-          @click="sureCancel = false"
-        ></i>
+
+  <!-- Cancel Confirmation Popup -->
+  <div v-if="sureCancel" class="popup-overlay" @click.self="sureCancel = false">
+    <div class="popup-box">
+      <h4 class="label">{{ $t("cancel order") }}</h4>
+      <div class="popup-content-scroll">
+        <p class="p-color-fs mb-3">
+          {{ $t("Are you sure you want to cancel this order?") }}
+        </p>
+        <div class="d-flex justify-content-center gap-2 mt-3">
+          <button class="btn btn-danger" @click="cancelOrder = true">
+            {{ $t("Yes, Cancel Order") }}
+          </button>
+          <button class="btn btn-secondary" @click="sureCancel = false">
+            {{ $t("Close") }}
+          </button>
+        </div>
       </div>
-      <h1 class="mt-3">{{ $t("cancel order") }}</h1>
-      <p class="p-color-fs">
-        {{ $t("Are you sure you want to cancel this order?") }}
-      </p>
-      <div class="button-cancel cancel-order mt-3">
-        <button @click="cancelOrder = true">
-          {{ $t("Yes, Cancel Order") }}
+    </div>
+  </div>
+
+  <!-- Cancel Reason Popup -->
+  <div v-if="cancelOrder" class="popup-overlay" @click.self="toFalse">
+    <div class="popup-box">
+      <h4 class="label">{{ $t("Mention reason") }}</h4>
+      <div class="popup-content-scroll">
+        <div
+          class="popup-option"
+          v-for="reason in getReasons"
+          :key="reason.id"
+          @click="changeStatusOrder('canceled', reason.id)"
+        >
+          {{ reason.title }}
+        </div>
+      </div>
+      <div class="d-flex justify-content-center mt-3">
+        <button class="btn btn-secondary" @click="toFalse">
+          {{ $t("Close") }}
         </button>
       </div>
     </div>
   </div>
 
-  <div v-if="cancelOrder">
-    <div class="popup">
-      <div class="reasons">
-        <!-- metion reason -->
-        <div class="d-flex justify-content-between">
-          <div class="Mention-reason reason-title mb-5 mt-2">
-            {{ $t("Mention reason") }}
-          </div>
-
-          <div
-            class="icon-to-page d-flex justify-content-center align-items-center"
-            @click="toFalse"
-          >
-            <i class="fa-solid fa-xmark"></i>
-          </div>
-        </div>
-
-        <div class="reason-box" v-for="reason in getReasons" :key="reason.id">
-          <div
-            @click="changeStatusOrder('canceled', reason.id)"
-            class="d-flex align-items-center"
-          >
-            <p class="reason-title text-capitalize">{{ reason.title }}</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
   <!-- order details -->
   <div class="order-steps">
     <div class="container position-relative">
@@ -334,7 +328,7 @@
                   <button
                     @click="popupItems = true"
                     type="button"
-                    class="btn btn-danger txet-capitalize"
+                    class="btn btn-danger txet-capitalize btn-text"
                   >
                     {{ $t("more") }}
                   </button>
@@ -344,126 +338,125 @@
             <!-- modal items show -->
             <div
               v-if="popupItems"
-              class="modal-overlay"
+              class="popup-overlay"
               @click.self="popupItems = false"
             >
-              <div class="modal-content">
-                <div class="modal-box">
+              <div class="popup-box">
+                <h4 class="label">{{ $t("items order") }}</h4>
+                <div class="popup-content-scroll">
                   <div
-                    class="d-flex align-items-center justify-content-between"
+                    v-if="
+                      orderSelected &&
+                      orderSelected.services &&
+                      orderSelected.services.length
+                    "
+                    class="services"
                   >
-                    <h1 class="p-color-fs">{{ $t("items order") }}</h1>
-                    <i
-                      @click="popupItems = false"
-                      class="fa-solid fa-xmark"
-                      style="cursor: pointer"
-                    ></i>
-                  </div>
-                  <!-- services -->
-                  <div v-if="orderSelected.services?.length" class="services">
-                    <h4 class="label">{{ $t("services") }}</h4>
-                    <div class="service-list">
-                      <div
-                        class="order-amount transparent mb-3 border-box-item d-flex align-items-center gap-2"
-                        v-for="service in orderSelected.services"
-                        :key="service.id"
+                    <h5 class="label">{{ $t("services") }}</h5>
+                    <div
+                      class="popup-option"
+                      v-for="service in orderSelected.services"
+                      :key="service.id"
+                    >
+                      <img
+                        :src="service.image"
+                        class="image-width me-2"
+                        alt=""
+                      />
+                      {{ service.title }} -
+                      <span class="text-danger"
+                        >{{ service.price }} {{ $t("sar") }}</span
                       >
-                        <img :src="service.image" class="image-width" alt="" />
-                        <div class="title-price">
-                          <h5 class="label">{{ service.title }}</h5>
-                          <p class="text-danger text-uppercase fw-bold">
-                            {{ service.price }} {{ $t("sar") }}
-                          </p>
-                        </div>
-                      </div>
                     </div>
                   </div>
-                  <!-- spare Parts -->
                   <div
-                    v-if="orderSelected.spare_parts?.length"
+                    v-if="
+                      orderSelected &&
+                      orderSelected.spare_parts &&
+                      orderSelected.spare_parts.length
+                    "
                     class="spareparts"
                   >
-                    <h4 class="label">{{ $t("spare-parts") }}</h4>
-                    <div class="spare-list">
-                      <div
-                        class="order-amount transparent mb-3 border-box-item d-flex align-items-center gap-2"
-                        v-for="sparePart in orderSelected.spare_parts"
-                        :key="sparePart.id"
+                    <h5 class="label">{{ $t("spare-parts") }}</h5>
+                    <div
+                      class="popup-option"
+                      v-for="sparePart in orderSelected.spare_parts"
+                      :key="sparePart.id"
+                    >
+                      <img
+                        :src="sparePart.image"
+                        class="image-width me-2"
+                        alt=""
+                      />
+                      {{ sparePart.title }} -
+                      <span class="text-danger"
+                        >{{ sparePart.price }} {{ $t("sar") }}</span
                       >
-                        <img
-                          :src="sparePart.image"
-                          class="image-width"
-                          alt=""
-                        />
-                        <div class="title-price">
-                          <h5 class="label">{{ sparePart.title }}</h5>
-                          <p class="text-danger text-uppercase fw-bold">
-                            {{ sparePart.price }} {{ $t("sar") }}
-                          </p>
-                        </div>
-                      </div>
                     </div>
                   </div>
-
-                  <!-- offers -->
-                  <div v-if="orderSelected.offers?.length" class="offers">
-                    <h4 class="label">{{ $t("offers") }}</h4>
-                    <div class="offer-list">
-                      <div
-                        class="order-amount transparent mb-3 border-box-item d-flex align-items-center gap-2"
-                        v-for="offer in orderSelected.offers"
-                        :key="offer.offerid"
+                  <div
+                    v-if="
+                      orderSelected &&
+                      orderSelected.offers &&
+                      orderSelected.offers.length
+                    "
+                    class="offers"
+                  >
+                    <h5 class="label">{{ $t("offers") }}</h5>
+                    <div
+                      class="popup-option"
+                      v-for="offer in orderSelected.offers"
+                      :key="offer.offerid"
+                    >
+                      <img :src="offer.image" class="image-width me-2" alt="" />
+                      {{ offer.title }} -
+                      <span class="text-danger"
+                        >{{ offer.price }} {{ $t("sar") }}</span
                       >
-                        <img :src="offer.image" class="image-width" alt="" />
-                        <div class="title-price">
-                          <h5 class="label">{{ offer.title }}</h5>
-                          <p class="text-danger text-uppercase fw-bold">
-                            {{ offer.price }} {{ $t("sar") }}
-                          </p>
-                        </div>
-                      </div>
                     </div>
                   </div>
-                  <!-- details items price -->
-                  <div class="details-items">
-                    <div class="box-design">
-                      <div
-                        class="total-order d-flex justify-content-between align-items-center"
+                </div>
+                <div class="details-items mt-3">
+                  <div class="box-design">
+                    <div
+                      class="total-order d-flex justify-content-between align-items-center"
+                    >
+                      <h5 class="label">{{ $t("sub total") }}</h5>
+                      <span
+                        >{{ orderSelected && orderSelected.sub_total }}
+                        <span class="p-color-fs text-uppercase span">{{
+                          $t("sar")
+                        }}</span></span
                       >
-                        <h4 class="label">{{ $t("sub total") }}</h4>
-                        <p class="text-capitalize">
-                          {{ orderSelected.sub_total }}
-                          <span class="p-color-fs text-uppercase span">{{
-                            $t("sar")
-                          }}</span>
-                        </p>
-                      </div>
-
-                      <div
-                        class="vat d-flex justify-content-between align-items-center"
+                    </div>
+                    <div
+                      class="vat d-flex justify-content-between align-items-center"
+                    >
+                      <h5 class="label">{{ $t("vat") }}</h5>
+                      <span
+                        >{{ orderSelected && orderSelected.vat_amount }}
+                        <span class="p-color-fs text-uppercase span">{{
+                          $t("sar")
+                        }}</span></span
                       >
-                        <h4 class="label">{{ $t("vat") }}</h4>
-                        <p class="text-capitalize">
-                          {{ orderSelected?.vat_amount }}
-                          <span class="p-color-fs text-uppercase span">{{
-                            $t("sar")
-                          }}</span>
-                        </p>
-                      </div>
-
-                      <div
-                        class="final-amount d-flex justify-content-between align-items-center"
+                    </div>
+                    <div
+                      class="final-amount d-flex justify-content-between align-items-center"
+                    >
+                      <h5 class="label">{{ $t("Final Amount") }}</h5>
+                      <span
+                        >{{ orderSelected && orderSelected.total_amount }}
+                        <span class="p-color-fs text-uppercase span">{{
+                          $t("sar")
+                        }}</span></span
                       >
-                        <h4 class="label">{{ $t("Final Amount") }}</h4>
-                        <p class="text-capitalize">
-                          {{ orderSelected.total_amount }}
-                          <span class="p-color-fs text-uppercase span">{{
-                            $t("sar")
-                          }}</span>
-                        </p>
-                      </div>
                     </div>
                   </div>
+                </div>
+                <div class="d-flex justify-content-center mt-3">
+                  <button class="btn btn-secondary" @click="popupItems = false">
+                    {{ $t("Close") }}
+                  </button>
                 </div>
               </div>
             </div>
@@ -504,32 +497,36 @@
       </div>
     </div>
 
-    <div v-if="times" class="popup-reschedule">
-      <div class="d-flex justify-content-between">
-        <div class="Mention-reason reason-title mb-3 mt-2">
-          {{ $t("choose from the date available") }}
+    <!-- Reschedule Time Popup -->
+    <div v-if="times" class="popup-overlay" @click.self="times = false">
+      <div class="popup-box">
+        <h4 class="label">{{ $t("choose from the date available") }}</h4>
+        <div class="popup-content-scroll">
+          <template v-for="dateObj in availableDates" :key="dateObj.date">
+            <div class="fw-bold mb-2">{{ dateObj.date }}</div>
+            <div class="d-flex flex-column gap-2 mb-3">
+              <div
+                class="popup-option"
+                v-for="slot in dateObj.time_slots"
+                :key="slot.time"
+              >
+                <button
+                  class="btn w-100"
+                  @click="
+                    rescheduleTime({ date: dateObj.date, time: slot.time })
+                  "
+                >
+                  {{ slot.time }}
+                </button>
+              </div>
+            </div>
+          </template>
         </div>
-
-        <div
-          class="icon-to-page d-flex justify-content-center align-items-center"
-          @click="times = false"
-        >
-          <i class="fa-solid fa-xmark"></i>
+        <div class="d-flex justify-content-center mt-3">
+          <button class="btn btn-secondary" @click="times = false">
+            {{ $t("Close") }}
+          </button>
         </div>
-      </div>
-
-      <div class="time-box">
-        <template v-for="dateObj in availableDates" :key="dateObj.date">
-          <div class="date-title">{{ dateObj.date }}</div>
-          <div
-            class="slots"
-            v-for="slot in dateObj.time_slots"
-            :key="slot.time"
-            @click="rescheduleTime({ date: dateObj.date, time: slot.time })"
-          >
-            <div class="slot">{{ slot.time }}</div>
-          </div>
-        </template>
       </div>
     </div>
     <LoadingSpinner :is-loading-otp="isLoading" />
@@ -678,37 +675,14 @@ onMounted(async () => {
 }
 .popup-sure-cancel {
   text-align: center;
-  height: auto; /* يخليه ياخد ارتفاع المحتوى تلقائي */
-  max-height: 20vh; /* أقصى ارتفاع 90% من الشاشة */ /* لو المحتوى زاد، يضيف سكرول داخلي */
+  height: auto;
+  max-height: 20vh;
 }
-
 
 .border-box-item {
   border: 1px solid #c71f45;
 }
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-}
 
-.modal-content {
-  background: white;
-  border-radius: 12px;
-  padding: 20px;
-  max-width: 600px;
-  width: 100%;
-}
-.modal-box {
-  width: 100%;
-}
 .amount,
 .text-success {
   font-size: 15px !important;
@@ -748,13 +722,15 @@ onMounted(async () => {
     width: 95%;
     padding: 15px;
   }
+  .btn-text {
+    font-size: 11px;
+  }
 }
 
 @media (max-width: 480px) {
   .popup-reschedule {
     width: 100%;
     border-radius: 12px;
-    /* margin: 10px; */
   }
 }
 </style>

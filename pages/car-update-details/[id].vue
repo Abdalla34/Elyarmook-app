@@ -65,19 +65,19 @@
                   </div>
                 </div>
                 <!-- modal years -->
-                <div v-if="showYears" class="modal-overlay">
-                  <div class="modal-box position-relative" @click.stop>
+                <div v-if="showYears" class="popup-overlay" @click.self="showYears = false">
+                  <div class="popup-box position-relative">
                     <button
                       class="btn-close position-absolute top-0 end-0 m-3"
                       @click="showYears = false"
                     ></button>
-
                     <h1 class="label mb-3">{{ $t("Manufacture Year:") }}</h1>
-                    <div class="all-years">
+                    <div class="popup-content-scroll all-years">
                       <div
                         v-for="year in years"
+                        :key="year"
                         @click="selecteYears(year)"
-                        class="box-year mb-2 rounded ps-2 pe-2 pt-1 pb-1"
+                        class="box-year popup-option mb-2 rounded ps-2 pe-2 pt-1 pb-1"
                         style="cursor: pointer"
                       >
                         {{ year }}

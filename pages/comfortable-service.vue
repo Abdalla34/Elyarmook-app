@@ -19,7 +19,7 @@
           </h1>
 
           <ButtonCard
-            @click="onGoAddCar"
+            @click="goAddCar"
             v-if="mycars.length <= 0"
             :text-button="isloadBtn ? $t('loading...') : $t('added your car')"
           />
@@ -622,19 +622,6 @@ onMounted(async () => {
   }
 });
 const { handleClick, isloadBtn } = loadBtn();
-
-// Wrapper to trigger loading then navigate
-async function onGoAddCar() {
-  try {
-    if (typeof handleClick === "function") {
-      await handleClick();
-    }
-  } finally {
-    // existing navigation helper
-    goAddCar();
-  }
-}
-
 // Cleanup map instances when component is unmounted
 onUnmounted(() => {
   if (maps.pickup.value) {
@@ -939,6 +926,7 @@ const onSubmit = async () => {
 };
 const route = useRoute();
 function goAddCar() {
+    isloadBtn.value = true;
   navigateTo(LocalePath(`/car-brand?redirect=${route.fullPath}`));
 }
 </script>

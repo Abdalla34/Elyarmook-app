@@ -1,15 +1,7 @@
 <template>
   <div class="order-details">
     <div class="container">
-      <!-- <div class="row justify-content-center" v-if="isSkeleton">
-       
-      </div> -->
       <div class="row">
-        <NotRegister
-          :IsNotRegitser="msgError"
-          message="your orders is Empty you must create account"
-        />
-
         <div class="col-md-8 col-padding">
           <h1 data-v-8bcd5751 class="text-capitalize text title-pages">
             {{ $t("Order Details") }}
@@ -137,64 +129,6 @@
               ></textarea>
             </div>
 
-            <!-- <div
-              class="branch-date d-flex align-items-center justify-content-between gap-3"
-              :dir="$i18n.locale === 'ar' ? 'rtl' : 'ltr'"
-            >
-              <div
-                class="input-barnch position-relative fix d-flex flex-column"
-              >
-                <label for="" class="label">{{ $t("branch") }}</label>
-                <select v-model="branchValue" class="input-style">
-                  <option disabled value="">{{ $t("Select Branch") }}</option>
-                  <option v-for="br in branches" :key="br.id" :value="br.id">
-                    {{ br.title }}
-                  </option>
-                </select>
-                <div
-                  class="icon-shape position-absolute"
-                  :style="{
-                    right: $i18n.locale === 'ar' ? 'auto' : '10px',
-                    left: $i18n.locale === 'ar' ? '10px' : 'auto',
-                  }"
-                >
-                  <icons-order-iconunion />
-                </div>
-              </div>
-             
-              <div
-                class="input-barnch position-relative fix d-flex flex-column"
-              >
-                <label for="" class="label">{{ $t("date") }}</label>
-                <select v-model="dateValue" class="input-style">
-                  <option disabled value="">
-                    {{ $t("Select Date & Time") }}
-                  </option>
-                  <template
-                    v-for="dateObj in availableDates"
-                    :key="dateObj.date"
-                  >
-                    <option
-                      v-for="slot in dateObj.time_slots"
-                      :key="dateObj.date + slot.time"
-                      :value="{ date: dateObj.date, time: slot.time }"
-                    >
-                      {{ dateObj.date }} - {{ slot.time }}
-                    </option>
-                  </template>
-                </select>
-                <div
-                  :style="{
-                    right: $i18n.locale === 'ar' ? 'auto' : '10px',
-                    left: $i18n.locale === 'ar' ? '10px' : 'auto',
-                  }"
-                  class="icon-shape position-absolute"
-                >
-                  <icons-order-iconunion />
-                </div>
-              </div>
-            </div> -->
-
             <div
               class="problem-photo"
               :dir="$i18n.locale === 'ar' ? 'rtl' : 'ltr'"
@@ -286,6 +220,7 @@ const { isloadBtn } = loadBtn();
 const route = useRoute();
 
 function goAddCar() {
+  isloadBtn.value = true;
   navigateTo(localePath(`/car-brand?redirect=${route.fullPath}`));
 }
 
