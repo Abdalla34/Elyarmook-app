@@ -14,11 +14,11 @@
               </h1>
 
               <!-- fill name -->
-              <div class="help margin-bottom-24px box-pages">
-                <div
-                  class="help-box"
-                  @click="navigateTo($localePath('/fill-form'))"
-                >
+              <div
+                @click="navigateToFn('fill-form', 'fillForm')"
+                class="help margin-bottom-24px box-pages"
+              >
+                <div class="help-box">
                   <div
                     class="help-detalis d-flex justify-content-between align-items-center"
                   >
@@ -26,16 +26,25 @@
                       <PuplicIconFillName />
                       <div class="details">{{ $t("Fill a Form") }}</div>
                     </div>
-                    <div class="Arrow">
+                    <div v-if="!loadingBox.fillForm" class="Arrow">
                       <PuplicIconArrowRight />
+                    </div>
+                    <div v-else class="Arrow">
+                      <span
+                        class="spinner-border spinner-border-sm text-success"
+                        role="status"
+                      ></span>
                     </div>
                   </div>
                 </div>
               </div>
 
               <!-- fa1 -->
-              <div class="help margin-bottom-24px box-pages">
-                <div class="help-box" @click="navigateTo($localePath('faq'))">
+              <div
+                @click="navigateToFn('/faq', 'faq')"
+                class="help margin-bottom-24px box-pages"
+              >
+                <div class="help-box">
                   <div
                     class="help-detalis d-flex justify-content-between align-items-center"
                   >
@@ -43,8 +52,14 @@
                       <PuplicIconFAQ />
                       <div class="details text-uppercase">{{ $t("faq") }}</div>
                     </div>
-                    <div class="Arrow">
+                    <div v-if="!loadingBox.faq" class="Arrow">
                       <PuplicIconArrowRight />
+                    </div>
+                    <div v-else class="Arrow">
+                      <span
+                        class="spinner-border spinner-border-sm text-success"
+                        role="status"
+                      ></span>
                     </div>
                   </div>
                 </div>
@@ -75,8 +90,11 @@
               </div>
 
               <!-- visit branch -->
-              <div class="help margin-bottom-24px box-pages">
-                <div class="help-box" @click="navigateTo(localePath('/map'))">
+              <div
+                @click="navigateToFn('/map', 'map')"
+                class="help margin-bottom-24px box-pages"
+              >
+                <div class="help-box">
                   <div
                     class="help-detalis d-flex justify-content-between align-items-center"
                   >
@@ -86,8 +104,14 @@
                         {{ $t("Visit Your Nearest Branch") }}
                       </div>
                     </div>
-                    <div class="Arrow">
+                    <div v-if="!loadingBox.map" class="Arrow">
                       <PuplicIconArrowRight />
+                    </div>
+                    <div v-else class="Arrow">
+                      <span
+                        class="spinner-border spinner-border-sm text-success"
+                        role="status"
+                      ></span>
                     </div>
                   </div>
                 </div>
@@ -130,6 +154,17 @@ async function loadSettings() {
       timestamp: currentTime,
     })
   );
+}
+const loadingBox = ref({
+  fillForm: false,
+  faq: false,
+  map: false,
+});
+
+function navigateToFn(path, key) {
+  Object.keys(loadingBox.value).forEach((k) => (loadingBox.value[k] = false));
+  loadingBox.value[key] = true;
+  navigateTo(localePath(path));
 }
 
 onMounted(() => {
