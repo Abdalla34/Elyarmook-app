@@ -6,14 +6,10 @@
           class="wench-content d-flex flex-column flex-md-row justify-content-between align-items-center gap-4"
         >
           <div class="img-wench text-center text-md-start">
-            <img
-              src="/wenchcar.jpg"
-              alt="wench car"
-              class="img-fluid rounded"
-            />
+            <img src="/wenchcar.jpg" alt="wench car" class="image-width" />
           </div>
 
-          <div class="order-now text-center text-md-start">
+          <div data-aos="fade-up" class="order-now text-center text-md-start">
             <h1 class="mb-3 fw-bold">
               {{ $t("Comfortable Service") }}
             </h1>
@@ -31,7 +27,7 @@
       class="modal-overlay"
       @click.self="showServiceModal = false"
     >
-      <div class="modal-container">
+      <div data-aos="fade-up" class="modal-container">
         <div
           class="modal-header d-flex justify-content-between align-items-center"
         >
@@ -149,6 +145,10 @@ function navigaToteComfrotable() {
 <style scoped>
 @import "@/assets/css/services.css";
 @import "@/assets/css/wenchcss.css";
+.image-width {
+  max-width: 100%;
+  border-radius: 20px;
+}
 @media (max-width: 768px) {
   .wench-content {
     flex-direction: column;
@@ -232,4 +232,5 @@ function navigaToteComfrotable() {
     }
   }
 }
+.cursor-pointer{cursor: pointer;}
 </style>

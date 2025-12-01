@@ -8,6 +8,7 @@
           </div>
           <div v-else class="row">
             <div
+            data-aos="fade-up"
               class="col-lg-6 col-md-12 col-sm-12"
               v-for="item in offers"
               :key="item.id"

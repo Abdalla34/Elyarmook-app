@@ -35,8 +35,8 @@
               </div>
             </div>
           </SwiperSlide>
-          <div class="swiper-button-prev-custom"></div>
-          <div class="swiper-button-next-custom"></div>
+          <!-- <div class="swiper-button-prev-custom"></div>
+          <div class="swiper-button-next-custom"></div> -->
         </Swiper>
       </div>
     </div>

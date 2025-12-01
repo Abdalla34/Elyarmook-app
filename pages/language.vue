@@ -18,14 +18,14 @@
                     <PuplicIconSoudiaIcon />
                     <h5 class="arabic">{{ $t("Arabic") }}</h5>
                   </div>
+
                   <div class="input-check">
                     <input
                       class="inpuy-border"
                       type="checkbox"
                       :checked="checkedAr"
-                      @change="isArabic = true"
-                      :disabled="isConfirmationOpen"
-                      :class="{ 'opacity-input-1': isConfirmationOpen }"
+                      :disabled="checkedAr"
+                      @click.prevent.stop="openArabicConfirm"
                     />
                   </div>
                 </div>
@@ -33,7 +33,6 @@
             </div>
 
             <!-- lang English -->
-
             <div class="lang margin-bottom-24px box-pages">
               <div class="lang-box">
                 <div
@@ -44,19 +43,20 @@
                     <PuplicIconUSA />
                     <h5 class="english">{{ $t("English") }}</h5>
                   </div>
+
                   <div class="input-check">
                     <input
                       class="inpuy-border"
                       type="checkbox"
                       :checked="checkedEn"
-                      @change="isEnglish = true"
-                      :disabled="isConfirmationOpen"
-                      :class="{ 'opacity-input-1': isConfirmationOpen }"
+                      :disabled="checkedEn"
+                      @click.prevent.stop="openEnglishConfirm"
                     />
                   </div>
                 </div>
               </div>
             </div>
+
             <!-- box Arabic -->
             <div
               class="box-checked border-radius-36px text-center"
@@ -66,6 +66,7 @@
                 <PuplicIconSoudiaIcon />
                 <h6>{{ $t("Change Language to Arabic") }}</h6>
                 <p>{{ $t("Are you Sure to Change Language to Arabic?") }}</p>
+
                 <div
                   class="done margin-60px d-flex align-items-center justify-content-center gap-2"
                 >
@@ -75,6 +76,7 @@
                   >
                     cancel
                   </div>
+
                   <div
                     class="yes-change box-button text-capitalize"
                     @click="ChangeToAr"
@@ -85,7 +87,7 @@
               </div>
             </div>
 
-            <!-- box English  -->
+            <!-- box English -->
             <div
               class="box-checked border-radius-36px text-center"
               v-if="isEnglish"
@@ -94,6 +96,7 @@
                 <PuplicIconUSA />
                 <h6>{{ $t("Change Language to English") }}</h6>
                 <p>{{ $t("Are you Sure to Change Language to English?") }}</p>
+
                 <div
                   class="done margin-60px d-flex align-items-center justify-content-center gap-2"
                 >
@@ -103,6 +106,7 @@
                   >
                     cancel
                   </div>
+
                   <div
                     class="yes-change box-button text-capitalize"
                     @click="ChangeToEn"
@@ -121,34 +125,51 @@
 </template>
 
 <script setup>
-import { set } from "date-fns";
-
 let isArabic = ref(false);
 let isEnglish = ref(false);
+
 const { locale, setLocale } = useI18n();
 
-const isConfirmationOpen = computed(() => isArabic.value || isEnglish.value);
 const checkedAr = computed(() => locale.value === "ar");
 const checkedEn = computed(() => locale.value === "en");
 
 
+function openArabicConfirm() {
+  if (!checkedAr.value) {
+    isArabic.value = true;
+  }
+}
+
+
+function openEnglishConfirm() {
+  if (!checkedEn.value) {
+    isEnglish.value = true;
+  }
+}
 
 function cancelArabic() {
   isArabic.value = false;
 }
+
 function cancelEnglish() {
   isEnglish.value = false;
 }
+
 function ChangeToAr() {
   setLocale("ar");
   isArabic.value = false;
 }
+
 function ChangeToEn() {
   setLocale("en");
   isEnglish.value = false;
 }
 </script>
 
+
 <style scoped>
 @import "@/assets/css/language.css";
+.disabled {
+  cursor: not-allowed;
+}
 </style>

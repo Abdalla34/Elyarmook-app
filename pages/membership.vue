@@ -5,7 +5,7 @@
         <skeletons-member-ships />
       </div>
       <div class="row justify-content-center">
-        <div class="col-lg-8 col-md-5 col-sm-12">
+        <div data-aos="fade-up" class="col-lg-8 col-md-5 col-sm-12">
           <div
             class="card mb-3 shadow rounded overflow-hidden"
             v-for="value in allMemberShip"

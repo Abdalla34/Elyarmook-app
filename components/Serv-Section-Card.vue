@@ -1,7 +1,7 @@
 <template>
   <div class="services-section border-radius-20px margin-bottom-section">
     <div class="services-container container position-relative">
-      <div class="services-grid">
+      <div data-aos="fade-up" class="services-grid">
         <!-- services -->
         <div class="service-box" @click="navigateTo($localePath('/services'))">
           <img class="img" src="/car-fix.png" alt="service.title" />

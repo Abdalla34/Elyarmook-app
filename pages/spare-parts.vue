@@ -6,6 +6,7 @@
       </div>
       <div class="row">
         <div
+          data-aos="fade-up"
           class="col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center"
           v-for="sparepart in spareParts"
           :key="sparepart.id"

@@ -215,7 +215,7 @@
         class="modal-overlay"
         @click.self="buttonsOpen = false"
       >
-        <div class="modal-content">
+        <div data-aos="fade-up" class="modal-content">
           <div class="mdoal-box">
             <div class="d-flex align-items-center justify-content-between mb-2">
               <h1 class="text-capitalize label">{{ $t("send points") }}</h1>
@@ -253,7 +253,7 @@
         class="modal-overlay"
         @click.self="popupRedeem = false"
       >
-        <div class="modal-content">
+        <div data-aos="fade-up" class="modal-content">
           <div class="mdoal-box">
             <div class="input-num">
               <!-- input numbe points -->
@@ -424,8 +424,7 @@
 import dayjs from "#build/dayjs.imports.mjs";
 import { startOfSecond } from "date-fns";
 import { number } from "yup";
-const {getPoints, redeemPoints, pointTransfer} = useApi();
-
+const { getPoints, redeemPoints, pointTransfer } = useApi();
 
 const buttonsOpen = ref(false);
 const popupRedeem = ref(false);
@@ -549,7 +548,7 @@ const sendTransferPoints = async () => {
     isLoading.value = true;
     const res = await pointTransfer(pointNum.value, phoneNumberSend.value);
 
-    const data = res?._data || res; 
+    const data = res?._data || res;
 
     if (data?.status) {
       Points.value.current_points =
@@ -580,7 +579,6 @@ const sendTransferPoints = async () => {
     isLoading.value = false;
   }
 };
-
 
 // ✅ steps for tabs
 let step = ref(0);

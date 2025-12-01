@@ -42,6 +42,7 @@
 
         <!-- left section -->
         <div
+          data-aos="fade-up"
           class="col-12 col-md-12 col-lg-6 col-md-6"
           v-if="
             (token && cartRes?.id && services.length > 0) ||
@@ -247,6 +248,7 @@
         </div>
         <!-- right section -->
         <div
+          data-aos="fade-up"
           class="col-12 col-md-12 col-lg-4 col-test"
           v-if="
             (token && cartRes?.id && token && services.length > 0) ||

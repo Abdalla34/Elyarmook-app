@@ -5,11 +5,6 @@
   >
     <div class="col-md-10 col-sm-12">
       <SkeletonsSlidersHome />
-      <!-- <img
-        src="/placeholder.jpeg"
-        alt="Slide Image"
-        class="slide-img rounded-4"
-      /> -->
     </div>
 
     <!-- <div
@@ -20,29 +15,25 @@
     </div> -->
   </div>
 
-  <div v-else class="parent-swiper margin-bottom-section">
+  <div v-else data-aos="fade-up" class="parent-swiper margin-bottom-section">
     <Swiper
       :modules="[Pagination, Autoplay, Navigation]"
       :slides-per-view="1"
       loop="true"
       :autoplay="{ delay: 3000, disableOnInteraction: false }"
       :pagination="{ clickable: true, el: '.custom-pagination' }"
-      :dir="currentDir"
       class="mySwiper p-2 mt-4"
     >
-      <SwiperSlide v-for="item in images" :key="item.id">
-        <div class="row d-flex align-items-center justify-content-center">
-          <div class="col-md-10 col-sm-12">
-            <div
-              class="slide-content d-flex align-items-center justify-content-center"
-            >
-              <img
-                :src="item.image"
-                alt="Slide Image"
-                class="slide-img rounded-4"
-              />
-            </div>
-          </div>
+      <SwiperSlide v-for="(item, index) in images" :key="item.id">
+        <div
+          class="slide-content d-flex align-items-center justify-content-center"
+        >
+          <img
+            :src="item.image"
+            :loading="index === 0 ? 'eager' : 'lazy'"
+            decoding="async"
+            class="slide-img rounded-4"
+          />
         </div>
       </SwiperSlide>
     </Swiper>
@@ -57,16 +48,12 @@ import { Pagination, Autoplay, Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-const skele = ref(true);
 
+const skele = ref(true);
 let images = ref([]);
 
-const { locale } = useI18n();
-
-const currentDir = computed(() => {
-  return locale.value === "ar" ? "rtl" : "ltr";
-});
 const { gethome } = useApi();
+
 const time = 7 * 24 * 60 * 60 * 1000;
 
 async function cachedData() {
@@ -80,9 +67,7 @@ async function cachedData() {
         images.value = parseData.sliders || [];
         skele.value = false;
       }
-    } catch (err) {
-      console.error("Error parsing cache");
-    }
+    } catch (err) {}
   }
 
   try {
@@ -95,15 +80,80 @@ async function cachedData() {
       );
     }
   } catch (err) {
-    console.error("Error fetching home data");
   } finally {
     skele.value = false;
   }
 }
 
+watch(images, (val) => {
+  if (val?.length) {
+    useHead({
+      link: [
+        {
+          rel: "preload",
+          as: "image",
+          href: val[0].image,
+        },
+      ],
+    });
+  }
+});
+
 onMounted(() => {
   cachedData();
 });
+// import { Swiper, SwiperSlide } from "swiper/vue";
+// import { Pagination, Autoplay, Navigation } from "swiper/modules";
+// import "swiper/css";
+// import "swiper/css/pagination";
+// import "swiper/css/navigation";
+// const skele = ref(true);
+
+// let images = ref([]);
+
+// const { locale } = useI18n();
+
+// const currentDir = computed(() => {
+//   return locale.value === "ar" ? "rtl" : "ltr";
+// });
+// const { gethome } = useApi();
+// const time = 7 * 24 * 60 * 60 * 1000;
+
+// async function cachedData() {
+//   const cached = localStorage.getItem("homeData");
+//   const currentTime = Date.now();
+
+//   if (cached) {
+//     try {
+//       const parseData = JSON.parse(cached);
+//       if (currentTime - parseData.timestamp < time) {
+//         images.value = parseData.sliders || [];
+//         skele.value = false;
+//       }
+//     } catch (err) {
+//       console.error("Error parsing cache");
+//     }
+//   }
+
+//   try {
+//     const res = await gethome();
+//     if (res?.data?.sliders) {
+//       images.value = res.data.sliders;
+//       localStorage.setItem(
+//         "homeData",
+//         JSON.stringify({ sliders: images.value, timestamp: currentTime })
+//       );
+//     }
+//   } catch (err) {
+//     console.error("Error fetching home data");
+//   } finally {
+//     skele.value = false;
+//   }
+// }
+
+// onMounted(() => {
+//   cachedData();
+// });
 </script>
 
 <style scoped>

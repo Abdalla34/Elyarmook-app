@@ -4,7 +4,7 @@
     <div class="wallet-information wallet-margin">
       <div class="container">
         <div class="row">
-          <div class="col-md-8 col-padding">
+          <div data-aos="fade-up" class="col-md-8 col-padding">
             <div
               class="wallet-section container my-4 p-3 border rounded shadow-sm bg-light"
             >
@@ -16,7 +16,7 @@
                   <h1 class="text-capitalize mb-0">{{ $t("wallet") }}</h1>
                   <button
                     @click="otpModalAmount = true"
-                    class="btn  btn-sm text-capitalize"
+                    class="btn btn-sm text-capitalize"
                   >
                     {{ $t("deposit money") }}
                   </button>
@@ -142,7 +142,7 @@
           class="modal-overlay"
           @click.self="otpModalAmount = false"
         >
-          <div class="modal-content">
+          <div data-aos="fade-up" class="modal-content">
             <div class="mdoal-box">
               <h4 class="label fw-bold mb-2">{{ $t("the amount") }}</h4>
               <!-- amount input -->

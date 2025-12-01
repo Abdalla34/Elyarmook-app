@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="veiws-parent margin-bottom-24px">
-      <div class="container px-2 links">
+      <div class="container links">
         <div class="row">
           <div class="col-12 mt-4">
             <div class="pages border-radius-36px">

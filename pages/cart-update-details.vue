@@ -34,6 +34,7 @@
 
         <!-- left section -->
         <div
+          data-aos="fade-up"
           class="col-12 col-md-12 col-lg-6 col-md-6"
           v-if="
             (token && items.length > 0) ||
@@ -233,6 +234,7 @@
 
         <!-- right section -->
         <div
+          data-aos="fade-up"
           class="col-12 col-md-12 col-lg-4 col-test"
           v-if="
             (token && items.length > 0) ||

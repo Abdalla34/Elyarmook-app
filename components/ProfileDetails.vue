@@ -1,6 +1,6 @@
 <template>
   <div class="links-profile margin-bottom-40px">
-    <div class="container px-2 links">
+    <div class="container px-3 links">
       <div class="row">
         <div class="col-10">
           <div class="pages mb-4 border-radius-36px profile-scroll-container">

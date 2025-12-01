@@ -11,6 +11,7 @@
           :key="service.id"
         >
           <div
+            data-aos="fade-up"
             class="service-card text-center margin-bottom-24px position-relative"
           >
             <div class="service-icon-wrapper">
