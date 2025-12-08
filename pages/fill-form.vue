@@ -33,6 +33,7 @@
                   class="input-style"
                   type="text"
                   :placeholder="user ? user.phone : $t('phone')"
+                  v-model="phone"
                 />
               </div>
             </div>
@@ -42,7 +43,7 @@
                 <input
                   class="input-style"
                   type="text"
-                  :v-model="$t('address')"
+                  v-model="address"
                   :class="{ 'is-invalid': addressError }"
                 />
                 <span v-if="addressError" class="text-danger">{{
@@ -57,7 +58,7 @@
                   class=""
                   type="text"
                   :placeholder="$t('write your message')"
-                  :v-model="$t('Message')"
+                  v-model="message"
                   :class="{ 'is-invalid': messageError }"
                 />
                 <span v-if="messageError" class="text-danger">{{
@@ -71,8 +72,17 @@
             @click="onSubmit"
             class="button-save border-radius-36px width-height width-100"
           >
-            <button class="text-capitalize fw-bold">{{ $t("send") }}</button>
+            <button v-if="!loadingBtn" class="text-capitalize fw-bold">
+              {{ $t("send") }}
+            </button>
+            <div v-else>
+              <span
+                class="spinner-border spinner-border-sm text-success"
+                role="status"
+              ></span>
+            </div>
           </div>
+
           <div v-if="showModal" class="modal-overlay">
             <div class="modal-box">
               <p class="fs-5 mb-3">{{ modalMessage }}</p>
@@ -99,7 +109,7 @@ const schema = yup.object({
 const { handleSubmit } = useForm({
   validationSchema: schema,
 });
-
+const { contactUs } = useApi();
 const { value: address, errorMessage: addressError } = useField("address");
 const { value: message, errorMessage: messageError } = useField("message");
 const { value: name } = useField("name");
@@ -109,7 +119,7 @@ const modalMessage = ref("");
 const modalTitle = ref("");
 const isSuccess = ref(false);
 const user = useCookie("user").value;
-
+const loadingBtn = ref(false);
 const onSubmit = handleSubmit(async (values) => {
   const form = {
     title: values.address,
@@ -118,7 +128,8 @@ const onSubmit = handleSubmit(async (values) => {
     phone: values.phone || user.phone,
   };
   try {
-    let res = await useApi().contactUs(form);
+    loadingBtn.value = true;
+    let res = await contactUs(form);
     if (res?.status) {
       modalMessage.value = res?.message;
       modalTitle.value = "Success";
@@ -135,9 +146,13 @@ const onSubmit = handleSubmit(async (values) => {
       isSuccess.value = false;
       showModal.value = true;
     }
+    console.log("Form submitted successfully:", form);
   } catch (error) {
     modalMessage.value = error?.message;
     showModal.value = true;
+    console.log("Form submitted successfully:", form);
+  } finally {
+    loadingBtn.value = false;
   }
 });
 </script>
