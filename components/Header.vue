@@ -100,7 +100,13 @@ const cartCount = useState("cartCount", () => 0);
 
 <style scoped>
 @import "@/assets/css/header.css";
-
+.header-parent {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
 .menu-profile-log {
   position: absolute;
   top: 80px;

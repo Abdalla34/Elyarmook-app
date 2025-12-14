@@ -8,6 +8,7 @@
     <!-- Page Content -->
     <NuxtPage />
     <Footer class="margin-top" v-if="showLayout" />
+    <Bar />
   </div>
 </template>
 

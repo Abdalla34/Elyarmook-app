@@ -31,7 +31,7 @@
           </div>
           <img class="img" src="/parts.png" alt="service.title" />
           <h3 class="service-title text-capitalize mb-2">
-            {{ $t("spare Parts") }}
+            {{ $t("spare-parts") }}
           </h3>
           <p class="p-color-fs text-capitalize">{{ $t("Order Now") }}</p>
         </div>

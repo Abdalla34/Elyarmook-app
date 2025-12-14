@@ -14,6 +14,7 @@
             @click="navigateTo(localePath(`/membership-details/${value.id}`))"
           >
             <img
+            v-if="value.image"
               :src="value.image"
               class="card-img-top image-member"
               :alt="value.descrption"
