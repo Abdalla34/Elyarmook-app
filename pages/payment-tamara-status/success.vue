@@ -1,19 +1,25 @@
 <template>
-  <div class="container text-center py-10">
-    <div class="text-center">
-      <div>
-        <img class="image-media" src="/donePayment.png" alt="تم الدفع بنجاح" />
-        <h1 class="text-green-600 text-3xl font-bold mb-4">
-          {{ message }}
-        </h1>
+  <div class="parent-index-success">
+    <div class="container text-center py-10">
+      <div class="text-center">
+        <div>
+          <img
+            class="image-media"
+            src="/donePayment.png"
+            alt="تم الدفع بنجاح"
+          />
+          <h1 class="text-green-600 text-3xl font-bold mb-4">
+            {{ message }}
+          </h1>
+        </div>
       </div>
-    </div>
 
-    <button-card
-      @click="navigateTo($localePath('/myo-rders'))"
-      :text-button="$t('view my orders')"
-    >
-    </button-card>
+      <button-card
+        @click="navigateTo($localePath('/myo-rders'))"
+        :text-button="$t('view my orders')"
+      >
+      </button-card>
+    </div>
   </div>
 </template>
 
@@ -32,7 +38,7 @@ try {
     setTimeout(() => {
       cartCount.value = 0;
       localStorage.removeItem("yarmook-cart");
-      router.replace(localePath('index'));
+      router.replace(localePath("index"));
     }, 3000);
   }
 
@@ -42,7 +48,7 @@ try {
       message.value = res?.message || "تمت عملية الدفع بنجاح";
       cartCount.value = 0;
       localStorage.removeItem("yarmook-cart");
-      router.replace(localePath('index'));
+      router.replace(localePath("index"));
     } else {
       router.replace(localePath("/payment-tamara-status/failed"));
       message.value = res?.message || "فشلت عملية الدفع";

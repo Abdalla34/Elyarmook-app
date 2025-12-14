@@ -1,5 +1,7 @@
 <template>
-  <div class="text-green-600 text-3xl font-bold mb-4 text-center fs-3">
+  <div
+    class="parent-index-success text-green-600 text-3xl font-bold mb-4 text-center fs-3"
+  >
     {{ $t("loading check status Payment") }}
   </div>
   <div class="load">
@@ -13,7 +15,7 @@ let isChecking = false;
 let route = useRoute();
 let router = useRouter();
 const loading = ref(false);
-const localePath = useLocalePath()
+const localePath = useLocalePath();
 
 onMounted(async () => {
   if (isChecking) return;
@@ -45,5 +47,7 @@ onMounted(async () => {
     loading.value = false;
   }
 });
-
 </script>
+<style scoped>
+
+</style>

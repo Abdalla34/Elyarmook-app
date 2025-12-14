@@ -697,7 +697,7 @@ textarea {
   .popup-box {
     width: 100%;
     max-width: 100%;
-    border-radius: 16px 16px 0 0; 
+    border-radius: 16px 16px 0 0;
     animation: slideUp 0.3s ease;
   }
 
@@ -709,4 +709,10 @@ textarea {
       transform: translateY(0);
     }
   }
+}
+.parent-index-success {
+  min-height: 60vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
