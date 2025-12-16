@@ -1,17 +1,47 @@
 <template>
   <div class="bar" ref="bottomBar">
-    <div class="container">
+    <div class="containeer">
       <div
-        class="box-bar px-5 d-flex align-items-center justify-content-center gap-4 shadow-lg p-2 rounded-5 text-white"
+        class="box-bar px-5 d-flex align-items-center justify-content-between gap-3 shadow-lg p-2 rounded-1 text-white"
       >
-        <div class="box-bar-item" @click="navigateTo(localePath('/'))">
-          <i class="fa-solid fa-house text-dark"></i>
+        <div
+          class="box-bar-item text-center"
+          @click="navigateTo(localePath('/'))"
+        >
+          <PuplicIconHome :isActive="$route.path === '/'" />
+          <p class="price-currency text-capitalize">{{ $t("Home") }}</p>
         </div>
-        <div class="box-bar-item" @click="navigateTo(localePath('/profile'))">
-          <i class="fa-solid fa-user fa-1x text-dark"></i>
+        <div
+          class="box-bar-item text-center"
+          @click="navigateTo(localePath('/profile'))"
+        >
+          <i v-if="$route.path !== '/profile'" class="fa-regular fa-user"></i>
+          <i v-else class="fa-solid fa-user fa-1x"></i>
+          <p class="price-currency text-capitalize">{{ $t("profile") }}</p>
         </div>
-        <div class="box-bar-item" @click="navigateTo(localePath('/my-cars'))">
-          <i class="fa-solid fa-car text-dark"></i>
+        <div
+          class="box-bar-item text-center"
+          @click="navigateTo(localePath('/offers'))"
+        >
+          <PuplicIconOfferIcon :isActive="$route.path === '/offers'" />
+          <p class="price-currency text-capitalize">{{ $t("offers") }}</p>
+        </div>
+        <div
+          class="box-bar-item text-center"
+          @click="navigateTo(localePath('/services'))"
+        >
+          <PuplicIconServcesIcon :isActive="$route.path === '/services'" />
+          <p class="price-currency text-capitalize">{{ $t("services") }}</p>
+        </div>
+        <div
+          class="box-bar-item text-center"
+          @click="navigateTo(localePath('/my-cars'))"
+        >
+          <i v-if="$route.path === '/my-cars'" class="fa-solid fa-car"></i>
+          <PuplicIconCarIcon v-else />
+          <p class="price-currency text-capitalize font-important">
+            {{ $t("my cars") }}
+          </p>
         </div>
       </div>
     </div>
@@ -41,7 +71,7 @@ onUnmounted(() => {
 .bar {
   display: none;
   position: fixed;
-  bottom: 2%;
+  bottom: 0%;
   left: 0;
   width: 100%;
   z-index: 999;
@@ -56,11 +86,13 @@ onUnmounted(() => {
   transform: translateY(0);
 }
 .box-bar {
-  width: fit-content;
-  margin: auto;
-  background-color: var(--main-color);
-  box-shadow: 20px 20px 25px rgba(0, 0, 0, 0.25);
+  background-color: #fff;
+  box-shadow: 40px 40px 45px rgba(0, 0, 0, 0.25);
 }
+.box-bar-item {
+  color: #000;
+}
+
 @media (max-width: 768px) {
   .bar {
     display: block;
