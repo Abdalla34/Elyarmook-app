@@ -1,10 +1,10 @@
 <template>
   <div class="links-profile margin-bottom-40px">
-    <div class="container px-3 links">
+    <div class="container links">
       <div class="row">
-        <div class="col-10">
+        <div class="col-10 col-sm-12">
           <div class="pages mb-4 border-radius-36px profile-scroll-container">
-            <ul class="links d-flex justify-content-center align-items-end ul">
+            <ul class="links d-flex align-items-end ul">
               <li v-if="token" class="">
                 <NuxtLink
                   :to="$localePath('/profile')"
@@ -99,6 +99,8 @@ const localePath = useLocalePath();
 .col-10 {
   width: 100%;
   margin: auto;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
 }
 
 .ul {
@@ -150,11 +152,11 @@ const localePath = useLocalePath();
   .pages {
     display: block;
   }
-
   .profile-scroll-container {
     overflow-x: auto;
     overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
+    border-radius: 10px;
     scrollbar-width: thin;
   }
 
@@ -179,7 +181,12 @@ const localePath = useLocalePath();
   .ul {
     width: max-content;
     flex-wrap: nowrap;
+    border-radius: 10px !important;
+    background-color: #ffffff;
+    padding: 12px 0px;
+    gap: 12px !important;
   }
+
 }
 
 @media (max-width: 768px) {

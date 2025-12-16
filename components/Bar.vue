@@ -2,7 +2,7 @@
   <div class="bar" ref="bottomBar">
     <div class="containeer">
       <div
-        class="box-bar px-5 d-flex align-items-center justify-content-between gap-3 shadow-lg p-2 rounded-1 text-white"
+        class="box-bar px-3 d-flex align-items-center justify-content-between gap-3 shadow-lg p-2 rounded-1 text-white"
       >
         <div
           class="box-bar-item text-center"
