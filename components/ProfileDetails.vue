@@ -158,6 +158,7 @@ const localePath = useLocalePath();
     -webkit-overflow-scrolling: touch;
     border-radius: 10px;
     scrollbar-width: thin;
+    box-shadow: 0px 1px 8px 0px rgba(0, 0, 0, 0.1);
   }
 
   .profile-scroll-container::-webkit-scrollbar {
@@ -183,7 +184,7 @@ const localePath = useLocalePath();
     flex-wrap: nowrap;
     border-radius: 10px !important;
     background-color: #ffffff;
-    padding: 12px 0px;
+    padding: 12px 5px;
     gap: 12px !important;
   }
 
