@@ -1,7 +1,7 @@
 <template>
   <div class="footer p-5 text-light">
     <div class="container">
-      <div class="row hand d-flex text-md-start">
+      <div class="row hand d-flex">
         <!-- Logo + Download + Contact -->
         <div class="col-lg-3 col-md-6 col-12 logo">
           <img
@@ -10,7 +10,7 @@
             class="img-fluid mb-3"
           />
           <p class="text-light mb-3">{{ $t("Download our app") }}</p>
-          <div class="icons-link d-flex flex-wrap justify-content-end gap-2">
+          <div class="icons-link d-flex flex-wrap justify-content-startenhance  gap-2">
             <div
               class="google d-flex align-items-center gap-2 ps-3 pe-3 pt-2 pb-2 box-style"
             >
