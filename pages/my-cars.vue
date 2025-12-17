@@ -263,6 +263,9 @@ const goToAddCar = () => {
 
 <style scoped>
 @import "@/assets/css/mycars.css";
+.mycars-information{
+  margin-bottom: 95px !important;
+}
 .fs {
   font-size: 12px;
   transition: all 0.3s;

@@ -60,7 +60,6 @@
   transition: all 0.3s ease-in-out;
 }
 
-
 @media (max-width: 992px) {
   .poup-edit {
     right: 60px;
@@ -70,7 +69,6 @@
   }
 }
 
-
 @media (max-width: 767px) {
   .poup-edit {
     right: 30px;
@@ -78,12 +76,14 @@
     width: 230px;
     padding: 20px;
   }
+  .mycars-information {
+    margin-bottom: 35px !important;
+  }
 }
-
 
 @media (max-width: 480px) {
   .poup-edit {
-    position: fixed; 
+    position: fixed;
     right: 10px;
     left: 10px;
     top: auto;
