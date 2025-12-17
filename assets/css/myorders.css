@@ -1,5 +1,5 @@
 .my-orders {
-  margin-bottom: 80px;
+  margin-bottom: 188px;
 }
 
 .links {
@@ -49,9 +49,6 @@
   gap: 4px;
 }
 
-
-
-
 .action {
   position: absolute !important;
   background-color: #de2b53;
@@ -72,8 +69,11 @@
   .span {
     font-size: 12px;
   }
-    a {
+  a {
     font-size: 10px;
+  }
+  .my-orders {
+    margin-bottom: 80px;
   }
 }
 
