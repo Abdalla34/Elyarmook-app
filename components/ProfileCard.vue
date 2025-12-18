@@ -1,29 +1,50 @@
 <template>
   <div class="profile-ds">
     <div
-      class="profile-card d-flex justify-content-center align-items-center gap-2"
+      class="profile-card d-flex justify-content-start align-items-center gap-2"
     >
-      <div>
+      <!-- cars if registered -->
+      <div v-if="token">
         <div
           class="background-color-cart d-flex align-items-center justify-content-center"
           @click="
             navigateTo($localePath(`/my-cars?redirect=${route.fullPath}`))
           "
         >
-          <button v-if="token" class="buttons">
+          <button class="buttons">
             <img
               class="bmw-img z-index-after"
               :src="defaultCar?.brand?.image"
               alt=""
             />
           </button>
-          <button v-if="!token" class="buttons">
-            <PuplicIconCarIcon />
-          </button>
         </div>
       </div>
 
-      <div class="position-relative">
+      <div
+        v-if="!token"
+        class="bo-sign d-flex align-items-center justify-content-between gap-1 w-100"
+        @click="navigateTo($localePath('/createaccount'))"
+      >
+        <div>
+          <span class="font-p fw-bold">{{ $t("sign up") }}</span>
+        </div>
+        <div>
+          <i class="fa-solid fa-arrow-right-to-bracket"></i>
+        </div>
+      </div>
+      <!-- profile if registred  -->
+      <div
+        v-else
+        @click="navigateTo($localePath(`/profile?redirect=${route.fullPath}`))"
+        class="background-color-cart d-flex align-items-center justify-content-center position-relative"
+      >
+        <button class="buttons">
+          <i class="fa-solid fa-user-check fa-2x" style="color: #28a745"></i>
+        </button>
+      </div>
+
+      <!-- <div class="position-relative background-color-cart">
         <div
           @click="
             navigateTo($localePath(`/profile?redirect=${route.fullPath}`))
@@ -32,20 +53,9 @@
           class="icon-user login"
           style="cursor: pointer"
         >
-          <i class="fa-solid fa-user fa-2x"></i>
+         <i class="fa-solid fa-arrow-right-to-bracket"></i>
         </div>
-        <div
-          v-if="token"
-          @click="
-            navigateTo($localePath(`/profile?redirect=${route.fullPath}`))
-          "
-          class="background-color-cart d-flex align-items-center justify-content-center position-relative"
-        >
-          <button class="buttons">
-            <i class="fa-solid fa-user-check fa-2x" style="color: #28a745"></i>
-          </button>
-        </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -58,6 +68,7 @@ const { defaultCar, fetchMyCars } = useMyCars();
 onMounted(() => {
   fetchMyCars();
 });
+const { locale } = useI18n();
 </script>
 
 <style scoped>

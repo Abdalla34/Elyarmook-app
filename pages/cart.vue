@@ -9,7 +9,7 @@
         <SkeletonsCartComfortableService />
       </div>
       <div v-else class="row justify-content-center">
-        <NotRegister
+        <notRegister
           :IsNotRegitser="notRegister"
           :message="$t('cart is Empty you must create account')"
         />
@@ -43,7 +43,7 @@
         <!-- left section -->
         <div
           data-aos="fade-up"
-          class="col-12 col-md-12 col-lg-6 col-md-6"
+          class="col-12 col-md-12 col-lg-6 col-md-6 section-scroll"
           v-if="
             (token && cartRes?.id && services.length > 0) ||
             offers.length > 0 ||
@@ -69,45 +69,6 @@
                     $t("sar")
                   }}</span>
                 </p>
-                <div class="qty-controls d-flex align-items-center mt-2">
-                  <button
-                    class="qty-btn"
-                    :disabled="loadingQty[service.id] || service.qty <= 1"
-                    @click="
-                      updateQty(
-                        'service',
-                        order_id,
-                        service,
-                        service.qty - 1,
-                        'minus'
-                      )
-                    "
-                  >
-                    -
-                  </button>
-                  <span class="mx-2">{{ service.qty }}</span>
-                  <button
-                    @click="
-                      updateQty(
-                        'service',
-                        order_id,
-                        service,
-                        service.qty + 1,
-                        'plus'
-                      )
-                    "
-                    class="qty-btn"
-                    :disabled="loadingQty[service.id]"
-                  >
-                    +
-                  </button>
-                  <span v-if="loadingQty[service.id]" class="ms-2">{{
-                    $t("loading...")
-                  }}</span>
-                  <div v-if="msg[service.id]" class="text-danger label mt-2">
-                    {{ msg[service.id] }}
-                  </div>
-                </div>
               </div>
             </div>
             <div
@@ -536,4 +497,10 @@ function toContinue() {
 
 <style scoped>
 @import "@/assets/css/cartorder.css";
+.section-scroll {
+  max-height: 70vh;
+  overflow-y: auto;
+  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+  scroll-behavior: smooth;
+}
 </style>

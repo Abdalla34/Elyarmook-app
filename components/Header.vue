@@ -1,7 +1,7 @@
 <template>
-  <div class="header-parent">
+  <div class="header-parent py-2">
     <div
-      class="container p-2 d-flex justify-content-between align-items-center pt-3"
+      class="container p-2 d-flex justify-content-between align-items-center"
     >
       <div class="logo d-flex align-items-center gap-3 position-relative">
         <div class="image-logo" @click="navigateTo(localePath('/'))">
@@ -47,6 +47,24 @@
           </div>
 
           <div class="position-relative profile">
+            <!-- sign up new -->
+            <!-- <div
+              v-if="!token"
+              class="d-flex align-items-center justify-content-center gap-1 w-100 icon-user"
+              @click="
+                navigateTo(
+                  $localePath(`/createaccount?redirect=${route.fullPath}`)
+                )
+              "
+              style="cursor: pointer"
+            >
+              <div>
+                <span class="font-p fw-bold">{{ $t("sign up") }}</span>
+              </div>
+              <div>
+                <i class="fa-solid fa-arrow-right-to-bracket"></i>
+              </div>
+            </div> -->
             <div
               @click="
                 navigateTo($localePath(`/profile?redirect=${route.fullPath}`))
@@ -57,6 +75,7 @@
             >
               <i class="fa-solid fa-user fa-2x"></i>
             </div>
+
             <div
               v-if="token"
               @click="
@@ -125,7 +144,6 @@ const cartCount = useState("cartCount", () => 0);
 .login {
   padding: 10px 21px;
   background-color: var(--color-secound-main);
-  width: -moz-fit-content;
   width: fit-content;
   border-radius: 11px;
   font-weight: bold;

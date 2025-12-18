@@ -32,7 +32,7 @@
             :src="item.image"
             :loading="index === 0 ? 'eager' : 'lazy'"
             decoding="async"
-            class="slide-img rounded-4"
+            class="slide-img rounded-4 p-2"
           />
         </div>
       </SwiperSlide>

@@ -10,12 +10,10 @@
             >
               <i class="fa-solid fa-xmark"></i>
             </div>
-
-            <h1 class="margin-bottom-24px text-capitalize title-pages">
+          </div>
+   <h1 class="margin-bottom-24px text-center text-capitalize title-pages">
               {{ $t("Fill a Form") }}
             </h1>
-          </div>
-
           <div class="bottom-80px">
             <div class="input">
               <div class="input d-flex flex-column">
@@ -72,7 +70,7 @@
             @click="onSubmit"
             class="button-save border-radius-36px width-height width-100"
           >
-            <button v-if="!loadingBtn" class="text-capitalize fw-bold">
+            <button v-if="!loadingBtn" class="text-capitalize fw-bold text-black">
               {{ $t("send") }}
             </button>
             <div v-else>

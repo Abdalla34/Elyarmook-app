@@ -94,9 +94,9 @@
             chassisError
           }}</span>
           <button-card
-            :disabled="!carForm.chassis_number || !carForm.manufacture_year"
+            :disabled="!carForm.manufacture_year"
             :text-button="isloadCar ? $t('loading...') : $t('add car')"
-            class="mt-4"
+            class="mt-4 text-black"
             type="submit"
           />
         </form>

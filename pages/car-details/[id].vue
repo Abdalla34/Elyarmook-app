@@ -51,7 +51,7 @@
                   class="chassis-num text-center details-order flex-fill pe-3"
                 >
                   <p class="p-colo-fs mb-2">
-                    <span class="p-color-fs">{{ $t("chassis Number:") }} </span>
+                    <span class="p-color-fs fs-14px">{{ $t("chassis Number:") }} </span>
                     {{ carDetails.chassis_number }}
                   </p>
                 </div>
@@ -61,7 +61,7 @@
                   class="chassis-num text-center details-order flex-fill ps-3"
                 >
                   <p class="p-colo-fs mb-2">
-                    <span class="p-color-fs">{{
+                    <span class="p-color-fs fs-14px">{{
                       $t("Manufacture Year:")
                     }}</span>
                     {{ carDetails.manufacture_year }}
@@ -161,6 +161,9 @@ function getIdCarToEdit() {
 </script>
 
 <style scoped>
+.car-details {
+  margin-bottom: 150px;
+}
 .car-model,
 .details-order {
   background-color: var(--color-secound-main);
@@ -180,5 +183,16 @@ function getIdCarToEdit() {
 .order-bg {
   background-color: #14142b;
   transition: all 0.3s;
+}
+@media (max-width: 576px) {
+  .car-details {
+    margin-bottom: 100px;
+  }
+  .img {
+    width: 45px;
+  }
+  .fs-14px{
+    font-size: 14px;
+  }
 }
 </style>

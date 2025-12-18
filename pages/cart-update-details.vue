@@ -35,7 +35,7 @@
         <!-- left section -->
         <div
           data-aos="fade-up"
-          class="col-12 col-md-12 col-lg-6 col-md-6"
+          class="col-12 col-md-12 col-lg-6 col-md-6 section-scroll"
           v-if="
             (token && items.length > 0) ||
             offers.length > 0 ||
@@ -61,36 +61,6 @@
                     $t("sar")
                   }}</span>
                 </p>
-                <div class="qty-controls d-flex align-items-center mt-2">
-                  <button
-                    class="qty-btn"
-                    :disabled="loadingQty[order.id] || order.qty <= 1"
-                    @click="
-                      updateQty('service', order_id, order, order.qty - 1)
-                    "
-                  >
-                    -
-                  </button>
-                  <span class="mx-2">{{ order.qty }}</span>
-                  <button
-                    class="qty-btn"
-                    :disabled="loadingQty[order.id]"
-                    @click="
-                      updateQty('service', order_id, order, order.qty + 1)
-                    "
-                  >
-                    +
-                  </button>
-                  <span v-if="loadingQty[order.id]" class="ms-2">{{
-                    $t("loading...")
-                  }}</span>
-                  <div
-                    v-if="msgErrorQty[order.id]"
-                    class="text-danger label mt-2"
-                  >
-                    {{ msgErrorQty[order.id] }}
-                  </div>
-                </div>
               </div>
             </div>
             <div class="delete-icon" @click="deletedOrder(order.id, 'service')">
@@ -806,6 +776,12 @@ async function toContinue() {
 
 <style scoped>
 @import "@/assets/css/cartorder.css";
+.section-scroll {
+  max-height: 70vh;
+  overflow-y: auto;
+  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+  scroll-behavior: smooth;
+}
 .image-media {
   width: 300px;
 }

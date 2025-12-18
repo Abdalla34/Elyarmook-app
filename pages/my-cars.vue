@@ -141,7 +141,7 @@
               class="button-save border-radius-36px width-height"
               @click="goToAddCar"
             >
-              <button class="text-capitalize">
+              <button class="text-capitalize fw-bold text-black">
                 <!-- <i class="fa-solid fa-plus"></i> -->
                 <span v-if="!loadingIdAddCar">{{ $t("add new car") }}</span>
                 <span
@@ -264,7 +264,7 @@ const goToAddCar = () => {
 <style scoped>
 @import "@/assets/css/mycars.css";
 .mycars-information{
-  margin-bottom: 95px !important;
+  margin-bottom: 95px;
 }
 .fs {
   font-size: 12px;

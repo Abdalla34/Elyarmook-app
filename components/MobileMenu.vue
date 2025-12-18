@@ -4,17 +4,21 @@
     <!-- Cart Icon -->
     <div
       v-if="token"
-      class="cart-icon-wrapper"
+      class="cart-icon-wrapper boxicon-design"
       @click="navigateTo($localePath('/cart'))"
     >
       <div class="cart-icon-inner">
         <PuplicIconCartIcon />
-        <span v-if="cartCount > 0" class="cart-badge">{{ cartCount }}</span>
+        <span v-if="cartCount > 0" class="cart-badge text-white d-flex align-items-center">{{ cartCount }}</span>
       </div>
     </div>
 
     <!-- Burger Menu Icon -->
-    <div class="menu-icon" @click="toggleMenu" :class="{ active: isMenuOpen }">
+    <div
+      class="menu-icon boxicon-design"
+      @click="toggleMenu"
+      :class="{ active: isMenuOpen }"
+    >
       <div class="burger-lines">
         <span class="line line1"></span>
         <span class="line line2"></span>
@@ -35,7 +39,7 @@
       <div v-if="isMenuOpen" class="box-phone" :dir="currentDir">
         <div class="menu-header">
           <h3 class="menu-title">{{ $t("Menu") }}</h3>
-          <button class="close-btn" @click="toggleMenu">×</button>
+          <!-- <button class="close-btn" @click="toggleMenu">×</button> -->
         </div>
 
         <ul class="ul-phone">
@@ -148,24 +152,15 @@ const currentDir = computed(() => {
 }
 
 /* Cart Icon Wrapper */
-.cart-icon-wrapper {
+.boxicon-design {
   background: rgba(255, 255, 255, 0.95);
+  border: 2px solid rgba(255, 230, 84, 0.2);
+  box-shadow: 0 0px 1 px rgba(0, 0, 0, 0.1);
   padding: 12px;
   border-radius: 15px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  backdrop-filter: blur(10px);
-  border: 2px solid rgba(255, 230, 84, 0.2);
   display: none;
   z-index: 1000;
-}
-
-.cart-icon-wrapper:hover {
-  background: rgba(255, 255, 255, 1);
-  transform: scale(1.05);
-  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
-  border-color: rgba(255, 230, 84, 0.4);
 }
 
 .cart-icon-inner {
@@ -182,19 +177,13 @@ const currentDir = computed(() => {
   top: -12px;
   right: -12px;
   background: linear-gradient(135deg, #ff4757, #ff6b81);
-  color: white;
   border-radius: 50%;
   min-width: 20px;
   height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   font-size: 11px;
   font-weight: 700;
   padding: 2px 5px;
-  box-shadow: 0 2px 8px rgba(255, 71, 87, 0.4);
   animation: pulse 2s ease-in-out infinite;
-  border: 2px solid white;
 }
 
 @keyframes pulse {
@@ -205,27 +194,6 @@ const currentDir = computed(() => {
   50% {
     transform: scale(1.1);
   }
-}
-
-/* Enhanced Burger Menu Icon */
-.menu-icon {
-  background: rgba(255, 255, 255, 0.95);
-  padding: 12px;
-  border-radius: 15px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  backdrop-filter: blur(10px);
-  border: 2px solid rgba(255, 230, 84, 0.2);
-  display: none;
-  z-index: 1000;
-}
-
-.menu-icon:hover {
-  background: rgba(255, 255, 255, 1);
-  transform: scale(1.05);
-  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
-  border-color: rgba(255, 230, 84, 0.4);
 }
 
 /* Burger Lines */
@@ -308,34 +276,12 @@ const currentDir = computed(() => {
   margin: 0;
 }
 
-.close-btn {
-  background: none;
-  border: none;
-  font-size: 2rem;
-  color: #6c757d;
-  cursor: pointer;
-  padding: 5px;
-  border-radius: 50%;
-  transition: all 0.3s ease;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.close-btn:hover {
-  background: rgba(255, 71, 87, 0.1);
-  color: #ff4757;
-  transform: rotate(90deg);
-}
-
 /* Menu Links */
 .ul-phone {
-  flex: 1;
   padding: 20px 0;
   margin: 0;
   list-style: none;
+  border-bottom: 1px solid #ccc;
 }
 
 .menu-item {
