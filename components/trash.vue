@@ -6,6 +6,7 @@
       viewBox="0 0 25 25"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      class="test"
     >
       <path
         d="M21.5 6.48047C18.17 6.15047 14.82 5.98047 11.48 5.98047C9.5 5.98047 7.52 6.08047 5.54 6.28047L3.5 6.48047"
@@ -45,3 +46,9 @@
     </svg>
   </div>
 </template>
+<style scoped>
+.test {      
+stroke: white;
+fill: white;
+}
+</style>

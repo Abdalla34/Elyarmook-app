@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div data-aos="fade-left">
     <div class="wench-service cursor-pointer" @click="conditionToken">
       <div class="wench-service-content">
         <div
