@@ -189,6 +189,9 @@
   .swiper-button-next-custom {
     right: 1px;
   }
+  .box-diesign {
+    border-radius: 10px;
+  }
 }
 
 @media (min-width: 577px) and (max-width: 768px) {

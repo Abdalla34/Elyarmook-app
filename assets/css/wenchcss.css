@@ -135,6 +135,7 @@
   .wench-service {
     padding: 1rem;
     margin: 1rem;
+    border-radius: 10px;
   }
 
   .img-wench {
@@ -152,5 +153,8 @@
   }
   .img-modal {
     height: 130px;
+  }
+  .wench-service{
+    background-color: rgba(235, 235, 235, 1);
   }
 }

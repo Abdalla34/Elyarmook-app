@@ -498,9 +498,16 @@ function toContinue() {
 <style scoped>
 @import "@/assets/css/cartorder.css";
 .section-scroll {
-  max-height: 70vh;
+  max-height: 65vh;
   overflow-y: auto;
   scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
   scroll-behavior: smooth;
+}
+@media (max-width: 768px) {
+  .section-scroll {
+    overflow-y: hidden;   /* يلغي الاسكرول */
+    max-height: none;     /* يشيل تحديد الارتفاع */
+    scroll-behavior: auto;
+  }
 }
 </style>

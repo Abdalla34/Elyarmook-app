@@ -178,6 +178,10 @@
   .service-box p {
     font-size: 0.75rem;
   }
+  .service-box {
+    background-color: rgba(235, 235, 235, 1);
+    box-shadow: 0 0px 0px rgba(0, 0, 0, 0.08), 0 4px 20px rgba(0, 0, 0, 0.04);
+  }
 }
 
 /* 📱 من أول 576px لحد 400px (موبايل عادي) */

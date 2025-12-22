@@ -1,12 +1,16 @@
 <template>
-  <div data-aos="fade-left">
+  <div>
     <div class="wench-service cursor-pointer" @click="conditionToken">
       <div class="wench-service-content">
         <div
-          class="wench-content d-flex flex-column flex-md-row justify-content-between align-items-center gap-4"
+          class="wench-content d-flex justify-content-between align-items-center gap-2"
         >
-          <div class="img-wench text-center text-md-start">
-            <img src="/wenchcar.jpg" alt="wench car" class="image-width" />
+          <div data-aos="filp-left" class="img-wench text-center text-md-start">
+            <img
+              src="/Carcomfortable.png"
+              alt="Carcomfortable"
+              class="image-width"
+            />
           </div>
 
           <div data-aos="fade-up" class="order-now text-center text-md-start">
@@ -27,7 +31,7 @@
       class="modal-overlay"
       @click.self="showServiceModal = false"
     >
-      <div data-aos="fade-up" class="modal-container">
+      <div data-aos="zoom-in" class="modal-container">
         <div
           class="modal-header d-flex justify-content-between align-items-center"
         >
@@ -147,16 +151,19 @@ function navigaToteComfrotable() {
 @import "@/assets/css/wenchcss.css";
 .image-width {
   max-width: 100%;
-  border-radius: 20px;
+  height: 200px;
 }
+
 @media (max-width: 768px) {
   .wench-content {
-    flex-direction: column;
     text-align: center;
   }
 
   .order-now h1 {
     font-size: 1.3rem;
+  }
+  .order-now {
+    width: 100%;
   }
 
   .modal-container {
@@ -171,6 +178,9 @@ function navigaToteComfrotable() {
   }
   .orderbtn-text {
     font-size: 10px !important;
+  }
+  .image-width {
+    height: 100%;
   }
 }
 
@@ -221,6 +231,7 @@ function navigaToteComfrotable() {
     border-radius: 16px 16px 0 0;
     animation: slideUp 0.3s ease-out;
     max-height: 80vh;
+    bottom: -14px;
   }
 
   @keyframes slideUp {
@@ -232,5 +243,7 @@ function navigaToteComfrotable() {
     }
   }
 }
-.cursor-pointer{cursor: pointer;}
+.cursor-pointer {
+  cursor: pointer;
+}
 </style>

@@ -1,27 +1,36 @@
 <template>
   <div class="services-section border-radius-20px margin-bottom-section">
     <div class="services-container container position-relative">
-      <div data-aos="fade-up" class="services-grid">
+      <div class="services-grid">
         <!-- services -->
-        <div class="service-box" @click="navigateTo($localePath('/services'))">
-          <img class="img" src="/car-fix.png" alt="service.title" />
+        <div
+          data-aos="fade-right"
+          class="service-box"
+          @click="navigateTo(localePath('/services'))"
+        >
           <h3 class="service-title text-capitalize mb-2">
             {{ $t("services") }}
           </h3>
           <p class="p-color-fs text-capitalize">{{ $t("booking now") }}</p>
+          <img class="img" src="/servicesbackground.png" alt="service.title" />
         </div>
 
         <!-- offers -->
-        <div class="service-box" @click="navigateTo($localePath('/offers'))">
-          <img class="img" src="/Discount Gift.png" alt="service.title" />
+        <div
+          data-aos="fade-up"
+          class="service-box"
+          @click="navigateTo(localePath('/offers'))"
+        >
           <h3 class="service-title text-capitalize mb-2">{{ $t("offers") }}</h3>
           <p class="p-color-fs text-capitalize">{{ $t("Find now") }}</p>
+          <img class="img" src="/Discount Gift.png" alt="service.title" />
         </div>
 
         <!-- spare Parts -->
         <div
+          data-aos="fade-left"
           class="service-box"
-          @click="navigateTo($localePath('/spare-parts'))"
+          @click="navigateTo(localePath('/spare-parts'))"
         >
           <div class="services-header position-relative">
             <span
@@ -29,11 +38,11 @@
               >{{ $t("Soon") }}</span
             >
           </div>
-          <img class="img" src="/parts.png" alt="service.title" />
           <h3 class="service-title text-capitalize mb-2">
             {{ $t("spare-parts") }}
           </h3>
           <p class="p-color-fs text-capitalize">{{ $t("Order Now") }}</p>
+          <img class="img" src="/sparebackground.png" alt="service.title" />
         </div>
       </div>
     </div>
@@ -46,6 +55,7 @@ import { Pagination, Autoplay, Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+const localePath = useLocalePath();
 </script>
 
 <style scoped>
