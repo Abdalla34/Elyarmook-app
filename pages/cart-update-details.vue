@@ -927,5 +927,11 @@ async function toContinue() {
 }
 .form-control:focus {
   outline: none;
+  border: none;
+}
+.form-check-input:checked {
+  background-color: var(--main-color);
+  border-color: var(--main-color);
+
 }
 </style>

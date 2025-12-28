@@ -5,7 +5,7 @@
         <div
           class="wench-content d-flex justify-content-between align-items-center gap-2"
         >
-          <div data-aos="filp-left" class="img-wench text-center text-md-start">
+          <div data-aos="flip-left" class="img-wench text-center text-md-start">
             <img
               src="/Carcomfortable.png"
               alt="Carcomfortable"

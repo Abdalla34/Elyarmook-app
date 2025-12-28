@@ -30,7 +30,7 @@
         <div
           data-aos="fade-left"
           class="service-box"
-          @click="navigateTo(localePath('/spare-parts'))"
+         
         >
           <div class="services-header position-relative">
             <span
