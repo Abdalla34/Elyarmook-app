@@ -3,11 +3,7 @@
     <div class="services-container container position-relative">
       <div class="services-grid">
         <!-- services -->
-        <div
-          data-aos="fade-right"
-          class="service-box"
-          @click="navigateTo(localePath('/services'))"
-        >
+        <div data-aos="fade-right" class="service-box" @click="navigateTo(localePath('/services'))">
           <h3 class="service-title text-capitalize mb-2">
             {{ $t("services") }}
           </h3>
@@ -16,27 +12,17 @@
         </div>
 
         <!-- offers -->
-        <div
-          data-aos="fade-up"
-          class="service-box"
-          @click="navigateTo(localePath('/offers'))"
-        >
+        <div data-aos="fade-up" class="service-box" @click="navigateTo(localePath('/offers'))">
           <h3 class="service-title text-capitalize mb-2">{{ $t("offers") }}</h3>
           <p class="p-color-fs text-capitalize">{{ $t("Find now") }}</p>
           <img class="img" src="/Discount Gift.png" alt="service.title" />
         </div>
 
         <!-- spare Parts -->
-        <div
-          data-aos="fade-left"
-          class="service-box"
-         
-        >
+        <div data-aos="fade-left" class="service-box">
           <div class="services-header position-relative">
-            <span
-              class="soon-badge text-capitalize ps-3 pe-3 pt-1 pb-1 position-absolute border-radius-20px"
-              >{{ $t("Soon") }}</span
-            >
+            <span class="soon-badge text-capitalize ps-3 pe-3 pt-1 pb-1 position-absolute border-radius-20px">{{
+              $t("Soon") }}</span>
           </div>
           <h3 class="service-title text-capitalize mb-2">
             {{ $t("spare-parts") }}
@@ -44,8 +30,21 @@
           <p class="p-color-fs text-capitalize">{{ $t("Order Now") }}</p>
           <img class="img" src="/sparebackground.png" alt="service.title" />
         </div>
+
+
       </div>
+   
     </div>
+    <div class="membership-img rounded-5 px-3 py-1 text-white">
+        <div class="box--member p-4 rounded-">
+          <h1>Al yarmook Packages</h1>
+          <p class="mt-3">Save With an ALyarmook One Membership For 1 Year</p>
+          <div class="subscription d-flex align-items-center justify-content-between">
+            <NuxtLink to="/membership">Subscribe now ></NuxtLink>
+            <img src="/Group.png" alt="">
+          </div>
+        </div>
+      </div>
   </div>
 </template>
 

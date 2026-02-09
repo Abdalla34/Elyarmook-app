@@ -78,6 +78,7 @@
     line-height: 40px;
   }
 }
+
 /* ////////////////////////////////////////////////////////// */
 .services-grid {
   display: grid;
@@ -97,6 +98,7 @@
   cursor: pointer;
   border: 1px solid rgba(255, 255, 255, 0.8);
 }
+
 .service-box:hover {
   transform: translateY(-2px) scale(1.02);
   box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15), 0 10px 30px rgba(0, 0, 0, 0.1);
@@ -124,7 +126,111 @@
   border-radius: 5px;
 }
 
-/* 📱 من أول 992px لحد 768px (تابلت كبير) */
+/* Membership banner section */
+.membership-img {
+  background-color: #111111;
+  overflow: hidden;
+  width: 90%;
+  margin: auto;
+  margin-top: 80px;
+  margin-bottom: 80px;
+}
+
+.membership-img .box--member {
+  background-image: url('/patterns.png');
+  background-size: contain;
+}
+
+.membership-img .box--member p {
+  color: #ccc7c7;
+}
+
+.membership-img .subscription a {
+  color: #ffcc33;
+  font-weight: 600;
+  font-size: 1.05rem;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+}
+
+.membership-img .subscription a:hover {
+  text-decoration: underline;
+}
+
+.membership-img .subscription img {
+  width: 140px;
+  max-width: 40%;
+  height: auto;
+}
+
+/* Responsive  membership  */
+@media (max-width: 992px) {
+  .membership-img {
+    padding: 24px 80px 24px 24px;
+  }
+
+  .membership-img .box--member h1 {
+    font-size: 1.6rem;
+  }
+
+  .membership-img .box--member p {
+    font-size: 0.95rem;
+  }
+
+  .membership-img .subscription img {
+    width: 110px;
+  }
+}
+
+@media (max-width: 768px) {
+  .membership-img {
+    padding: 22px 22px 20px;
+  }
+
+  .membership-img .box--member {
+    align-items: flex-start;
+  }
+
+  .membership-img .subscription {
+    flex-direction: row;
+  }
+
+  .membership-img .subscription img {
+    width: 100px;
+  }
+}
+
+@media (max-width: 576px) {
+  .membership-img {
+    margin-top: 20px;
+    width: 100%;
+    border-radius: 15px !important;
+    padding: 0px !important;
+  }
+
+  .membership-img .box--member h1 {
+    font-size: 15px;
+  }
+
+  .membership-img .box--member p {
+    font-size: 12px;
+    max-width: 100%;
+  }
+
+  .membership-img .subscription {
+    margin-top: 12px;
+    gap: 12px;
+  }
+
+  .membership-img .subscription a {
+    font-size: 12px;
+  }
+
+  .membership-img .subscription img {
+    width: 42px;
+    max-width: 35%;
+  }
+}
 @media (max-width: 992px) {
   .services-grid {
     grid-template-columns: 1fr 1fr 1fr;
@@ -150,12 +256,11 @@
     font-size: 0.85rem;
   }
 }
-
-/* 📱 من أول 768px لحد 576px (تابلت صغير / موبايل أفقي) */
 @media (max-width: 768px) {
   .soon-badge {
     top: -16px;
   }
+
   .services-grid {
     grid-template-columns: 1fr 1fr;
     gap: 18px;
@@ -178,13 +283,12 @@
   .service-box p {
     font-size: 0.75rem;
   }
+
   .service-box {
     background-color: rgba(235, 235, 235, 1);
     box-shadow: 0 0px 0px rgba(0, 0, 0, 0.08), 0 4px 20px rgba(0, 0, 0, 0.04);
   }
 }
-
-/* 📱 من أول 576px لحد 400px (موبايل عادي) */
 @media (max-width: 576px) {
   .services-grid {
     grid-template-columns: 1fr 1fr;
@@ -210,8 +314,6 @@
     font-size: 0.7rem;
   }
 }
-
-/* 📱 أقل من 400px (شاشات صغيرة جدًا زي 320px) */
 @media (max-width: 400px) {
   .services-grid {
     grid-template-columns: 1fr 1fr;

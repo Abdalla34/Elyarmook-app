@@ -157,4 +157,9 @@
   .wench-service{
     background-color: rgba(235, 235, 235, 1);
   }
+  .btn-order {
+    padding: 5px;
+    border-radius: 5px;
+  }
+  
 }

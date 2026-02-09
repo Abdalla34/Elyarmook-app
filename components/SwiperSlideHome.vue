@@ -33,6 +33,7 @@
             :loading="index === 0 ? 'eager' : 'lazy'"
             decoding="async"
             class="slide-img rounded-4 p-2"
+            alt="sliderimage"
           />
         </div>
       </SwiperSlide>
@@ -102,58 +103,6 @@ watch(images, (val) => {
 onMounted(() => {
   cachedData();
 });
-// import { Swiper, SwiperSlide } from "swiper/vue";
-// import { Pagination, Autoplay, Navigation } from "swiper/modules";
-// import "swiper/css";
-// import "swiper/css/pagination";
-// import "swiper/css/navigation";
-// const skele = ref(true);
-
-// let images = ref([]);
-
-// const { locale } = useI18n();
-
-// const currentDir = computed(() => {
-//   return locale.value === "ar" ? "rtl" : "ltr";
-// });
-// const { gethome } = useApi();
-// const time = 7 * 24 * 60 * 60 * 1000;
-
-// async function cachedData() {
-//   const cached = localStorage.getItem("homeData");
-//   const currentTime = Date.now();
-
-//   if (cached) {
-//     try {
-//       const parseData = JSON.parse(cached);
-//       if (currentTime - parseData.timestamp < time) {
-//         images.value = parseData.sliders || [];
-//         skele.value = false;
-//       }
-//     } catch (err) {
-//       console.error("Error parsing cache");
-//     }
-//   }
-
-//   try {
-//     const res = await gethome();
-//     if (res?.data?.sliders) {
-//       images.value = res.data.sliders;
-//       localStorage.setItem(
-//         "homeData",
-//         JSON.stringify({ sliders: images.value, timestamp: currentTime })
-//       );
-//     }
-//   } catch (err) {
-//     console.error("Error fetching home data");
-//   } finally {
-//     skele.value = false;
-//   }
-// }
-
-// onMounted(() => {
-//   cachedData();
-// });
 </script>
 
 <style scoped>

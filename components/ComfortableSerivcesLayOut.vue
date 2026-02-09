@@ -2,19 +2,17 @@
   <div>
     <div class="wench-service cursor-pointer" @click="conditionToken">
       <div class="wench-service-content">
-        <div
-          class="wench-content d-flex justify-content-between align-items-center gap-2"
-        >
+        <div class="wench-content d-flex justify-content-between align-items-center gap-4"
+          :class="{ 'flex-row-reverse': localPath === 'ar' }">
           <div data-aos="flip-left" class="img-wench text-center text-md-start">
-            <img
-              src="/Carcomfortable.png"
-              alt="Carcomfortable"
-              class="image-width"
-            />
+            <img src="/Carcomfortable.png" alt="Carcomfortable" class="image-width" />
           </div>
 
           <div data-aos="fade-up" class="order-now text-center text-md-start">
-            <h1 class="mb-3 fw-bold">
+            <div class="box-mini-title px-1 rounded-1">
+              <h2 class="min-title mb-3">{{ $t('The Fastest in the Market') }}</h2>
+            </div>
+            <h1 class="mb-3 fw-bold hand-title-serv">
               {{ $t("Comfortable Service") }}
             </h1>
             <button class="btn-order orderbtn-text">
@@ -26,28 +24,15 @@
     </div>
 
     <!-- Modal -->
-    <div
-      v-if="showServiceModal"
-      class="modal-overlay"
-      @click.self="showServiceModal = false"
-    >
+    <div v-if="showServiceModal" class="modal-overlay" @click.self="showServiceModal = false">
       <div data-aos="zoom-in" class="modal-container">
-        <div
-          class="modal-header d-flex justify-content-between align-items-center"
-        >
+        <div class="modal-header d-flex justify-content-between align-items-center">
           <h3 class="text-capitalize title">{{ $t("About Service") }}</h3>
-          <i
-            class="fa-solid fa-xmark cursor-pointer"
-            @click="showServiceModal = false"
-          ></i>
+          <i class="fa-solid fa-xmark cursor-pointer" @click="showServiceModal = false"></i>
         </div>
 
         <div class="modal-body text-center text-md-start">
-          <img
-            class="img-modal rounded shadow-sm"
-            src="/comfortableimg.jpeg"
-            alt="Service"
-          />
+          <img class="img-modal rounded shadow-sm" src="/comfortableimg.jpeg" alt="Service" />
 
           <div class="service-info mt-4">
             <h4 class="title text-capitalize text-start">
@@ -93,10 +78,7 @@
           </button>
           <button @click="navigaToteComfrotable" class="btn-order w-100">
             <span v-if="!isLoadingBtn">{{ $t("Order Now") }}</span>
-            <span
-              v-else
-              class="spinner-border spinner-border-sm text-success"
-            ></span>
+            <span v-else class="spinner-border spinner-border-sm text-success"></span>
           </button>
         </div>
       </div>
@@ -104,18 +86,13 @@
   </div>
 
   <div class="otp-modal" v-if="showComponentOtp">
-    <OtpModal
-      :showDialCode="showDialCode"
-      :showOtpModal="showOtpModal"
-      @close-dial-code="showDialCode = false"
-      @close-otp-modal="showOtpModal = false"
-      @open-otp-modal="showOtpModal = true"
-      @otp-success="handleOtpSuccess"
-    />
+    <OtpModal :showDialCode="showDialCode" :showOtpModal="showOtpModal" @close-dial-code="showDialCode = false"
+      @close-otp-modal="showOtpModal = false" @open-otp-modal="showOtpModal = true" @otp-success="handleOtpSuccess" />
   </div>
 </template>
 
 <script setup>
+const localPath = useLocalePath()
 const token = useCookie("token");
 const showComponentOtp = ref(false);
 
@@ -149,9 +126,20 @@ function navigaToteComfrotable() {
 <style scoped>
 @import "@/assets/css/services.css";
 @import "@/assets/css/wenchcss.css";
+
 .image-width {
   max-width: 100%;
   height: 200px;
+}
+
+.box-mini-title {
+  background-color: #EAF9DE;
+  width: fit-content;
+}
+
+.min-title {
+  font-size: 14px;
+  color: #067306;
 }
 
 @media (max-width: 768px) {
@@ -162,6 +150,7 @@ function navigaToteComfrotable() {
   .order-now h1 {
     font-size: 1.3rem;
   }
+
   .order-now {
     width: 100%;
   }
@@ -170,15 +159,19 @@ function navigaToteComfrotable() {
     max-width: 95%;
     padding: 15px;
   }
+
   .wench-service {
     margin-bottom: 40px;
   }
+
   .order-now h1 {
     font-size: 13px !important;
   }
+
   .orderbtn-text {
     font-size: 10px !important;
   }
+
   .image-width {
     height: 100%;
   }
@@ -224,7 +217,12 @@ function navigaToteComfrotable() {
     justify-content: center;
     align-items: flex-end;
   }
-
+  .min-title {
+    font-size: 10px;
+  }
+  .hand-title-serv{
+    font-size: 10px;
+  }
   .modal-container {
     width: 100%;
     max-width: 100%;
@@ -238,11 +236,13 @@ function navigaToteComfrotable() {
     from {
       transform: translateY(100%);
     }
+
     to {
       transform: translateY(0);
     }
   }
 }
+
 .cursor-pointer {
   cursor: pointer;
 }
