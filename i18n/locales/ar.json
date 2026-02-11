@@ -32,7 +32,7 @@
   "twoWay": "ذهاب وعوده",
   "type delivery": "نوع التوصيل",
   "time works from": "اوقات العمل من",
-  "The Fastest in the Market" :"الاسرع في السوق",
+  "The Fastest in the Market": "الاسرع في السوق",
 
   "offers": "العروض",
   "Order Now": "اطلب الآن",
@@ -47,7 +47,7 @@
   "optional": "اختياري",
   "oneWay": "ذهاب فقط",
   "o'clock 1": "1 ساعه",
-  "Order details have been successfully updated" :"تم تحديث تفاصيل الطلب بنجاح",
+  "Order details have been successfully updated": "تم تحديث تفاصيل الطلب بنجاح",
   "Orders retrieved Successfully": "تم استرجاع الطلبات بنجاح",
 
   "my orders": "طلباتي",
@@ -106,8 +106,8 @@
   "alyarmook takes a nap to service you better": "alyarmook يأخذ قيلولة ليقدم لك خدمة أفضل",
   "About Us DescriptioN Visit our information website": "نبذة عنا الوصف قم بزيارة موقعنا المعلوماتي",
   "About Us": "عن اليرموك",
-  "add car" :"أضف سيارة",
-  "apply" :"تطبيق",
+  "add car": "أضف سيارة",
+  "apply": "تطبيق",
 
   "loading...": "جارٍ التحميل...",
   "log out": "تسجيل خروج",
@@ -137,6 +137,7 @@
   "show order": "عرض الطلب",
   "send points": "إرسال نقاط",
   "send": "إرسال",
+  "Save With an ALyarmook One Membership For 1 Year": "وفّر مع عضوية Alyarmook One لمدة عام واحد",
   "Select Branch": "اختار الفرع",
   "Select Date & Time": "اختار الوقت",
   "show in maps": "عرض على الخرائط",
@@ -198,7 +199,7 @@
   "Close": "اغلاق",
   "created_at": "تم إنشاؤها في",
   "continue profile": "متابعة حسابك",
-  "Copied successfully!" : "تم النسخ بنجاح!",
+  "Copied successfully!": "تم النسخ بنجاح!",
 
   "Next": "التالي",
   "Prev": "السابق",
@@ -224,7 +225,8 @@
   "phone invalid length min": "رقم الهاتف يجب أن يكون على الأقل 8 أرقام ويبدأ برقم 5",
   "By using this website means your acceptance of": "باستخدام هذا الموقع يعني موافقتك على",
   "Policy and Terms of use": "السياسة وشروط الاستخدام",
-  "pay from wallet" :" الدفع من المحفظة",
+  "pay from wallet": " الدفع من المحفظة",
+  "benefits": "مزايا",
 
   "first name": "الاسم الأول",
   "Find now": "ابحث الآن",

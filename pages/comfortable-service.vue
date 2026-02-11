@@ -14,107 +14,75 @@
               </button>
             </div>
           </div>
-          <h1 data-v-8bcd5751 class="text-capitalize text title-pages">
+          <h1 data-v-8bcd5751 class="text-capitalize text title-pages fs-6">
             {{ $t("services comfortable") }}
           </h1>
 
-          <ButtonCard
-            @click="goAddCar"
-            v-if="mycars.length <= 0"
-            :text-button="isloadBtn ? $t('loading...') : $t('added your car')"
-          />
+          <ButtonCard @click="goAddCar" v-if="mycars.length <= 0"
+            :text-button="isloadBtn ? $t('loading...') : $t('added your car')" />
           <!-- get car default -->
-          <div
-            v-if="mycars.length >= 1"
-            class="box-car d-flex align-items-center gap-2 justify-content-between mb-3 pt-1 pb-1 pe-3 ps-3"
-          >
-            <div
-              v-if="defaultCar"
-              class="car-details d-flex align-items-center gap-3"
-            >
+          <div v-if="mycars.length >= 1"
+            class="box-car d-flex align-items-center gap-3 justify-content-between mb-3 pt-1 pb-1 pe-3 ps-3">
+            <div v-if="defaultCar" class="car-details d-flex align-items-center gap-3">
               <img :src="defaultCar.brand?.image" alt="" />
 
-              {{ defaultCar.brand?.title }} - {{ defaultCar.car_type?.title }}
+              <h1 class="title-boxsm ">
+                {{ defaultCar.brand?.title }} - {{ defaultCar.car_type?.title }}
+              </h1>
             </div>
             <div class="btn-change" @click="navigateTo(LocalePath('/my-cars'))">
-              <button type="button" class="btn btn-secondary">
+              <button type="button" class="btn btn-change text-white">
                 {{ $t("change") }}
               </button>
             </div>
           </div>
 
           <!-- location to receive  -->
-          <div
-            v-if="address && !showMapPickup"
-            class="box-car mt-3 d-flex align-items-center justify-content-between mb-3 pt-1 pb-1 pe-3 ps-3"
-          >
-            <div
-              class="car-details d-flex align-items-center text-capitalize label"
-            >
+          <div v-if="address && !showMapPickup"
+            class="box-car mt-3 d-flex align-items-center justify-content-between mb-3 pt-1 pb-1 pe-3 ps-3">
+            <div class="car-details d-flex align-items-center text-capitalize label">
               {{ address }}
             </div>
             <!--  btn change -->
-            <div
-              class="btn btn-warning"
-              style="cursor: pointer"
-              @click="openMap(false)"
-            >
+            <div class="btn btn-warning" style="cursor: pointer" @click="openMap(false)">
               {{ $t("change") }}
             </div>
           </div>
 
           <div v-if="!address && !showMapPickup">
-            <div
-              class="location-receive-car mt-5 mb-2 d-flex align-items-center justify-content-center text-capitalize"
-              style="cursor: pointer"
-              @click="openMap(false)"
-            >
+            <div class="location-receive-car mt-5 mb-2 d-flex align-items-center justify-content-center text-capitalize"
+              style="cursor: pointer" @click="openMap(false)">
               {{ $t("location to receive car") }}
             </div>
             <span class="text-danger">{{ addressError }}</span>
           </div>
 
           <!-- Map container - always available when showMapPickup is true -->
-          <div
-            v-if="showMapPickup"
-            class="mt-3"
-            style="position: relative; height: 400px; width: 100%"
-          >
+          <div v-if="showMapPickup" class="mt-3" style="position: relative; height: 400px; width: 100%">
             <div id="mapPickup" style="height: 100%; width: 100%"></div>
 
             <!--  btn sure -->
-            <button
-              @click="confirmLocation(false)"
+            <button @click="confirmLocation(false)"
               class="btn-confirm-location text-capitalize button position-absolute bottom-0 start-50 translate-middle-x mb-3 ps-3 pe-3 pt-1 pb-1"
-              style="cursor: pointer"
-            >
+              style="cursor: pointer">
               {{ $t("Confirm Location") }}
             </button>
           </div>
 
           <!-- select branch -->
-          <div
-            class="branch-date mt-3 d-flex align-items-center justify-content-between gap-3"
-          >
+          <div class="branch-date mt-3 d-flex align-items-center justify-content-between gap-3">
             <div class="input-barnch position-relative fix d-flex flex-column">
               <label for="" class="label">{{ $t("branch") }}</label>
 
               <!-- replaced select with clickable span that opens popup -->
-              <span
-                class="input-style"
-                role="button"
-                @click="showBranchesPopup = true"
-              >
+              <span class="input-style" role="button" @click="showBranchesPopup = true">
                 {{ selectedBranchTitle || $t("Select Branch") }}
               </span>
 
-              <div
-                :style="{
-                  right: $i18n.locale === 'ar' ? 'auto' : '10px',
-                  left: $i18n.locale === 'ar' ? '10px' : 'auto',
-                }"
-                class="icon-shape position-absolute"
-              >
+              <div :style="{
+                right: $i18n.locale === 'ar' ? 'auto' : '10px',
+                left: $i18n.locale === 'ar' ? '10px' : 'auto',
+              }" class="icon-shape position-absolute">
                 <PuplicIconArrowBottom />
               </div>
             </div>
@@ -122,20 +90,11 @@
           <span class="text-danger">{{ branchError }}</span>
 
           <!-- branches popup -->
-          <div
-            v-if="showBranchesPopup"
-            class="popup-overlay"
-            @click.self="showBranchesPopup = false"
-          >
+          <div v-if="showBranchesPopup" class="popup-overlay" @click.self="showBranchesPopup = false">
             <div class="popup-box">
               <h4 class="label">{{ $t("Select Branch") }}</h4>
               <div class="popup-content-scroll">
-                <div
-                  class="popup-option"
-                  v-for="br in branches"
-                  :key="br.id"
-                  @click="chooseBranch(br)"
-                >
+                <div class="popup-option" v-for="br in branches" :key="br.id" @click="chooseBranch(br)">
                   {{ br.title }}
                 </div>
               </div>
@@ -149,18 +108,10 @@
             <div class="time-options mt-3">
               <div class="time-option-group">
                 <!-- urgent -->
-                <label
-                  class="time-option d-flex gap-2 align-items-center p-2 rounded mb-2"
-                  :class="{ active: typeService === 'urgent' }"
-                >
+                <label class="time-option d-flex gap-2 align-items-center p-2 rounded mb-2"
+                  :class="{ active: typeService === 'urgent' }">
                   <div class="d-flex align-items-center gap-2">
-                    <input
-                      type="radio"
-                      name="timeOption"
-                      value="urgent"
-                      v-model="typeService"
-                      class="custom-radio"
-                    />
+                    <input type="radio" name="timeOption" value="urgent" v-model="typeService" class="custom-radio" />
                     <span class="option-text">{{ $t("urgent") }}</span>
                   </div>
                   <!-- ساعة 1 تبقى Tag -->
@@ -171,40 +122,24 @@
                 </label>
 
                 <div class="urgent-note text-warning mb-2 text-end">
-                  <{{
-                    $t(
-                      "Note: Choosing express shipping will increase the shipping price."
-                    )
-                  }}
-                  <i class="fa-solid fa-circle-info me-1"></i>
+                  <{{ $t("Note: Choosing express shipping will increase the shipping price.") }} <i
+                    class="fa-solid fa-circle-info me-1"></i>
                 </div>
 
                 <!-- normal -->
-                <label
-                  class="time-option d-flex align-items-center gap-3 p-2 rounded"
-                  :class="{
-                    active: typeService === 'normal' && branchValue !== '',
-                    opacity: branchValue === '',
-                  }"
-                  :disabled="branchValue === ''"
-                >
-                  <input
-                    type="radio"
-                    name="timeOption"
-                    value="normal"
-                    v-model="typeService"
-                    class="custom-radio"
-                    :disabled="branchValue === ''"
-                  />
+                <label class="time-option d-flex align-items-center gap-3 p-2 rounded" :class="{
+                  active: typeService === 'normal' && branchValue !== '',
+                  opacity: branchValue === '',
+                }" :disabled="branchValue === ''">
+                  <input type="radio" name="timeOption" value="normal" v-model="typeService" class="custom-radio"
+                    :disabled="branchValue === ''" />
                   <span class="option-text">{{ $t("normal") }}</span>
                 </label>
               </div>
             </div>
             <!-- select time and date -->
-            <div
-              class="parent-time w-100 bg-white p-2 mt-2 rounded"
-              v-if="typeService === 'normal' && branchValue !== ''"
-            >
+            <div class="parent-time w-100 bg-white p-2 mt-2 rounded"
+              v-if="typeService === 'normal' && branchValue !== ''">
               <p class="p-color-fs">
                 {{
                   $t(
@@ -214,29 +149,17 @@
               </p>
               <div class="time-available gap-3 mt-3 d-flex">
                 <div class="d-flex gap-3 mt-3">
-                  <div
-                    class="time-date lay-out-box"
-                    v-for="valuetime in availableDates"
-                    :key="valuetime.date"
-                    :class="{ active: selectedDate === valuetime.date }"
-                    @click="selectedDate = valuetime.date"
-                  >
+                  <div class="time-date lay-out-box" v-for="valuetime in availableDates" :key="valuetime.date"
+                    :class="{ active: selectedDate === valuetime.date }" @click="selectedDate = valuetime.date">
                     {{ dayjs(valuetime.date).format("ddd D") }}
                   </div>
                 </div>
               </div>
-              <div
-                class="overflow-x-auto overflow-hidden d-flex justify-content-center align-items-center mt-3 gap-2"
-              >
-                <div
-                  class="time-slot lay-out-box"
-                  v-for="slot in availableDates.find(
-                    (d) => d.date === selectedDate
-                  )?.time_slots"
-                  :key="slot.time"
-                  :class="{ active: selectedTimeSlot === slot.time }"
-                  @click="selectedTimeSlot = slot.time"
-                >
+              <div class="overflow-x-auto overflow-hidden d-flex justify-content-center align-items-center mt-3 gap-2">
+                <div class="time-slot lay-out-box" v-for="slot in availableDates.find(
+                  (d) => d.date === selectedDate
+                )?.time_slots" :key="slot.time" :class="{ active: selectedTimeSlot === slot.time }"
+                  @click="selectedTimeSlot = slot.time">
                   {{
                     dayjs(`${selectedDate} ${slot.time}`, [
                       "YYYY-MM-DD HH:mm",
@@ -249,41 +172,26 @@
           </div>
 
           <!-- type delivery -->
-          <div
-            class="branch-date type-delivery d-flex align-items-center justify-content-between gap-3"
-          >
-            <div
-              class="input-barnch position-relative fix d-flex flex-column"
-              @click="showDeliveryTypePopUp = true"
-            >
+          <div class="branch-date type-delivery d-flex align-items-center justify-content-between gap-3">
+            <div class="input-barnch position-relative fix d-flex flex-column" @click="showDeliveryTypePopUp = true">
               <label class="label">{{ $t("type delivery") }}</label>
               <span class="input-style">{{
                 typeDelivery || $t("Select type delivery")
               }}</span>
 
-              <div
-                :style="{
-                  right: $i18n.locale === 'ar' ? 'auto' : '10px',
-                  left: $i18n.locale === 'ar' ? '10px' : 'auto',
-                }"
-                class="icon-shape position-absolute"
-              >
+              <div :style="{
+                right: $i18n.locale === 'ar' ? 'auto' : '10px',
+                left: $i18n.locale === 'ar' ? '10px' : 'auto',
+              }" class="icon-shape position-absolute">
                 <PuplicIconArrowBottom />
               </div>
             </div>
           </div>
           <!-- popup delivery -->
-          <div
-            v-if="showDeliveryTypePopUp"
-            class="popup-overlay"
-            @click.self="showDeliveryTypePopUp = false"
-          >
+          <div v-if="showDeliveryTypePopUp" class="popup-overlay" @click.self="showDeliveryTypePopUp = false">
             <div class="popup-box">
               <div class="popup-delivery-option p-3">
-                <div
-                  class="mb-2 children"
-                  @click="chosenDeliveryType('oneWay')"
-                >
+                <div class="mb-2 children" @click="chosenDeliveryType('oneWay')">
                   <p class="label p-5">{{ $t("oneWay") }}</p>
                 </div>
                 <div class="children" @click="chosenDeliveryType('twoWay')">
@@ -294,71 +202,46 @@
           </div>
 
           <!-- location to return   -->
-          <div
-            v-if="
-              addressReturn &&
-              !showMapReturn &&
-              (typeDelivery === 'twoWay' || typeDelivery === 'two_way')
-            "
-            class="box-car mt-3 d-flex align-items-center justify-content-between mb-3 pt-1 pb-1 pe-3 ps-3"
-          >
-            <div
-              class="car-details d-flex align-items-center text-capitalize label"
-            >
+          <div v-if="
+            addressReturn &&
+            !showMapReturn &&
+            (typeDelivery === 'twoWay' || typeDelivery === 'two_way')
+          " class="box-car mt-3 d-flex align-items-center justify-content-between mb-3 pt-1 pb-1 pe-3 ps-3">
+            <div class="car-details d-flex align-items-center text-capitalize label">
               {{ addressReturn }}
             </div>
             <!--  btn change -->
-            <div
-              class="btn btn-warning"
-              style="cursor: pointer"
-              @click="openMap(true)"
-            >
+            <div class="btn btn-warning" style="cursor: pointer" @click="openMap(true)">
               {{ $t("change") }}
             </div>
           </div>
 
-          <div
-            v-if="
-              !addressReturn &&
-              !showMapReturn &&
-              (typeDelivery === 'twoWay' || typeDelivery === 'two_way')
-            "
-          >
-            <div
-              class="location-receive-car mt-2 mb-2 d-flex align-items-center justify-content-center text-capitalize"
-              style="cursor: pointer"
-              @click="openMap(true)"
-            >
+          <div v-if="
+            !addressReturn &&
+            !showMapReturn &&
+            (typeDelivery === 'twoWay' || typeDelivery === 'two_way')
+          ">
+            <div class="location-receive-car mt-2 mb-2 d-flex align-items-center justify-content-center text-capitalize"
+              style="cursor: pointer" @click="openMap(true)">
               {{ $t("location to return car") }}
             </div>
           </div>
 
           <!-- Return Map container - always available when showMapReturn is true -->
-          <div
-            v-if="showMapReturn"
-            class="mt-3"
-            style="position: relative; height: 400px; width: 100%"
-          >
+          <div v-if="showMapReturn" class="mt-3" style="position: relative; height: 400px; width: 100%">
             <div id="mapReturn" style="height: 100%; width: 100%"></div>
 
             <!--  btn sure -->
-            <button
-              @click="confirmLocation(true)"
+            <button @click="confirmLocation(true)"
               class="btn-confirm-location text-capitalize button position-absolute bottom-0 start-50 translate-middle-x mb-3 ps-3 pe-3 pt-1 pb-1"
-              style="cursor: pointer"
-            >
+              style="cursor: pointer">
               {{ $t("Confirm Location") }}
             </button>
           </div>
 
           <!-- type problem -->
-          <div
-            class="branch-date d-flex align-items-center justify-content-between gap-3"
-          >
-            <div
-              @click="showPopupProblems = true"
-              class="input-barnch position-relative fix d-flex flex-column"
-            >
+          <div class="branch-date d-flex align-items-center justify-content-between gap-3">
+            <div @click="showPopupProblems = true" class="input-barnch position-relative fix d-flex flex-column">
               <label for="" class="label">{{ $t("type problem") }}</label>
               <span class="input-style">{{
                 selectedProblemTitle || $t("Select type problem")
@@ -366,21 +249,12 @@
             </div>
           </div>
           <!-- popup problems -->
-          <div
-            v-if="showPopupProblems"
-            class="popup-overlay"
-            @click.self="showPopupProblems = false"
-          >
+          <div v-if="showPopupProblems" class="popup-overlay" @click.self="showPopupProblems = false">
             <div class="popup-box">
               <h4 class="label">{{ $t("Select type problem") }}</h4>
 
               <div class="popup-content-scroll">
-                <div
-                  class="popup-option"
-                  v-for="value in getProblemss"
-                  :key="value.id"
-                  @click="chooseProblem(value)"
-                >
+                <div class="popup-option" v-for="value in getProblemss" :key="value.id" @click="chooseProblem(value)">
                   {{ value.title }}
                 </div>
               </div>
@@ -389,40 +263,24 @@
           <span class="text-danger">{{ problemError }}</span>
 
           <!-- text area  -->
-          <div
-            class="branch-date d-flex align-items-center justify-content-between gap-3"
-          >
+          <div class="branch-date d-flex align-items-center justify-content-between gap-3">
             <div class="input-barnch position-relative fix d-flex flex-column">
               <label for="" class="label">{{ $t("more details") }}</label>
-              <textarea
-                name="description"
-                :placeholder="$t('more details')"
-                id=""
-              ></textarea>
+              <textarea name="description" :placeholder="$t('more details')" id=""></textarea>
             </div>
           </div>
 
           <!-- input upload file -->
           <div class="problem-photo">
             <label class="label">{{ $t("problem photo") }}</label>
-            <div
-              class="upload-box d-flex justify-content-center gap-5 align-items-center"
-            >
+            <div class="upload-box d-flex justify-content-center gap-5 align-items-center">
               <div class="icon-upload mb-3">
                 <PuplicIconUploadIcon />
               </div>
               <div>
                 <!-- <input id="problem-photo" type="file" accept="image/*" /> -->
-                <input
-                  id="problem-photo"
-                  type="file"
-                  accept="image/*"
-                  @change="handleImageUpload"
-                />
-                <label
-                  for="problem-photo"
-                  class="upload-trigger d-flex justify-content-center"
-                >
+                <input id="problem-photo" type="file" accept="image/*" @change="handleImageUpload" />
+                <label for="problem-photo" class="upload-trigger d-flex justify-content-center">
                   <div class="">{{ $t("Upload from your device") }}</div>
                   <div class="file-name">{{ fileName }}</div>
                 </label>
@@ -430,26 +288,16 @@
             </div>
           </div>
           <!-- modal nap -->
-          <div
-            v-if="showUnavailableModal"
+          <div v-if="showUnavailableModal"
             class="modal-overlay position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 d-flex align-items-center justify-content-center"
-            @click="showUnavailableModal = false"
-          >
+            @click="showUnavailableModal = false">
             <div
               class="modal-content position-relative p-4 bg-white rounded d-flex flex-column align-items-center justify-content-center text-center"
-              @click.stop
-              style="max-width: 600px; width: 90%"
-            >
-              <button
-                type="button"
-                class="btn-close position-absolute top-0 end-0 m-3"
-                aria-label="Close"
-                @click="showUnavailableModal = false"
-              ></button>
+              @click.stop style="max-width: 600px; width: 90%">
+              <button type="button" class="btn-close position-absolute top-0 end-0 m-3" aria-label="Close"
+                @click="showUnavailableModal = false"></button>
 
-              <div
-                class="image-urgent mb-3 d-flex align-items-center justify-content-center"
-              >
+              <div class="image-urgent mb-3 d-flex align-items-center justify-content-center">
                 <img src="/car-fix.png" alt="car fix" class="img-fluid" />
               </div>
 
@@ -465,15 +313,8 @@
           </div>
 
           <!-- submit button -->
-          <form
-            class="buttons-order d-flex justify-content-center gap-2"
-            @submit.prevent="onSubmit"
-          >
-            <button
-              type="submit"
-              class="continue text-capitalize label p-3"
-              :disabled="!isBranchAvailable"
-            >
+          <form class="buttons-order d-flex justify-content-center gap-2" @submit.prevent="onSubmit">
+            <button type="submit" class="continue text-capitalize label p-3" :disabled="!isBranchAvailable">
               {{ $t("continue") }}
             </button>
           </form>
@@ -926,7 +767,7 @@ const onSubmit = async () => {
 };
 const route = useRoute();
 function goAddCar() {
-    isloadBtn.value = true;
+  isloadBtn.value = true;
   navigateTo(LocalePath(`/car-brand?redirect=${route.fullPath}`));
 }
 </script>
@@ -934,10 +775,12 @@ function goAddCar() {
 <style scoped>
 @import "@/assets/css/orderDetails.css";
 @import "@/assets/css/orderWench.css";
+
 .opacity {
   opacity: 0.5;
   cursor: not-allowed;
 }
+
 .time-available {
   background-color: #ffffff;
   box-shadow: 0px 0px 20px 0px #0000000a;
@@ -963,6 +806,7 @@ function goAddCar() {
   cursor: pointer;
   border: 1px solid var(--main-color);
 }
+
 .lay-out-box.active {
   background-color: var(--main-color);
   border-color: var(--main-color);
@@ -974,9 +818,11 @@ function goAddCar() {
   background-color: antiquewhite;
   border-radius: 50%;
 }
+
 .image-urgent img {
   width: 60px;
 }
+
 .continue:disabled {
   opacity: 0.5;
   cursor: not-allowed;
@@ -988,10 +834,12 @@ function goAddCar() {
   flex-direction: column;
   cursor: pointer;
 }
+
 .children {
   border-bottom: 1px solid #ececec;
 }
-.children:hover > * {
+
+.children:hover>* {
   background: #f5f5f5;
 }
 </style>

@@ -1,135 +1,166 @@
 <template>
   <div class="details-member">
-    <div class="container py-5">
+    <div class="container">
       <div v-if="isSkeleton" class="row justify-content-center">
         <SkeletonsMemberShipsSkeleId />
       </div>
       <div v-else class="row justify-content-center">
         <div class="col-lg-8 col-md-6 col-sm-12">
-          <div class="parent" v-if="memmberDetails">
-            <div class="image-details">
-              <img
-                :src="memmberDetails.image"
-                :alt="memmberDetails.description"
-                class="image-member border-radius-36px mb-2"
-              />
-            </div>
-            <!-- date -->
-            <div class="date d-flex gap-3 align-items-center">
-              <div class="date-start">{{ memmberDetails.start_date }}</div>
-              <div
-                class="date-end ps-2 pe-2 rounded pt-1 pb-1"
-                style="background-color: var(--color-secound-main)"
-              >
-                to {{ memmberDetails.end_date }}
+          <!-- box-car  -->
+          <div v-if="mycars.length >= 1" class="box-car-handle mb-3 pt-2 pb-2 pe-3 ps-3">
+            <div v-if="defaultCar" class="car-details d-flex align-items-center gap-3 ">
+              <div>
+                <img :src="defaultCar.brand?.image" alt="" />
+              </div>
+              <div class="note">
+                <h1 class="title-boxsm ">
+                  {{ defaultCar.brand?.title }} - {{ defaultCar.car_type?.title }}
+                </h1>
+                <p class="mt-1" style="font-size: 12px;">🔒 Membership applies to this vehicle only</p>
               </div>
             </div>
-            <!-- name -->
-            <div class="name price discount">
-              <h1 class="label">{{ memmberDetails.name }}</h1>
-              <div class="price-des">
-                <div class="price-details d-flex gap-3 align-items-center">
-                  <div class="before-des text-uppercase">
-                    {{ memmberDetails.price_before_discount }} {{ $t("sar") }}
-                  </div>
-                  <div
-                    class="after-des text-uppercase"
-                    style="font-size: 18px; color: #c71f45; font-weight: 400"
-                  >
-                    {{ memmberDetails.price_after_discount }} {{ $t("sar") }}
-                  </div>
-                </div>
-              </div>
-              <hr />
-            </div>
-            <div class="member-includes">
-              <h1 class="label text-uppercase">
-                {{ $t("memberships includes") }} :
-              </h1>
-              <div v-for="value in memmberDetails.includes" class="items">
-                <div class="title d-flex align-items-center gap-3 mb-3">
-                  <div
-                    v-if="value.service_icon"
-                    class="img-items p-1 rounded"
-                    style="background-color: rgba(255, 249, 212, 1)"
-                  >
-                    <img :src="value.service_icon" alt="" />
-                  </div>
-                  <div class="text">
-                    <h4 class="label">{{ value.service_name }}</h4>
-                    <p>{{ value.quantity_per_period }}</p>
-                  </div>
-                </div>
+            <!-- member details -->
+          </div>
+          <!-- memberShip image and subDetails -->
+          <div class="membership-details" v-if="memberDetails">
+            <img :src="memberDetails.image" alt="memershipdetails" class="image">
+            <div class="tags d-flex align-items-center gap-2 mt-3">
+              <div class="box-tag px-4 py-1 bg-box rounded-4 fw-bold">{{ memberDetails?.includes?.inspection?.length }}
+                {{ $t('services') }}</div>
+              <div class="box-tag px-4 py-1 rounded-4 bg-benefits fw-bold">{{ memberDetails?.exclusive_benefits?.length
+              }} {{ $t('benefits') }}
               </div>
             </div>
-            <div
-              class="btn-get btn-have text-center pt-3 pb-3 border-radius-36px"
-              style="background-color: var(--color-secound-main)"
-              v-if="memmberDetails.has_active_subscription"
-            >
-              <button
-                style="
-                  border: none;
-                  outline: none;
-                  background-color: transparent;
-                  cursor: not-allowed;
-                "
-                class="p-color-fs text-capitalize"
-              >
-                {{ $t("get this actully i have one") }}
-              </button>
-            </div>
-            <div
-              @click="
-                navigateTo({
-                  path: $localePath('/payment'),
-                  query: { membership: idMember },
-                })
-              "
-              class="btn-get"
-              v-if="!memmberDetails.has_active_subscription"
-            >
-              <ButtonCard :text-button="$t('get this membership')" />
+            <h1 class="fs-5 mt-3 fw-bold">{{ $t('Save With an ALyarmook One Membership For 1 Year') }}</h1>
+          </div>
+          <!-- price and discount -->
+          <div class="price-disc mt-3 d-flex align-items-center justify-content-between">
+            <div class="price-member fw-bold"> <img src="/SAcurrency.png" alt=""> {{ memberDetails?.price_after_discount
+            }}
             </div>
           </div>
+          <!-- the main benefits -->
+          <div class="benefits-wrapper p-4 rounded-4">
+            <div class="benefits-grid">
+
+              <div v-for="member in memberDetails?.includes?.inspection" :key="member.id"
+                class="benefit-item p-2 d-flex align-items-center gap-3">
+                <img :src="member.service_icon" class="img" alt="memberIcon">
+                <div class="details-member">
+
+                  <p class="benefit-title">{{ member.service_name }}</p>
+                  <span class="benefit-time">{{ member.quantity_per_period }} Times</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- <div class="benefits">
+            <div class="title-benefit text-capitalize fw-bold mt-5">the main benefits</div>
+            <div class="details-grid">
+              <div class="one-row">
+                <div class="items d-flex align-items-center justify-content-between">
+
+                </div>
+              </div>
+              <div class="two-row"></div>
+            </div>
+           </div> -->
         </div>
       </div>
     </div>
-    <!-- <LoadingSpinner :is-loading-otp="isloading" /> -->
   </div>
 </template>
 
 <script setup>
 const route = useRoute();
 const idMember = route.params.id;
-const memmberDetails = ref({});
+const memberDetails = ref({});
 const isSkeleton = ref(false);
 
 onMounted(async () => {
   try {
     isSkeleton.value = true;
     const res = await useApi().memberShipDetails(idMember);
-    memmberDetails.value = res?.data;
+    memberDetails.value = res?.data;
   } catch (err) {
     console.log('Error fetching ');
   } finally {
     isSkeleton.value = false;
   }
 });
+
+const mycars = ref([]);
+const rescar = await useApi().getMycars();
+mycars.value = rescar?.data || [];
+
+const defaultCar = computed(
+  () => mycars.value.find((car) => car.is_default) || null
+);
+
 </script>
 
 <style scoped>
-.before-des {
-  font-family: var(--font-main);
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
-  letter-spacing: 0%;
-  text-align: center;
-  text-decoration: line-through;
-  color: #7e7e7e;
+.image {
+  max-height: 200px;
+  cursor: pointer;
+  width: 100%;
+  margin: auto;
 }
-.img-items img {
+
+.bg-box {
+  background-color: #ECFAF2;
+}
+
+.bg-benefits {
+  background-color: rgba(255, 249, 212, 1);
+}
+
+.price-member {
+  color: #C71F45;
+  font-size: 24px;
+}
+
+@media (max-width:768px) {
+  .image {
+    width: 100%;
+  }
+}
+
+.benefits-wrapper {
+  background: #fff;
+  border: 1px solid #eee;
+  overflow-x: auto;
+}
+
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(200px, 1fr));
+  gap: 16px;
+  min-width: 200px;
+}
+
+.benefit-title {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.benefit-time {
+  color: #7a7a9d;
+  font-size: 14px;
+}
+
+/* scrollbar */
+.benefits-wrapper::-webkit-scrollbar {
+  height: 6px;
+}
+
+.benefits-wrapper::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 10px;
+}
+
+.img {
   width: 40px;
 }
 </style>

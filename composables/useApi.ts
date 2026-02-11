@@ -625,7 +625,7 @@ export const useApi = () => {
   };
   // done
   const memberShipDetails = async (membership_id: any) => {
-    return $fetch(`${baseURL}/membership/memberships/${membership_id}`, {
+    return $fetch(`${baseURL}/v1.1/membership/memberships/${membership_id}`, {
       method: "GET",
       headers,
     });

@@ -22,11 +22,13 @@ body {
   /* background-color: #fdfdff; */
   font-family: "Poppins", sans-serif;
 }
+
 /* Global smooth scrolling */
 
 html {
   scroll-behavior: smooth;
 }
+
 h1,
 h2,
 h3,
@@ -50,12 +52,14 @@ ul {
 ul a {
   text-decoration: none;
 }
+
 /* main font size title fw */
 .title-fs-fw {
   font-size: 36px;
   font-family: var(--font-main);
   font-weight: 600;
 }
+
 /* main parag font size fw */
 .font-title {
   font-family: var(--font-main);
@@ -78,6 +82,7 @@ ul a {
   .font-title {
     font-size: 2rem;
   }
+
   .font-p {
     font-size: 1rem;
     padding: 0 10px;
@@ -128,6 +133,7 @@ button {
 button:hover {
   transform: translateY(-1px);
 }
+
 /* Smooth transitions for all elements */
 .button {
   background-color: var(--main-color);
@@ -230,6 +236,7 @@ button:hover {
     font-size: 0.7rem;
   }
 }
+
 /* end name currency sar */
 
 /* sale offers */
@@ -260,6 +267,7 @@ button:hover {
     padding-left: 8px;
     padding-right: 8px;
   }
+
   .margin-bottom-section {
     margin-bottom: 20px;
   }
@@ -290,6 +298,7 @@ button:hover {
   letter-spacing: 0%;
   /* padding-left: 40px; */
 }
+
 /* end  */
 
 /* satrt  button pages car profile wallet helpe */
@@ -302,11 +311,13 @@ button:hover {
   transition: all 0.4s ease;
   cursor: pointer;
 }
+
 @media (max-width: 768px) {
   .width-height {
     width: 100%;
   }
 }
+
 .button-save {
   background-color: var(--main-color);
 }
@@ -325,6 +336,7 @@ button:hover {
 .width-height:hover {
   transform: scale(1.05) translateY(-2px);
 }
+
 /* end */
 
 /* start box-pages */
@@ -347,7 +359,8 @@ button:hover {
   background-color: #fae1e7;
   padding: 8px;
   border-radius: 8px;
-  display: inline-flex; /* تخليه ياخد حجم الأيقونة بس */
+  display: inline-flex;
+  /* تخليه ياخد حجم الأيقونة بس */
 }
 
 .background-icon {
@@ -370,6 +383,7 @@ button:hover {
     display: block;
     margin-bottom: 24px;
   }
+
   .label {
     margin: 10px 0px;
   }
@@ -397,6 +411,7 @@ textarea:focus {
   border: 2px solid var(--main-color);
   box-shadow: 0px 1px 10px var(--main-color);
 }
+
 .input-style:hover,
 textarea:hover {
   outline: none;
@@ -452,6 +467,7 @@ textarea {
 .input-brand:hover {
   background-color: #ebebeb;
 }
+
 /* end */
 
 /* box-hover-bg */
@@ -524,6 +540,7 @@ textarea {
     font-size: 11px;
   }
 }
+
 /* end ul link */
 
 /* over lay */
@@ -540,6 +557,7 @@ textarea {
 .additems {
   background-color: #ffffff;
 }
+
 .additems:hover {
   background-color: var(--color-secound-main);
 }
@@ -551,7 +569,9 @@ textarea {
   border: 1px solid #d4d4d4;
   color: #040505;
 }
+
 @media (max-width: 576px) {
+
   .additems,
   .continue {
     width: 100%;
@@ -571,6 +591,7 @@ textarea {
   align-items: center;
   z-index: 2000;
 }
+
 .spinner {
   width: 50px;
   height: 50px;
@@ -579,6 +600,7 @@ textarea {
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
+
 @keyframes spin {
   to {
     transform: rotate(360deg);
@@ -599,6 +621,7 @@ textarea {
   z-index: 1000;
   left: 0;
 }
+
 .image-member {
   width: 100%;
   height: 200px;
@@ -610,6 +633,7 @@ textarea {
 .box-year {
   border: 1px solid var(--color-secound-main);
 }
+
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -633,6 +657,7 @@ textarea {
   width: 30%;
   margin: auto;
 }
+
 .modal-box::-webkit-scrollbar {
   display: none;
 }
@@ -642,6 +667,7 @@ textarea {
     width: 90%;
   }
 }
+
 .popup-overlay {
   position: fixed;
   top: 0;
@@ -663,6 +689,7 @@ textarea {
   padding: 20px;
   border-radius: 12px;
 }
+
 .popup-content-scroll {
   max-height: 60vh;
   overflow-y: auto;
@@ -690,9 +717,11 @@ textarea {
   margin-top: 10px;
   margin-bottom: 6px;
 }
+
 @media (max-width: 576px) {
   .popup-overlay {
-    align-items: flex-end; /* move box to bottom */
+    align-items: flex-end;
+    /* move box to bottom */
   }
 
   .popup-box {
@@ -706,14 +735,33 @@ textarea {
     from {
       transform: translateY(100%);
     }
+
     to {
       transform: translateY(0);
     }
   }
 }
+
 .parent-index-success {
   min-height: 60vh;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.title-boxsm {
+  font-size: 14px;
+}
+
+.btn-change {
+  background-color: #040505;
+  border-radius: 10px;
+  font-size: 14px
+}
+.box-car-handle {
+  border-radius: 10px;
+  background-color: var(--color-secound-main);
+}
+.box-car-handle img{
+  width: 50px;
 }
