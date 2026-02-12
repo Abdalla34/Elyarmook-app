@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="skele margin-bottom-section row d-flex align-items-center justify-content-center"
-    v-if="skele"
-  >
+  <div class="skele margin-bottom-section row d-flex align-items-center justify-content-center" v-if="skele">
     <div class="col-md-10 col-sm-12">
       <SkeletonsSlidersHome />
     </div>
@@ -16,25 +13,14 @@
   </div>
 
   <div v-else data-aos="fade-up" class="parent-swiper margin-bottom-section">
-    <Swiper
-      :modules="[Pagination, Autoplay, Navigation]"
-      :slides-per-view="1"
-      loop="true"
+    <Swiper :modules="[Pagination, Autoplay, Navigation]" :slides-per-view="1" loop="true"
       :autoplay="{ delay: 3000, disableOnInteraction: false }"
-      :pagination="{ clickable: true, el: '.custom-pagination' }"
-      class="mySwiper p-2 mt-4"
-    >
+      :pagination="{ clickable: true, el: '.custom-pagination' }" class="mySwiper p-2 mt-4">
       <SwiperSlide v-for="(item, index) in images" :key="item.id">
-        <div
-          class="slide-content d-flex align-items-center justify-content-center"
-        >
-          <img
-            :src="item.image"
-            :loading="index === 0 ? 'eager' : 'lazy'"
-            decoding="async"
-            class="slide-img rounded-4 p-2"
-            alt="sliderimage"
-          />
+        <div class="slide-content d-flex align-items-center justify-content-center">
+          <img :src="item.image" :loading="index === 0 ? 'eager' : 'lazy'" decoding="async"
+            class="slide-img rounded-4 p-2" alt="sliderimage"
+            @error="e => { e.target.onerror = null; e.target.src = '/placeholder.jpeg' }">
         </div>
       </SwiperSlide>
     </Swiper>
@@ -68,7 +54,7 @@ async function cachedData() {
         images.value = parseData.sliders || [];
         skele.value = false;
       }
-    } catch (err) {}
+    } catch (err) { }
   }
 
   try {

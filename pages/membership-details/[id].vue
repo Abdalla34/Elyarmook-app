@@ -40,12 +40,13 @@
             </div>
           </div>
           <!-- the main benefits -->
-          <div class="benefits-wrapper p-4 rounded-4">
+          <h1 class="text-capitalize fw-bold fs-6 mt-3 mb-2">the main benefits :</h1>
+          <div v-if="memberDetails?.includes?.inspection.length > 0" class="benefits-wrapper p-4 rounded-4">
             <div class="benefits-grid">
-
               <div v-for="member in memberDetails?.includes?.inspection" :key="member.id"
                 class="benefit-item p-2 d-flex align-items-center gap-3">
-                <img :src="member.service_icon" class="img" alt="memberIcon">
+                <img :src="member.service_icon" class="img" alt="memberIcon"
+                  @error="e => { e.target.onerror = null; e.target.src = '/placeholder.jpeg' }">
                 <div class="details-member">
 
                   <p class="benefit-title">{{ member.service_name }}</p>
@@ -55,17 +56,92 @@
             </div>
           </div>
 
-          <!-- <div class="benefits">
-            <div class="title-benefit text-capitalize fw-bold mt-5">the main benefits</div>
-            <div class="details-grid">
-              <div class="one-row">
-                <div class="items d-flex align-items-center justify-content-between">
+          <!-- the main exclusive -->
+          <h1 class="text-capitalize fw-bold fs-6 mt-3 mb-2">exclusive benefits :</h1>
+          <div  class="benefits-wrapper p-4 rounded-4">
+            <div class="benefits-grid">
+              <div v-for="exclusive in memberDetails?.exclusive_benefits" :key="exclusive.id"
+                class="benefit-item p-2 d-flex align-items-center gap-3">
+                <img v-if="exclusive.icon" :src="exclusive.icon" class="img" alt="Icon"
+                  @error="e => { e.target.onerror = null; e.target.src = '/fix-serv.png' }">
+                <div class="details-member">
 
+                  <p class="benefit-title">{{ exclusive.title }}</p>
+                  <span class="benefit-time">{{ memberDetails?.points.display }} </span>
                 </div>
               </div>
-              <div class="two-row"></div>
             </div>
-           </div> -->
+          </div>
+
+          <!-- memberShip Details -->
+          <div class="duration w-80">
+            <h1 class="text-capitalize fw-bold fs-6 mt-3 mb-2">memberShip Details :</h1>
+            <div class="border p-3 rounded-4 d-flex align-items-center justify-content-between">
+              <div class="Subscription type">Subscription type <p class="text-capitalize fw-bold text-center">annually
+                </p>
+              </div>
+              <div class="fees text-center">fees <p class="text-capitalize fw-bold text-center"><img
+                    src="/currencyBlack.png" alt=""> {{ memberDetails?.price_after_discount }}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- faq -->
+          <div class="faqs">
+            <h1 class="text-capitalize fw-bold fs-6 mt-3 mb-2">faq :</h1>
+            <div class="box-main-faq  p-3 rounded-3 mt-3  d-flex align-items-center justify-content-between"
+              v-for="faq in memberDetails?.faqs" :key="faq.id" @click="toggleIcon(faq.id)">
+
+              <div class="detalis position-relative z-index">
+                <h6 class="text-capitalize font-p fw-bold">
+                  {{ faq.question }}
+                </h6>
+                <transition name="fade-slide">
+                  <p v-if="activeIndexes[faq.id]" class="font-p mt-1 display-paragraph d-block">
+                    {{ faq.answer }}
+                  </p>
+                </transition>
+              </div>
+
+              <div class="icon-arrow position-relative z-index">
+                <div class="arrow-bottom" :class="{ 'd-none': activeIndexes[faq.id] }">
+                  <svg class="font-icon" width="12" height="8" viewBox="0 0 12 8" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 1.5L6 6.5L11 1.5" stroke="#7E7E7E" stroke-width="2" stroke-linecap="round"
+                      stroke-linejoin="round" />
+                  </svg>
+                </div>
+
+                <div class="arrow-top" v-if="activeIndexes[faq.id]">
+                  <svg class="font-icon" width="12" height="8" viewBox="0 0 12 8" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M11 6.5L6 1.5L1 6.5" stroke="#7E7E7E" stroke-width="2" stroke-linecap="round"
+                      stroke-linejoin="round" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Payments Images -->
+          <div class="img-pay text-center mt-4">
+            <p class="fs-6 text-capitalize fw-bold">you can pay with</p>
+            <img src="/Payment.png" alt="paymentsimg" class="pay-img mt-3">
+          </div>
+          <hr>
+          <div class="agree text-center w-80 mx-auto">
+            <p class="text-capitalize" style="color:  #7e7e7e;">By sumbiting the membership you agree on <span
+                class="fw-bold text-capitalize text-black"> Terms and conditions</span></p>
+          </div>
+          <hr>
+          <div class="buy mt-3 d-flex align-items-center gap-3 justify-content-between">
+            <div class="fw-bold" style="color: #C71F45;">{{ memberDetails?.price_after_discount }} <img
+                src="/SAcurrency.png" alt=""> <span class="before-disc">{{ memberDetails?.price_before_discount }} <img
+                  src="/currencyBlack.png" alt=""></span></div>
+            <div>
+              <ButtonCard text-button="buy it now" />
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -83,12 +159,19 @@ onMounted(async () => {
     isSkeleton.value = true;
     const res = await useApi().memberShipDetails(idMember);
     memberDetails.value = res?.data;
+
+
+    memberDetails.value?.faqs?.forEach(faq => {
+      activeIndexes.value[faq.id] = false;
+    });
+
   } catch (err) {
-    console.log('Error fetching ');
+    console.log('Error fetching ', err);
   } finally {
     isSkeleton.value = false;
   }
 });
+
 
 const mycars = ref([]);
 const rescar = await useApi().getMycars();
@@ -98,6 +181,12 @@ const defaultCar = computed(
   () => mycars.value.find((car) => car.is_default) || null
 );
 
+
+const activeIndexes = ref({});
+
+function toggleIcon(id) {
+  activeIndexes.value[id] = !activeIndexes.value[id];
+}
 </script>
 
 <style scoped>
@@ -162,5 +251,40 @@ const defaultCar = computed(
 
 .img {
   width: 40px;
+}
+
+.box-main-faq {
+  background-color: #F7F7FC;
+}
+
+.fade-slide-enter-active,
+.fade-slide-leave-active {
+  transition: all 0.3s ease;
+}
+
+.fade-slide-enter-from,
+.fade-slide-leave-to {
+  opacity: 0;
+  transform: translateY(-5px);
+  max-height: 0;
+}
+
+.fade-slide-enter-to,
+.fade-slide-leave-from {
+  opacity: 1;
+  transform: translateY(0);
+  max-height: 200px;
+}
+
+.pay-img {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.before-disc {
+  text-decoration: line-through;
+  color: #7a7a9d;
+  font-size: 16px;
 }
 </style>

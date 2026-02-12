@@ -27,7 +27,7 @@
         @click="navigateTo($localePath('/createaccount'))"
       >
         <div>
-          <span class="font-p fw-bold">{{ $t("sign up") }}</span>
+          <span class="font-p fw-bold">{{ $t("sign in") }}</span>
         </div>
         <div>
           <i class="fa-solid fa-arrow-right-to-bracket"></i>
