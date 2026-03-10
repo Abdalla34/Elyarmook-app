@@ -57,7 +57,7 @@ const { initCartFromLocalStorage } = useAddToCart();
 
 import { useRoute } from "vue-router";
 const token = useCookie("token", { maxAge: 365 * 24 * 60 * 60 });
-
+const user = useCookie("user", { maxAge: 365 * 24 * 60 * 60 });
 const route = useRoute();
 
 const noLayoutPages = [
@@ -105,6 +105,12 @@ if (token.value) {
     const totalCartLength = servicesCount + sparePartsCount + offersCount;
 
     cartCount.value = totalCartLength;
+  } else if (res?.status === 401) {
+    cartCount.value = 0;
+    await useApi().logout();
+    token.value = null;
+    user.value = null;
+
   }
 }
 

@@ -39,7 +39,7 @@
 const isSkele = ref(true);
 const allMemberShip = ref([]);
 const localePath = useLocalePath();
-const { memberShips } = useApi();
+const { memberShips, memberShipSubscriptions } = useApi();
 const endTimeCach = 12 * 60 * 60 * 1000;
 async function cachMemebr() {
   try {
@@ -52,7 +52,7 @@ async function cachMemebr() {
         isSkele.value = false;
       }
     }
-    const response = await memberShips();
+    const response = await memberShips(defaultCar.value.id);
     allMemberShip.value = response?.data;
     isSkele.value = false;
     localStorage.setItem(
@@ -69,16 +69,23 @@ async function cachMemebr() {
   }
 }
 const mycars = ref([]);
-const rescar = await useApi().getMycars();
-mycars.value = rescar?.data || [];
-
 const defaultCar = computed(
   () => mycars.value.find((car) => car.is_default) || null
 );
+const token = useCookie("token");
 
 
 onMounted(async () => {
-  cachMemebr();
+  if (token.value) {
+    const rescar = await useApi().getMycars();
+    mycars.value = rescar?.data || [];
+
+    if (defaultCar.value) {
+      cachMemebr();
+    }
+    // const response = await memberShipSubscriptions();
+    // console.log(response);
+  }
 });
 </script>
 
@@ -104,5 +111,4 @@ onMounted(async () => {
     width: 100%;
   }
 }
-
 </style>

@@ -58,7 +58,7 @@
 
           <!-- the main exclusive -->
           <h1 class="text-capitalize fw-bold fs-6 mt-3 mb-2">exclusive benefits :</h1>
-          <div  class="benefits-wrapper p-4 rounded-4">
+          <div class="benefits-wrapper p-4 rounded-4">
             <div class="benefits-grid">
               <div v-for="exclusive in memberDetails?.exclusive_benefits" :key="exclusive.id"
                 class="benefit-item p-2 d-flex align-items-center gap-3">
@@ -98,14 +98,14 @@
                   {{ faq.question }}
                 </h6>
                 <transition name="fade-slide">
-                  <p v-if="activeIndexes[faq.id]" class="font-p mt-1 display-paragraph d-block">
+                  <p v-if="activeId[faq.id]" class="font-p mt-1 display-paragraph d-block">
                     {{ faq.answer }}
                   </p>
                 </transition>
               </div>
 
               <div class="icon-arrow position-relative z-index">
-                <div class="arrow-bottom" :class="{ 'd-none': activeIndexes[faq.id] }">
+                <div class="arrow-bottom" :class="{ 'd-none': activeId[faq.id] }">
                   <svg class="font-icon" width="12" height="8" viewBox="0 0 12 8" fill="none"
                     xmlns="http://www.w3.org/2000/svg">
                     <path d="M1 1.5L6 6.5L11 1.5" stroke="#7E7E7E" stroke-width="2" stroke-linecap="round"
@@ -113,7 +113,7 @@
                   </svg>
                 </div>
 
-                <div class="arrow-top" v-if="activeIndexes[faq.id]">
+                <div class="arrow-top" v-if="activeId[faq.id]">
                   <svg class="font-icon" width="12" height="8" viewBox="0 0 12 8" fill="none"
                     xmlns="http://www.w3.org/2000/svg">
                     <path d="M11 6.5L6 1.5L1 6.5" stroke="#7E7E7E" stroke-width="2" stroke-linecap="round"
@@ -139,7 +139,12 @@
                 src="/SAcurrency.png" alt=""> <span class="before-disc">{{ memberDetails?.price_before_discount }} <img
                   src="/currencyBlack.png" alt=""></span></div>
             <div>
-              <ButtonCard text-button="buy it now" />
+              <ButtonCard text-button="buy it now" @click="
+                navigateTo({
+                  path: $localePath('/payment'),
+                  query: { membership: idMember },
+                })
+                " />
             </div>
           </div>
         </div>
@@ -182,10 +187,10 @@ const defaultCar = computed(
 );
 
 
-const activeIndexes = ref({});
+const activeId = ref({});
 
 function toggleIcon(id) {
-  activeIndexes.value[id] = !activeIndexes.value[id];
+  activeId.value[id] = !activeId.value[id];
 }
 </script>
 
@@ -255,6 +260,7 @@ function toggleIcon(id) {
 
 .box-main-faq {
   background-color: #F7F7FC;
+  cursor: pointer;
 }
 
 .fade-slide-enter-active,

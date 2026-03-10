@@ -441,7 +441,8 @@ export const useApi = () => {
   const gethome = async () => {
     return await $fetch(`${baseURL}/home`, {
       method: "GET",
-      headers,});
+      headers,
+    });
   };
   // done
   const deleteaccount = async (deactivated_reason_id: any, fcm_type: any) => {
@@ -617,10 +618,11 @@ export const useApi = () => {
     });
   };
   // done
-  const memberShips = async () => {
-    return $fetch(`${baseURL}/membership/memberships`, {
+  const memberShips = async (user_car_id: any) => {
+    return $fetch(`${baseURL}/v1.1/membership/memberships`, {
       method: "GET",
       headers,
+      params: { user_car_id }
     });
   };
   // done
@@ -631,6 +633,12 @@ export const useApi = () => {
     });
   };
 
+  const memberShipSubscriptions = async () => {
+    return $fetch(`${baseURL}/v1.1/membership/subscriptions`, {
+      method: "GET",
+      headers,
+    });
+  };
   return {
     sendOTP,
     checkOTP,
@@ -705,5 +713,6 @@ export const useApi = () => {
     usePaymentToChargeWallet,
     resetToken,
     getToken,
+    memberShipSubscriptions,
   };
 };

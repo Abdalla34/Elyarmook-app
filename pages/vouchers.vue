@@ -8,9 +8,7 @@
       <div v-else class="row justify-content-center">
         <div class="col-md-8 col-padding">
           <!-- title -->
-          <div
-            class="current-point d-flex align-items-center justify-content-between"
-          >
+          <div class="current-point d-flex align-items-center justify-content-between">
             <div class="point-num text-center">
               <h4 class="title-pages"></h4>
               <p class="p-color-fs text-capitalize created-at">
@@ -24,59 +22,35 @@
           </div>
           <!-- li links -->
           <div class="ul-point">
-            <ul
-              class="d-flex justify-content-center align-items-center gap-4 mb-0 text-capitalize hand-ul"
-            >
-              <li
-                :class="{ active: step === 0 }"
-                @click="available"
-                class="li-point link"
-              >
+            <ul class="d-flex justify-content-center align-items-center gap-4 mb-0 text-capitalize hand-ul">
+              <li :class="{ active: step === 0 }" @click="available" class="li-point link">
                 {{ $t("available") }}
               </li>
-              <li
-                :class="{ active: step === 1 }"
-                @click="used"
-                class="li-point link"
-              >
+              <li :class="{ active: step === 1 }" @click="used" class="li-point link">
                 {{ $t("used") }}
               </li>
-              <li
-                :class="{ active: step === 2 }"
-                @click="expired"
-                class="li-point link"
-              >
+              <li :class="{ active: step === 2 }" @click="expired" class="li-point link">
                 {{ $t("expired") }}
               </li>
             </ul>
           </div>
           <!-- available -->
           <div v-if="step === 0">
-            <div
-              v-for="voucher in availableVouchers"
-              :key="voucher.id"
-              class="coupon-box p-1 mb-3"
-            >
-              <div
-                class="d-flex justify-content-between p-2 rounded align-items-start bg-name"
-              >
+            <div v-for="voucher in availableVouchers" :key="voucher.id" class="coupon-box p-1 mb-3">
+              <div class="d-flex justify-content-between p-2 rounded align-items-start bg-name">
                 <div>
                   <h6 class="fw-bold mb-1 label">{{ voucher.name }}</h6>
                   <p class="text-muted mb-2">{{ voucher.description }}</p>
                 </div>
               </div>
 
-              <div
-                class="d-flex justify-content-between align-items-center mt-3"
-              >
+              <div class="d-flex justify-content-between align-items-center mt-3">
                 <button class="coupon-code" @click="copyVoucher(voucher.code)">
                   {{ $t("copy") }} "{{ voucher.code }}"
                 </button>
-                <div
-                  v-if="copyMsg"
+                <div v-if="copyMsg"
                   class="position-fixed top-0 start-50 translate-middle-x p-2 px-4 mt-3 bg-success text-white rounded shadow"
-                  style="z-index: 9999"
-                >
+                  style="z-index: 9999">
                   {{ copyMsg }}
                 </div>
                 <div>
@@ -93,27 +67,27 @@
                 </div>
               </div>
             </div>
+            <div class="empty-msg fw-bold mb-1 label" v-if="availableVouchers.length === 0">
+              <div class="ing-false text-center not-offer">
+                <PuplicIconNotOffer />
+                <h1 class="label fw-bold">
+                  {{ $t("there as not found vouchers yet") }}
+                </h1>
+              </div>
+            </div>
           </div>
 
           <!-- used -->
           <div v-if="step === 1" class="box-details">
-            <div
-              v-for="voucher in usedVouchers"
-              :key="voucher.id"
-              class="p-1 mb-3"
-            >
-              <div
-                class="d-flex justify-content-between p-2 rounded align-items-start"
-              >
+            <div v-for="voucher in usedVouchers" :key="voucher.id" class="p-1 mb-3">
+              <div class="d-flex justify-content-between p-2 rounded align-items-start">
                 <div>
                   <h6 class="fw-bold mb-1 label">{{ voucher.name }}</h6>
                   <p class="text-muted mb-2">{{ voucher.description }}</p>
                 </div>
               </div>
 
-              <div
-                class="d-flex justify-content-between align-items-center mt-3"
-              >
+              <div class="d-flex justify-content-between align-items-center mt-3">
                 <!-- <button class="coupon-code">نسخ "{{ voucher.code }}"</button> -->
                 <div>
                   <span class="price-currency">{{ $t("expired at") }}</span>
@@ -121,7 +95,7 @@
                 </div>
               </div>
             </div>
-            <div class="empty-msg fw-bold mb-1 label" v-if="messageEmpty">
+            <div class="empty-msg fw-bold mb-1 label" v-if="usedVouchers.length === 0">
               <div class="ing-false text-center not-offer">
                 <PuplicIconNotOffer />
                 <h1 class="label fw-bold">
@@ -132,24 +106,16 @@
           </div>
 
           <!-- expired -->
-          <div v-if="step === 2" class="coupon-box opacity-50 p-1 mb-3">
-            <div
-              v-for="voucher in ExVouchers"
-              :key="voucher.id"
-              class="p-1 mb-3"
-            >
-              <div
-                class="d-flex justify-content-between p-2 rounded align-items-start expired-box"
-              >
+          <div v-if="step === 2" class="opacity-50 p-1 mb-3" :class="{ 'coupon-box': ExVouchers.length > 0 }">
+            <div v-for="voucher in ExVouchers" :key="voucher.id" class="p-1 mb-3">
+              <div class="d-flex justify-content-between p-2 rounded align-items-start expired-box">
                 <div>
                   <h6 class="fw-bold mb-1 label">{{ voucher.name }}</h6>
                   <p class="text-muted mb-2">{{ voucher.description }}</p>
                 </div>
               </div>
 
-              <div
-                class="d-flex justify-content-between align-items-center mt-3"
-              >
+              <div class="d-flex justify-content-between align-items-center mt-3">
                 <!-- <button class="coupon-code">نسخ "{{ voucher.code }}"</button> -->
                 <div>
                   <span class="price-currency">{{ $t("expired at") }}</span>
@@ -157,7 +123,7 @@
                 </div>
               </div>
             </div>
-            <div class="empty-msg fw-bold mb-1 label" v-if="messageEmpty">
+            <div class="empty-msg fw-bold mb-1 label" v-if="ExVouchers.length === 0">
               <div class="ing-false text-center not-offer">
                 <PuplicIconNotOffer />
                 <h1 class="label fw-bold">
@@ -166,6 +132,7 @@
               </div>
             </div>
           </div>
+
         </div>
       </div>
     </div>
@@ -292,14 +259,16 @@ onMounted(async () => {
   font-size: 14px;
   cursor: pointer;
 }
+
 .coupon-code:hover {
   background: #eaf9f0;
 }
+
 .bg-name {
   background: #7ace8e;
 }
+
 .expired-box {
   background-color: rgb(228, 228, 194);
 }
 </style>
-

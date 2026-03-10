@@ -3,19 +3,12 @@
     <div class="container">
       <div class="row">
         <div class="col-md-8 col-padding">
-          <div
-            class="profiel-img d-flex justify-content-between align-items-center margin-bottom-24px"
-          >
+          <div class="profiel-img d-flex justify-content-between align-items-center margin-bottom-24px">
             <h1 class="margin-bottom-24px text-capitalize personal mb-0">
               {{ $t("register information") }}
             </h1>
             <div class="box-img position-relative text-center">
-              <img
-                @click="ChangeProfile"
-                src="/Ellipse 2.png"
-                alt=""
-                class="img-profile"
-              />
+
             </div>
           </div>
         </div>
@@ -26,44 +19,21 @@
               <div class="row-inputs">
                 <div class="input d-flex flex-column">
                   <label class="label">{{ $t("first name") }}</label>
-                  <input
-                    type="text"
-                    placeholder="your name"
-                    v-model="firstName"
-                    class="text-capitalize"
-                  />
-                  <span
-                    class="text-danger text-capitalize mt-2"
-                    v-if="errors.firstName"
-                    >{{ errors.firstName }}</span
-                  >
+                  <input type="text" placeholder="your name" v-model="firstName" class="text-capitalize" />
+                  <span class="text-danger text-capitalize mt-2" v-if="errors.firstName">{{ errors.firstName }}</span>
                 </div>
 
                 <div class="input d-flex flex-column">
                   <label class="label">{{ $t("last name") }}</label>
-                  <input
-                    type="text"
-                    placeholder="your name"
-                    v-model="lastName"
-                    class="text-capitalize"
-                  />
-                  <span
-                    class="text-danger text-capitalize mt-2"
-                    v-if="errors.lastName"
-                    >{{ errors.lastName }}</span
-                  >
+                  <input type="text" placeholder="your name" v-model="lastName" class="text-capitalize" />
+                  <span class="text-danger text-capitalize mt-2" v-if="errors.lastName">{{ errors.lastName }}</span>
                 </div>
               </div>
 
               <div class="row-inputs">
                 <div class="input d-flex flex-column">
                   <label class="label">{{ $t("phone Number") }}</label>
-                  <input
-                    type="text"
-                    :placeholder="phone"
-                    v-model="phonesliceDialcode"
-                    disabled
-                  />
+                  <input type="text" :placeholder="phone" v-model="phonesliceDialcode" disabled />
                 </div>
               </div>
 
@@ -72,55 +42,34 @@
                   <label class="label" for="area">{{ $t("area") }}</label>
                   <select id="area" class="select" v-model="area">
                     <option value="" disabled>{{ $t("Select area") }}</option>
-                    <option
-                      v-for="areaItem in allAreas"
-                      :key="areaItem.id"
-                      :value="areaItem.id"
-                    >
+                    <option v-for="areaItem in allAreas" :key="areaItem.id" :value="areaItem.id">
                       {{ areaItem.title }}
                     </option>
                   </select>
 
-                  <span
-                    class="text-danger text-capitalize mt-2"
-                    v-if="errors.area"
-                    >{{ errors.area }}</span
-                  >
+                  <span class="text-danger text-capitalize mt-2" v-if="errors.area">{{ errors.area }}</span>
                 </div>
 
                 <div class="input d-flex flex-column">
                   <label class="label" for="city">city</label>
                   <select id="city" class="select" v-model="city">
                     <option value="" disabled>{{ $t("Select city") }}</option>
-                    <option
-                      v-for="cityItem in allCities"
-                      :key="cityItem.id"
-                      :value="cityItem.id"
-                    >
+                    <option v-for="cityItem in allCities" :key="cityItem.id" :value="cityItem.id">
                       {{ cityItem.title }}
                     </option>
                   </select>
-                  <span
-                    class="text-danger text-capitalize mt-2"
-                    v-if="errors.city"
-                    >{{ errors.city }}</span
-                  >
+                  <span class="text-danger text-capitalize mt-2" v-if="errors.city">{{ errors.city }}</span>
                 </div>
               </div>
             </div>
 
             <button
               class="text-capitalize margin-bottom text-center btn-register button border-radius-36px d-flex justify-content-center"
-              type="submit"
-            >
+              type="submit">
               <span v-if="!isloading">
                 {{ $t("save") }}
               </span>
-              <span
-                v-else
-                class="spinner-border spinner-border-sm text-success"
-                role="status"
-              ></span>
+              <span v-else class="spinner-border spinner-border-sm text-success" role="status"></span>
             </button>
           </form>
         </div>
@@ -155,7 +104,7 @@ const { value: lastName } = useField("lastName");
 // const { value: phoneNumber } = useField("phoneNumber");
 const { value: area } = useField("area");
 const { value: city } = useField("city");
-const {getCountries ,getAreasByCountry ,getCitiesByArea ,loginOrRegister } = useApi();
+const { getCountries, getAreasByCountry, getCitiesByArea, loginOrRegister } = useApi();
 onMounted(async () => {
   let countries = await getCountries();
   countryId.value = countries?.data?.[0]?.id;
@@ -207,6 +156,7 @@ let onSubmit = handleSubmit(async (values) => {
 
 <style>
 @import "@/assets/css/personalInformation.css";
+
 .margin-bottom {
   margin-bottom: 90px;
 }
