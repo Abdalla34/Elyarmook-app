@@ -7,6 +7,8 @@
       <div class="row justify-content-center">
         <div class="col-lg-8 col-md-5 col-sm-12">
           <h1 class="fs-4 fw-bold mb-4">Available Membership</h1>
+          
+        
           <!-- car user -->
           <div v-if="mycars.length >= 1"
             class="box-car d-flex align-items-center gap-3 justify-content-between mb-3 pt-1 pb-1 pe-3 ps-3">
@@ -23,8 +25,14 @@
               </button>
             </div>
           </div>
+          <!-- if no active memberships -->
+          <div class="text-center" v-if="allMemberShip.length === 0">
+            <img class="mb-2" src="/Group.png" alt="">
+            <h3>No Active Memberships Yet</h3>
+            <p>Once you subscribe or earn one, it will appear here.</p>
+          </div>
           <!-- all memberships -->
-          <h1 class="fs-6 fw-bold mb-3 mt-3">All Memberships</h1>
+          <h1 class="fs-6 fw-bold mb-3 mt-3" v-if="allMemberShip.length > 0">All Memberships</h1>
           <div v-for="member in allMemberShip" :key="member.id" class="d-flex">
             <img class="mb-3 image" v-if="member.image" :src="member.image" alt="membershipimage"
               @click="navigateTo(localePath(`/membership-details/${member.id}`))">
