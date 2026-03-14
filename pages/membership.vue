@@ -4,11 +4,24 @@
       <div v-if="isSkele" class="row justify-content-center">
         <skeletons-member-ships />
       </div>
-      <div class="row justify-content-center">
+      <div v-else class="row justify-content-center">
         <div class="col-lg-8 col-md-5 col-sm-12">
-          <h1 class="fs-4 fw-bold mb-4">Available Membership</h1>
-          
-        
+          <h1 class="fs-4 fw-bold mb-4" v-if="allMemberShip.length > 0">Available Membership</h1>
+
+          <div v-if="!token"
+            class="box-car d-flex align-items-center gap-3 justify-content-between mb-3 pt-1 pb-1 pe-3 ps-3">
+            <div class="car-details d-flex align-items-center gap-3">
+              <img src="/car-add.png" alt="" class="w" />
+              <!-- <PuplicIconCarIcon /> -->
+            </div>
+            <div class="btn-change" @click="navigateTo(localePath('/my-cars'))">
+              <button type="button" class="btn btn-change text-white text-capitalize">
+                {{ $t("add car") }}
+              </button>
+            </div>
+          </div>
+
+
           <!-- car user -->
           <div v-if="mycars.length >= 1"
             class="box-car d-flex align-items-center gap-3 justify-content-between mb-3 pt-1 pb-1 pe-3 ps-3">
@@ -26,7 +39,7 @@
             </div>
           </div>
           <!-- if no active memberships -->
-          <div class="text-center" v-if="allMemberShip.length === 0">
+          <div class="text-center" v-if="allMemberShip.length === 0 || !token">
             <img class="mb-2" src="/Group.png" alt="">
             <h3>No Active Memberships Yet</h3>
             <p>Once you subscribe or earn one, it will appear here.</p>
@@ -51,6 +64,16 @@ const { memberShips, memberShipSubscriptions } = useApi();
 const endTimeCach = 12 * 60 * 60 * 1000;
 async function cachMemebr() {
   try {
+    if (token.value) {
+    const rescar = await useApi().getMycars();
+    mycars.value = rescar?.data || [];
+    // const response = await memberShipSubscriptions();
+    // console.log(response);
+  }else{
+    localStorage.removeItem("memberShips");
+    allMemberShip.value = [];
+    isSkele.value = false;
+  }
     const getLocal = localStorage.getItem("memberShips");
     const currentDate = Date.now();
     if (getLocal) {
@@ -60,6 +83,7 @@ async function cachMemebr() {
         isSkele.value = false;
       }
     }
+
     const response = await memberShips(defaultCar.value.id);
     allMemberShip.value = response?.data;
     isSkele.value = false;
@@ -84,16 +108,8 @@ const token = useCookie("token");
 
 
 onMounted(async () => {
-  if (token.value) {
-    const rescar = await useApi().getMycars();
-    mycars.value = rescar?.data || [];
+cachMemebr();
 
-    if (defaultCar.value) {
-      cachMemebr();
-    }
-    // const response = await memberShipSubscriptions();
-    // console.log(response);
-  }
 });
 </script>
 

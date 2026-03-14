@@ -192,6 +192,9 @@
   .box-diesign {
     border-radius: 10px;
   }
+  .box-diesign{
+    margin-top: -40px;
+  }
 }
 
 @media (min-width: 577px) and (max-width: 768px) {
