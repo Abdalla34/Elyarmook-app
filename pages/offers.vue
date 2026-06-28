@@ -7,30 +7,20 @@
             <Skeletons-OffersSkeleton />
           </div>
           <div v-else class="row">
-            <div
-            data-aos="fade-up"
-              class="col-lg-6 col-md-12 col-sm-12"
-              v-for="item in offers"
-              :key="item.id"
-            >
+            <div data-aos="fade-up" class="col-lg-6 col-md-12 col-sm-12" v-for="item in offers" :key="item.id">
               <div class="offer-card margin-bottom-24px" @click="toBox(item)">
                 <div class="img-offer text-center">
                   <img :src="item.image" alt="" class="margin-bottom-24px" />
                 </div>
 
-                <div
-                  class="details-card d-flex justify-content-between margin-bottom-24px"
-                >
+                <div class="details-card d-flex justify-content-between margin-bottom-24px">
                   <h1 class="item-name text-start">{{ item.title }}</h1>
-                  <span
-                    class="offers-sale d-flex align-items-center justify-content-center"
-                    >{{ item.discount_percentage_text }} {{ $t("OFF") }}
+                  <span class="offers-sale d-flex align-items-center justify-content-center">{{
+                    item.discount_percentage_text }} {{ $t("OFF") }}
                   </span>
                 </div>
 
-                <div
-                  class="parent-price d-flex align-items-center justify-content-between"
-                >
+                <div class="parent-price d-flex align-items-center justify-content-between">
                   <div class="price-section d-flex align-items-end gap-2">
                     <p class="price">
                       {{ item.price_after_discount }}
@@ -118,6 +108,7 @@ onMounted(() => {
   font-size: 18px;
   color: #14142b;
 }
+
 .not-offer p {
   font-family: var(--font-main);
   font-weight: 400;

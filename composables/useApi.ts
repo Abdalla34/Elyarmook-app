@@ -633,12 +633,19 @@ export const useApi = () => {
     });
   };
 
-  const memberShipSubscriptions = async () => {
+  const getSubscriptions = async () => {
     return $fetch(`${baseURL}/v1.1/membership/subscriptions`, {
       method: "GET",
       headers,
     });
   };
+  const getCarSubscriptions = async (membership_id: any) => {
+    return $fetch(`${baseURL}/v1.1/membership/memberships/${membership_id}/eligible-cars`, {
+      headers,
+      // params:{membership_id}
+    })
+
+  }
   return {
     sendOTP,
     checkOTP,
@@ -713,6 +720,7 @@ export const useApi = () => {
     usePaymentToChargeWallet,
     resetToken,
     getToken,
-    memberShipSubscriptions,
+    getSubscriptions,
+    getCarSubscriptions
   };
 };

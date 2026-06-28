@@ -60,14 +60,14 @@
 const isSkele = ref(true);
 const allMemberShip = ref([]);
 const localePath = useLocalePath();
-const { memberShips, memberShipSubscriptions } = useApi();
+const { memberShips,getSubscriptions } = useApi();
 const endTimeCach = 12 * 60 * 60 * 1000;
 async function cachMemebr() {
   try {
     if (token.value) {
     const rescar = await useApi().getMycars();
     mycars.value = rescar?.data || [];
-    // const response = await memberShipSubscriptions();
+    // const response = await getSubscriptions();
     // console.log(response);
   }else{
     localStorage.removeItem("memberShips");
@@ -109,8 +109,8 @@ const token = useCookie("token");
 
 onMounted(async () => {
 cachMemebr();
-
 });
+
 </script>
 
 <style scoped>

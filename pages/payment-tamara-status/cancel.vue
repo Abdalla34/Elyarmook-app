@@ -16,7 +16,7 @@
 <script setup>
 const { tabbyStatusCancel } = useApi();
 const route = useRoute();
-const router = useRouter();
+// const router = useRouter();
 try {
   let paymentId = route.query.payment_id;
   if (paymentId) {

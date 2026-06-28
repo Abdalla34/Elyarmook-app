@@ -1,38 +1,25 @@
 <template>
   <div class="cart-parent mt-5">
     <div class="container">
-      <div
-        :dir="$i18n.locale === 'ar' ? 'rtl' : 'ltr'"
-        class="row justify-content-center"
-        v-if="isSkeleton"
-      >
+      <div :dir="$i18n.locale === 'ar' ? 'rtl' : 'ltr'" class="row justify-content-center" v-if="isSkeleton">
         <SkeletonsCartComfortableService />
       </div>
       <div v-else class="row justify-content-center">
-        <notRegister
-          :IsNotRegitser="notRegister"
-          :message="$t('cart is Empty you must create account')"
-        />
+        <notRegister :IsNotRegitser="notRegister" :message="$t('cart is Empty you must create account')" />
 
-        <div
-          class="empty-cart text-center"
-          v-if="
-            token &&
-            services.length === 0 &&
-            offers.length === 0 &&
-            spareParts.length === 0
-          "
-        >
+        <div class="empty-cart text-center" v-if="
+          token &&
+          services.length === 0 &&
+          offers.length === 0 &&
+          spareParts.length === 0
+        ">
           <div>
             <img src="/Vector.png" alt="" />
             <h3 class="text-capitalize create">
               {{ $t("your cart is empty") }}
             </h3>
             <div class="btn-items">
-              <button
-                class="d-flex justify-content-center"
-                @click="navigateTo(localePath('/services'))"
-              >
+              <button class="d-flex justify-content-center" @click="navigateTo(localePath('/services'))">
                 <PuplicIconPlusIcon />
                 {{ $t("Add Items") }}
               </button>
@@ -41,22 +28,15 @@
         </div>
 
         <!-- left section -->
-        <div
-          data-aos="fade-up"
-          class="col-12 col-md-12 col-lg-6 col-md-6 section-scroll"
-          v-if="
-            (token && cartRes?.id && services.length > 0) ||
-            offers.length > 0 ||
-            spareParts.length > 0
-          "
-        >
+        <div data-aos="fade-up" class="col-12 col-md-12 col-lg-6 col-md-6 section-scroll" v-if="
+          (token && cartRes?.id && services.length > 0) ||
+          offers.length > 0 ||
+          spareParts.length > 0
+        ">
           <h4 class="mb-4 fw-bold">{{ $t("Order Details") }}</h4>
 
-          <div
-            class="cart d-flex justify-content-between align-items-center border-radius-36px mb-3"
-            v-for="service in services"
-            :key="service.id"
-          >
+          <div class="cart d-flex justify-content-between align-items-center border-radius-36px mb-3"
+            v-for="service in services" :key="service.id">
             <div class="details-cart d-flex align-items-center gap-3">
               <div class="img">
                 <img :src="service.image" :alt="service.title" />
@@ -71,19 +51,13 @@
                 </p>
               </div>
             </div>
-            <div
-              class="delete-icon"
-              @click="deletedOrder(service.id, 'service', service.qty)"
-            >
+            <div class="delete-icon" @click="deletedOrder(service.id, 'service', service.qty)">
               <trash />
             </div>
           </div>
 
-          <div
-            class="cart d-flex justify-content-between align-items-center border-radius-36px mb-3"
-            v-for="offer in offers"
-            :key="offer.offer_id"
-          >
+          <div class="cart d-flex justify-content-between align-items-center border-radius-36px mb-3"
+            v-for="offer in offers" :key="offer.offer_id">
             <div class="details-cart d-flex align-items-center gap-3">
               <div class="img">
                 <img :src="offer.image" :alt="offer.title" />
@@ -97,30 +71,22 @@
                   }}</span>
                 </p>
                 <div class="qty-controls d-flex align-items-center mt-2">
-                  <button
-                    class="qty-btn"
-                    :disabled="loadingQty[offer.id] || offer.qty <= 1"
-                    @click="
-                      updateQty(
-                        'offer',
-                        order_id,
-                        offer,
-                        offer.qty - 1,
-                        'minus'
-                      )
-                    "
-                  >
+                  <button class="qty-btn" :disabled="loadingQty[offer.id] || offer.qty <= 1" @click="
+                    updateQty(
+                      'offer',
+                      order_id,
+                      offer,
+                      offer.qty - 1,
+                      'minus'
+                    )
+                    ">
                     -
                   </button>
 
                   <span class="mx-2">{{ offer.qty }}</span>
-                  <button
-                    class="qty-btn"
-                    :disabled="loadingQty[offer.id]"
-                    @click="
-                      updateQty('offer', order_id, offer, offer.qty + 1, 'plus')
-                    "
-                  >
+                  <button class="qty-btn" :disabled="loadingQty[offer.id]" @click="
+                    updateQty('offer', order_id, offer, offer.qty + 1, 'plus')
+                    ">
                     +
                   </button>
                   <span v-if="loadingQty[offer.id]" class="ms-2">{{
@@ -129,22 +95,15 @@
                 </div>
               </div>
             </div>
-            <div
-              class="delete-icon"
-              @click="deletedOrder(offer.offer_id, 'offer', offer.qty)"
-            >
+            <div class="delete-icon" @click="deletedOrder(offer.offer_id, 'offer', offer.qty)">
               <trash />
               <span v-if="loadingDelete[offer.offer_id]">
-                {{ $t("loading...") }}</span
-              >
+                {{ $t("loading...") }}</span>
             </div>
           </div>
 
-          <div
-            class="cart d-flex justify-content-between align-items-center border-radius-36px mb-3"
-            v-for="sparepart in spareParts"
-            :key="sparepart.id"
-          >
+          <div class="cart d-flex justify-content-between align-items-center border-radius-36px mb-3"
+            v-for="sparepart in spareParts" :key="sparepart.id">
             <div class="details-cart d-flex align-items-center gap-3">
               <div class="img">
                 <img :src="sparepart.image" :alt="sparepart.title" />
@@ -158,36 +117,28 @@
                   }}</span>
                 </p>
                 <div class="qty-controls d-flex align-items-center mt-2">
-                  <button
-                    class="qty-btn"
-                    :disabled="loadingQty[sparepart.id] || sparepart.qty <= 1"
-                    @click="
-                      updateQty(
-                        'spare_part',
-                        order_id,
-                        sparepart,
-                        sparepart.qty - 1,
-                        'minus'
-                      )
-                    "
-                  >
+                  <button class="qty-btn" :disabled="loadingQty[sparepart.id] || sparepart.qty <= 1" @click="
+                    updateQty(
+                      'spare_part',
+                      order_id,
+                      sparepart,
+                      sparepart.qty - 1,
+                      'minus'
+                    )
+                    ">
                     -
                   </button>
 
                   <span class="mx-2">{{ sparepart.qty }}</span>
-                  <button
-                    class="qty-btn"
-                    :disabled="loadingQty[sparepart.id]"
-                    @click="
-                      updateQty(
-                        'spare_part',
-                        order_id,
-                        sparepart,
-                        sparepart.qty + 1,
-                        'plus'
-                      )
-                    "
-                  >
+                  <button class="qty-btn" :disabled="loadingQty[sparepart.id]" @click="
+                    updateQty(
+                      'spare_part',
+                      order_id,
+                      sparepart,
+                      sparepart.qty + 1,
+                      'plus'
+                    )
+                    ">
                     +
                   </button>
                   <span v-if="loadingQty[sparepart.id]" class="ms-2">{{
@@ -196,10 +147,7 @@
                 </div>
               </div>
             </div>
-            <div
-              class="delete-icon"
-              @click="deletedOrder(sparepart.id, 'spare_part', sparepart.qty)"
-            >
+            <div class="delete-icon" @click="deletedOrder(sparepart.id, 'spare_part', sparepart.qty)">
               <trash />
               <span v-if="loadingDelete[sparepart.id]">{{
                 $t("loading...")
@@ -208,24 +156,18 @@
           </div>
         </div>
         <!-- right section -->
-        <div
-          data-aos="fade-up"
-          class="col-12 col-md-12 col-lg-4 col-test"
-          v-if="
-            (token && cartRes?.id && token && services.length > 0) ||
-            offers.length > 0 ||
-            spareParts.length > 0
-          "
-        >
+        <div data-aos="fade-up" class="col-12 col-md-12 col-lg-4 col-test" v-if="
+          (token && cartRes?.id && token && services.length > 0) ||
+          offers.length > 0 ||
+          spareParts.length > 0
+        ">
           <div class="h-100">
             <div class=""></div>
             <!-- price details -->
             <div class="">
               <h6 class="fw-bold">{{ $t("Cost Details") }}</h6>
               <div class="box-design">
-                <div
-                  class="total-order d-flex justify-content-between align-items-center"
-                >
+                <div class="total-order d-flex justify-content-between align-items-center">
                   <h4 class="label">{{ $t("sub total") }}</h4>
                   <p class="text-capitalize">
                     {{ Number(cartRes?.sub_total).toFixed(2) }}
@@ -235,9 +177,7 @@
                   </p>
                 </div>
 
-                <div
-                  class="vat d-flex justify-content-between align-items-center"
-                >
+                <div class="vat d-flex justify-content-between align-items-center">
                   <h4 class="label">{{ $t("vat") }}</h4>
                   <p class="text-capitalize">
                     {{ Number(cartRes?.vat_amount).toFixed(2) }}
@@ -247,9 +187,7 @@
                   </p>
                 </div>
 
-                <div
-                  class="final-amount d-flex justify-content-between align-items-center"
-                >
+                <div class="final-amount d-flex justify-content-between align-items-center">
                   <h4 class="label">
                     {{ $t("Final Amount") }}
                   </h4>
@@ -262,9 +200,7 @@
                 </div>
               </div>
 
-              <div
-                class="total-amount d-flex align-items-center justify-content-between"
-              >
+              <div class="total-amount d-flex align-items-center justify-content-between">
                 <h1 class="amount text-capitalize">{{ $t("total amount") }}</h1>
                 <p>
                   {{ Number(cartRes?.total_amount).toFixed(2) }}
@@ -278,15 +214,11 @@
                 <ButtonCard :textButton="$t('continue')" />
               </div>
               <div class="buttion-confirm">
-                <button
-                  v-if="
-                    services.length >= 1 ||
-                    offers.length >= 1 ||
-                    spareParts.length >= 1
-                  "
-                  @click="navigateTo($localePath('/services'))"
-                  class="additems text-capitalize label p-2"
-                >
+                <button v-if="
+                  services.length >= 1 ||
+                  offers.length >= 1 ||
+                  spareParts.length >= 1
+                " @click="navigateTo($localePath('/services'))" class="additems text-capitalize label p-2">
                   <i class="fa-solid fa-plus"></i>
                   {{ $t("add another items") }}
                 </button>
@@ -497,16 +429,20 @@ function toContinue() {
 
 <style scoped>
 @import "@/assets/css/cartorder.css";
+
 .section-scroll {
   max-height: 65vh;
   overflow-y: auto;
   scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
   scroll-behavior: smooth;
 }
+
 @media (max-width: 768px) {
   .section-scroll {
-    overflow-y: hidden;   /* يلغي الاسكرول */
-    max-height: none;     /* يشيل تحديد الارتفاع */
+    overflow-y: hidden;
+    /* يلغي الاسكرول */
+    max-height: none;
+    /* يشيل تحديد الارتفاع */
     scroll-behavior: auto;
   }
 }

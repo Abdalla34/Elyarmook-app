@@ -192,6 +192,8 @@ const activeId = ref({});
 function toggleIcon(id) {
   activeId.value[id] = !activeId.value[id];
 }
+// const testres = await useApi().getCarSubscriptions(idMember);
+// console.log(testres);
 </script>
 
 <style scoped>
